@@ -12,10 +12,9 @@ CREATE TABLE task_notify_gru_cf(
   position_directory_entry_email INT DEFAULT -1,
   position_directory_entry_sms INT DEFAULT -1,
   position_directory_entry_user_guid_ongle1 INT DEFAULT -1,
-position_directory_entry_user
-  sender_name VARCHAR(255) DEFAULT NULL, 
-  subject VARCHAR(255) DEFAULT NULL, 
-  message long VARCHAR DEFAULT NULL,
+  sender_name_ongle1 VARCHAR(255) DEFAULT NULL, 
+  subject_ongle1 VARCHAR(255) DEFAULT NULL, 
+  message_ongle1 long VARCHAR DEFAULT NULL,
   is_notify_by_email SMALLINT NOT NULL DEFAULT 0,
   is_notify_by_sms SMALLINT NOT NULL DEFAULT 0,
   is_notify_by_mailing_list SMALLINT NOT NULL DEFAULT 0,
@@ -30,7 +29,6 @@ position_directory_entry_user
   id_mailing_list INT DEFAULT NULL,
   is_view_record SMALLINT NOT NULL DEFAULT 0,
   label_link_view_record VARCHAR(255) DEFAULT NULL,
-
   id_directory_ongle3 INT DEFAULT NULL,
   position_directory_entry_id_demand INT DEFAULT NULL,
   position_directory_entry_user_guid_ongle3 INT DEFAULT NULL,
@@ -40,10 +38,9 @@ position_directory_entry_user
   message_ongle3 long VARCHAR DEFAULT NULL,
   status_text VARCHAR(255) DEFAULT '' NOT NULL,
   position_directory_entry_crm_web_app_code VARCHAR(255) DEFAULT '' NOT NULL,
-
-
   PRIMARY KEY  (id_task)
   );
+  
     
 
 
