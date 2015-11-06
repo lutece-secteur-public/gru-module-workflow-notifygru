@@ -37,7 +37,7 @@ import fr.paris.lutece.plugins.workflow.module.notifygru.business.TaskNotifyGruC
 import fr.paris.lutece.plugins.rest.service.RestConstants;
 import fr.paris.lutece.plugins.rest.util.json.JSONUtil;
 import fr.paris.lutece.plugins.rest.util.xml.XMLUtil;
-import fr.paris.lutece.plugins.workflow.module.notifygru.business.NotifygruHome;
+import fr.paris.lutece.plugins.workflow.module.notifygru.business.TaskNotifyGruConfigDAO;
 import fr.paris.lutece.util.xml.XmlUtil;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import java.io.IOException;
@@ -99,8 +99,8 @@ public class NotifygruRest
      */
     public String getNotifygrusXml( )
     {
-        StringBuffer sbXML = new StringBuffer( XmlUtil.getXmlHeader() );
-        Collection<TaskNotifyGruConfig> list = NotifygruHome.getNotifygrusList();
+      /*   StringBuffer sbXML = new StringBuffer( XmlUtil.getXmlHeader() );
+       Collection<TaskNotifyGruConfig> list = TaskNotifyGruConfigDAO.class();
         
         XmlUtil.beginElement( sbXML , KEY_NOTIFYGRUS );
 
@@ -109,9 +109,11 @@ public class NotifygruRest
             addNotifygruXml( sbXML, notifygru );
         }
         
-        XmlUtil.endElement( sbXML , KEY_NOTIFYGRUS );
+        XmlUtil.endElement( sbXML , KEY_NOTIFYGRUS );  */
 
-        return sbXML.toString(  );
+        //return sbXML.toString(  );
+        
+        return "Implémenter REST API";
     }
     
     /**
@@ -120,7 +122,7 @@ public class NotifygruRest
      */
     public String getNotifygrusJson( )
     {
-        JSONObject jsonNotifygru = new JSONObject(  );
+   /*     JSONObject jsonNotifygru = new JSONObject(  );
         JSONObject json = new JSONObject(  );
         
         Collection<TaskNotifyGruConfig> list = NotifygruHome.getNotifygrusList();
@@ -132,7 +134,8 @@ public class NotifygruRest
         
         json.accumulate( KEY_NOTIFYGRUS, jsonNotifygru );
         
-        return json.toString( );
+        return json.toString( ); */
+         return "Implémenter REST API";
     }
     
     @GET
@@ -164,7 +167,7 @@ public class NotifygruRest
      */
     public String getNotifygruXml( String strId )
     {
-        StringBuffer sbXML = new StringBuffer(  );
+   /*     StringBuffer sbXML = new StringBuffer(  );
         
         try
         {
@@ -186,7 +189,9 @@ public class NotifygruRest
             sbXML.append( XMLUtil.formatError( "Notifygru not found", 1 ) );
         }
 
-        return sbXML.toString(  );
+        return sbXML.toString(  );  */
+        
+         return "Implémenter REST API";
     }
     
     /**
@@ -196,7 +201,7 @@ public class NotifygruRest
      */
     public String getNotifygruJson( String strId )
     {
-        JSONObject json = new JSONObject(  );
+     /*   JSONObject json = new JSONObject(  );
         String strJson = "";
 
         try
@@ -219,7 +224,9 @@ public class NotifygruRest
             strJson = JSONUtil.formatError( "Notifygru not found", 1 );
         }
 
-        return strJson;
+        return strJson;  */
+        
+         return "Implémenter REST API";
     }
     
     @DELETE
@@ -230,10 +237,10 @@ public class NotifygruRest
         {
             int nId = Integer.parseInt( strId );
             
-            if ( NotifygruHome.findByPrimaryKey( nId ) != null )
-            {
-                NotifygruHome.remove( nId );
-            }
+//            if ( NotifygruHome.findByPrimaryKey( nId ) != null )
+//            {
+//                NotifygruHome.remove( nId );
+//            }
         }
         catch ( NumberFormatException e )
         {
@@ -253,22 +260,22 @@ public class NotifygruRest
         {
             int nId = Integer.parseInt( KEY_ID );
 
-            TaskNotifyGruConfig notifygru = NotifygruHome.findByPrimaryKey( nId );
-
-            if ( notifygru != null )
-            {
-                notifygru.setTitle( title );
-                notifygru.setIdTask( Integer.parseInt( id_task ) );
-                NotifygruHome.update( notifygru );
-            }
+//            TaskNotifyGruConfig notifygru = NotifygruHome.findByPrimaryKey( nId );
+//
+//            if ( notifygru != null )
+//            {
+//                notifygru.setTitle( title );
+//                notifygru.setIdTask( Integer.parseInt( id_task ) );
+//                NotifygruHome.update( notifygru );
+//            }
         }
         else
         {
             TaskNotifyGruConfig notifygru = new TaskNotifyGruConfig( );
             
-            notifygru.setTitle( title );
-            notifygru.setIdTask( Integer.parseInt( id_task ) );
-            NotifygruHome.create( notifygru );
+//            notifygru.setTitle( title );
+//            notifygru.setIdTask( Integer.parseInt( id_task ) );
+//            NotifygruHome.create( notifygru );
         }
         return getNotifygrus(accept, format);
     }
@@ -281,8 +288,8 @@ public class NotifygruRest
     private void addNotifygruXml( StringBuffer sbXML, TaskNotifyGruConfig notifygru )
     {
         XmlUtil.beginElement( sbXML, KEY_NOTIFYGRU );
-        XmlUtil.addElement( sbXML, KEY_ID , notifygru.getId( ) );
-        XmlUtil.addElement( sbXML, KEY_TITLE , notifygru.getTitle( ) );
+     //   XmlUtil.addElement( sbXML, KEY_ID , notifygru.getId( ) );
+      //  XmlUtil.addElement( sbXML, KEY_TITLE , notifygru.getTitle( ) );
         XmlUtil.addElement( sbXML, KEY_ID_TASK , notifygru.getIdTask( ) );
         XmlUtil.endElement( sbXML, KEY_NOTIFYGRU );
     }
@@ -295,8 +302,8 @@ public class NotifygruRest
     private void addNotifygruJson( JSONObject json, TaskNotifyGruConfig notifygru )
     {
         JSONObject jsonNotifygru = new JSONObject(  );
-        jsonNotifygru.accumulate( KEY_ID , notifygru.getId( ) );
-        jsonNotifygru.accumulate( KEY_TITLE, notifygru.getTitle( ) );
+      //  jsonNotifygru.accumulate( KEY_ID , notifygru.getId( ) );
+      //  jsonNotifygru.accumulate( KEY_TITLE, notifygru.getTitle( ) );
         jsonNotifygru.accumulate( KEY_ID_TASK, notifygru.getIdTask( ) );
         json.accumulate( KEY_NOTIFYGRU, jsonNotifygru );
     }
