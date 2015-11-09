@@ -1,13 +1,32 @@
 <#include "/admin/util/editor/editor.html" />
 
+<#assign senderNameOngle1 = "">
+<#assign subjectOngle1 = "">
+<#assign messageOngle1 = "">
+<#assign positionEntryDirectoryIdDemand = -1>
+<#assign positionEntryDirectoryUserGuidOngle1 = -1>
+<#assign positionEntryDirectoryCrmWebAppCode = -1>
+<#assign sendNotification = true>
+
 <#assign id_directory = -1>
+<#assign id_directoryOngle1 = -1>
 <#assign id_mailing_list = -1>
 <#assign position_entry_gru_sms = -1>
 <#assign position_entry_gru_email = -1>
 <#assign position_entry_gru_user_guid = -1>
 <#assign id_state_after_validation = -1>
 <#if config?exists>
+	
+	<#assign senderNameOngle1 = config.senderNameOngle1>
+	<#assign subjectOngle1 = config.subjectOngle1>
+	<#assign messageOngle1 = config.messageOngle1>
+	<#assign positionEntryDirectoryIdDemand = config.positionEntryDirectoryIdDemand>
+	<#assign positionEntryDirectoryUserGuidOngle1 = config.positionEntryDirectoryUserGuidOngle1>
+	<#assign positionEntryDirectoryCrmWebAppCode = config.positionEntryDirectoryCrmWebAppCode>
+	<#assign sendNotification = config.sendNotification>
+
 	<#assign id_directory = config.idDirectory>
+	<#assign id_directoryOngle1 = config.idDirectoryOngle1>
 	<#assign id_mailing_list = config.idMailingList>
 	<#assign position_entry_gru_sms = config.positionEntryDirectorySms>
 	<#assign position_entry_gru_email = config.positionEntryDirectoryEmail>
@@ -50,7 +69,7 @@
 			</ul>
 	<div class="tab-content">		
 		<div class="tab-pane <#if pane="pane-desk">active</#if>" id="pane-desk">
-			Guichet Parisien
+			<#include "task_notify_crm_config.html" />
 		</div>
 		<div class="tab-pane <#if pane="pane-agent">active</#if>" id="pane-agent">
 			Vue Agent
