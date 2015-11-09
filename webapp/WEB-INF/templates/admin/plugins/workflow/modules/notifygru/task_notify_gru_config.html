@@ -25,8 +25,38 @@
 	</#if>
 	<#return false>
 </#function>
+
+<#assign pane="pane-desk">
+
 <fieldset>
      <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
+     
+     <ul id="tabs" class="nav nav-tabs">
+				<li <#if pane="pane-desk">class="active"</#if> >
+					<a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_desk.title}</a>
+				</li>
+				<li <#if pane="pane-agent">class="active"</#if> >
+					<a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
+				</li>
+				<li <#if pane="pane-email">class="active"</#if> >
+					<a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
+				</li>
+				<li <#if pane="pane-sms">class="active"</#if> >
+					<a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
+				</li>
+				<li <#if pane="pane-mailing-list">class="active"</#if> >
+					<a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
+				</li>
+			</ul>
+	<div class="tab-content">		
+		<div class="tab-pane <#if pane="pane-desk">active</#if>" id="pane-desk">
+			Guichet Parisien
+		</div>
+		<div class="tab-pane <#if pane="pane-agent">active</#if>" id="pane-agent">
+			Vue Agent
+		</div>
+		<div class="tab-pane <#if pane="pane-email">active</#if>" id="pane-email">
+			
         <div id="notify_by">
             <div class="form-group">
                 <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="notify">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notify_by} *</label>
@@ -378,6 +408,14 @@
                 </div>
 				
             </div>
+         </div>
+         <div class="tab-pane <#if pane="pane-sms">active</#if>" id="pane-sms">
+			Sms
+		</div>
+		<div class="tab-pane <#if pane="pane-mailing-list">active</#if>" id="pane-mailing-list">
+			Liste de diffusion
+		</div>
+    </div>	
 </fieldset>
 
 
