@@ -30,7 +30,16 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         "FROM task_notify_gru_cf  WHERE id_task=?";
     
     private static final String SQL_QUERY_INSERT = "INSERT INTO task_notify_gru_cf( " +
-        "id_task,id_directory_ongle1,position_directory_entry_email,position_directory_entry_sms,position_directory_entry_user_guid_ongle1,sender_name_ongle1,subject_ongle1,message_ongle1,is_notify_by_email,is_notify_by_sms,is_notify_by_mailing_list,is_notify_by_user_guid,is_email_validation,id_state_after_validation,label_link,message_validation,period_validity,recipients_cc,recipients_bcc,id_mailing_list,"
+        "id_task,id_directory_ongle1,"
+            + "position_directory_entry_email,"
+            + "position_directory_entry_sms,"
+            + "position_directory_entry_user_guid_ongle1,"
+            + "sender_name_ongle1,subject_ongle1,"
+            + "message_ongle1,is_notify_by_email,"
+            + "is_notify_by_sms,is_notify_by_mailing_list,"
+            + "is_notify_by_user_guid,is_email_validation,"
+            + "id_state_after_validation,label_link,message_validation,"
+            + "period_validity,recipients_cc,recipients_bcc,id_mailing_list,"
             + "is_view_record,label_link_view_record,"
             + "id_directory_ongle3, position_directory_entry_id_demand, "
             + "position_directory_entry_user_guid_ongle3, send_notification, "

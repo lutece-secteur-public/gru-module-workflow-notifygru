@@ -103,6 +103,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strError = StringUtils.EMPTY;
         String[] tabSelectedPositionEntryFile = request.getParameterValues( NotifyGruConstants.PARAMETER_LIST_POSITION_ENTRY_FILE_CHECKED );
 
+        
+        
         if ( StringUtils.isBlank( strApply ) )
         {
             if ( nIdDirectory_ongle1 == WorkflowUtils.CONSTANT_ID_NULL )
@@ -224,6 +226,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         config.setIdMailingList( nIdMailingList );
         config.setViewRecord( strViewRecord != null );
         config.setLabelLinkViewRecord( strLabelLinkViewRecord );
+        config.setStatusText("status texte");
+        config.setSendNotification(true);
+        config.setPositionEntryDirectoryCrmWebAppCode(-1);
 
         config.setNotifyByUserGuid( bIsNotifyByUserGuid );
 
