@@ -144,6 +144,8 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config != null )
         {
+            if(config.getSubjectOngle1(  )==null) return "Texte getSubject";
+            else
             return config.getSubjectOngle1();
         }
 
