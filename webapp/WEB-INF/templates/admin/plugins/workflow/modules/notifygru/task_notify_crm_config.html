@@ -2,53 +2,53 @@
 <div>
 	<fieldset>
 		<div class="control-group">
-			<label class="control-label" for="idDirectoryOngle1">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_directory} * :</label>
+			<label class="control-label" for="id_resource_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_directory} * :</label>
 			<div class="controls">
-				<@comboWithParams name="id_directory" default_value=id_directory?string additionalParameters="class=\"input-xxlarge\"" items=list_directory />
+				<@comboWithParams name="id_resource_guichet" default_value=id_directory?string additionalParameters="class=\"input-xxlarge\"" items=list_id_resource_guichet />
 			</div>
 		</div>
-		<#if list_entries_id_demand?exists>
-			<div class="control-group" id="entry_id_demand">
-				<label class="control-label" for="positionEntryDirectoryIdDemand">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_id_demand} * :</label>
+		<#if list_id_demand_guichet?exists>
+			<div class="control-group" id="id_demand_guichet">
+				<label class="control-label" for="id_demand_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_id_demand} * :</label>
 				<div class="controls">
-					<@combo name="positionEntryDirectoryIdDemand" items=list_entries_id_demand default_value=positionEntryDirectoryIdDemand />&nbsp;
+					<@combo name="id_demand_guichet" items=list_id_demand_guichet default_value=id_demand_guichet />&nbsp;
 					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_id_demand_comment}</span>
 				</div>
 			</div>
 		</#if>
-		<#if list_entries_user_guid?exists && is_user_attribute_ws_active>
-			<div class="control-group"id="entry_user_guid">
-				<label class="control-label" for="positionEntryDirectoryUserGuidOngle1">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_user_guid} :</label>
+		<#if list_user_guid_guichet?exists && is_user_attribute_ws_active>
+			<div class="control-group"id="user_guid_guichet">
+				<label class="control-label" for="user_guid_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_user_guid} :</label>
 				<div class="controls">
-					<@combo name="positionEntryDirectoryUserGuidOngle1" items=list_entries_user_guid default_value=positionEntryDirectoryUserGuidOngle1 />&nbsp;
+					<@combo name="user_guid_guichet" items=list_user_guid_guichet default_value=user_guid_guichet />&nbsp;
 					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_user_guid_comment}</span>
 				</div>
 			</div>
 		</#if>
-		<#if list_entries_crm_web_app_code?exists>
-			<div class="control-group"id="entry_user_guid">
-				<label class="control-label" for="positionEntryDirectoryCrmWebAppCode">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_crm_web_app_code}  :</label>
+		<#if list_crm_web_app_code_guichet?exists>
+			<div class="control-group"id="crm_web_app_code_guichet">
+				<label class="control-label" for="crm_web_app_code_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_crm_web_app_code}  :</label>
 				<div class="controls">
-						<@combo name="positionEntryDirectoryCrmWebAppCode" items=list_entries_crm_web_app_code default_value=positionEntryDirectoryCrmWebAppCode />&nbsp;
+						<@combo name="crm_web_app_code_guichet" items=list_crm_web_app_code_guichet default_value=crm_web_app_code_guichet />&nbsp;
 						<span class="help-block">#i18n{module.workflow.notifygru.task_notify_crm_config.label_task_entry_directory_crm_web_app_code_comment}</span>
 				</div>
 			</div>
 		</#if>
 		<div class="control-group">
-			<label class="control-label" for="statusText">#i18n{module.workflow.notifygru.task_notify_crm_config.label_status_text} * :</label>
+			<label class="control-label" for="status_text_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_status_text} * :</label>
 			<div class="controls">
-				<input type="text" name="statusText" value="${statusText!}" size="80" maxlength="255" />
+				<input type="text" name="status_text_guichet" value="${status_text_guichet!}" size="80" maxlength="255" />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="sendNotification">#i18n{module.workflow.notifygru.task_notify_crm_config.label_send_notification} :</label>
+			<label class="control-label" for="send_notification_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_send_notification} :</label>
 			<div class="controls">
 				<label class="checkbox">
-					<input type="radio" name="sendNotification" value="true" <#if sendNotification>checked="checked"</#if> />
+					<input type="radio" name="send_notification_guichet" value="true" <#if send_notification_guichet>checked="checked"</#if> />
 					&nbsp;#i18n{module.workflow.notifygru.task_notify_crm_config.label_send_notification.yes}
 				</label>
 				<label class="checkbox">
-					<input type="radio" name="sendNotification" value="false" <#if !sendNotification>checked="checked"</#if> />
+					<input type="radio" name="send_notification_guichet" value="false" <#if !send_notification_guichet>checked="checked"</#if> />
 					&nbsp;#i18n{module.workflow.notifygru.task_notify_crm_config.label_send_notification.no}
 				</label>
 			</div>
@@ -62,31 +62,31 @@
 		</div>
 	</fieldset>
 </div>
-<#if sendNotification>
+<#if send_notification_guichet>
 	<div>
 		<div class="control-group">
-			<label class="control-label" for="senderNameOngle1">#i18n{module.workflow.notifygru.task_notify_crm_config.label_sender_name} * :</label>
+			<label class="control-label" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_sender_name} * :</label>
 			<div class="controls">
-				<input type="text" name="senderNameOngle1" id="" size="80" value="${senderNameOngle1}" maxlength="255" />		
+				<input type="text" name="sender_name_guichet" id="" size="80" value="${sender_name_guichet}" maxlength="255" />		
 				#i18n{module.workflow.notifygru.task_notify_crm_config.label_sender_name_comment}
 			</div>
 		</div>
 		<div class="control-group">
-	    	<label class="control-label" for="sujectOngle1">#i18n{module.workflow.notifygru.task_notify_crm_config.label_subject} * :</label>
+	    	<label class="control-label" for="subject_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_subject} * :</label>
 			<div class="controls">
-				<input type="text" name="subjectOngle1" id="" size="80" value="${subjectOngle1}" maxlength="255" />
+				<input type="text" name="subject_guichet" id="" size="80" value="${subject_guichet}" maxlength="255" />
 				#i18n{module.workflow.notifygru.task_notify_crm_config.label_subject_comment}
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="messageOngle1">#i18n{module.workflow.notifygru.task_notify_crm_config.label_message} * :</label>
+			<label class="control-label" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_crm_config.label_message} * :</label>
 			<div class="controls editor">
-				<textarea name="messageOngle1" id="" rows="20" cols="90" class="richtext">${messageOngle1}</textarea>
+				<textarea name="message_guichet" id="" rows="20" cols="90" class="richtext">${message_guichet}</textarea>
 				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_crm_config.label_message_comment}</span>
 			</div>
 		</div>
 		
-		<#if config?exists && config.idDirectoryOngle1!=-1>
+		<#if config?exists && config.id_resource_guichet!=-1>
 			<fieldset>
 				<legend>#i18n{module.workflow.notifygru.task_notify_crm_config.label_directory_comment}</legend>
 				<table class="table">
