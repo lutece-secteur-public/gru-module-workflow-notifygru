@@ -32,7 +32,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     {
         super.create( config );
 
-        TaskNotifyGruConfig notifyConfig = getConfigBean( config );
+     /*   TaskNotifyGruConfig notifyConfig = getConfigBean( config );
 
         if ( ( notifyConfig != null ) && ( notifyConfig.getListPositionEntryFile(  ) != null ) )
         {
@@ -41,6 +41,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
                 this.createPositionEntryFile( config.getIdTask(  ), nPositionEntryFile );
             }
         }
+        */
     }
 
     /**
@@ -52,7 +53,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     {
         super.update( config );
 
-        TaskNotifyGruConfig notifyConfig = getConfigBean( config );
+    /*    TaskNotifyGruConfig notifyConfig = getConfigBean( config );
 
         if ( notifyConfig != null )
         {
@@ -68,66 +69,68 @@ public class TaskNotifyGruConfigService extends TaskConfigService
                 }
             }
         }
+        */
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
-    public void remove( int nIdTask )
-    {
-        super.remove( nIdTask );
-        this.removeListPositionEntryFile( nIdTask );
-    }
+//    @Override
+//    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+//    public void remove( int nIdTask )
+//    {
+//        super.remove( nIdTask );
+//        this.removeListPositionEntryFile( nIdTask );
+//    }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public <T> T findByPrimaryKey( int nIdTask )
-    {
-        TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
-
-        if ( config != null )
-        {
-            List<Integer> listPositionEntryFile = findPositionEntryFile( nIdTask );
-
-            if ( ( listPositionEntryFile != null ) && !listPositionEntryFile.isEmpty(  ) )
-            {
-                config.setListPositionEntryFile( listPositionEntryFile );
-            }
-        }
-
-        return (T) config;
-    }
+  //  @Override
+//    public <T> T findByPrimaryKey( int nIdTask )
+//    {
+//        TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
+//
+//        if ( config != null )
+//        {
+//            List<Integer> listPositionEntryFile = findPositionEntryFile( nIdTask );
+//
+//            if ( ( listPositionEntryFile != null ) && !listPositionEntryFile.isEmpty(  ) )
+//            {
+//                config.setListPositionEntryFile( listPositionEntryFile );
+//            }
+//        }
+//
+//        return (T) config;
+//    }
 
     /**
      * Find the positions entry file from a given id task
      * @param nIdTask the id task
      * @return a list of position
      */
-    private List<Integer> findPositionEntryFile( int nIdTask )
-    {
-        return _taskNotifyGruConfigDAO.loadListPositionEntryFile( nIdTask );
-    }
+//    private List<Integer> findPositionEntryFile( int nIdTask )
+//    {
+//        return null;
+//       
+//    }
 
     /**
      * Create the link task - entry file
      * @param nIdTask the id task
      * @param nPositionEntryFile the position entry file
      */
-    private void createPositionEntryFile( int nIdTask, int nPositionEntryFile )
-    {
-        _taskNotifyGruConfigDAO.insertListPositionEntryFile( nIdTask, nPositionEntryFile );
-    }
+//    private void createPositionEntryFile( int nIdTask, int nPositionEntryFile )
+//    {
+//        _taskNotifyGruConfigDAO.insertListPositionEntryFile( nIdTask, nPositionEntryFile );
+//    }
 
     /**
      * Remove all links task - entry file
      * @param nIdTask the id task
      */
-    private void removeListPositionEntryFile( int nIdTask )
-    {
-        _taskNotifyGruConfigDAO.deleteListPositionEntryFile( nIdTask );
-    }
+//    private void removeListPositionEntryFile( int nIdTask )
+//    {
+//        _taskNotifyGruConfigDAO.deleteListPositionEntryFile( nIdTask );
+//    }
 }

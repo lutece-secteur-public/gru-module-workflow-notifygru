@@ -57,7 +57,7 @@ public class TaskNotifyGru extends SimpleTask
     {
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
-
+/*
         if ( ( config != null ) && ( resourceHistory != null ) &&
                 Record.WORKFLOW_RESOURCE_TYPE.equals( resourceHistory.getResourceType(  ) ) )
         {
@@ -121,8 +121,8 @@ public class TaskNotifyGru extends SimpleTask
                     _notifyDirectoryService.sendMessage( config, strEmail, strSms, strSenderEmail, strSubject,
                         strEmailContent, strSmsContent, listFileAttachment );
                 }
-            }
-        }
+            }  
+        }  */
     }
 
     /**
@@ -144,11 +144,10 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config != null )
         {
-            if(config.getSubjectOngle1(  )==null) return "Texte getSubject";
-            else
-            return config.getSubjectOngle1();
+           
+            return "TACHE GRU CONFIGURER";
         }
 
-        return StringUtils.EMPTY;
+       return "TACHE GRU NON CONFIGURER";
     }
 }

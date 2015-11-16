@@ -204,83 +204,83 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             bCreate = true;
         }
 
-        config.setIdDirectoryOngle1(DirectoryUtils.convertStringToInt( strIdDirectory_ongle1 ) );
-        config.setIdDirectoryOngle1(DirectoryUtils.convertStringToInt( strIdDirectory_ongle3 ) );
-        config.setPositionEntryDirectorySms( nPositionEntryDirectorySms );
-        config.setPositionEntryDirectoryEmail( nPositionEntryDirectoryEmail );
-        config.setPositionEntryDirectoryUserGuidOngle1(nPositionEntryDirectoryUserGuid_ongle1 );
-        config.setPositionEntryDirectoryUserGuidOngle1(nPositionEntryDirectoryUserGuid_ongle3 );
-        config.setMessageOngle1(strMessage_ongle1 );
-        config.setMessageOngle1(strMessage_ongle3 );
-        config.setSenderNameOngle1(strSenderName_ongle1 );
-        config.setSenderNameOngle1(strSenderName_ongle3 );
-        config.setSubjectOngle1(strSubject_ongle1 );
-        config.setSubjectOngle1(strSubject_ongle3 );
-        config.setEmailValidation( strEmailValidation != null );
-        config.setIdStateAfterValidation( nIdState );
-        config.setLabelLink( strLabelLink );
-        config.setMessageValidation( strMessageValidation );
-        config.setPeriodValidity( nPeriodValidity );
-        config.setRecipientsCc( StringUtils.isNotEmpty( strRecipientsCc ) ? strRecipientsCc : StringUtils.EMPTY );
-        config.setRecipientsBcc( StringUtils.isNotEmpty( strRecipientsBcc ) ? strRecipientsBcc : StringUtils.EMPTY );
-        config.setIdMailingList( nIdMailingList );
-        config.setViewRecord( strViewRecord != null );
-        config.setLabelLinkViewRecord( strLabelLinkViewRecord );
-        config.setStatusText("status texte");
-        config.setSendNotification(true);
-        config.setPositionEntryDirectoryCrmWebAppCode(-1);
+//        config.setIdDirectoryOngle1(DirectoryUtils.convertStringToInt( strIdDirectory_ongle1 ) );
+//        config.setIdDirectoryOngle1(DirectoryUtils.convertStringToInt( strIdDirectory_ongle3 ) );
+//        config.setPositionEntryDirectorySms( nPositionEntryDirectorySms );
+//        config.setPositionEntryDirectoryEmail( nPositionEntryDirectoryEmail );
+//        config.setPositionEntryDirectoryUserGuidOngle1(nPositionEntryDirectoryUserGuid_ongle1 );
+//        config.setPositionEntryDirectoryUserGuidOngle1(nPositionEntryDirectoryUserGuid_ongle3 );
+//        config.setMessageOngle1(strMessage_ongle1 );
+//        config.setMessageOngle1(strMessage_ongle3 );
+//        config.setSenderNameOngle1(strSenderName_ongle1 );
+//        config.setSenderNameOngle1(strSenderName_ongle3 );
+//        config.setSubjectOngle1(strSubject_ongle1 );
+//        config.setSubjectOngle1(strSubject_ongle3 );
+//        config.setEmailValidation( strEmailValidation != null );
+//        config.setIdStateAfterValidation( nIdState );
+//        config.setLabelLink( strLabelLink );
+//        config.setMessageValidation( strMessageValidation );
+//        config.setPeriodValidity( nPeriodValidity );
+//        config.setRecipientsCc( StringUtils.isNotEmpty( strRecipientsCc ) ? strRecipientsCc : StringUtils.EMPTY );
+//        config.setRecipientsBcc( StringUtils.isNotEmpty( strRecipientsBcc ) ? strRecipientsBcc : StringUtils.EMPTY );
+//        config.setIdMailingList( nIdMailingList );
+//        config.setViewRecord( strViewRecord != null );
+//        config.setLabelLinkViewRecord( strLabelLinkViewRecord );
+//        config.setStatusText("status texte");
+//        config.setSendNotification(true);
+//        config.setPositionEntryDirectoryCrmWebAppCode(-1);
+//
+//        config.setNotifyByUserGuid( bIsNotifyByUserGuid );
 
-        config.setNotifyByUserGuid( bIsNotifyByUserGuid );
+//        if ( nNotify == NotificationTypeEnum.EMAIL.getId(  ) )
+//        {
+//            config.setNotifyByEmail( true );
+//            config.setNotifyBySms( false );
+//            config.setNotifyByMailingList( false );
+//        }
+//        else if ( nNotify == NotificationTypeEnum.SMS.getId(  ) )
+//        {
+//            config.setNotifyByEmail( false );
+//            config.setNotifyBySms( true );
+//            config.setNotifyByMailingList( false );
+//        }
+//        else if ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) )
+//        {
+//            config.setNotifyByEmail( true );
+//            config.setNotifyBySms( true );
+//            config.setNotifyByMailingList( false );
+//        }
+//        else if ( nNotify == NotificationTypeEnum.MAILING_LIST.getId(  ) )
+//        {
+//            config.setNotifyByEmail( false );
+//            config.setNotifyBySms( false );
+//            config.setNotifyByMailingList( true );
+//        }
 
-        if ( nNotify == NotificationTypeEnum.EMAIL.getId(  ) )
-        {
-            config.setNotifyByEmail( true );
-            config.setNotifyBySms( false );
-            config.setNotifyByMailingList( false );
-        }
-        else if ( nNotify == NotificationTypeEnum.SMS.getId(  ) )
-        {
-            config.setNotifyByEmail( false );
-            config.setNotifyBySms( true );
-            config.setNotifyByMailingList( false );
-        }
-        else if ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) )
-        {
-            config.setNotifyByEmail( true );
-            config.setNotifyBySms( true );
-            config.setNotifyByMailingList( false );
-        }
-        else if ( nNotify == NotificationTypeEnum.MAILING_LIST.getId(  ) )
-        {
-            config.setNotifyByEmail( false );
-            config.setNotifyBySms( false );
-            config.setNotifyByMailingList( true );
-        }
-
-        if ( ( tabSelectedPositionEntryFile != null ) && ( tabSelectedPositionEntryFile.length > 0 ) )
-        {
-            List<Integer> listSelectedPositionEntryFile = new ArrayList<Integer>(  );
-
-            for ( int i = 0; i < tabSelectedPositionEntryFile.length; i++ )
-            {
-                listSelectedPositionEntryFile.add( WorkflowUtils.convertStringToInt( tabSelectedPositionEntryFile[i] ) );
-            }
-
-            config.setListPositionEntryFile( listSelectedPositionEntryFile );
-        }
-        else
-        {
-            config.setListPositionEntryFile( null );
-        }
-
-        if ( bCreate )
-        {
-            _taskNotifyGruConfigService.create( config );
-        }
-        else
-        {
-            _taskNotifyGruConfigService.update( config );
-        }
+//        if ( ( tabSelectedPositionEntryFile != null ) && ( tabSelectedPositionEntryFile.length > 0 ) )
+//        {
+//            List<Integer> listSelectedPositionEntryFile = new ArrayList<Integer>(  );
+//
+//            for ( int i = 0; i < tabSelectedPositionEntryFile.length; i++ )
+//            {
+//                listSelectedPositionEntryFile.add( WorkflowUtils.convertStringToInt( tabSelectedPositionEntryFile[i] ) );
+//            }
+//
+//            config.setListPositionEntryFile( listSelectedPositionEntryFile );
+//        }
+//        else
+//        {
+//            config.setListPositionEntryFile( null );
+//        }
+//
+//        if ( bCreate )
+//        {
+//            _taskNotifyGruConfigService.create( config );
+//        }
+//        else
+//        {
+//            _taskNotifyGruConfigService.update( config );
+//        }
 
         return null;
     }
@@ -315,11 +315,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         model.put( NotifyGruConstants.MARK_LIST_ENTRIES_FILE,
             _notifyDirectoryService.getListEntriesFile( task.getId(  ), locale ) );
 
-        if ( config != null )
-        {
-            model.put( NotifyGruConstants.MARK_LIST_POSITION_ENTRY_FILE_CHECKED,
-                config.getListPositionEntryFile(  ) );
-        }
+//        if ( config != null )
+//        {
+//            model.put( NotifyGruConstants.MARK_LIST_POSITION_ENTRY_FILE_CHECKED,
+//                config.getListPositionEntryFile(  ) );
+//        }
 
         model.put( NotifyGruConstants.MARK_MAILING_LIST, _notifyDirectoryService.getMailingList( request ) );
         model.put( NotifyGruConstants.MARK_PLUGIN_WORKFLOW, pluginWorkflow );
