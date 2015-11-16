@@ -1,9 +1,9 @@
 
 
     <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_directory">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_directory} *</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_resource_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_directory} *</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-            <@comboWithParams name="id_directory" default_value=id_directory?string additionalParameters="class=\"input-xxlarge\"" items=list_directory />
+            <@comboWithParams name="id_resource_email" default_value=id_resource_email?string additionalParameters="class=\"input-xxlarge\"" items=list_id_resource_email />
 			<button class="btn btn-primary btn-sm btn-flat" type="submit" value="apply" name="apply" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_apply}">
 				<!-- Value in button to fix bad behaviour on button click -->
 				<i class="glyphicon glyphicon-ok"></i>
@@ -14,19 +14,19 @@
         
        
 
-        <#if list_entries_email_sms?exists>
-        <div id="entry_email">
+        <#if list_id_resource_sms?exists>
+        <div id="id_resource_sms">
             <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="position_entry_gru_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email} * </label>
+                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_resource_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="position_entry_gru_email" items=list_entries_email_sms default_value=position_entry_gru_email />
+                    <@combo name="id_resource_sms" items=list_id_resource_sms default_value=id_resource_sms />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email_comment}</span>
                 </div>
             </div>
         </div>
         </#if>
         
-         <#if list_entries_user_guid?exists && is_user_attribute_ws_active>
+         <#if list_record_user_guid_email?exists && is_user_attribute_ws_active>
         <div id="notify_by_user_guid">
             <div class="form-group">
                 <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""></label>
@@ -43,9 +43,9 @@
         </div>
         <div id="entry_user_guid">
             <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="position_entry_gru_user_guid">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid} :</label>
+                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="record_user_guid_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid} :</label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="position_entry_gru_user_guid" items=list_entries_user_guid default_value=position_entry_gru_user_guid />
+                    <@combo name="record_user_guid_email" items=list_record_user_guid_email default_value=record_user_guid_email />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid_comment}</span>
                 </div>
             </div>
@@ -53,46 +53,46 @@
         </#if>
         
         	<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.senderNameOngle1?has_content>
-                    <input type="text" name="sender_name" id="" class="form-control input-sm" value="${config.senderNameOngle1}" maxlength="255">
+                <#if config?exists && config.sender_name_email?has_content>
+                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.sender_name_email}" maxlength="255">
                 <#else>
-                    <input type="text" name="sender_name" id="" class="form-control input-sm" value="${default_sender_name}" maxlength="255">
+                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${default_sender_name}" maxlength="255">
 				</#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment}</span>
             </div>
         </div>
 		<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cc">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc}</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc}</label>
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.recipientsCc?has_content>
-                    <input type="text" name="recipients_cc" id="" class="form-control input-sm" value="${config.recipientsCc}"  maxlength="255">
+                <#if config?exists && config.recipient_cc_email?has_content>
+                    <input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="${config.recipient_cc_email}"  maxlength="255">
                 <#else>
-					<input type="text" name="recipients_cc" id="" class="form-control input-sm" value="" maxlength="255">
+					<input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment}</span>
              </div>
         </div>
         
          <div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_bcc">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc}</label>
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc}</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-				<#if config?exists && config.recipientsBcc?has_content>
-                    <input type="text" name="recipients_bcc" id="" class="form-control input-sm" value="${config.recipientsBcc}"  maxlength="255">
+				<#if config?exists && config.recipient_cci_email?has_content>
+                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="${config.recipient_cci_email}"  maxlength="255">
                 <#else>
-                    <input type="text" name="recipients_bcc" id="" class="form-control input-sm" value="" maxlength="255">
+                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment}</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="suject">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <#if config?exists && config.subjectOngle1?has_content>
-					<input type="text" name="subject" id="" class="form-control input-sm" value="${config.subjectOngle1}" maxlength="255">
+					<input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subject_email}" maxlength="255">
                 <#else>
-                    <input type="text" name="subject" id="" class="form-control input-sm" value="" maxlength="255">
+                    <input type="text" name="subject_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment}</span>
             </div>
@@ -100,12 +100,12 @@
         
         
 		<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <#if config?exists  && config.messageOngle1?has_content>
-                    <textarea name="message" id="message" rows="20" cols="90" class="richtext">${config.messageOngle1}</textarea>
+                    <textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext">${config.message_email}</textarea>
                 <#else>
-					<textarea name="message" id="message" rows="20" cols="90" class="richtext"></textarea>
+					<textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
             </div>
