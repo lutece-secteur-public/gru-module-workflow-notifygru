@@ -140,14 +140,15 @@ public class TaskNotifyGru extends SimpleTask
     @Override
     public String getTitle( Locale locale )
     {
+        
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
 
         if ( config != null )
         {
            
-            return "TACHE GRU CONFIGURER";
+            return new String("TACHE GRU CONFIGURER");
         }
 
-       return "TACHE GRU NON CONFIGURER";
+        return new String("TACHE GRU CONFIGURER");
     }
 }

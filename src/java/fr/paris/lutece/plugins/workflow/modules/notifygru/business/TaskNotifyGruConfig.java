@@ -2,8 +2,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
-
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -17,12 +15,12 @@ public class TaskNotifyGruConfig extends TaskConfig {
     /**
      * user dashboard : guichet
      */
-
     @NotNull
     @Min(1)
-    private int _nIdRessourceGuichet;
+    private int _nIdRessource;
+    private int _nIdUserGuid;
+
     private int _nIdDemandGuichet;
-    private int _nIdUserGuidGuichet;
     private int _nCrmWebAppCodeGuichet;
     private boolean _bSendNotificationGuichet;
     @NotNull
@@ -37,11 +35,20 @@ public class TaskNotifyGruConfig extends TaskConfig {
      */
 
     /**
+     * user agent : agent
+     */
+    /**
+     * fin user agent : agent
+     */
+    private String _strStatusTextAgent;
+    private String _strMessageAgent;
+    private String _strLevelNotificationAgent;
+    private boolean _bActiveOngletAgent;
+    /**
      * user email : vue send email
      */
-    private int _nIdRessourceEmail;
+
     private String _strRessourceRecordEmail;
-    private int _nRessourceRecordUserGuidEmail;
     private String _strSubjectEmail;
     private String _strEntryEmail;
     private String _strMessageEmail;
@@ -59,26 +66,54 @@ public class TaskNotifyGruConfig extends TaskConfig {
     /**
      * user sms : vue sms
      */
-    private int _nIdRessourceSMS;
     private String _nRessourceRecordSMS;
-    private int _nRessourceRecordUserGuidSMS;
-    private String _strSubjectSMS;
-    private String _strEntrySMS;
+    private String _strPhoneSMS;
     private String _strMessageSMS;
-    private String _strSenderNameSMS;
-    private String _strRecipientsSMS;
-    private String _strRecipientsCcSMS;
-    private String _strRecipientsCciSMS;
     private boolean _bIsNotifyBySMS;
     private String _strLevelNotificationSMS;
     private boolean _bActiveOngletSMS;
 
-    public int getIdRessourceGuichet() {
-        return _nIdRessourceGuichet;
+    public String getStatusTextAgent() {
+        return _strStatusTextAgent;
     }
 
-    public void setIdRessourceGuichet(int _nIdRessourceGuichet) {
-        this._nIdRessourceGuichet = _nIdRessourceGuichet;
+    public void setStatusTextAgent(String _strStatusTextAgent) {
+        this._strStatusTextAgent = _strStatusTextAgent;
+    }
+
+    public String getMessageAgent() {
+        return _strMessageAgent;
+    }
+
+    public void setMessageAgent(String _strMessageAgent) {
+        this._strMessageAgent = _strMessageAgent;
+    }
+
+    public String getLevelNotificationAgent() {
+        return _strLevelNotificationAgent;
+    }
+
+    public void setLevelNotificationAgent(String _strLevelNotificationAgent) {
+        this._strLevelNotificationAgent = _strLevelNotificationAgent;
+    }
+
+    public boolean isActiveOngletAgent() {
+        return _bActiveOngletAgent;
+    }
+
+    public void setActiveOngletAgent(boolean _bActiveOngletAgent) {
+        this._bActiveOngletAgent = _bActiveOngletAgent;
+    }
+
+    
+    
+    
+    public int getIdRessource() {
+        return _nIdRessource;
+    }
+
+    public void setIdRessource(int _nIdRessource) {
+        this._nIdRessource = _nIdRessource;
     }
 
     public int getIdDemandGuichet() {
@@ -89,12 +124,12 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._nIdDemandGuichet = _nIdDemandGuichet;
     }
 
-    public int getIdUserGuidGuichet() {
-        return _nIdUserGuidGuichet;
+    public int getIdUserGuid() {
+        return _nIdUserGuid;
     }
 
-    public void setIdUserGuidGuichet(int _nIdUserGuidGuichet) {
-        this._nIdUserGuidGuichet = _nIdUserGuidGuichet;
+    public void setIdUserGuid(int _nIdUserGuid) {
+        this._nIdUserGuid = _nIdUserGuid;
     }
 
     public int getCrmWebAppCodeGuichet() {
@@ -161,28 +196,12 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._bActiveOngletGuichet = _bActiveOngletGuichet;
     }
 
-    public int getIdRessourceEmail() {
-        return _nIdRessourceEmail;
-    }
-
-    public void setIdRessourceEmail(int _nIdRessourceEmail) {
-        this._nIdRessourceEmail = _nIdRessourceEmail;
-    }
-
     public String getRessourceRecordEmail() {
         return _strRessourceRecordEmail;
     }
 
     public void setRessourceRecordEmail(String _strRessourceRecordEmail) {
         this._strRessourceRecordEmail = _strRessourceRecordEmail;
-    }
-
-    public int getRessourceRecordUserGuidEmail() {
-        return _nRessourceRecordUserGuidEmail;
-    }
-
-    public void setRessourceRecordUserGuidEmail(int _nRessourceRecordUserGuidEmail) {
-        this._nRessourceRecordUserGuidEmail = _nRessourceRecordUserGuidEmail;
     }
 
     public String getSubjectEmail() {
@@ -265,14 +284,6 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._bActiveOngletEmail = _bActiveOngletEmail;
     }
 
-    public int getIdRessourceSMS() {
-        return _nIdRessourceSMS;
-    }
-
-    public void setIdRessourceSMS(int _nIdRessourceSMS) {
-        this._nIdRessourceSMS = _nIdRessourceSMS;
-    }
-
     public String getRessourceRecordSMS() {
         return _nRessourceRecordSMS;
     }
@@ -281,28 +292,12 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._nRessourceRecordSMS = _nRessourceRecordSMS;
     }
 
-    public int getRessourceRecordUserGuidSMS() {
-        return _nRessourceRecordUserGuidSMS;
+    public String getPhoneSMS() {
+        return _strPhoneSMS;
     }
 
-    public void setRessourceRecordUserGuidSMS(int _nRessourceRecordUserGuidSMS) {
-        this._nRessourceRecordUserGuidSMS = _nRessourceRecordUserGuidSMS;
-    }
-
-    public String getSubjectSMS() {
-        return _strSubjectSMS;
-    }
-
-    public void setSubjectSMS(String _strSubjectSMS) {
-        this._strSubjectSMS = _strSubjectSMS;
-    }
-
-    public String getEntrySMS() {
-        return _strEntrySMS;
-    }
-
-    public void setEntrySMS(String _strEntrySMS) {
-        this._strEntrySMS = _strEntrySMS;
+    public void setPhoneSMS(String _strEntrySMS) {
+        this._strPhoneSMS = _strEntrySMS;
     }
 
     public String getMessageSMS() {
@@ -311,38 +306,6 @@ public class TaskNotifyGruConfig extends TaskConfig {
 
     public void setMessageSMS(String _strMessageSMS) {
         this._strMessageSMS = _strMessageSMS;
-    }
-
-    public String getSenderNameSMS() {
-        return _strSenderNameSMS;
-    }
-
-    public void setSenderNameSMS(String _strSenderNameSMS) {
-        this._strSenderNameSMS = _strSenderNameSMS;
-    }
-
-    public String getRecipientsSMS() {
-        return _strRecipientsSMS;
-    }
-
-    public void setRecipientsSMS(String _strRecipientsSMS) {
-        this._strRecipientsSMS = _strRecipientsSMS;
-    }
-
-    public String getRecipientsCcSMS() {
-        return _strRecipientsCcSMS;
-    }
-
-    public void setRecipientsCcSMS(String _strRecipientsCcSMS) {
-        this._strRecipientsCcSMS = _strRecipientsCcSMS;
-    }
-
-    public String getRecipientsCciSMS() {
-        return _strRecipientsCciSMS;
-    }
-
-    public void setRecipientsCciSMS(String _strRecipientsCciSMS) {
-        this._strRecipientsCciSMS = _strRecipientsCciSMS;
     }
 
     public boolean isIsNotifyBySMS() {
@@ -368,7 +331,5 @@ public class TaskNotifyGruConfig extends TaskConfig {
     public void setActiveOngletSMS(boolean _bActiveOngletSMS) {
         this._bActiveOngletSMS = _bActiveOngletSMS;
     }
-
- 
 
 }

@@ -32,16 +32,16 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     {
         super.create( config );
 
-     /*   TaskNotifyGruConfig notifyConfig = getConfigBean( config );
+        TaskNotifyGruConfig notifyConfig = getConfigBean( config );
 
-        if ( ( notifyConfig != null ) && ( notifyConfig.getListPositionEntryFile(  ) != null ) )
-        {
-            for ( int nPositionEntryFile : notifyConfig.getListPositionEntryFile(  ) )
-            {
-                this.createPositionEntryFile( config.getIdTask(  ), nPositionEntryFile );
-            }
-        }
-        */
+//        if ( ( notifyConfig != null ) && ( notifyConfig.getListPositionEntryFile(  ) != null ) )
+//        {
+//            for ( int nPositionEntryFile : notifyConfig.getListPositionEntryFile(  ) )
+//            {
+//                this.createPositionEntryFile( config.getIdTask(  ), nPositionEntryFile );
+//            }
+//        }
+        
     }
 
     /**
@@ -75,22 +75,22 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     /**
      * {@inheritDoc}
      */
-//    @Override
-//    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
-//    public void remove( int nIdTask )
-//    {
-//        super.remove( nIdTask );
-//        this.removeListPositionEntryFile( nIdTask );
-//    }
+    @Override
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    public void remove( int nIdTask )
+    {
+        super.remove( nIdTask );
+      //  this.removeListPositionEntryFile( nIdTask );
+    }
 
     /**
      * {@inheritDoc}
      */
-  //  @Override
-//    public <T> T findByPrimaryKey( int nIdTask )
-//    {
-//        TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
-//
+    @Override
+    public <T> T findByPrimaryKey( int nIdTask )
+    {
+        TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
+
 //        if ( config != null )
 //        {
 //            List<Integer> listPositionEntryFile = findPositionEntryFile( nIdTask );
@@ -100,20 +100,20 @@ public class TaskNotifyGruConfigService extends TaskConfigService
 //                config.setListPositionEntryFile( listPositionEntryFile );
 //            }
 //        }
-//
-//        return (T) config;
-//    }
+
+        return (T) config;
+    }
 
     /**
      * Find the positions entry file from a given id task
      * @param nIdTask the id task
      * @return a list of position
      */
-//    private List<Integer> findPositionEntryFile( int nIdTask )
-//    {
-//        return null;
-//       
-//    }
+    private List<Integer> findPositionEntryFile( int nIdTask )
+    {
+        return null;
+       
+    }
 
     /**
      * Create the link task - entry file
