@@ -83,8 +83,8 @@ public final class NotifyGruConstants
     public static final String MARK_MESSAGE_EMAIL = "message_email";
     public static final String MARK_SENDER_NAME_EMAIL = "sender_name_email";
     public static final String MARK_RECIPIENT_EMAIL = "recipient_email";
-    public static final String MARK_RECIPIENT_CC_EMAIL = "recipient_cc_name_email";
-    public static final String MARK_RECIPIENT_CCI_EMAIL = "recipient_cci_name_email";
+    public static final String MARK_RECIPIENT_CC_EMAIL = "recipient_cc_email";
+    public static final String MARK_RECIPIENT_CCI_EMAIL = "recipient_cci_email";
     public static final String MARK_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String MARK_IS_ACTIVE_ONGLET_EMAIL = "is_active_onglet_email";
     // MARKS SMS
@@ -100,8 +100,8 @@ public final class NotifyGruConstants
     public static final String MARK_MESSAGE_SMS = "message_sms";
     public static final String MARK_SENDER_NAME_SMS = "sender_name_sms";
     public static final String MARK_RECIPIENT_SMS = "recipient_sms";
-    public static final String MARK_RECIPIENT_CC_SMS = "recipient_cc_name_sms";
-    public static final String MARK_RECIPIENT_CCI_SMS = "recipient_cci_name_sms";
+    public static final String MARK_RECIPIENT_CC_SMS = "recipient_cc_sms";
+    public static final String MARK_RECIPIENT_CCI_SMS = "recipient_cci_sms";
     public static final String MARK_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String MARK_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
     
@@ -127,8 +127,8 @@ public final class NotifyGruConstants
     public static final String PARAMETER_MESSAGE_EMAIL = "message_email";
     public static final String PARAMETER_SENDER_NAME_EMAIL = "sender_name_email";
     public static final String PARAMETER_RECIPIENT_EMAIL = "recipient_email";
-    public static final String PARAMETER_RECIPIENT_CC_EMAIL = "recipient_cc_name_email";
-    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipient_cci_name_email";
+    public static final String PARAMETER_RECIPIENT_CC_EMAIL = "recipient_cc_email";
+    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipient_cci_email";
     public static final String PARAMETER_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String PARAMETER_IS_ACTIVE_ONGLET_EMAIL = "is_active_onglet_email";
     // PARAMETERS SMS
@@ -141,8 +141,8 @@ public final class NotifyGruConstants
     public static final String PARAMETER_MESSAGE_SMS = "message_sms";
     public static final String PARAMETER_SENDER_NAME_SMS = "sender_name_sms";
     public static final String PARAMETER_RECIPIENT_SMS = "recipient_sms";
-    public static final String PARAMETER_RECIPIENT_CC_SMS = "recipient_cc_name_sms";
-    public static final String PARAMETER_RECIPIENT_CCI_SMS = "recipient_cci_name_sms";
+    public static final String PARAMETER_RECIPIENT_CC_SMS = "recipient_cc_sms";
+    public static final String PARAMETER_RECIPIENT_CCI_SMS = "recipient_cci_sms";
     public static final String PARAMETER_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String PARAMETER_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
     

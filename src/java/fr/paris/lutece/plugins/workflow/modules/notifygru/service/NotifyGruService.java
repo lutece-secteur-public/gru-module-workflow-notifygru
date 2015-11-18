@@ -559,7 +559,7 @@ public final class NotifyGruService implements INotifyGruService
         ITask task = _taskService.findByPrimaryKey( config.getIdTask(  ), locale );
         Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        model.put( NotifyGruConstants.MARK_MESSAGE, config.getMessageOngle1());
+        model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageOngle1());
         model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
         model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
 
@@ -625,7 +625,7 @@ public final class NotifyGruService implements INotifyGruService
             State state = WorkflowService.getInstance(  )
                                          .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
                     directory.getIdWorkflow(  ), null );
-            model.put( NotifyGruConstants.MARK_STATUS, state.getName(  ) );
+            model.put( NotifyGruConstants.MARK_STATUS_TEXT_GUICHET, state.getName(  ) );
         }
 
         // Link View record

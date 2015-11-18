@@ -4,7 +4,9 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationTypeEnum;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IUserDashboardService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.UserDashboardService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
 import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
@@ -32,7 +34,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -54,6 +55,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private INotifyGruService _notifyDirectoryService;
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
+    
+    private IUserDashboardService _userDashService = new UserDashboardService();
 
     /**
      * {@inheritDoc}
@@ -297,6 +300,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         Plugin pluginWorkflow = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
+        
+        model.put( "list_resource", _userDashService.getUserDashboards() );
 
         model.put( NotifyGruConstants.MARK_CONFIG, config );
         model.put( NotifyGruConstants.MARK_DEFAULT_SENDER_NAME, strDefaultSenderName );

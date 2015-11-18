@@ -50,8 +50,8 @@ public class TaskNotifyGruConfigRefactoring extends TaskConfig {
     private String _strRecipientsCcEmail;
     private String _strRecipientsCciEmail;
     private boolean _bIsNotifyByEmail;
-     private String _strLevelNotificationEmail;
-        private boolean _bActiveOngletEmail;
+    private String _strLevelNotificationEmail;
+    private boolean _bActiveOngletEmail;
 
     /**
      * fin user email : vue send email
@@ -71,7 +71,7 @@ public class TaskNotifyGruConfigRefactoring extends TaskConfig {
     private String _strRecipientsCciSMS;
     private boolean _bIsNotifyBySMS;
     private String _strLevelNotificationSMS;
-       private boolean _bActiveOngletSMS;
+    private boolean _bActiveOngletSMS;
     /**
      * end user sms : vue sms
      */
