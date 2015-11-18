@@ -19,8 +19,30 @@
 <#assign pane="pane-desk">
 
 
+
+<#if list_ongle?exists>
+			<div class="control-group" id="entry_id_demand" style="float:right;">
+				<label class="control-label" for="IdDemandGuichet">choisir une config * :</label>
+				<div class="controls">
+					<@combo name="active_ongle" items=list_ongle default_value=2 />&nbsp;
+					
+<button class="btn btn-small btn-primary" type="submit" name="apply" value="ajouter">
+					<i class="icon-ok icon-white">&nbsp;</i>ajouter
+				</button>
+
+<button class="btn btn-small btn-danger" type="submit" name="apply" value="supprimer">
+					<i class="icon-ok icon-white">&nbsp;</i>supprimer
+				</button>
+				</div>
+
+			</div>
+		</#if>
+
+
+
 <fieldset>
-    <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
+    <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}  </legend>
+
 
 
 
@@ -40,6 +62,8 @@
         <li <#if pane="pane-mailing-list">class="active"</#if> >
             <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
         </li>
+
+
     </ul>
 
 
