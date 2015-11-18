@@ -22,28 +22,30 @@
 
 <#if list_ongle?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
-				<label class="control-label" for="IdDemandGuichet">choisir une config * :</label>
+				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose} * :</label>
 				<div class="controls">
 					<@combo name="active_ongle" items=list_ongle default_value=2 />&nbsp;
 					
+<<<<<<< HEAD
 <button class="btn btn-small btn-primary" type="submit" name="add_onglet" value="AddOnglet">
 					<i class="icon-ok icon-white">&nbsp;</i>ajouter
 				</button>
 
 <button class="btn btn-small btn-danger" type="submit" name="remove_onglet" value="RemoveOnglet">
 					<i class="icon-ok icon-white">&nbsp;</i>supprimer
+=======
+<button class="btn btn-small btn-primary" type="submit" name="apply" value="ajouter">
+					<i class="icon-ok icon-white">&nbsp;</i>#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_add}
+				</button>
+
+<button class="btn btn-small btn-danger" type="submit" name="apply" value="supprimer">
+					<i class="icon-ok icon-white">&nbsp;</i>#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}
+>>>>>>> ee4243dd1275024e44f027fb19a6ff498c496b18
 				</button>
 				</div>
 
 			</div>
 		</#if>
-
-
-
-<fieldset>
-    <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}  </legend>
-
-
 
 
     <ul id="tabs" class="nav nav-tabs">
@@ -69,7 +71,7 @@
 
     <div class="tab-content">		
         <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
-           <#include "config_crm.html" />
+           <#include "config_guichet.html" />
         </div>
         <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
              <#include "config_agent.html" />
@@ -85,9 +87,4 @@
              <#include "config_liste_broadcast.html" />
         </div>
     </div>
-    
-    
-</fieldset>
-
-
 <@initEditor />

@@ -1,21 +1,17 @@
 
 <div>
 	<fieldset>
-		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}</legend>
+		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</legend>
 		<br />
-		
-                
-                
-
 <div class="control-group">
 			<label class="control-label" for="statusTextAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text} * :</label>
 			<div class="controls">
                               <#if config?exists && config.statusTextAgent?has_content>
                            
-                            <input type="text" name="statusTextAgent" value="${config.statusTextAgent}" size="80" maxlength="255" />
+                            <input type="text" name="status_text_agent" value="${config.statusTextAgent}" size="80" maxlength="255" />
 		
                             <#else>
-                             <input type="text" name="statusTextAgent" value="" size="80" maxlength="255" />
+                             <input type="text" name="status_text_agent" value="" size="80" maxlength="255" />
 		
                               </#if>
 					</div>
@@ -32,10 +28,7 @@
                                </#if>
 					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
 			</div>
-		</div>
-
-                
-                
+		</div>   
 	</fieldset>
 </div>
  
