@@ -155,7 +155,10 @@ public final class NotifyGruConstants
     public static final String MARK_LINK = "link";
     public static final String MARK_DEFAULT_SENDER_NAME = "default_sender_name";
     public static final String MARK_LIST_ENTRIES_EMAIL_SMS = "list_entries_email_sms";
-    public static final String MARK_GRU_LIST = "list_directory";
+    public static final String MARK_LIST_ONGLE= "list_ongle";
+    public static final String MARK_GRU_LIST = "list_ressources";
+    public static final String MARK_GRU_LIST_RESSSOURCE_DEMANDES = "list_entries_id_demand";
+    public static final String MARK_GRU_LIST_CRM_WEBAPP = "list_entries_crm_web_app_code";
     public static final String MARK_CONFIG = "config";
     public static final String MARK_STATE_LIST = "list_state";
     public static final String MARK_LIST_ENTRIES_FREEMARKER = "list_entries_freemarker";

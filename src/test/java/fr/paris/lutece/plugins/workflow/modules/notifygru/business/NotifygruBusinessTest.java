@@ -14,8 +14,7 @@ public class NotifygruBusinessTest extends LuteceTestCase
     public void testBusiness(  )
     {
         // Initialize an object
-        TaskNotifyGruConfig notifygru = new TaskNotifyGruConfig();
-        notifygru.setLabelLink(TITLE1 );
+        TaskNotifyGruConfig notifygru = new TaskNotifyGruConfig();       
         notifygru.setIdTask( IDTASK1 );
 
       

@@ -1,109 +1,87 @@
 
-
     <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_resource_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_directory} *</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="idRessource">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_list_ressource} *</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-            <@comboWithParams name="id_resource_email" default_value=id_resource_email?string additionalParameters="class=\"input-xxlarge\"" items=list_id_resource_email />
+            <@comboWithParams name="idRessource" default_value=1?string additionalParameters="class=\"input-xxlarge\"" items=list_ressources />
 			<button class="btn btn-primary btn-sm btn-flat" type="submit" value="apply" name="apply" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_apply}">
 				<!-- Value in button to fix bad behaviour on button click -->
 				<i class="glyphicon glyphicon-ok"></i>
 			</button>
 			</div>
         </div>
-     
-        
-       
 
-        <#if list_id_resource_sms?exists>
+
+ <#if list_entries_id_demand?exists>
         <div id="id_resource_sms">
             <div class="form-group">
                 <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_resource_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="id_resource_sms" items=list_id_resource_sms default_value=id_resource_sms />
+                    <@combo name="entry_email" items=list_entries_id_demand default_value=1 />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email_comment}</span>
                 </div>
             </div>
         </div>
         </#if>
-        
-         <#if list_record_user_guid_email?exists && is_user_attribute_ws_active>
-        <div id="notify_by_user_guid">
-            <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""></label>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-					<label class="checkbox" for="is_notify_by_user_guid">
-						<input type="checkbox" name="is_notify_by_user_guid" value="1" id="is_notify_by_user_guid" <#if config?exists && config.notifyByEmail && config.notifyByUserGuid>checked="checked"</#if>>
-						#i18n{module.workflow.notifygru.task_notify_gru_config.label_notify_by_user_guid}
-					</label>
-                    <span class="help-block">
-						#i18n{module.workflow.notifygru.task_notify_gru_config.label_notify_by_user_guid_comment}
-					</span>
-                </div>
-            </div>
-        </div>
-        <div id="entry_user_guid">
-            <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="record_user_guid_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid} :</label>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="record_user_guid_email" items=list_record_user_guid_email default_value=record_user_guid_email />
-                    <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid_comment}</span>
-                </div>
-            </div>
-        </div>
-        </#if>
-        
-        	<div class="form-group">
+
+
+<div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.sender_name_email?has_content>
-                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.sender_name_email}" maxlength="255">
+                <#if config?exists && config.senderNameEmail?has_content>
+                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.senderNameEmail}" maxlength="70">
                 <#else>
-                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${default_sender_name}" maxlength="255">
+                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="" maxlength="70">
 				</#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment}</span>
             </div>
         </div>
+
+
+
 		<div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc}</label>
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.recipient_cc_email?has_content>
-                    <input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="${config.recipient_cc_email}"  maxlength="255">
+                <#if config?exists && config.recipientCcEmail?has_content>
+                    <input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="${config.recipientCcEmail}"  maxlength="255">
                 <#else>
 					<input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment}</span>
              </div>
         </div>
-        
-         <div class="form-group">
+
+
+<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc}</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-				<#if config?exists && config.recipient_cci_email?has_content>
-                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="${config.recipient_cci_email}"  maxlength="255">
+				<#if config?exists && config.recipientCciEmail?has_content>
+                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="${config.recipientCciEmail}"  maxlength="255">
                 <#else>
                     <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment}</span>
             </div>
         </div>
-        <div class="form-group">
+
+
+<div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.subjectOngle1?has_content>
-					<input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subject_email}" maxlength="255">
+                <#if config?exists && config.subjectEmail?has_content>
+					<input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subjectEmail}" maxlength="255">
                 <#else>
                     <input type="text" name="subject_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment}</span>
             </div>
         </div>
-        
-        
-		<div class="form-group">
+
+
+<div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists  && config.messageOngle1?has_content>
-                    <textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext">${config.message_email}</textarea>
+                <#if config?exists  && config.messageEmail?has_content>
+                    <textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext">${config.messageEmail}</textarea>
                 <#else>
 					<textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
@@ -111,209 +89,5 @@
             </div>
         </div>
         
-        <#if config?exists && config.idDirectoryOngle1!=-1>
-			<div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""></label>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-					<label class="checkbox" for="view_record">
-						#i18n{module.workflow.notifygru.task_notify_gru_config.label_view_record}
-						<input type="checkbox" name="view_record" id="view_record" value="1" <#if config.viewRecord>checked="checked"</#if>>
-						<span class="help-text">#i18n{module.workflow.notifygru.task_notify_gru_config.label_view_record_comment}</span>
-					</label>
-                </div>
-            </div>
-        
-        
-		
 
-            <div id="record">
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        #i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker_link_view_record}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="label_link_view_record">#i18n{module.workflow.notifygru.task_notify_gru_config.label_label_link_view_record} *</label>
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        <#if config.labelLinkViewRecord?has_content>
-                        <input type="text" name="label_link_view_record" id="" class="form-control input-sm" value="${config.labelLinkViewRecord}"  maxlength="255">
-                        <#else>
-                        <input type="text" name="label_link_view_record" id="" class="form-control input-sm" value=""  maxlength="255">
-                        </#if>		
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_label_view_record_comment}</span>
-                    </div>
-                </div>
-            </div>
-        
-        
 
-            <fieldset>
-                <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.label_gru_comment}</legend>
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_directory}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker}</th>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_status}</td>
-                        <td>&#36;&#123;status&#125;</td>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_gru_title}</td>
-                        <td>&#36;&#123;directory_title&#125;</td>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_gru_description}</td>
-                        <td>&#36;&#123;directory_description&#125;</td>
-                    </tr>
-                </table>
-            </fieldset>
-        
-        
-            <#if is_user_attribute_ws_active>
-            <fieldset class="user_attribute_freemarker">
-                <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.label_user_attribute_comment}</legend>
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_user_attribute}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker}</th>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_first_name}</td>
-                        <td>&#36;&#123;first_name&#125;</td>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_last_name}</td>
-                        <td>&#36;&#123;last_name&#125;</td>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_email}</td>
-                        <td>&#36;&#123;email&#125;</td>
-                    </tr>
-                    <tr>
-                        <td>#i18n{module.workflow.notifygru.task_notify_gru_config.label_phone_number}</td>
-                        <td>&#36;&#123;phone_number&#125;</td>
-                    </tr>
-                </table>
-            </fieldset>
-             </#if>
-             
-             
-            <#if tasks_list?exists && tasks_list?has_content>
-            <fieldset>
-                <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.label_tasks_list_comment}</legend>
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_title}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_type}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker}</th>
-                    </tr>
-                    <#list tasks_list as task>
-                    <tr>
-                        <td>${task.getTitle( locale )}</td>
-                        <td>${task.taskType.title}</td>
-                        <td>&#36;&#123;task_${task.id}&#125;</td>
-                    </tr>
-                    </#list>
-                </table>
-            </fieldset>
-            </#if>
-            <fieldset>
-                <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.label_entry_gru_comment}</legend>
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_entry}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker}</th>
-                    </tr>
-                    <#list list_entries_freemarker as entry>
-                    <tr>
-                        <td>
-                            ${entry.title}
-                        </td>
-                        <td>
-                            &#36;&#123;position_${entry.position}&#125;
-                        </td>
-                    </tr>
-                    </#list>
-                </table>
-            </fieldset>
-            <fieldset>
-                <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.label_entry_file}</legend>
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_file_checked}</th>
-                        <th>#i18n{module.workflow.notifygru.task_notify_gru_config.label_file_name}</th>
-                    </tr>
-                    <#list list_entries_file as entry>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="list_position_entry_file_checked" name="list_position_entry_file_checked" value="${entry.position}" <#if ( list_position_entry_file_checked?has_content && isSelected (entry.position,list_position_entry_file_checked))> checked="checked" </#if>>
-                        </td>
-                        <td>${entry.title}</td>
-                    </tr>
-                    </#list>
-                </table>
-            </fieldset>
-               </#if>
-               
-               	<div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="email_validation">#i18n{module.workflow.notifygru.task_notify_gru_config.label_email_validation} </label>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <input type="checkbox" name="email_validation" id="email_validation" value="1" <#if config?exists && config.emailValidation> checked="checked" </#if>>
-                    <span class="help-block">
-						#i18n{module.workflow.notifygru.task_notify_gru_config.label_email_validation_comment}
-					</span>
-                </div>
-            </div>
-
-            <div id="email">
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        #i18n{module.workflow.notifygru.task_notify_gru_config.label_freemarker_link}
-                    </div>
-                    <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="label_link">#i18n{module.workflow.notifygru.task_notify_gru_config.label_label_link} * </label>
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        <#if config?exists && config.labelLink?has_content>
-                        <input type="text" name="label_link" id="" class="form-control input-sm" value="${config.labelLink}"  maxlength="255">
-                        <#else>
-                        <input type="text" name="label_link" id="" class="form-control input-sm" value=""  maxlength="255">
-                        </#if>		
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_label_link_comment}</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_state">#i18n{module.workflow.notifygru.task_notify_gru_config.label_state} </label>
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        <@combo name="id_state"  items=list_state default_value=id_state_after_validation />
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_state_comment}</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_validation">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_validation} * </label>
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        <#if config?exists && config.messageOngle1Validation?has_content>
-                        <textarea name="message_validation" id="message_validation" rows="20" style="width:50%;">${config.messageOngle1Validation}</textarea>
-                        <#else>
-                        <textarea name="message_validation" id="message_validation" rows="20" style="width:50%;"></textarea>
-                        </#if>
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_validation_comment}</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="period_validity">#i18n{module.workflow.notifygru.task_notify_gru_config.label_period_validity} * </label>
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                        <#if config?exists && config.periodValidity!=-1>
-                        <input type="text" name="period_validity" id="" size="2" value="${config.periodValidity}"  maxlength="2"/>
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_period_validity_unit}</span>
-                        <#else>
-                        <input type="text" name="period_validity" id="" size="2" value="" maxlength="2"/>
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_period_validity_unit}</span>
-                        </#if>
-                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_period_validity_comment}</span>
-                    </div>
-                </div>
-				
-            </div>

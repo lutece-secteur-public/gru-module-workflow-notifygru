@@ -2,641 +2,334 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
 
 /**
  *
  * TaskNotifyDirectoryConfig
  *
  */
-public class TaskNotifyGruConfig extends TaskConfig
-{
-    /*for task directory*/
+public class TaskNotifyGruConfig extends TaskConfig {
+
+    /**
+     * user dashboard : guichet
+     */
     @NotNull
-    @Min( 1 )
-    private int _nIdDirectoryOngle1;
-    private int _nPositionEntryDirectoryEmail;
-    private int _nPositionEntryDirectorySms;
-    private int _nPositionEntryDirectoryUserGuidOngle1;
-    private String _strSubjectOngle1;
-    private String _strMessageOngle1;
-    private String _strSenderNameOngle1;
-    
+    @Min(1)
+    private int _nIdRessource;
+    private int _nIdUserGuid;
+
+    private int _nIdDemandGuichet;
+    private int _nCrmWebAppCodeGuichet;
+    private boolean _bSendNotificationGuichet;
+    @NotNull
+    private String _strStatusTextGuichet;
+    private String _strSubjectGuichet;
+    private String _strMessageGuichet;
+    private String _strSenderNameGuichet;
+    private String _strLevelNotificationGuichet;
+    private boolean _bActiveOngletGuichet;
+    /**
+     * fin user dashboard : guichet
+     */
+
+    /**
+     * user agent : agent
+     */
+    /**
+     * fin user agent : agent
+     */
+    private String _strStatusTextAgent;
+    private String _strMessageAgent;
+    private String _strLevelNotificationAgent;
+    private boolean _bActiveOngletAgent;
+    /**
+     * user email : vue send email
+     */
+
+    private String _strRessourceRecordEmail;
+    private String _strSubjectEmail;
+    private String _strEntryEmail;
+    private String _strMessageEmail;
+    private String _strSenderNameEmail;
+    private String _strRecipientsEmail;
+    private String _strRecipientsCcEmail;
+    private String _strRecipientsCciEmail;
     private boolean _bIsNotifyByEmail;
-    private boolean _bIsNotifyBySms;
-    private boolean _bIsNotifyByMailingList;
-    private boolean _bIsNotifyByUserGuid;   
-    private boolean _bEmailValidation;
-    private int _nIdStateAfterValidation;
-    private String _strLabelLink;
-    private String _strMessageValidation;
-    private int _nPeriodValidity;
-    private String _strRecipientsCc;
-    private String _strRecipientsBcc;
-    private int _nIdMailingList;
-    private boolean _bViewRecord;
-    private String _strLabelLinkViewRecord;
-    private List<Integer> _listPositionEntryFile;
-    
-     /*for task crm*/
-    @NotNull
-    @Min( 1 )
-    private int _nIdDirectoryOngle3;
-    @NotNull
-    @Min( 1 )
-    private int _nPositionEntryDirectoryIdDemand;
-    private int _nPositionEntryDirectoryUserGuidOngle3;
-    private int _nPositionEntryDirectoryCrmWebAppCode;
-    
-      private String _strSubjectOngle3;
-    private String _strMessageOngle3;
-    private String _strSenderNameOngle3;
-     
-    private boolean _bSendNotification;
-    @NotNull
-    private String _strStatusText;
-  
-    
-    
-     /**********************************************
-       * Getter and setter for task directory
-       ************************************/
-       /**
-    *
-    * @return id directory
-    */
-    public int getIdDirectoryOngle1(  )
-    {
-        return _nIdDirectoryOngle1;
-    }
+    private String _strLevelNotificationEmail;
+    private boolean _bActiveOngletEmail;
 
     /**
-     * Set id directory
-     * @param idDirectory id directory
+     * fin user email : vue send email
      */
-    public void setIdDirectoryOngle1( int idDirectory )
-    {
-        _nIdDirectoryOngle1 = idDirectory;
-    }
-    
-     /**
-     * Get the position of the entry directory form email
-     * @return position Entry directory Email
+    /**
+     * user sms : vue sms
      */
-    public int getPositionEntryDirectoryEmail(  )
-    {
-        return _nPositionEntryDirectoryEmail;
+    private String _nRessourceRecordSMS;
+    private String _strPhoneSMS;
+    private String _strMessageSMS;
+    private boolean _bIsNotifyBySMS;
+    private String _strLevelNotificationSMS;
+    private boolean _bActiveOngletSMS;
+
+    public String getStatusTextAgent() {
+        return _strStatusTextAgent;
     }
 
-    /**
-     * Set position Entry directory Email
-     * @param nPositionEntryDirectoryEmail position of Entry directory Email
-     */
-    public void setPositionEntryDirectoryEmail( int nPositionEntryDirectoryEmail )
-    {
-        _nPositionEntryDirectoryEmail = nPositionEntryDirectoryEmail;
+    public void setStatusTextAgent(String _strStatusTextAgent) {
+        this._strStatusTextAgent = _strStatusTextAgent;
     }
 
-    /**
-     * Get the position of the entry directory for sms
-     * @return position Entry directory Sms
-     */
-    public int getPositionEntryDirectorySms(  )
-    {
-        return _nPositionEntryDirectorySms;
+    public String getMessageAgent() {
+        return _strMessageAgent;
     }
 
-    /**
-     * Set position of Entry directory Sms
-     * @param nPositionEntryDirectorySms position of Entry directory Sms
-     */
-    public void setPositionEntryDirectorySms( int nPositionEntryDirectorySms )
-    {
-        _nPositionEntryDirectorySms = nPositionEntryDirectorySms;
+    public void setMessageAgent(String _strMessageAgent) {
+        this._strMessageAgent = _strMessageAgent;
     }
 
-    /**
-     * Get the position of the entry directory associated to the user guid
-     * @return position Entry directory user guid
-     */
-    public int getPositionEntryDirectoryUserGuidOngle1(  )
-    {
-        return _nPositionEntryDirectoryUserGuidOngle1;
+    public String getLevelNotificationAgent() {
+        return _strLevelNotificationAgent;
     }
 
-    /**
-     * Set position Entry directory user guid
-     * @param nPositionEntryDirectoryUserGuid position of Entry directory user guid
-     */
-    public void setPositionEntryDirectoryUserGuidOngle1( int nPositionEntryDirectoryUserGuid )
-    {
-        _nPositionEntryDirectoryUserGuidOngle1 = nPositionEntryDirectoryUserGuid;
-    }
-    
-     /**
-     * Get the subject
-     * @return the subject of the message
-     */
-    public String getSubjectOngle1(  )
-    {
-        return _strSubjectOngle1;
-    }
-    
-     
-     /**
-     * Get the subject
-     * @return the subject of the message
-     */
-    public String getSubjectOngle3(  )
-    {
-        return _strSubjectOngle3;
+    public void setLevelNotificationAgent(String _strLevelNotificationAgent) {
+        this._strLevelNotificationAgent = _strLevelNotificationAgent;
     }
 
-    /**
-     * Set the subject of the message
-     * @param subject the subject of the message
-     */
-    public void setSubjectOngle1( String subject )
-    {
-        _strSubjectOngle1 = subject;
+    public boolean isActiveOngletAgent() {
+        return _bActiveOngletAgent;
+    }
+
+    public void setActiveOngletAgent(boolean _bActiveOngletAgent) {
+        this._bActiveOngletAgent = _bActiveOngletAgent;
     }
 
     
-    /**
-     * Set the subject of the message
-     * @param subject the subject of the message
-     */
-    public void setSubjectOngle3( String subject )
-    {
-        _strSubjectOngle3 = subject;
-    }
     
-    /**
-     * Get the message
-     * @return the message of the notification
-     */
-    public String getMessageOngle1(  )
-    {
-        return _strMessageOngle1;
-    }
     
-     /**
-     * Get the message
-     * @return the message of the notification
-     */
-    public String getMessageOngle3(  )
-    {
-        return _strMessageOngle3;
+    public int getIdRessource() {
+        return _nIdRessource;
     }
 
-    /**
-     * Set the message of the notification
-     * @param message the message of the notifictaion
-     */
-    public void setMessageOngle1( String message )
-    {
-        _strMessageOngle1 = message;
+    public void setIdRessource(int _nIdRessource) {
+        this._nIdRessource = _nIdRessource;
     }
 
-    
-     /**
-     * Set the message of the notification
-     * @param message the message of the notifictaion
-     */
-    public void setMessageOngle3( String message )
-    {
-        _strMessageOngle3 = message;
+    public int getIdDemandGuichet() {
+        return _nIdDemandGuichet;
     }
 
-    
-    /**
-     * Get the sender name
-     * @return the sender name
-     */
-    public String getSenderNameOngle1(  )
-    {
-        return _strSenderNameOngle1;
+    public void setIdDemandGuichet(int _nIdDemandGuichet) {
+        this._nIdDemandGuichet = _nIdDemandGuichet;
     }
 
-    
-      
-    /**
-     * Get the sender name
-     * @return the sender name
-     */
-    public String getSenderNameOngle3(  )
-    {
-        return _strSenderNameOngle3;
-    }
-    
-    /**
-     * Set the sender name
-     * @param senderName the sender name
-     */
-    public void setSenderNameOngle1( String senderName )
-    {
-        _strSenderNameOngle1 = senderName;
+    public int getIdUserGuid() {
+        return _nIdUserGuid;
     }
 
-     /**
-     * Set the sender name
-     * @param senderName the sender name
-     */
-    public void setSenderNameOngle3( String senderName )
-    {
-        _strSenderNameOngle3 = senderName;
+    public void setIdUserGuid(int _nIdUserGuid) {
+        this._nIdUserGuid = _nIdUserGuid;
     }
-    
-    
-    /**
-     * Check if it is notify by mail
-     * @return true if notify by Email
-     */
-    public boolean isNotifyByEmail(  )
-    {
+
+    public int getCrmWebAppCodeGuichet() {
+        return _nCrmWebAppCodeGuichet;
+    }
+
+    public void setCrmWebAppCodeGuichet(int _nCrmWebAppCodeGuichet) {
+        this._nCrmWebAppCodeGuichet = _nCrmWebAppCodeGuichet;
+    }
+
+    public boolean isSendNotificationGuichet() {
+        return _bSendNotificationGuichet;
+    }
+
+    public void setSendNotificationGuichet(boolean _bSendNotificationGuichet) {
+        this._bSendNotificationGuichet = _bSendNotificationGuichet;
+    }
+
+    public String getStatusTextGuichet() {
+        return _strStatusTextGuichet;
+    }
+
+    public void setStatusTextGuichet(String _strStatusTextGuichet) {
+        this._strStatusTextGuichet = _strStatusTextGuichet;
+    }
+
+    public String getSubjectGuichet() {
+        return _strSubjectGuichet;
+    }
+
+    public void setSubjectGuichet(String _strSubjectGuichet) {
+        this._strSubjectGuichet = _strSubjectGuichet;
+    }
+
+    public String getMessageGuichet() {
+        return _strMessageGuichet;
+    }
+
+    public void setMessageGuichet(String _strMessageGuichet) {
+        this._strMessageGuichet = _strMessageGuichet;
+    }
+
+    public String getSenderNameGuichet() {
+        return _strSenderNameGuichet;
+    }
+
+    public void setSenderNameGuichet(String _strSenderNameGuichet) {
+        this._strSenderNameGuichet = _strSenderNameGuichet;
+    }
+
+    public String getLevelNotificationGuichet() {
+        return _strLevelNotificationGuichet;
+    }
+
+    public void setLevelNotificationGuichet(String _strLevelNotificationGuichet) {
+        this._strLevelNotificationGuichet = _strLevelNotificationGuichet;
+    }
+
+    public boolean isActiveOngletGuichet() {
+        return _bActiveOngletGuichet;
+    }
+
+    public void setActiveOngletGuichet(boolean _bActiveOngletGuichet) {
+        this._bActiveOngletGuichet = _bActiveOngletGuichet;
+    }
+
+    public String getRessourceRecordEmail() {
+        return _strRessourceRecordEmail;
+    }
+
+    public void setRessourceRecordEmail(String _strRessourceRecordEmail) {
+        this._strRessourceRecordEmail = _strRessourceRecordEmail;
+    }
+
+    public String getSubjectEmail() {
+        return _strSubjectEmail;
+    }
+
+    public void setSubjectEmail(String _strSubjectEmail) {
+        this._strSubjectEmail = _strSubjectEmail;
+    }
+
+    public String getEntryEmail() {
+        return _strEntryEmail;
+    }
+
+    public void setEntryEmail(String _strEntryEmail) {
+        this._strEntryEmail = _strEntryEmail;
+    }
+
+    public String getMessageEmail() {
+        return _strMessageEmail;
+    }
+
+    public void setMessageEmail(String _strMessageEmail) {
+        this._strMessageEmail = _strMessageEmail;
+    }
+
+    public String getSenderNameEmail() {
+        return _strSenderNameEmail;
+    }
+
+    public void setSenderNameEmail(String _strSenderNameEmail) {
+        this._strSenderNameEmail = _strSenderNameEmail;
+    }
+
+    public String getRecipientsEmail() {
+        return _strRecipientsEmail;
+    }
+
+    public void setRecipientsEmail(String _strRecipientsEmail) {
+        this._strRecipientsEmail = _strRecipientsEmail;
+    }
+
+    public String getRecipientsCcEmail() {
+        return _strRecipientsCcEmail;
+    }
+
+    public void setRecipientsCcEmail(String _strRecipientsCcEmail) {
+        this._strRecipientsCcEmail = _strRecipientsCcEmail;
+    }
+
+    public String getRecipientsCciEmail() {
+        return _strRecipientsCciEmail;
+    }
+
+    public void setRecipientsCciEmail(String _strRecipientsCciEmail) {
+        this._strRecipientsCciEmail = _strRecipientsCciEmail;
+    }
+
+    public boolean isIsNotifyByEmail() {
         return _bIsNotifyByEmail;
     }
 
-    /**
-     * Set true if notify by Email
-     * @param bIsNotifyByEmail true if notify by Email
-     */
-    public void setNotifyByEmail( boolean bIsNotifyByEmail )
-    {
-        _bIsNotifyByEmail = bIsNotifyByEmail;
+    public void setIsNotifyByEmail(boolean _bIsNotifyByEmail) {
+        this._bIsNotifyByEmail = _bIsNotifyByEmail;
     }
 
-    /**
-     * Check if it is notify by sms
-     * @return true if notify by Sms
-     */
-    public boolean isNotifyBySms(  )
-    {
-        return _bIsNotifyBySms;
+    public String getLevelNotificationEmail() {
+        return _strLevelNotificationEmail;
     }
 
-    /**
-     * Set true if notify by Sms
-     * @param bIsNotifyBySms enable true if notify by Sms
-     */
-    public void setNotifyBySms( boolean bIsNotifyBySms )
-    {
-        _bIsNotifyBySms = bIsNotifyBySms;
+    public void setLevelNotificationEmail(String _strLevelNotificationEmail) {
+        this._strLevelNotificationEmail = _strLevelNotificationEmail;
     }
 
-    /**
-     * Check if it is notify by MailingList
-     * @return true if notify by MailingList
-     */
-    public boolean isNotifyByMailingList(  )
-    {
-        return _bIsNotifyByMailingList;
+    public boolean isActiveOngletEmail() {
+        return _bActiveOngletEmail;
     }
 
-    /**
-     * Set true if notify by MailingList
-     * @param bIsNotifyByMailingList enable true if notify by Sms
-     */
-    public void setNotifyByMailingList( boolean bIsNotifyByMailingList )
-    {
-        _bIsNotifyByMailingList = bIsNotifyByMailingList;
+    public void setActiveOngletEmail(boolean _bActiveOngletEmail) {
+        this._bActiveOngletEmail = _bActiveOngletEmail;
     }
 
-    /**
-     * Set true if notify by user guid
-     * @param bIsNotifyByUserGuid true if notify by user guid
-     */
-    public void setNotifyByUserGuid( boolean bIsNotifyByUserGuid )
-    {
-        _bIsNotifyByUserGuid = bIsNotifyByUserGuid;
+    public String getRessourceRecordSMS() {
+        return _nRessourceRecordSMS;
     }
 
-    /**
-     * Check if notify by user guid
-     * @return true if notify by user guid
-     */
-    public boolean isNotifyByUserGuid(  )
-    {
-        return _bIsNotifyByUserGuid;
+    public void setRessourceRecordSMS(String _nRessourceRecordSMS) {
+        this._nRessourceRecordSMS = _nRessourceRecordSMS;
     }
 
-    /**
-     * Check if it must have an email validation
-     * @return true if the email is email validation
-     */
-    public boolean isEmailValidation(  )
-    {
-        return _bEmailValidation;
+    public String getPhoneSMS() {
+        return _strPhoneSMS;
     }
 
-    /**
-     * Set true if the email is email validation
-     * @param bEmailValidation enable true if the email is email validation
-     */
-    public void setEmailValidation( boolean bEmailValidation )
-    {
-        _bEmailValidation = bEmailValidation;
+    public void setPhoneSMS(String _strEntrySMS) {
+        this._strPhoneSMS = _strEntrySMS;
     }
 
-    /**
-     * Get the id state after validation
-     * @return id Entry directory
-     */
-    public int getIdStateAfterValidation(  )
-    {
-        return _nIdStateAfterValidation;
+    public String getMessageSMS() {
+        return _strMessageSMS;
     }
 
-    /**
-     * Set id of State Workflow after validation
-     * @param nIdStateAfterValidation the id state after validation
-     */
-    public void setIdStateAfterValidation( int nIdStateAfterValidation )
-    {
-        _nIdStateAfterValidation = nIdStateAfterValidation;
+    public void setMessageSMS(String _strMessageSMS) {
+        this._strMessageSMS = _strMessageSMS;
     }
 
-    /**
-     * Get the label link
-     * @return the label link
-     */
-    public String getLabelLink(  )
-    {
-        return _strLabelLink;
+    public boolean isIsNotifyBySMS() {
+        return _bIsNotifyBySMS;
     }
 
-    /**
-     * Set the label link
-     * @param strLabelLink the label link
-     */
-    public void setLabelLink( String strLabelLink )
-    {
-        _strLabelLink = strLabelLink;
+    public void setIsNotifyBySMS(boolean _bIsNotifyBySMS) {
+        this._bIsNotifyBySMS = _bIsNotifyBySMS;
     }
 
-    /**
-     * Get the message validation
-     * @return the message of validation
-     */
-    public String getMessageValidation(  )
-    {
-        return _strMessageValidation;
+    public String getLevelNotificationSMS() {
+        return _strLevelNotificationSMS;
     }
 
-    /**
-     * Set the message of the validation
-     * @param messageValidation the message of the validation
-     */
-    public void setMessageValidation( String messageValidation )
-    {
-        _strMessageValidation = messageValidation;
+    public void setLevelNotificationSMS(String _strLevelNotificationSMS) {
+        this._strLevelNotificationSMS = _strLevelNotificationSMS;
     }
 
-    /**
-     * Get the period validity
-     * @return nPeriodValidity
-     */
-    public int getPeriodValidity(  )
-    {
-        return _nPeriodValidity;
+    public boolean isActiveOngletSMS() {
+        return _bActiveOngletSMS;
     }
 
-    /**
-     * Set nPeriodValidity
-     * @param nPeriodValidity period of validity
-     */
-    public void setPeriodValidity( int nPeriodValidity )
-    {
-        _nPeriodValidity = nPeriodValidity;
+    public void setActiveOngletSMS(boolean _bActiveOngletSMS) {
+        this._bActiveOngletSMS = _bActiveOngletSMS;
     }
 
-    /**
-     * Returns the Recipient
-     * @return The Recipient
-     */
-    public String getRecipientsCc(  )
-    {
-        return _strRecipientsCc;
-    }
-
-    /**
-     * Sets the Recipient
-     * @param strRecipient The Recipient
-     */
-    public void setRecipientsCc( String strRecipient )
-    {
-        _strRecipientsCc = strRecipient;
-    }
-
-    /**
-     * Returns the Recipient
-     * @return The Recipient
-     */
-    public String getRecipientsBcc(  )
-    {
-        return _strRecipientsBcc;
-    }
-
-    /**
-     * Sets the Recipient
-     * @param strRecipient The Recipient
-     */
-    public void setRecipientsBcc( String strRecipient )
-    {
-        _strRecipientsBcc = strRecipient;
-    }
-
-    /**
-     * Get the id mailing list
-     * @return the id mailing list
-     */
-    public int getIdMailingList(  )
-    {
-        return _nIdMailingList;
-    }
-
-    /**
-    * Set the id mailing list
-    * @param nIdMailingList the id mailing list
-    */
-    public void setIdMailingList( int nIdMailingList )
-    {
-        _nIdMailingList = nIdMailingList;
-    }
-
-    /**
-     * Set the link view record
-     * @param bViewRecord true if the email should include the link view record
-     */
-    public void setViewRecord( boolean bViewRecord )
-    {
-        _bViewRecord = bViewRecord;
-    }
-
-    /**
-     * Check if the email should include the link view record
-     * @return true if the email should include the link view record
-     */
-    public boolean isViewRecord(  )
-    {
-        return _bViewRecord;
-    }
-
-    /**
-     * Set the label for the link view record
-     * @param strLabelLinkViewRecord the label
-     */
-    public void setLabelLinkViewRecord( String strLabelLinkViewRecord )
-    {
-        _strLabelLinkViewRecord = strLabelLinkViewRecord;
-    }
-
-    /**
-     * Get the label for the link view record
-     * @return the label for the link view record
-     */
-    public String getLabelLinkViewRecord(  )
-    {
-        return _strLabelLinkViewRecord;
-    }
-
-    /**
-     * set the list of entry file which must be include in mail attachments
-     * @param listPositionEntryFile  list of entry file which must be include in mail attachments
-     */
-    public void setListPositionEntryFile( List<Integer> listPositionEntryFile )
-    {
-        _listPositionEntryFile = listPositionEntryFile;
-    }
-
-    /**
-     * get the list of entry file which must be include in mail attachments
-     * @return the list of entry file which must be include in mail attachments
-     */
-    public List<Integer> getListPositionEntryFile(  )
-    {
-        return _listPositionEntryFile;
-    }
-    
-     /**********************************************
-       * end Getter and setter for task directory
-       ************************************/
-    
-
-      /**********************************************
-       * Getter and setter for task crm
-       ************************************/
-    /**
-     * Get the ID directory
-     * @return id directory
-     */
-    public int getIdDirectoryOngle3(  )
-    {
-        return _nIdDirectoryOngle3;
-    }
-
-    /**
-     * Set id directory
-     * @param idDirectory id directory
-     */
-    public void setIdDirectoryOngle3( int idDirectory )
-    {
-        _nIdDirectoryOngle3 = idDirectory;
-    }
-
-    /**
-     * Get the position of the entry directory id demand
-     * @return position Entry directory ID demand
-     */
-    public int getPositionEntryDirectoryIdDemand(  )
-    {
-        return _nPositionEntryDirectoryIdDemand;
-    }
-
-    /**
-     * Set position Entry directory id demand
-     * @param nPositionEntryDirectoryIdDemand position of Entry directory id demand
-     */
-    public void setPositionEntryDirectoryIdDemand( int nPositionEntryDirectoryIdDemand )
-    {
-        _nPositionEntryDirectoryIdDemand = nPositionEntryDirectoryIdDemand;
-    }
-
-    /**
-     * Get the position of the entry directory associated to the user guid
-     * @return position Entry directory user guid
-     */
-    public int getPositionEntryDirectoryUserGuidOngle3(  )
-    {
-        return _nPositionEntryDirectoryUserGuidOngle3;
-    }
-
-    /**
-     * Set position Entry directory user guid
-     * @param nPositionEntryDirectoryUserGuid position of Entry directory user guid
-     */
-    public void setPositionEntryDirectoryUserGuidOngle3( int nPositionEntryDirectoryUserGuid )
-    {
-        _nPositionEntryDirectoryUserGuidOngle3 = nPositionEntryDirectoryUserGuid;
-    }
-
-    /**
-     * Set true if it must send a notification, false otherwise
-     * @param bSendNotification true if it must send a notification, false otherwise
-     */
-    public void setSendNotification( boolean bSendNotification )
-    {
-        _bSendNotification = bSendNotification;
-    }
-
-    /**
-     * Return true if it must send a notification, false otherwise
-     * @return true if it must send a notification, false otherwise
-     */
-    public boolean getSendNotification(  )
-    {
-        return _bSendNotification;
-    }
-
-    /**
-     * Set the status
-     * @param strStatusText the status
-     */
-    public void setStatusText( String strStatusText )
-    {
-        _strStatusText = strStatusText;
-    }
-
-    /**
-     * Get the status
-     * @return the status
-     */
-    public String getStatusText(  )
-    {
-        return _strStatusText;
-    }
-   
-	/**
-	 * 
-	 * @return  the position Entry directory crm webapp code
-	 */
-	public int getPositionEntryDirectoryCrmWebAppCode() {
-		return _nPositionEntryDirectoryCrmWebAppCode;
-	}
-	
-	/**
-	 * Set position Entry directory crm webapp code
-	 * @param positionEntryCrmWebAppCode Set position Entry directory crm webapp code
-	 */
-	public void setPositionEntryDirectoryCrmWebAppCode(int nPositionEntryCrmWebAppCode) {
-		this._nPositionEntryDirectoryCrmWebAppCode = nPositionEntryCrmWebAppCode;
-	}
-        
-         /**********************************************
-       * end Getter and setter for task crm
-       ************************************/
 }

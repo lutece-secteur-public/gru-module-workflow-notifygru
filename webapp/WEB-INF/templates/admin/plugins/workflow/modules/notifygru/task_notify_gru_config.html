@@ -1,106 +1,68 @@
 <#include "/admin/util/editor/editor.html" />
 
-<#assign senderNameOngle1 = "">
-<#assign subjectOngle1 = "">
-<#assign messageOngle1 = "">
-<#assign positionEntryDirectoryIdDemand = -1>
-<#assign positionEntryDirectoryUserGuidOngle1 = -1>
-<#assign positionEntryDirectoryCrmWebAppCode = -1>
-<#assign sendNotification = true>
-
-<#assign id_directory = -1>
-<#assign id_directoryOngle1 = -1>
-<#assign id_mailing_list = -1>
-<#assign position_entry_gru_sms = -1>
-<#assign position_entry_gru_email = -1>
-<#assign position_entry_gru_user_guid = -1>
-<#assign id_state_after_validation = -1>
-
-<#if config?exists && config.senderNameOngle1?has_content>
-<#assign senderNameOngle1 = config.senderNameOngle1>
-</#if>
-
-<#if config?exists && config.senderNameOngle1?has_content>
-<#assign subjectOngle1 = config.subjectOngle1>
-</#if>
-
-	<#if config?exists && config.senderNameOngle1?has_content>
-<#assign messageOngle1 = config.messageOngle1>
-</#if>
-	
-	
 <#if config?exists >	
-	<#assign positionEntryDirectoryIdDemand = config.positionEntryDirectoryIdDemand>
-	<#assign positionEntryDirectoryUserGuidOngle1 = config.positionEntryDirectoryUserGuidOngle1>
-	<#assign positionEntryDirectoryCrmWebAppCode = config.positionEntryDirectoryCrmWebAppCode>
-	<#assign sendNotification = config.sendNotification>
-
-
-	<#assign id_directoryOngle1 = config.idDirectoryOngle1>
-	<#assign id_directory = config.idDirectoryOngle1>
-	<#assign id_mailing_list = config.idMailingList>
-	<#assign position_entry_gru_sms = config.positionEntryDirectorySms>
-	<#assign position_entry_gru_email = config.positionEntryDirectoryEmail>
-	<#assign position_entry_gru_user_guid = config.positionEntryDirectoryUserGuidOngle1>
-	<#assign id_state_after_validation = config.idStateAfterValidation>
 
 
 </#if>
-
-
-
 
 <#function isSelected entry  default_values >
-	<#if default_values?has_content>
-		<#list default_values as default_value>
-			<#if  default_value=entry>  		
-				<#return true>
-			</#if>
-		</#list>
-	</#if>
-	<#return false>
+<#if default_values?has_content>
+<#list default_values as default_value>
+<#if  default_value=entry>  		
+<#return true>
+</#if>
+</#list>
+</#if>
+<#return false>
 </#function>
 
 <#assign pane="pane-desk">
 
+
 <fieldset>
-     <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
-     
-     <ul id="tabs" class="nav nav-tabs">
-				<li <#if pane="pane-desk">class="active"</#if> >
-					<a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_desk.title}</a>
-				</li>
-				<li <#if pane="pane-agent">class="active"</#if> >
-					<a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
-				</li>
-				<li <#if pane="pane-email">class="active"</#if> >
-					<a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
-				</li>
-				<li <#if pane="pane-sms">class="active"</#if> >
-					<a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
-				</li>
-				<li <#if pane="pane-mailing-list">class="active"</#if> >
-					<a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
-				</li>
-			</ul>
-	<div class="tab-content">		
-		<div class="tab-pane <#if pane="pane-desk">active</#if>" id="pane-desk">
-			<#include "task_notify_crm_config.html" />
-		</div>
-		<div class="tab-pane <#if pane="pane-agent">active</#if>" id="pane-agent">
-			Vue Agent
-		</div>
-		<div class="tab-pane <#if pane="pane-email">active</#if>" id="pane-email">
-	<#include "config_email.html" />	
-       
-         </div>
-         <div class="tab-pane <#if pane="pane-sms">active</#if>" id="pane-sms">
-			<#include "config_sms.html" />	
-		</div>
-		<div class="tab-pane <#if pane="pane-mailing-list">active</#if>" id="pane-mailing-list">
-			<#include "config_liste_broadcast.html" />	
-		</div>
-    </div>	
+    <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
+
+
+
+    <ul id="tabs" class="nav nav-tabs">
+        <li <#if pane="pane-desk">class="active"</#if> >
+            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_desk.title}</a>
+        </li>
+        <li <#if pane="pane-agent">class="active"</#if> >
+            <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
+        </li>
+        <li <#if pane="pane-email">class="active"</#if> >
+            <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
+        </li>
+        <li <#if pane="pane-sms">class="active"</#if> >
+            <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
+        </li>
+        <li <#if pane="pane-mailing-list">class="active"</#if> >
+            <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
+        </li>
+    </ul>
+
+
+    <div class="tab-content">		
+        <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
+           <#include "config_crm.html" />
+        </div>
+        <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
+             <#include "config_agent.html" />
+        </div>
+        <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
+            <#include "config_email.html" />
+
+        </div>
+        <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
+             <#include "config_sms.html" />
+        </div>
+        <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
+             <#include "config_liste_broadcast.html" />
+        </div>
+    </div>
+    
+    
 </fieldset>
 
 

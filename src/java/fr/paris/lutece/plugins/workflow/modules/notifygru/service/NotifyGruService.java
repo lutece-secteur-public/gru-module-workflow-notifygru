@@ -254,7 +254,7 @@ public final class NotifyGruService implements INotifyGruService
         if ( config != null )
         {
             EntryFilter entryFilter = new EntryFilter(  );
-            entryFilter.setIdDirectory(config.getIdDirectoryOngle1());
+         //   entryFilter.setIdDirectory(config.getIdDirectoryOngle1());
 
             listEntries = EntryHome.getEntryList( entryFilter, pluginDirectory );
         }
@@ -306,6 +306,8 @@ public final class NotifyGruService implements INotifyGruService
         return refenreceListEntries;
     }
 
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -356,18 +358,18 @@ public final class NotifyGruService implements INotifyGruService
     {
         String strEmail = StringUtils.EMPTY;
 
-        if ( config.isNotifyByEmail(  ) )
+        if ( config.isIsNotifyByEmail())
         {
-            if ( config.isNotifyByUserGuid(  ) )
-            {
-                String strUserGuid = getRecordFieldValue( config.getPositionEntryDirectoryUserGuidOngle1(), nIdRecord,
-                        nIdDirectory );
-                strEmail = _userAttributesManager.getAttribute( strUserGuid, LuteceUser.BUSINESS_INFO_ONLINE_EMAIL );
-            }
-            else
-            {
-                strEmail = getRecordFieldValue( config.getPositionEntryDirectoryEmail(  ), nIdRecord, nIdDirectory );
-            }
+//            if ( config.i(  ) )
+//            {
+//                String strUserGuid = getRecordFieldValue( config.getPositionEntryDirectoryUserGuidOngle1(), nIdRecord,
+//                        nIdDirectory );
+//                strEmail = _userAttributesManager.getAttribute( strUserGuid, LuteceUser.BUSINESS_INFO_ONLINE_EMAIL );
+//            }
+//            else
+//            {
+//                strEmail = getRecordFieldValue( config.getPositionEntryDirectoryEmail(  ), nIdRecord, nIdDirectory );
+//            }
         }
 
         return strEmail;
@@ -381,9 +383,9 @@ public final class NotifyGruService implements INotifyGruService
     {
         String strSMSPhoneNumber = StringUtils.EMPTY;
 
-        if ( config.isNotifyBySms(  ) )
+        if ( config.isIsNotifyBySMS())
         {
-            strSMSPhoneNumber = getRecordFieldValue( config.getPositionEntryDirectorySms(  ), nIdRecord, nIdDirectory );
+           // strSMSPhoneNumber = getRecordFieldValue( config.getPositionEntryDirectorySms(  ), nIdRecord, nIdDirectory );
         }
 
         return strSMSPhoneNumber;
@@ -397,7 +399,7 @@ public final class NotifyGruService implements INotifyGruService
     {
         List<FileAttachment> listFileAttachment = null;
 
-        if ( ( config.getListPositionEntryFile(  ) != null ) && ( config.getListPositionEntryFile(  ).size(  ) > 0 ) )
+   /*     if ( ( config.getListPositionEntryFile(  ) != null ) && ( config.getListPositionEntryFile(  ).size(  ) > 0 ) )
         {
             listFileAttachment = new ArrayList<FileAttachment>(  );
 
@@ -418,7 +420,7 @@ public final class NotifyGruService implements INotifyGruService
                     }
                 }
             }
-        }
+        }  */
 
         return listFileAttachment;
     }
@@ -431,10 +433,10 @@ public final class NotifyGruService implements INotifyGruService
     {
         String strUserGuid = StringUtils.EMPTY;
 
-        if ( config.getPositionEntryDirectoryUserGuidOngle1()!= DirectoryUtils.CONSTANT_ID_NULL )
-        {
-            strUserGuid = getRecordFieldValue( config.getPositionEntryDirectoryUserGuidOngle1(), nIdRecord, nIdDirectory );
-        }
+//        if ( config.getPositionEntryDirectoryUserGuidOngle1()!= DirectoryUtils.CONSTANT_ID_NULL )
+//        {
+//            strUserGuid = getRecordFieldValue( config.getPositionEntryDirectoryUserGuidOngle1(), nIdRecord, nIdDirectory );
+//        }  
 
         return strUserGuid;
     }
@@ -483,29 +485,29 @@ public final class NotifyGruService implements INotifyGruService
     public void sendMessage( TaskNotifyGruConfig config, String strEmail, String strSms, String strSenderEmail,
         String strSubject, String strEmailContent, String strSMSContent, List<FileAttachment> listFileAttachment )
     {
-        if ( config.isNotifyByEmail(  ) && StringUtils.isNotBlank( strEmail ) )
+        if ( config.isIsNotifyByEmail()&& StringUtils.isNotBlank( strEmail ) )
         {
             // Build the mail message
             if ( ( listFileAttachment != null ) && ( listFileAttachment.size(  ) > 0 ) )
             {
-                MailService.sendMailMultipartHtml( strEmail, config.getRecipientsCc(  ), config.getRecipientsBcc(  ),
-                    config.getSenderNameOngle1(), strSenderEmail, strSubject, strEmailContent, null, listFileAttachment );
+                MailService.sendMailMultipartHtml( strEmail, config.getRecipientsEmail(), config.getRecipientsCcEmail(),
+                    config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent, null, listFileAttachment );
             }
             else
             {
-                MailService.sendMailHtml( strEmail, config.getRecipientsCc(  ), config.getRecipientsBcc(  ),
-                    config.getSenderNameOngle1(), strSenderEmail, strSubject, strEmailContent );
+                MailService.sendMailHtml( strEmail, config.getRecipientsEmail(), config.getRecipientsCcEmail(),
+                    config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent );
             }
         }
 
-        if ( config.isNotifyBySms(  ) && StringUtils.isNotBlank( strSms ) )
+        if ( config.isIsNotifyByEmail() && StringUtils.isNotBlank( strSms ) )
         {
             String strServerSms = AppPropertiesService.getProperty( NotifyGruConstants.PROPERTY_SERVER_SMS );
-            MailService.sendMailHtml( strSms + strServerSms, config.getSenderNameOngle1(), strSenderEmail, strSubject,
+            MailService.sendMailHtml( strSms + strServerSms, config.getSenderNameEmail(), strSenderEmail, strSubject,
                 strSMSContent );
         }
 
-        if ( config.isNotifyByMailingList(  ) )
+    /*    if ( config.isNotifyByMailingList(  ) )
         {
             Collection<Recipient> listRecipients = AdminMailingListService.getRecipients( config.getIdMailingList(  ) );
 
@@ -525,23 +527,23 @@ public final class NotifyGruService implements INotifyGruService
                         strSubject, strEmailContent );
                 }
             }
-        }
+        } */
 
         // If the task is not notified by email and the recipients bcc is not an
         // empty string, then send the bcc
-        if ( !config.isNotifyByEmail(  ) &&
-                ( StringUtils.isNotBlank( config.getRecipientsBcc(  ) ) ||
-                StringUtils.isNotBlank( config.getRecipientsCc(  ) ) ) )
+        if ( !config.isIsNotifyByEmail()&&
+                ( StringUtils.isNotBlank( config.getRecipientsCciEmail()) ||
+                StringUtils.isNotBlank( config.getRecipientsCcEmail()) ) )
         {
             if ( ( listFileAttachment != null ) && ( listFileAttachment.size(  ) > 0 ) )
             {
-                MailService.sendMailMultipartHtml( null, config.getRecipientsCc(  ), config.getRecipientsBcc(  ),
-                    config.getSenderNameOngle1(), strSenderEmail, strSubject, strEmailContent, null, listFileAttachment );
+                MailService.sendMailMultipartHtml( null, config.getRecipientsCcEmail(), config.getRecipientsCciEmail(),
+                    config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent, null, listFileAttachment );
             }
             else
             {
-                MailService.sendMailHtml( null, config.getRecipientsCc(  ), config.getRecipientsBcc(  ),
-                    config.getSenderNameOngle1(), strSenderEmail, strSubject, strEmailContent );
+                MailService.sendMailHtml( null, config.getRecipientsCcEmail(), config.getRecipientsCciEmail(),
+                    config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent );
             }
         }
     }
@@ -549,7 +551,7 @@ public final class NotifyGruService implements INotifyGruService
     /**
      * {@inheritDoc}
      */
-    @Override
+   @Override
     public Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory,
         Record record, Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory )
     {
@@ -559,7 +561,11 @@ public final class NotifyGruService implements INotifyGruService
         ITask task = _taskService.findByPrimaryKey( config.getIdTask(  ), locale );
         Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
+<<<<<<< HEAD
         model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageOngle1());
+=======
+        model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageEmail());
+>>>>>>> bb114b93cdfd79f7b67e5228584912042640f952
         model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
         model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
 
@@ -631,7 +637,7 @@ public final class NotifyGruService implements INotifyGruService
         // Link View record
         String strLinkViewRecordHtml = DirectoryUtils.EMPTY_STRING;
 
-        if ( config.isViewRecord(  ) )
+      /*  if ( config.isViewRecord(  ) )
         {
             StringBuilder sbBaseUrl = new StringBuilder( getBaseUrl( request ) );
 
@@ -657,14 +663,14 @@ public final class NotifyGruService implements INotifyGruService
             modelTmp.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, url.getUrl(  ) );
             strLinkViewRecordHtml = AppTemplateService.getTemplateFromStringFtl( sbLinkHtml.toString(  ), locale,
                     modelTmp ).getHtml(  );
-        }
+        }  */
 
         model.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, strLinkViewRecordHtml );
 
         // Generate key
         String linkHtml = DirectoryUtils.EMPTY_STRING;
 
-        if ( config.isEmailValidation(  ) )
+      /*  if ( config.isEmailValidation(  ) )
         {
             ResourceKey resourceKey = new ResourceKey(  );
             UUID key = java.util.UUID.randomUUID(  );
@@ -703,7 +709,7 @@ public final class NotifyGruService implements INotifyGruService
             Map<String, Object> modelTmp = new HashMap<String, Object>(  );
             modelTmp.put( NotifyGruConstants.MARK_LINK, url.getUrl(  ) );
             linkHtml = AppTemplateService.getTemplateFromStringFtl( linkHtml, locale, modelTmp ).getHtml(  );
-        }
+        }  */
 
         model.put( NotifyGruConstants.MARK_LINK, linkHtml );
 
@@ -719,7 +725,7 @@ public final class NotifyGruService implements INotifyGruService
         }
 
         return model;
-    }
+    }  
 
     /**
      * {@inheritDoc}
