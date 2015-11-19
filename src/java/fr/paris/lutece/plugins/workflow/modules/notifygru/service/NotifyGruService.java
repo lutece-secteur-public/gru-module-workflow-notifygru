@@ -561,11 +561,8 @@ public final class NotifyGruService implements INotifyGruService
         ITask task = _taskService.findByPrimaryKey( config.getIdTask(  ), locale );
         Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-<<<<<<< HEAD
-        model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageOngle1());
-=======
         model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageEmail());
->>>>>>> bb114b93cdfd79f7b67e5228584912042640f952
+     
         model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
         model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
 
