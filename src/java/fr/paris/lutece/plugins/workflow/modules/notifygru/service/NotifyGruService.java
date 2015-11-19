@@ -564,6 +564,7 @@ public final class NotifyGruService implements INotifyGruService
         Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
         model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageEmail());
+     
         model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
         model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
 

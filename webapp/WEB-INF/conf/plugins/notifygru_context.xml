@@ -42,5 +42,97 @@
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
    	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
+	
+	
+	<!-- UserDashboard 
+	<bean id="mydashboard-gru.mydashboardBillsComponent" class="fr.paris.lutece.plugins.mydashboard.modules.gru.web.MyDashboardBillsComponent" />
+    
+	-->
+    
+    <bean id="workflow-notifygru.userDashboard1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.UserDashboard">
+        <property name="idResource">
+            <value>1</value>
+        </property>
+        <property name="nameResource">
+            <value>Resource MOKE</value>
+        </property>
+        <property name="idDemand">
+            <value>1108</value>
+        </property>
+        <property name="idDemandType">
+            <value>14</value>
+        </property>
+        <property name="statusText">
+            <value>En attente de validation</value>
+        </property>
+        <property name="idStatusCrm">
+            <value>1</value>
+        </property>
+        <property name="subject">
+            <value>Subject</value>
+        </property>
+        <property name="message">
+            <value>Contenu du message</value>
+        </property>
+        <property name="senderName">
+            <value>Sender Name</value>
+        </property>
+        <property name="levelNotification">
+            <value>Niveau de notification</value>
+        </property>
+        <property name="notifiedBy">
+            <value>0</value>
+        </property>
+        
+    </bean>
+    
+    <bean id="workflow-notifygru.userDashboard2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.UserDashboard">
+    	<property name="idResource">
+            <value>2</value>
+        </property>
+        <property name="nameResource">
+            <value>Resource MOKE</value>
+        </property>
+        <property name="idDemand">
+            <value>1108</value>
+        </property>
+        <property name="idDemandType">
+            <value>14</value>
+        </property>
+        <property name="statusText">
+            <value>En attente de validation</value>
+        </property>
+        <property name="idStatusCrm">
+            <value>1</value>
+        </property>
+        <property name="subject">
+            <value>Subject</value>
+        </property>
+        <property name="message">
+            <value>Contenu du message</value>
+        </property>
+        <property name="senderName">
+            <value>Sender Name</value>
+        </property>
+        <property name="levelNotification">
+            <value>Niveau de notification</value>
+        </property>
+        <property name="notifiedBy">
+            <value>0</value>
+        </property>
+	</bean>
+	
+    <bean id="workflow-notifygru.listUserDashboards" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="workflow-notifygru.userDashboard1" />
+                <ref bean="workflow-notifygru.userDashboard2" />
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="workflow-notifygru.userDashboardService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.UserDashboardService" />
+	
+
 </beans>
  	
