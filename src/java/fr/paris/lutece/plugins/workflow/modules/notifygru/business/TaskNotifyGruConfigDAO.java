@@ -35,18 +35,18 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "id_task,id_ressource,id_user_guid,id_demand_guichet,"
             + "id_crm_web_app_code_guichet,is_send_notification_guichet,status_text_guichet,"
             + "subject_guichet,message_guichet,sender_name_guichet,level_notification_guichet,"
-            + "is_active_onglet_guichet,id_ressource_email,"
+            + "is_active_onglet_guichet,id_ressource_record_email,"
             + "subject_email,entity_email_email,message_email,"
-            + "sender_name_email,recipients_email,recipients_cc_email,recipients_cci_email,"
+            + "sender_name_email,recipients_cc_email,recipients_cci_email,"
             + "level_notification_email,is_active_onglet_email,"
             + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
             + "id_ressource_record_sms,"
             + "phone_sms,message_sms,level_notification_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,subject_broadcast,message_broadcast,"
             + "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast,"
-            + "level_notification_broadcast,is_active_onglet_broadcast,"   
+            + "level_notification_broadcast,is_active_onglet_broadcast"   
             + ")"
-            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE task_notify_gru_cf "
             + " SET id_task = ?, id_ressource = ?, id_user_guid = ?, id_demand_guichet = ?"
             + ",  id_crm_web_app_code_guichet = ?,"
@@ -55,7 +55,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "level_notification_guichet = ?, is_active_onglet_guichet= ?, "
             + "id_ressource_record_email = ?, subject_email = ?, "
             + "entity_email_email = ?, message_email = ?, sender_name_email = ?,"
-            + "recipients_email = ?, recipients_cc_email = ?, recipients_cci_email = ?, "
+            + "recipients_cc_email = ?, recipients_cci_email = ?, "
             + "level_notification_email = ?, is_active_onglet_email= ?,"
             + "status_text_agent = ? ,message_agent = ? ,"
             + "level_notification_agent = ? ,is_active_onglet_agent = ? , "
@@ -93,6 +93,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getStatusTextGuichet());
         daoUtil.setString(++nPos, config.getSubjectGuichet());
         daoUtil.setString(++nPos, config.getMessageGuichet());
+        daoUtil.setString(++nPos, config.getSenderNameGuichet());
         daoUtil.setString(++nPos, config.getLevelNotificationGuichet());
         daoUtil.setBoolean(++nPos, config.isActiveOngletGuichet());
 
@@ -129,7 +130,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
          daoUtil.setString(++nPos, config.getRecipientsCcBroadcast());
          daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
          daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
-             daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
+         daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
 
         daoUtil.executeUpdate();
         daoUtil.free();
@@ -153,6 +154,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getStatusTextGuichet());
         daoUtil.setString(++nPos, config.getSubjectGuichet());
         daoUtil.setString(++nPos, config.getMessageGuichet());
+        daoUtil.setString(++nPos, config.getSenderNameGuichet());
         daoUtil.setString(++nPos, config.getLevelNotificationGuichet());
         daoUtil.setBoolean(++nPos, config.isActiveOngletGuichet());
 
@@ -222,6 +224,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setCrmWebAppCodeGuichet(daoUtil.getInt(++nPos));
             config.setSendNotificationGuichet(daoUtil.getBoolean(++nPos));
             config.setStatusTextGuichet(daoUtil.getString(++nPos));
+            config.setSenderNameGuichet(daoUtil.getString(++nPos));
             config.setSubjectGuichet(daoUtil.getString(++nPos));
             config.setMessageGuichet(daoUtil.getString(++nPos));
             config.setLevelNotificationGuichet(daoUtil.getString(++nPos));

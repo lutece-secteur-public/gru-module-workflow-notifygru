@@ -60,7 +60,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Override
     public String doSaveConfig(HttpServletRequest request, Locale locale, ITask task) {
 
-        String strOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE);
+        String strApply = request.getParameter(NotifyGruConstants.PARAMETER_APPY);
 
         String strAddOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE_ADD);
 
@@ -79,8 +79,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         //non present dans le formulaire : ActiveOngletSMS
         String strActiveOngletSMS = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_SMS);
         Boolean bActiveOngletSMS = Boolean.parseBoolean(strActiveOngletSMS);
-        
-          //non present dans le formulaire : ActiveOngletBROADCAST
+
+        //non present dans le formulaire : ActiveOngletBROADCAST
         String strActiveOngletBROADCAST = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_BROADCAST);
         Boolean bActiveOngletBROADCAST = Boolean.parseBoolean(strActiveOngletBROADCAST);
 
@@ -94,28 +94,68 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         }
 
-        /*général*/   
+
+        /*général*/
         String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
         int nIdResource = (strIdResource == null) ? -1 : Integer.parseInt(strIdResource);
         String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
         int nstridUserGuid = (stridUserGuid == null) ? -1 : Integer.parseInt(stridUserGuid);
         /*fin général*/
 
-        /*guichet*/   
+        String strError = "";
+        if (StringUtils.isBlank(strApply)) {
+            if (nIdResource == WorkflowUtils.CONSTANT_ID_NULL) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
+        
+       
+
+        /*guichet*/
         String stridDemandGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ID_DEMAND_GUICHET);
         int nidDemandGuichet = (stridDemandGuichet == null) ? -1 : Integer.parseInt(stridDemandGuichet);
+        
+        if (StringUtils.isBlank(strApply)) {
+            if (nidDemandGuichet == WorkflowUtils.CONSTANT_ID_NULL) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
 
         String strCrmWebAppCodeGuichet = request.getParameter(NotifyGruConstants.PARAMETER_CRM_WEBAPP_CODE_GUICHET);
         int nCrmWebAppCodeGuichet = (strCrmWebAppCodeGuichet == null) ? -1 : Integer.parseInt(strCrmWebAppCodeGuichet);
+        
+          if (StringUtils.isBlank(strApply)) {
+            if (nCrmWebAppCodeGuichet == WorkflowUtils.CONSTANT_ID_NULL) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
+          
 
         String strSendNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SEND_NOTIFICATION_GUICHET);
         Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
+        
+         
 
         String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
         String strSubjectGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_GUICHET);
         String strMessageGuichet = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_GUICHET);
         String strSenderNameGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET);
         String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
+        
+        
+         if (StringUtils.isBlank(strApply)) {
+            if (strSenderNameGuichet == WorkflowUtils.EMPTY_STRING  
+                    ||  strMessageGuichet == WorkflowUtils.EMPTY_STRING  
+                    || strSubjectGuichet == WorkflowUtils.EMPTY_STRING  
+                    || strLevelNotificationGuichet == WorkflowUtils.EMPTY_STRING  
+                    || strStatusTextGuichet == WorkflowUtils.EMPTY_STRING) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
 
         /*fin guichet*/
         /*Agent*/
@@ -124,38 +164,99 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         String strLevelNotificationAgent = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_AGENT);
 
 
+         if (StringUtils.isBlank(strApply)) {
+            if (strStatusTextAgent == WorkflowUtils.EMPTY_STRING  
+                    ||  strMessageAgent == WorkflowUtils.EMPTY_STRING  
+                    ||  strLevelNotificationAgent == WorkflowUtils.EMPTY_STRING  
+                   ) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
+         
+         
         /*Fin Agent*/
-        /*email*/ 
+        /*email*/
         String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
         String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
         String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL); //NON  
         String strMessageEmail = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_EMAIL);
         String strSenderNameEmail = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_EMAIL);
-        
+
         String strRecipientsCcEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_EMAIL);
         String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
         String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
 
+           if (StringUtils.isBlank(strApply)) {
+            if (strRessourceRecordEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strSubjectEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strEntryEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strMessageEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strSenderNameEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strRecipientsCcEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strRecipientsCciEmail == WorkflowUtils.EMPTY_STRING  
+                    ||  strLevelNotificationEmail == WorkflowUtils.EMPTY_STRING  
+                   ) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
 
         /*fin email*/
         /*sms*/
-         //NON pour l'instant
+        //NON pour l'instant
         String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
-        
+
         String strPhoneSMS = request.getParameter(NotifyGruConstants.PARAMETER_PHONE_SMS);
         String strMessageSMS = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_SMS);
         String strLevelNotificationSMS = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_SMS);
-         
-         String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
-        int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
         
-         String strsenderNameBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_BROADCAST);
-         String strsubjectBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_BROADCAST);
-         String strmessageBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_BROADCAST);  
-         String strrecipientsCcBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_BROADCAST);  
-         String strrecipientsCciBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_BROADCAST);  
-          String strLevelNotificationBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_BROADCAST);
+         if (StringUtils.isBlank(strApply)) {
+            if (strRessourceRecordSMS == WorkflowUtils.EMPTY_STRING  
+                    ||  strPhoneSMS == WorkflowUtils.EMPTY_STRING  
+                    ||  strMessageSMS == WorkflowUtils.EMPTY_STRING  
+                    ||  strLevelNotificationSMS == WorkflowUtils.EMPTY_STRING  
+                    
+                   ) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
+         
 
+        String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
+        int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
+
+        String strsenderNameBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_BROADCAST);
+        String strsubjectBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_BROADCAST);
+        String strmessageBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_BROADCAST);
+        String strrecipientsCcBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_BROADCAST);
+        String strrecipientsCciBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_BROADCAST);
+        String strLevelNotificationBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_BROADCAST);
+        
+          if (StringUtils.isBlank(strApply)) {
+            if (nIdMailingListBroadcast == WorkflowUtils.CONSTANT_ID_NULL  
+                    ||  strsenderNameBroadcast == WorkflowUtils.EMPTY_STRING  
+                    ||  strsubjectBroadcast == WorkflowUtils.EMPTY_STRING  
+                    ||  strrecipientsCciBroadcast == WorkflowUtils.EMPTY_STRING  
+                    ||  strrecipientsCcBroadcast == WorkflowUtils.EMPTY_STRING  
+                    ||  strLevelNotificationBroadcast == WorkflowUtils.EMPTY_STRING  
+                    
+                   ) {
+                strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+            }            
+                      
+        }
+
+        
+        if (!strError.equals(WorkflowUtils.EMPTY_STRING)) {
+            Object[] tabRequiredFields = {I18nService.getLocalizedString(strError, locale)};
+
+            return AdminMessageService.getMessageUrl(request, NotifyGruConstants.MESSAGE_MANDATORY_FIELD,
+                    tabRequiredFields, AdminMessage.TYPE_STOP);
+        }    
+        
+        
         /*fin sms*/
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
         Boolean bCreate = false;
@@ -165,6 +266,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             config.setIdTask(task.getId());
             bCreate = true;
         }
+        
+        
 
         config.setIdRessource(nIdResource);
         config.setIdUserGuid(nstridUserGuid);
@@ -188,7 +291,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         config.setEntryEmail(strEntryEmail);
         config.setMessageEmail(strMessageEmail);
         config.setSenderNameEmail(strSenderNameEmail);
-      
+
         config.setRecipientsCcEmail(strRecipientsCcEmail);
         config.setRecipientsCciEmail(strRecipientsCciEmail);
 
@@ -201,16 +304,27 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         config.setLevelNotificationSMS(strLevelNotificationSMS);
         config.setActiveOngletSMS(bActiveOngletSMS);
+
+        config.setIdMailingListBroadcast(nIdMailingListBroadcast);
+        config.setSenderNameBroadcast(strsenderNameBroadcast);
+        config.setSubjectBroadcast(strsubjectBroadcast);
+        config.setMessageBroadcast(strmessageBroadcast);
+        config.setRecipientsCcBroadcast(strrecipientsCcBroadcast);
+        config.setRecipientsCciBroadcast(strrecipientsCciBroadcast);
+        config.setLevelNotificationBroadcast(strLevelNotificationBroadcast);
+        config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
         
         
-config.setIdMailingListBroadcast(nIdMailingListBroadcast);
-config.setSenderNameBroadcast(strsenderNameBroadcast);
-config.setSubjectBroadcast(strsubjectBroadcast);
-config.setMessageBroadcast(strmessageBroadcast);
-config.setRecipientsCcBroadcast(strrecipientsCcBroadcast);
-config.setRecipientsCciBroadcast(strrecipientsCciBroadcast);
-config.setLevelNotificationBroadcast(strLevelNotificationBroadcast);
-config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
+       if ( bCreate )
+        {
+            _taskNotifyGruConfigService.create( config );
+        }
+        else
+        {
+            _taskNotifyGruConfigService.update( config );
+        }
+        
+        
         //        if ( StringUtils.isBlank( strApply ) )
 //        {
 //            if ( nIdDirectory_ongle1 == WorkflowUtils.CONSTANT_ID_NULL )
@@ -279,13 +393,7 @@ config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
 //            }
 //        }
 //
-//        if ( !strError.equals( WorkflowUtils.EMPTY_STRING ) )
-//        {
-//            Object[] tabRequiredFields = { I18nService.getLocalizedString( strError, locale ) };
-//
-//            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_FIELD,
-//                tabRequiredFields, AdminMessage.TYPE_STOP );
-//        }
+        
 //        if ( StringUtils.isBlank( strApply ) && ( nPositionEntryDirectorySms == nPositionEntryDirectoryEmail ) &&
 //                !bIsNotifyByUserGuid && ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) ) )
 //        {
@@ -361,6 +469,8 @@ config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
         return null;
     }
 
+    
+    
     /**
      * {@inheritDoc}
      */
