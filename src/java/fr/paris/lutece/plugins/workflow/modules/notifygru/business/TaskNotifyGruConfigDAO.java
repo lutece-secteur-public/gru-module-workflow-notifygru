@@ -66,7 +66,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "id_mailing_list_broadcast = ?, subject_broadcast = ?, message_broadcast = ?,"
             + "sender_name_broadcast = ?, recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, "
             + "level_notification_broadcast = ?, is_active_onglet_broadcast = ?"
-            + "WHERE id_task = ? ";
+            + " WHERE id_task = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM task_notify_gru_cf WHERE id_task = ? ";
 
     /*  private static final String SQL_QUERY_DELETE_POSITION_ENTRY_FILE = "DELETE FROM task_notify_gru_ef where id_task= ? ";

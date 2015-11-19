@@ -28,11 +28,11 @@
 					
 
 <button class="btn btn-small btn-primary" type="submit" name="apply" value="AddOnglet">
-					<i class="icon-ok icon-white">&nbsp;</i>#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_add}
+					<i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
 				</button>
 
-<button class="btn btn-small btn-danger" type="submit" name="apply" value="AddOnglet">
-					<i class="icon-ok icon-white">&nbsp;</i>#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}
+<button class="btn btn-small btn-danger" type="submit" name="apply" value="RemoveOnglet">
+					<i class="glyphicon glyphicon-minus icon-white">&nbsp;</i>
 
 				</button>
 				</div>
@@ -40,7 +40,7 @@
 			</div>
 		</#if>
 
-
+<br/>
     <ul id="tabs" class="nav nav-tabs">
     <#if config?exists && config.activeOngletGuichet == true>
         <li <#if pane="pane-desk">class="active"</#if> >
@@ -96,6 +96,6 @@
         <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
              <#include "config_liste_broadcast.html" />
         </div>
-     </#if0>
+     </#if>
     </div>
 <@initEditor />
