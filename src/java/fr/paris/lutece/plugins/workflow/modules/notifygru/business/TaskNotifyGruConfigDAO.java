@@ -19,13 +19,13 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "is_send_notification_guichet,status_text_guichet,subject_guichet,message_guichet,"
             + "sender_name_guichet,level_notification_guichet,is_active_onglet_guichet,"
             + "id_ressource_record_email,"
-            + "subject_email,entity_email_email,message_email,sender_name_email,recipients_email,"
-            + "recipients_cc_email,recipients_cci_email,is_notify_by_email,level_notification_email,"
+            + "subject_email,entity_email_email,message_email,sender_name_email,"
+            + "recipients_cc_email,recipients_cci_email,level_notification_email,"
             + "is_active_onglet_email,"
             + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
             + "id_ressource_record_sms,"
             + "phone_sms,message_sms,"
-            + "is_notify_by_sms,level_notification_sms,is_active_onglet_sms"
+            + "level_notification_sms,is_active_onglet_sms"
             + " FROM task_notify_gru_cf  WHERE id_task = ?";
 
     private static final String SQL_QUERY_INSERT = "INSERT INTO task_notify_gru_cf( "
@@ -35,11 +35,10 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "is_active_onglet_guichet,id_ressource_email,"
             + "subject_email,entity_email_email,message_email,"
             + "sender_name_email,recipients_email,recipients_cc_email,recipients_cci_email,"
-            + "is_notify_by_email,level_notification_email,is_active_onglet_email,"
+            + "level_notification_email,is_active_onglet_email,"
             + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
             + "id_ressource_record_sms,"
-            + "phone_sms,message_sms,"
-            + "is_notify_by_sms,"
+            + "phone_sms,message_sms,"          
             + "level_notification_sms,is_active_onglet_sms)"
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE task_notify_gru_cf "
@@ -51,12 +50,12 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "id_ressource_record_email = ?, subject_email = ?, "
             + "entity_email_email = ?, message_email = ?, sender_name_email = ?,"
             + "recipients_email = ?, recipients_cc_email = ?, recipients_cci_email = ?, "
-            + "is_notify_by_email = ?, level_notification_email = ?, is_active_onglet_email= ?,"
+            + "level_notification_email = ?, is_active_onglet_email= ?,"
             + "status_text_agent = ? ,message_agent = ? ,"
             + "level_notification_agent = ? ,is_active_onglet_agent = ? , "
             + " id_ressource_record_sms= ?, "
             + " phone_sms = ?, message_sms = ?, "
-            + " is_notify_by_sms = ?, level_notification_sms = ?,"
+            + " level_notification_sms = ?,"
             + "is_active_onglet_sms = ?  WHERE id_task = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM task_notify_gru_cf WHERE id_task = ? ";
 
@@ -93,10 +92,10 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getEntryEmail());
         daoUtil.setString(++nPos, config.getMessageEmail());
         daoUtil.setString(++nPos, config.getSenderNameEmail());
-        daoUtil.setString(++nPos, config.getRecipientsEmail());
+    
         daoUtil.setString(++nPos, config.getRecipientsCcEmail());
         daoUtil.setString(++nPos, config.getRecipientsCciEmail());
-        daoUtil.setBoolean(++nPos, config.isIsNotifyByEmail());
+       
         daoUtil.setString(++nPos, config.getLevelNotificationEmail());
         daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
 
@@ -108,7 +107,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getRessourceRecordSMS());
         daoUtil.setString(++nPos, config.getPhoneSMS());
         daoUtil.setString(++nPos, config.getMessageSMS());
-        daoUtil.setBoolean(++nPos, config.isIsNotifyBySMS());
+       
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
 
@@ -143,10 +142,10 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getEntryEmail());
         daoUtil.setString(++nPos, config.getMessageEmail());
         daoUtil.setString(++nPos, config.getSenderNameEmail());
-        daoUtil.setString(++nPos, config.getRecipientsEmail());
+ 
         daoUtil.setString(++nPos, config.getRecipientsCcEmail());
         daoUtil.setString(++nPos, config.getRecipientsCciEmail());
-        daoUtil.setBoolean(++nPos, config.isIsNotifyByEmail());
+     
         daoUtil.setString(++nPos, config.getLevelNotificationEmail());
         daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
 
@@ -161,7 +160,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
         daoUtil.setString(++nPos, config.getMessageSMS());
 
-        daoUtil.setBoolean(++nPos, config.isIsNotifyBySMS());
+     
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
 
@@ -203,10 +202,10 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setEntryEmail(daoUtil.getString(++nPos));
             config.setMessageEmail(daoUtil.getString(++nPos));
             config.setSenderNameEmail(daoUtil.getString(++nPos));
-            config.setRecipientsEmail(daoUtil.getString(++nPos));
+            
             config.setRecipientsCcEmail(daoUtil.getString(++nPos));
             config.setRecipientsCciEmail(daoUtil.getString(++nPos));
-            config.setIsNotifyByEmail(daoUtil.getBoolean(++nPos));
+         
             config.setLevelNotificationEmail(daoUtil.getString(++nPos));
             config.setActiveOngletEmail(daoUtil.getBoolean(++nPos));
 
@@ -218,7 +217,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setRessourceRecordSMS(daoUtil.getString(++nPos));
             config.setPhoneSMS(daoUtil.getString(++nPos));
             config.setMessageSMS(daoUtil.getString(++nPos));
-            config.setIsNotifyBySMS(daoUtil.getBoolean(++nPos));
+           
             config.setLevelNotificationSMS(daoUtil.getString(++nPos));
             config.setActiveOngletSMS(daoUtil.getBoolean(++nPos));
         }

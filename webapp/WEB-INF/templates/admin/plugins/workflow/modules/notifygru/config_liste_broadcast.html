@@ -7,7 +7,7 @@
             <div class="form-group">
                 <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list} *</label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="id_mailing_list"  items=mailing_list default_value=1 />
+                    <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment}</span>
                 </div>
             </div>
@@ -19,12 +19,12 @@
 
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.senderNameEmail?has_content>
-                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.senderNameEmail}" maxlength="70">
+                <#if config?exists && config.senderNameBroadcast?has_content>
+                    <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="${config.senderNameBroadcast}" maxlength="70">
                 <#else>
-                    <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="" maxlength="70">
+                    <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="" maxlength="70">
 				</#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment}</span>
             </div>
@@ -33,12 +33,12 @@
 
 
 		<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc}</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cc_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc}</label>
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.recipientCcEmail?has_content>
-                    <input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="${config.recipientCcEmail}"  maxlength="255">
+                <#if config?exists && config.recipientsCcBroadcast?has_content>
+                    <input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="${config.recipientsCcBroadcast}"  maxlength="255">
                 <#else>
-					<input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="" maxlength="255">
+<input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment}</span>
              </div>
@@ -46,12 +46,12 @@
 
 
 <div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc}</label>
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cci_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc}</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-				<#if config?exists && config.recipientCciEmail?has_content>
-                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="${config.recipientCciEmail}"  maxlength="255">
+				<#if config?exists && config.recipientsCciBroadcast?has_content>
+                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="${config.recipientsCciBroadcast}"  maxlength="255">
                 <#else>
-                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="" maxlength="255">
+                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment}</span>
             </div>
@@ -59,12 +59,12 @@
 
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.subjectEmail?has_content>
-					<input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subjectEmail}" maxlength="255">
+                <#if config?exists && config.subjectBroadcast?has_content>
+					<input type="text" name="subject_broadcast" id="" class="form-control input-sm" value="${config.subjectBroadcast}" maxlength="255">
                 <#else>
-                    <input type="text" name="subject_email" id="" class="form-control input-sm" value="" maxlength="255">
+                    <input type="text" name="subject_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment}</span>
             </div>
@@ -72,16 +72,28 @@
 
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists  && config.messageEmail?has_content>
-                    <textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext">${config.messageEmail}</textarea>
+                <#if config?exists  && config.messageBroadcast?has_content>
+                    <textarea name="message_email_broadcast" id="message_email" rows="20" cols="90" class="richtext">${config.messageBroadcast}</textarea>
                 <#else>
-					<textarea name="message_email" id="message_email" rows="20" cols="90" class="richtext"></textarea>
+					<textarea name="message_email_broadcast" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
             </div>
         </div>
+        
+         <#if level_notification_broadcast?exists>
+			<div class="control-group" id="entry_id_demand">
+				<label class="control-label" for="level_notification_broadcast">Niveau de notification* :</label>
+				<div class="controls">
+					<@combo name="level_notification_broadcast" items=level_notification_broadcast default_value=1 />&nbsp;
+					<span class="help-block">Niveau de notification</span>
+				</div>
+			</div>
+		</#if>
+                
+                
 	</fieldset>
 </div>
 

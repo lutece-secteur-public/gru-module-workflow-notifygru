@@ -6,14 +6,14 @@
 		<div class="control-group">
 			<label class="control-label" for="idRessource">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_list_ressource} * :</label>
 			<div class="controls">
-				<@combo name="idRessource" items=list_ressources default_value=1 />
+				<@combo name="id_ressource" items=list_ressources default_value=1 />
 			</div>
 		</div>
 		<#if list_entries_id_demand?exists>
 			<div class="control-group" id="entry_id_demand">
 				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_ressource_id_demand} * :</label>
 				<div class="controls">
-					<@combo name="RessourceIdDemand" items=list_entries_id_demand default_value=1 />&nbsp;
+					<@combo name="ressource_id_demand" items=list_entries_id_demand default_value=1 />&nbsp;
 					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_ressource_id_demand}</span>
 				</div>
 			</div>
@@ -22,9 +22,9 @@
 		
 		<#if list_entries_crm_web_app_code?exists>
 			<div class="control-group"id="entry_user_guid">
-				<label class="control-label" for="crmwebappcode">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_crm_web_app_code}  :</label>
+				<label class="control-label" for="crm_web_app_code_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_crm_web_app_code}  :</label>
 				<div class="controls">
-						<@combo name="crmwebappcode" items=list_entries_crm_web_app_code default_value=1 />&nbsp;
+						<@combo name="crm_web_app_code_guichet" items=list_entries_crm_web_app_code default_value=1 />&nbsp;
 						<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_crm_web_app_code_comment}</span>
 				</div>
 			</div>
@@ -46,11 +46,11 @@
 			<label class="control-label" for="sendNotification">#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification} :</label>
 			<div class="controls">
 				<label class="checkbox">
-					<input type="radio" name="send_notification" value="true" <#if config.sendNotificationGuichet>checked="checked"</#if> />
+					<input type="radio" name="send_notification_guichet" value="true" <#if config.sendNotificationGuichet>checked="checked"</#if> />
 					&nbsp;#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification.yes}
 				</label>
 				<label class="checkbox">
-					<input type="radio" name="send_notification" value="false" <#if !config.sendNotificationGuichet>checked="checked"</#if> />
+					<input type="radio" name="send_notification_guichet" value="false" <#if !config.sendNotificationGuichet>checked="checked"</#if> />
 					&nbsp;#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification.no}
 				</label>
 			</div>
@@ -111,6 +111,18 @@
 		<br />
 		
 	</div>
+ 
+ 
+ <#if level_notification_guichet?exists>
+			<div class="control-group" id="entry_id_demand">
+				<label class="control-label" for="level_notification_guichet">Niveau de notification* :</label>
+				<div class="controls">
+					<@combo name="level_notification_guichet" items=level_notification_guichet default_value=1 />&nbsp;
+					<span class="help-block">Niveau de notification</span>
+				</div>
+			</div>
+		</#if>
+                
 </#if>
 
 <script type="text/javascript">

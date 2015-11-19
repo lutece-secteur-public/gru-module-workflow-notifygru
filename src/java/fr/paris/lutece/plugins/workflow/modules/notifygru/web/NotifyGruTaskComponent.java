@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServletRequest;
 public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
     // TEMPLATES
-
     private static final String TEMPLATE_TASK_NOTIFY_GRU_CONFIG = "admin/plugins/workflow/modules/notifygru/task_notify_gru_config.html";
 
     // SERVICES
@@ -65,6 +64,22 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         String strAddOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE_ADD);
 
+        //non present dans le formulaire : ActiveOngletGuichet
+        String strActiveOngletGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_GUICHET);
+        Boolean bActiveOngletGuichet = Boolean.parseBoolean(strActiveOngletGuichet);
+
+        //non present dans le formulaire : ActiveOngletAgent
+        String strActiveOngletAgent = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_AGENT);
+        Boolean bActiveOngletAgent = Boolean.parseBoolean(strActiveOngletAgent);
+
+        //non present dans le formulaire : ActiveOngletAgent
+        String strActiveOngletEmail = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_EMAIL);
+        Boolean bActiveOngletEmail = Boolean.parseBoolean(strActiveOngletEmail);
+
+        //non present dans le formulaire : ActiveOngletSMS
+        String strActiveOngletSMS = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_SMS);
+        Boolean bActiveOngletSMS = Boolean.parseBoolean(strActiveOngletSMS);
+
         if (strAddOnglet == null) {
             //ajout onglet
         }
@@ -78,8 +93,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         /*général*/
         String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
         int nIdResource = (strIdResource == null) ? -1 : Integer.parseInt(strIdResource);
-
-        //non present dans le formulaire : _nIdUserGuid
         String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);
         int nstridUserGuid = (stridUserGuid == null) ? -1 : Integer.parseInt(stridUserGuid);
         /*fin général*/
@@ -94,66 +107,40 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         String strSendNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SEND_NOTIFICATION_GUICHET);
         Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
 
-        //non present dans le formulaire : ActiveOngletGuichet
-        String strActiveOngletGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_GUICHET);
-        Boolean bActiveOngletGuichet = Boolean.parseBoolean(strActiveOngletGuichet);
-
         String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
         String strSubjectGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_GUICHET);
         String strMessageGuichet = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_GUICHET);
         String strSenderNameGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET);
-
-        //non present dans le formulaire : LevelNotificationGuichet
         String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
 
         /*fin guichet*/
         /*Agent*/
         String strStatusTextAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_AGENT);
         String strMessageAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_MESSAGE_AGENT);
-        //non present dans le formulaire : LevelNotificationAgent
         String strLevelNotificationAgent = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_AGENT);
-        //non present dans le formulaire : ActiveOngletAgent
-        String strActiveOngletAgent = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_AGENT);
-        Boolean bActiveOngletAgent = Boolean.parseBoolean(strActiveOngletAgent);
+
 
         /*Fin Agent*/
         /*email*/
-        //à revoir suir le template
         String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
         String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
-        //non present dans le formulaire : EntryEmail
         String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL);
         String strMessageEmail = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_EMAIL);
         String strSenderNameEmail = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_EMAIL);
         String strRecipientsEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_EMAIL);
         String strRecipientsCcEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_EMAIL);
         String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
-
-        //non present dans le formulaire : IsNotifyByEmail
-        String strIsNotifyByEmail = request.getParameter(NotifyGruConstants.PARAMETER_NOTIFIED_BY_EMAIL);
-        Boolean bIsNotifyByEmail = Boolean.parseBoolean(strIsNotifyByEmail);
-
-        //non present dans le formulaire : LevelNotificationAgent
         String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
-        //non present dans le formulaire : ActiveOngletAgent
-        String strActiveOngletEmail = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_EMAIL);
-        Boolean bActiveOngletEmail = Boolean.parseBoolean(strActiveOngletEmail);
+
 
         /*fin email*/
         /*sms*/
+        //non present dans le formulaire : IsNotifyBySMS
         String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
         String strPhoneSMS = request.getParameter(NotifyGruConstants.PARAMETER_PHONE_SMS);
         String strMessageSMS = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_SMS);
-
-        //non present dans le formulaire : IsNotifyBySMS
-        String strIsNotifyBySMS = request.getParameter(NotifyGruConstants.PARAMETER_NOTIFIED_BY_SMS);
-        Boolean bIsNotifyBySMS = Boolean.parseBoolean(strIsNotifyBySMS);
-
-        //non present dans le formulaire : LevelNotificationSMS
         String strLevelNotificationSMS = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_SMS);
-        //non present dans le formulaire : ActiveOngletSMS
-        String strActiveOngletSMS = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_SMS);
-        Boolean bActiveOngletSMS = Boolean.parseBoolean(strActiveOngletSMS);
+
 
         /*fin sms*/
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
@@ -190,18 +177,18 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         config.setRecipientsEmail(strRecipientsEmail);
         config.setRecipientsCcEmail(strRecipientsCcEmail);
         config.setRecipientsCciEmail(strRecipientsCciEmail);
-        config.setIsNotifyByEmail(bIsNotifyByEmail);
+
         config.setLevelNotificationEmail(strLevelNotificationEmail);
         config.setActiveOngletEmail(bActiveOngletEmail);
 
         config.setRessourceRecordSMS(strRessourceRecordSMS);
         config.setPhoneSMS(strPhoneSMS);
         config.setMessageSMS(strMessageSMS);
-        config.setIsNotifyBySMS(bIsNotifyBySMS);
+
         config.setLevelNotificationSMS(strLevelNotificationSMS);
         config.setActiveOngletSMS(bActiveOngletSMS);
 
-     //        if ( StringUtils.isBlank( strApply ) )
+        //        if ( StringUtils.isBlank( strApply ) )
 //        {
 //            if ( nIdDirectory_ongle1 == WorkflowUtils.CONSTANT_ID_NULL )
 //            {
@@ -369,13 +356,17 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         ReferenceList listeOnglet = this.getListOnglet();
         model.put(NotifyGruConstants.MARK_LIST_ONGLE, listeOnglet);
 
-        
-         ReferenceList levelNotification = this.getListNotification();
-        model.put(NotifyGruConstants.MARK_GRU_LIST_LEVEL_NOTIFICATION, levelNotification);
-        
+        ReferenceList levelNotification = this.getListNotification();
+        model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_GUICHET, levelNotification);
+        model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_AGENT, levelNotification);
+        model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_EMAIL, levelNotification);
+        model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_SMS, levelNotification);
+        model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification);
+
         model.put(NotifyGruConstants.MARK_GRU_LIST, this.getListRessources());
         model.put(NotifyGruConstants.MARK_GRU_LIST_CRM_WEBAPP, this.getListCrmWebApp());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourcesDemande());
+        model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourceEmail());
 //        model.put( NotifyGruConstants.MARK_STATE_LIST,
 //            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
 
@@ -453,8 +444,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         return refenreceList;
     }
-    
-      public ReferenceList getListOnglet() {
+
+    public ReferenceList getListOnglet() {
 
         ReferenceList refenreceList = new ReferenceList();
         refenreceList.addItem("guichet", "vue guichet");
@@ -465,14 +456,23 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         return refenreceList;
     }
-      
-       public ReferenceList getListNotification() {
+
+    public ReferenceList getListNotification() {
 
         ReferenceList refenreceList = new ReferenceList();
         refenreceList.addItem(0, "Visible par tout le monde");
         refenreceList.addItem(1, "Visible par domaine");
         refenreceList.addItem(2, "Visible par Admin");
-      
+
+        return refenreceList;
+    }
+
+    public ReferenceList getListRessourceEmail() {
+
+        ReferenceList refenreceList = new ReferenceList();
+        refenreceList.addItem(0, "email_1@email.com");
+        refenreceList.addItem(1, "email_2@email.com");
+        refenreceList.addItem(2, "email_3@email.com");
 
         return refenreceList;
     }

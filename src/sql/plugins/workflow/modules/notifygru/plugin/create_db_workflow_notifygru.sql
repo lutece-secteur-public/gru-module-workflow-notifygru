@@ -30,7 +30,6 @@ CREATE TABLE task_notify_gru_cf(
   recipients_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cc_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cci_email VARCHAR(255) DEFAULT ''  NULL,
- is_notify_by_email SMALLINT NOT NULL DEFAULT 0,
  level_notification_email VARCHAR(255) DEFAULT ''  NULL,
   is_active_onglet_email SMALLINT  NULL DEFAULT 0,
 
@@ -43,10 +42,18 @@ CREATE TABLE task_notify_gru_cf(
  id_ressource_record_sms INT DEFAULT NULL,
  phone_sms VARCHAR(255) DEFAULT ''  NULL,
  message_sms VARCHAR(255) DEFAULT ''  NULL,
- is_notify_by_sms SMALLINT NOT NULL DEFAULT 0,
  level_notification_sms VARCHAR(255) DEFAULT ''  NULL,
   is_active_onglet_sms SMALLINT NOT NULL DEFAULT 0,
  
+
+ id_mailing_list_broadcast INT DEFAULT NULL,
+subject_broadcast VARCHAR(255) DEFAULT ''  NULL,
+ message_broadcast VARCHAR(255) DEFAULT ''  NULL,
+  sender_name_broadcast VARCHAR(255) DEFAULT ''  NULL,
+  recipients_cc_broadcast VARCHAR(255) DEFAULT ''  NULL,
+  recipients_cci_broadcast VARCHAR(255) DEFAULT ''  NULL,
+ level_notification_broadcast VARCHAR(255) DEFAULT ''  NULL,
+  is_active_onglet_broadcast SMALLINT  NULL DEFAULT 0,
 
   PRIMARY KEY  (id_task)
   );

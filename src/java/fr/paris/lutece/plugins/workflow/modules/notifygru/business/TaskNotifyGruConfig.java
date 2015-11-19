@@ -53,10 +53,8 @@ public class TaskNotifyGruConfig extends TaskConfig {
     private String _strEntryEmail;
     private String _strMessageEmail;
     private String _strSenderNameEmail;
-    private String _strRecipientsEmail;
     private String _strRecipientsCcEmail;
-    private String _strRecipientsCciEmail;
-    private boolean _bIsNotifyByEmail;
+    private String _strRecipientsCciEmail;  
     private String _strLevelNotificationEmail;
     private boolean _bActiveOngletEmail;
 
@@ -68,11 +66,86 @@ public class TaskNotifyGruConfig extends TaskConfig {
      */
     private String _nRessourceRecordSMS;
     private String _strPhoneSMS;
-    private String _strMessageSMS;
-    private boolean _bIsNotifyBySMS;
+    private String _strMessageSMS;  
     private String _strLevelNotificationSMS;
     private boolean _bActiveOngletSMS;
 
+    
+     private int _nIdMailingListBroadcast;   
+     private String _strSenderNameBroadcast;
+     private String _strSubjectBroadcast;
+      private String _strMessageBroadcast;   
+    private String _strRecipientsCcBroadcast;
+    private String _strRecipientsCciBroadcast;  
+    private String _strLevelNotificationBroadcast;
+    private boolean _bActiveOngletBroadcast;
+
+    public int getIdMailingListBroadcast() {
+        return _nIdMailingListBroadcast;
+    }
+
+    public void setIdMailingListBroadcast(int _nIdMailingListBroadcast) {
+        this._nIdMailingListBroadcast = _nIdMailingListBroadcast;
+    }
+
+    public String getSenderNameBroadcast() {
+        return _strSenderNameBroadcast;
+    }
+
+    public void setSenderNameBroadcast(String _strSenderNameBroadcast) {
+        this._strSenderNameBroadcast = _strSenderNameBroadcast;
+    }
+
+    public String getSubjectBroadcast() {
+        return _strSubjectBroadcast;
+    }
+
+    public void setSubjectBroadcast(String _strSubjectBroadcast) {
+        this._strSubjectBroadcast = _strSubjectBroadcast;
+    }
+
+    public String getMessageBroadcast() {
+        return _strMessageBroadcast;
+    }
+
+    public void setMessageBroadcast(String _strMessageBroadcast) {
+        this._strMessageBroadcast = _strMessageBroadcast;
+    }
+
+    public String getRecipientsCcBroadcast() {
+        return _strRecipientsCcBroadcast;
+    }
+
+    public void setRecipientsCcBroadcast(String _strRecipientsCcBroadcast) {
+        this._strRecipientsCcBroadcast = _strRecipientsCcBroadcast;
+    }
+
+    public String getRecipientsCciBroadcast() {
+        return _strRecipientsCciBroadcast;
+    }
+
+    public void setRecipientsCciBroadcast(String _strRecipientsCciBroadcast) {
+        this._strRecipientsCciBroadcast = _strRecipientsCciBroadcast;
+    }
+
+    public String getLevelNotificationBroadcast() {
+        return _strLevelNotificationBroadcast;
+    }
+
+    public void setLevelNotificationBroadcast(String _strLevelNotificationBroadcast) {
+        this._strLevelNotificationBroadcast = _strLevelNotificationBroadcast;
+    }
+
+    public boolean isActiveOngletBroadcast() {
+        return _bActiveOngletBroadcast;
+    }
+
+    public void setActiveOngletBroadcast(boolean _bActiveOngletBroadcast) {
+        this._bActiveOngletBroadcast = _bActiveOngletBroadcast;
+    }
+    
+    
+    
     public String getStatusTextAgent() {
         return _strStatusTextAgent;
     }
@@ -236,13 +309,7 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._strSenderNameEmail = _strSenderNameEmail;
     }
 
-    public String getRecipientsEmail() {
-        return _strRecipientsEmail;
-    }
-
-    public void setRecipientsEmail(String _strRecipientsEmail) {
-        this._strRecipientsEmail = _strRecipientsEmail;
-    }
+   
 
     public String getRecipientsCcEmail() {
         return _strRecipientsCcEmail;
@@ -260,13 +327,7 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._strRecipientsCciEmail = _strRecipientsCciEmail;
     }
 
-    public boolean isIsNotifyByEmail() {
-        return _bIsNotifyByEmail;
-    }
-
-    public void setIsNotifyByEmail(boolean _bIsNotifyByEmail) {
-        this._bIsNotifyByEmail = _bIsNotifyByEmail;
-    }
+  
 
     public String getLevelNotificationEmail() {
         return _strLevelNotificationEmail;
@@ -308,13 +369,7 @@ public class TaskNotifyGruConfig extends TaskConfig {
         this._strMessageSMS = _strMessageSMS;
     }
 
-    public boolean isIsNotifyBySMS() {
-        return _bIsNotifyBySMS;
-    }
-
-    public void setIsNotifyBySMS(boolean _bIsNotifyBySMS) {
-        this._bIsNotifyBySMS = _bIsNotifyBySMS;
-    }
+   
 
     public String getLevelNotificationSMS() {
         return _strLevelNotificationSMS;
