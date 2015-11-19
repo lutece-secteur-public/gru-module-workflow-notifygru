@@ -358,8 +358,8 @@ public final class NotifyGruService implements INotifyGruService
     {
         String strEmail = StringUtils.EMPTY;
 
-        if ( config.isIsNotifyByEmail())
-        {
+//        if ( config.isIsNotifyByEmail())
+//        {
 //            if ( config.i(  ) )
 //            {
 //                String strUserGuid = getRecordFieldValue( config.getPositionEntryDirectoryUserGuidOngle1(), nIdRecord,
@@ -370,7 +370,7 @@ public final class NotifyGruService implements INotifyGruService
 //            {
 //                strEmail = getRecordFieldValue( config.getPositionEntryDirectoryEmail(  ), nIdRecord, nIdDirectory );
 //            }
-        }
+        //}
 
         return strEmail;
     }
@@ -383,10 +383,10 @@ public final class NotifyGruService implements INotifyGruService
     {
         String strSMSPhoneNumber = StringUtils.EMPTY;
 
-        if ( config.isIsNotifyBySMS())
-        {
+//        if ( config.isIsNotifyBySMS())
+//        {
            // strSMSPhoneNumber = getRecordFieldValue( config.getPositionEntryDirectorySms(  ), nIdRecord, nIdDirectory );
-        }
+//        }
 
         return strSMSPhoneNumber;
     }
@@ -485,22 +485,24 @@ public final class NotifyGruService implements INotifyGruService
     public void sendMessage( TaskNotifyGruConfig config, String strEmail, String strSms, String strSenderEmail,
         String strSubject, String strEmailContent, String strSMSContent, List<FileAttachment> listFileAttachment )
     {
-        if ( config.isIsNotifyByEmail()&& StringUtils.isNotBlank( strEmail ) )
+        //if ( config.isIsNotifyByEmail()&& StringUtils.isNotBlank( strEmail ) )
+        if ( StringUtils.isNotBlank( strEmail ) )
         {
             // Build the mail message
             if ( ( listFileAttachment != null ) && ( listFileAttachment.size(  ) > 0 ) )
             {
-                MailService.sendMailMultipartHtml( strEmail, config.getRecipientsEmail(), config.getRecipientsCcEmail(),
+                MailService.sendMailMultipartHtml( strEmail, config.getRecipientsCcEmail(), config.getRecipientsCciEmail(),
                     config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent, null, listFileAttachment );
             }
             else
             {
-                MailService.sendMailHtml( strEmail, config.getRecipientsEmail(), config.getRecipientsCcEmail(),
+                MailService.sendMailHtml( strEmail, config.getRecipientsCcEmail(), config.getRecipientsCciEmail(),
                     config.getSenderNameEmail(), strSenderEmail, strSubject, strEmailContent );
             }
         }
 
-        if ( config.isIsNotifyByEmail() && StringUtils.isNotBlank( strSms ) )
+    //    if ( config.isIsNotifyByEmail() && StringUtils.isNotBlank( strSms ) )
+        if (StringUtils.isNotBlank( strSms ) )
         {
             String strServerSms = AppPropertiesService.getProperty( NotifyGruConstants.PROPERTY_SERVER_SMS );
             MailService.sendMailHtml( strSms + strServerSms, config.getSenderNameEmail(), strSenderEmail, strSubject,
@@ -531,8 +533,8 @@ public final class NotifyGruService implements INotifyGruService
 
         // If the task is not notified by email and the recipients bcc is not an
         // empty string, then send the bcc
-        if ( !config.isIsNotifyByEmail()&&
-                ( StringUtils.isNotBlank( config.getRecipientsCciEmail()) ||
+       // if ( !config.isIsNotifyByEmail() && ( StringUtils.isNotBlank( config.getRecipientsCciEmail()) ||
+        if ( ( StringUtils.isNotBlank( config.getRecipientsCciEmail()) ||
                 StringUtils.isNotBlank( config.getRecipientsCcEmail()) ) )
         {
             if ( ( listFileAttachment != null ) && ( listFileAttachment.size(  ) > 0 ) )

@@ -1,0 +1,140 @@
+
+<div>
+	<fieldset>
+		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}</legend>
+		<br />
+		<div class="control-group">
+			<label class="control-label" for="idRessource">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_list_resource_guichet} * :</label>
+			<div class="controls">
+				<@combo name="id_ressource" items=list_ressources default_value=1 />
+			</div>
+		</div>
+		<#if list_entries_id_demand?exists>
+			<div class="control-group" id="ressource_id_demand_guichet">
+				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_resource_id_demand_guichet} * :</label>
+				<div class="controls">
+
+					<@combo name="ressource_id_demand_guichet" items=list_entries_id_demand default_value=1 />&nbsp;
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_resource_id_demand_guichet}</span>
+
+				</div>
+			</div>
+		</#if>
+                
+		
+		<#if list_entries_crm_web_app_code?exists>
+			<div class="control-group"id="entry_user_guid">
+				<label class="control-label" for="crm_web_app_code_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_crm_web_app_code_guichet}  :</label>
+				<div class="controls">
+						<@combo name="crm_web_app_code_guichet" items=list_entries_crm_web_app_code default_value=1 />&nbsp;
+						<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_crm_web_app_code_comment_guichet}</span>
+				</div>
+			</div>
+		</#if>
+		<div class="control-group">
+			<label class="control-label" for="statusTextGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet} * :</label>
+			<div class="controls">
+                              <#if config?exists && config.statusTextGuichet?has_content>
+                           
+                            <input type="text" name="status_text_guichet" value="${config.statusTextGuichet}" size="80" maxlength="255" />
+		
+                            <#else>
+                             <input type="text" name="status_text_guichet" value="" size="80" maxlength="255" />
+		
+                              </#if>
+					</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="sendNotification">#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification_guichet} :</label>
+			<div class="controls">
+				<label class="checkbox">
+					<input type="radio" name="send_notification_guichet" value="true" <#if config.sendNotificationGuichet>checked="checked"</#if> />
+					&nbsp;#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification.yes_guichet}
+				</label>
+				<label class="checkbox">
+					<input type="radio" name="send_notification_guichet" value="false" <#if !config.sendNotificationGuichet>checked="checked"</#if> />
+					&nbsp;#i18n{module.workflow.notifygru.task_notify_gru_config.label_send_notification.no_guichet}
+				</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-small btn-primary" type="submit" name="apply" value="#i18n{module.workflow.notifygru.task_notify_gru_config.label_apply}">
+					<i class="icon-ok icon-white">&nbsp;</i>&nbsp;#i18n{module.workflow.notifygru.task_notify_gru_config.label_apply_guichet}
+				</button>
+			</div>
+		</div>
+	</fieldset>
+</div>
+ <#if config?exists && config.sendNotificationGuichet?has_content>
+
+	<div>
+		<div class="control-group">
+			<label class="control-label" for="SenderNameGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet} * :</label>
+			<div class="controls">
+                             <#if config?exists && config.senderNameGuichet?has_content>
+                             
+                              <input type="text" name="sender_name_guichet" id="" size="80" value="${config.senderNameGuichet}" maxlength="255" />		
+			 <#else>
+                                <input type="text" name="sender_name_guichet" id="" size="80" value="" maxlength="255" />		
+			
+                                 </#if>
+					#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_guichet}
+			</div>
+		</div>
+	  	<div class="control-group">
+	    	<label class="control-label" for="suject">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_guichet} * :</label>
+			<div class="controls">
+                            <#if config?exists && config.subjectGuichet?has_content>
+                           
+                              <input type="text" name="subject_guichet" id="" size="80" value="${config.subjectGuichet}" maxlength="255" />		
+			
+                                <#else>
+                                <input type="text" name="subject_guichet" id="" size="80" value="" maxlength="255" />		
+			
+                                 </#if>
+				
+				#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_guichet}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="messageGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * :</label>
+			<div class="controls editor">
+                              <#if config?exists && config.messageGuichet?has_content>
+                           
+                             <textarea name="message_guichet" id="" rows="20" cols="90" class="richtext">${messageGuichet}</textarea>
+			
+                                <#else>
+                                <textarea name="message_guichet" id="" rows="20" cols="90" class="richtext"></textarea>
+                               </#if>
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
+			</div>
+		</div>
+		<br />
+		
+	</div>
+ 
+ 
+ <#if level_notification_guichet?exists>
+			<div class="control-group" id="entry_id_demand">
+				<label class="control-label" for="level_notification_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_guichet}* :</label>
+				<div class="controls">
+					<@combo name="level_notification_guichet" items=level_notification_guichet default_value=1 />&nbsp;
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_guichet}</span>
+				</div>
+			</div>
+		</#if>
+                
+</#if>
+
+<script type="text/javascript">
+	$( document ).ready( function(  ) {
+		if ( $( '#entry_user_guid select' ).val(  ) == "-1" ) {
+			$( '.user_attribute_freemarker' ).hide(  );
+		};
+		$( '#entry_user_guid select' ).change( function(  ) {
+			$( '.user_attribute_freemarker' ).toggle( $( this ).val(  ) != '-1' );
+		} );
+	} );
+</script>
+
