@@ -4,9 +4,9 @@
 		<br />
 
     <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="idRessource">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_list_resource} *</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="resource_record_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_list_resource} *</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-            <@comboWithParams name="id_ressource" default_value=1?string additionalParameters="class=\"input-xxlarge\"" items=list_ressources />
+            <@comboWithParams name="resource_record_email" default_value=1?string additionalParameters="class=\"input-xxlarge\"" items=list_ressources />
 			<button class="btn btn-primary btn-sm btn-flat" type="submit" value="apply" name="apply" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_apply}">
 				<!-- Value in button to fix bad behaviour on button click -->
 				<i class="glyphicon glyphicon-ok"></i>

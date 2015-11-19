@@ -110,12 +110,12 @@ public final class NotifyGruConstants {
       public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
 
     // PARAMETERS GUICHET
-    public static final String PARAMETER_ID_RESOURCE = "id_resource";
+    public static final String PARAMETER_ID_RESOURCE = "id_ressource";
     public static final String PARAMETER_ID_USER_GUID = "id_user_guid";
     
        
 
-    public static final String PARAMETER_ID_DEMAND_GUICHET = "id_demand_guichet";
+    public static final String PARAMETER_ID_DEMAND_GUICHET = "ressource_id_demand_guichet";
     public static final String PARAMETER_CRM_WEBAPP_CODE_GUICHET = "crm_web_app_code_guichet";
     public static final String PARAMETER_SEND_NOTIFICATION_GUICHET = "send_notification_guichet";
     public static final String PARAMETER_STATUS_TEXT_GUICHET = "status_text_guichet";
@@ -147,12 +147,12 @@ public final class NotifyGruConstants {
     public static final String PARAMETER_ACTIVE_ONGLET_SMS = "active_onglet_sms";
     
      // PARAMETERS Liste Diffusion
-    public static final String PARAMETER_ID_MAILING_LIST= "id_mailing_list";
+    public static final String PARAMETER_ID_MAILING_LIST= "id_mailing_list_broadcast";
       public static final String PARAMETER_SUBJECT_BROADCAST = "subject_broadcast";    
     public static final String PARAMETER_MESSAGE_BROADCAST = "message_broadcast";
     public static final String PARAMETER_SENDER_NAME_BROADCAST= "sender_name_broadcast"; 
-    public static final String PARAMETER_RECIPIENT_CC_BROADCAST = "recipient_cc_broadcast";
-    public static final String PARAMETER_RECIPIENT_CCI_BROADCAST = "recipient_cci_broadcast";   
+    public static final String PARAMETER_RECIPIENT_CC_BROADCAST = "recipients_cc_broadcast";
+    public static final String PARAMETER_RECIPIENT_CCI_BROADCAST = "recipients_cci_broadcast";   
     public static final String PARAMETER_ACTIVE_ONGLET_BROADCAST = "active_onglet_broadcast";
      public static final String PARAMETER_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
     

@@ -5,7 +5,7 @@
  <#if mailing_list?exists>
         <div id="mailing_list">
             <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list} *</label>
+                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_mailing_list_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list} *</label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                     <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment}</span>
@@ -72,12 +72,12 @@
 
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <#if config?exists  && config.messageBroadcast?has_content>
-                    <textarea name="message_email_broadcast" id="message_email" rows="20" cols="90" class="richtext">${config.messageBroadcast}</textarea>
+                    <textarea name="message_broadcast" id="message_email" rows="20" cols="90" class="richtext">${config.messageBroadcast}</textarea>
                 <#else>
-					<textarea name="message_email_broadcast" id="message_email" rows="20" cols="90" class="richtext"></textarea>
+					<textarea name="message_broadcast" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
             </div>

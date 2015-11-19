@@ -25,7 +25,10 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
             + "id_ressource_record_sms,"
             + "phone_sms,message_sms,"
-            + "level_notification_sms,is_active_onglet_sms"
+            + "level_notification_sms,is_active_onglet_sms,"
+            + "id_mailing_list_broadcast,subject_broadcast,message_broadcast,"
+            + "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast,"
+            + "level_notification_broadcast,is_active_onglet_broadcast"
             + " FROM task_notify_gru_cf  WHERE id_task = ?";
 
     private static final String SQL_QUERY_INSERT = "INSERT INTO task_notify_gru_cf( "
@@ -38,9 +41,12 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + "level_notification_email,is_active_onglet_email,"
             + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
             + "id_ressource_record_sms,"
-            + "phone_sms,message_sms,"          
-            + "level_notification_sms,is_active_onglet_sms)"
-            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + "phone_sms,message_sms,level_notification_sms,is_active_onglet_sms,"
+            + "id_mailing_list_broadcast,subject_broadcast,message_broadcast,"
+            + "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast,"
+            + "level_notification_broadcast,is_active_onglet_broadcast,"   
+            + ")"
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE task_notify_gru_cf "
             + " SET id_task = ?, id_ressource = ?, id_user_guid = ?, id_demand_guichet = ?"
             + ",  id_crm_web_app_code_guichet = ?,"
@@ -56,7 +62,11 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             + " id_ressource_record_sms= ?, "
             + " phone_sms = ?, message_sms = ?, "
             + " level_notification_sms = ?,"
-            + "is_active_onglet_sms = ?  WHERE id_task = ? ";
+            + "is_active_onglet_sms = ?,  "
+            + "id_mailing_list_broadcast = ?, subject_broadcast = ?, message_broadcast = ?,"
+            + "sender_name_broadcast = ?, recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, "
+            + "level_notification_broadcast = ?, is_active_onglet_broadcast = ?"
+            + "WHERE id_task = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM task_notify_gru_cf WHERE id_task = ? ";
 
     /*  private static final String SQL_QUERY_DELETE_POSITION_ENTRY_FILE = "DELETE FROM task_notify_gru_ef where id_task= ? ";
@@ -110,6 +120,16 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
        
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
+        
+        
+         daoUtil.setInt(++nPos, config.getIdMailingListBroadcast());
+         daoUtil.setString(++nPos, config.getSubjectBroadcast());
+         daoUtil.setString(++nPos, config.getMessageBroadcast());
+         daoUtil.setString(++nPos, config.getSenderNameBroadcast());
+         daoUtil.setString(++nPos, config.getRecipientsCcBroadcast());
+         daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
+         daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
+             daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
 
         daoUtil.executeUpdate();
         daoUtil.free();
@@ -163,6 +183,16 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
      
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
+        
+        
+        daoUtil.setInt(++nPos, config.getIdMailingListBroadcast());
+        daoUtil.setString(++nPos, config.getSubjectBroadcast());
+        daoUtil.setString(++nPos, config.getMessageBroadcast());
+        daoUtil.setString(++nPos, config.getSenderNameBroadcast());
+        daoUtil.setString(++nPos, config.getRecipientsCcBroadcast());
+        daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
+        daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
+        daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
 
         daoUtil.setInt(++nPos, config.getIdTask());
         daoUtil.executeUpdate();
@@ -220,6 +250,16 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
            
             config.setLevelNotificationSMS(daoUtil.getString(++nPos));
             config.setActiveOngletSMS(daoUtil.getBoolean(++nPos));
+            
+            
+                 config.setIdMailingListBroadcast(daoUtil.getInt(++nPos));
+                 config.setSubjectBroadcast(daoUtil.getString(++nPos));
+                 config.setMessageBroadcast(daoUtil.getString(++nPos));
+                 config.setSenderNameBroadcast(daoUtil.getString(++nPos));
+                 config.setRecipientsCcBroadcast(daoUtil.getString(++nPos));
+                 config.setRecipientsCciBroadcast(daoUtil.getString(++nPos));
+                 config.setLevelNotificationBroadcast(daoUtil.getString(++nPos));
+                  config.setActiveOngletBroadcast(daoUtil.getBoolean(++nPos));
         }
 
         daoUtil.free();

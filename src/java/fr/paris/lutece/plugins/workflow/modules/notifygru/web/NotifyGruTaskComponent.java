@@ -79,6 +79,10 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         //non present dans le formulaire : ActiveOngletSMS
         String strActiveOngletSMS = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_SMS);
         Boolean bActiveOngletSMS = Boolean.parseBoolean(strActiveOngletSMS);
+        
+          //non present dans le formulaire : ActiveOngletBROADCAST
+        String strActiveOngletBROADCAST = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_BROADCAST);
+        Boolean bActiveOngletBROADCAST = Boolean.parseBoolean(strActiveOngletBROADCAST);
 
         if (strAddOnglet == null) {
             //ajout onglet
@@ -90,19 +94,19 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         }
 
-        /*général*/
+        /*général*/   
         String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
         int nIdResource = (strIdResource == null) ? -1 : Integer.parseInt(strIdResource);
-        String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);
+        String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
         int nstridUserGuid = (stridUserGuid == null) ? -1 : Integer.parseInt(stridUserGuid);
         /*fin général*/
 
-        /*guichet*/
+        /*guichet*/   
         String stridDemandGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ID_DEMAND_GUICHET);
         int nidDemandGuichet = (stridDemandGuichet == null) ? -1 : Integer.parseInt(stridDemandGuichet);
 
         String strCrmWebAppCodeGuichet = request.getParameter(NotifyGruConstants.PARAMETER_CRM_WEBAPP_CODE_GUICHET);
-        int nCrmWebAppCodeGuichet = (strCrmWebAppCodeGuichet == null) ? -1 - 1 : Integer.parseInt(strCrmWebAppCodeGuichet);
+        int nCrmWebAppCodeGuichet = (strCrmWebAppCodeGuichet == null) ? -1 : Integer.parseInt(strCrmWebAppCodeGuichet);
 
         String strSendNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SEND_NOTIFICATION_GUICHET);
         Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
@@ -121,13 +125,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
 
         /*Fin Agent*/
-        /*email*/
+        /*email*/ 
         String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
         String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
-        String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL);
+        String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL); //NON  
         String strMessageEmail = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_EMAIL);
         String strSenderNameEmail = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_EMAIL);
-        String strRecipientsEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_EMAIL);
+        
         String strRecipientsCcEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_EMAIL);
         String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
         String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
@@ -135,12 +139,22 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         /*fin email*/
         /*sms*/
-        //non present dans le formulaire : IsNotifyBySMS
+         //NON pour l'instant
         String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
+        
         String strPhoneSMS = request.getParameter(NotifyGruConstants.PARAMETER_PHONE_SMS);
         String strMessageSMS = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_SMS);
         String strLevelNotificationSMS = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_SMS);
-
+         
+         String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
+        int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
+        
+         String strsenderNameBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_BROADCAST);
+         String strsubjectBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_BROADCAST);
+         String strmessageBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_BROADCAST);  
+         String strrecipientsCcBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_BROADCAST);  
+         String strrecipientsCciBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_BROADCAST);  
+          String strLevelNotificationBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_BROADCAST);
 
         /*fin sms*/
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
@@ -174,7 +188,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         config.setEntryEmail(strEntryEmail);
         config.setMessageEmail(strMessageEmail);
         config.setSenderNameEmail(strSenderNameEmail);
-        config.setRecipientsEmail(strRecipientsEmail);
+      
         config.setRecipientsCcEmail(strRecipientsCcEmail);
         config.setRecipientsCciEmail(strRecipientsCciEmail);
 
@@ -187,7 +201,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         config.setLevelNotificationSMS(strLevelNotificationSMS);
         config.setActiveOngletSMS(bActiveOngletSMS);
-
+        
+        
+config.setIdMailingListBroadcast(nIdMailingListBroadcast);
+config.setSenderNameBroadcast(strsenderNameBroadcast);
+config.setSubjectBroadcast(strsubjectBroadcast);
+config.setMessageBroadcast(strmessageBroadcast);
+config.setRecipientsCcBroadcast(strrecipientsCcBroadcast);
+config.setRecipientsCciBroadcast(strrecipientsCciBroadcast);
+config.setLevelNotificationBroadcast(strLevelNotificationBroadcast);
+config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
         //        if ( StringUtils.isBlank( strApply ) )
 //        {
 //            if ( nIdDirectory_ongle1 == WorkflowUtils.CONSTANT_ID_NULL )
@@ -367,6 +390,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_GRU_LIST_CRM_WEBAPP, this.getListCrmWebApp());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourcesDemande());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourceEmail());
+        model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_EMAIL, this.getListRessourceEmail());
 //        model.put( NotifyGruConstants.MARK_STATE_LIST,
 //            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
 
