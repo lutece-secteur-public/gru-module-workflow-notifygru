@@ -4,37 +4,37 @@
 		<br />
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="phone_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_phone} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="phone_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_phone_sms} * </label>
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <#if config?exists && config.PhoneSMS?has_content>
                     <input type="text" name="phone_sms" id="" class="form-control input-sm" value="${config.PhoneSMS}" maxlength="70">
                 <#else>
                     <input type="text" name="phone_sms" id="" class="form-control input-sm" value="" maxlength="70">
 				</#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_phone_comment}</span>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_phone_comment_sms}</span>
             </div>
         </div>
 
 
 
 <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} * </label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <#if config?exists  && config.messageSMS?has_content>
                     <textarea name="message_sms" id="message_sms" rows="20" cols="90" >${config.messageSMS}</textarea>
                 <#else>
 					<textarea name="message_sms" id="message_sms" rows="7" cols="40" ></textarea>
                 </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
             </div>
  </div>
                 
                 <#if level_notification_sms?exists>
 			<div class="control-group" id="entry_id_demand">
-				<label class="control-label" for="level_notification_sms">Niveau de notification* :</label>
+				<label class="control-label" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}* :</label>
 				<div class="controls">
 					<@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
-					<span class="help-block">Niveau de notification</span>
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
 				</div>
 			</div>
 		</#if>
