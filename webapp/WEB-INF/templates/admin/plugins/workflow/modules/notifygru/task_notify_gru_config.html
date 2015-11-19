@@ -42,42 +42,60 @@
 
 
     <ul id="tabs" class="nav nav-tabs">
+    <#if config?exists && config.activeOngletGuichet == true>
         <li <#if pane="pane-desk">class="active"</#if> >
-            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_desk.title}</a>
+            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_guichet.title}</a>
         </li>
+    </#if>
+     <#if config?exists && config.activeOngletAgent == true>
         <li <#if pane="pane-agent">class="active"</#if> >
             <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
         </li>
+     </#if>
+     <#if config?exists && config.activeOngletEmail == true>
         <li <#if pane="pane-email">class="active"</#if> >
             <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
         </li>
+      </#if>
+      <#if config?exists && config.activeOngletSMS == true>
         <li <#if pane="pane-sms">class="active"</#if> >
             <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
         </li>
+      </#if>
+      <#if config?exists && config.activeOngletBroadcast == true>
         <li <#if pane="pane-mailing-list">class="active"</#if> >
             <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
         </li>
-
+	  </#if>
 
     </ul>
 
 
-    <div class="tab-content">		
+    <div class="tab-content">	
+    <#if config?exists && config.activeOngletGuichet == true>	
         <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
            <#include "config_guichet.html" />
         </div>
+    </#if>
+    <#if config?exists && config.activeOngletAgent == true>
         <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
              <#include "config_agent.html" />
         </div>
+    </#if>
+    <#if config?exists && config.activeOngletEmail == true>
         <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
             <#include "config_email.html" />
-
         </div>
+    </#if>
+    <#if config?exists && config.activeOngletSMS == true>
         <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
              <#include "config_sms.html" />
         </div>
+    </#if>
+     <#if config?exists && config.activeOngletBroadcast == true>
         <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
              <#include "config_liste_broadcast.html" />
         </div>
+     </#if0>
     </div>
 <@initEditor />
