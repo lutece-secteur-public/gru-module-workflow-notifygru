@@ -8,7 +8,7 @@
                 
                 
 <div class="control-group">
-			<label class="control-label" for="statusTextAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text} * :</label>
+			<label class="control-label" for="statusTextAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent} * :</label>
 			<div class="controls">
                               <#if config?exists && config.statusTextAgent?has_content>
                            
@@ -21,7 +21,7 @@
 					</div>
 		</div>
 <div class="control-group">
-			<label class="control-label" for="messageAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message} * :</label>
+			<label class="control-label" for="messageAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * :</label>
 			<div class="controls editor">
                               <#if config?exists && config.messageAgent?has_content>
                            
@@ -30,17 +30,17 @@
                                 <#else>
                                 <textarea name="message_agent" id="" rows="20" cols="90" class="richtext"></textarea>
                                </#if>
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment}</span>
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
 			</div>
 		</div>   
                 
                 
                  <#if level_notification_agent?exists>
 			<div class="control-group" id="entry_id_demand">
-				<label class="control-label" for="level_notification_agent">Niveau de notification* :</label>
+				<label class="control-label" for="level_notification_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent}* :</label>
 				<div class="controls">
 					<@combo name="level_notification_agent" items=level_notification_agent default_value=1 />&nbsp;
-					<span class="help-block">Niveau de notification</span>
+					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent}</span>
 				</div>
 			</div>
 		</#if>
