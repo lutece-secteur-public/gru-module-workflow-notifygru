@@ -60,304 +60,263 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Override
     public String doSaveConfig(HttpServletRequest request, Locale locale, ITask task) {
 
-        String strOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE);
-
-        String strAddOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE_ADD);
-
-        //non present dans le formulaire : ActiveOngletGuichet
-        String strActiveOngletGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_GUICHET);
-        Boolean bActiveOngletGuichet = Boolean.parseBoolean(strActiveOngletGuichet);
-
-        //non present dans le formulaire : ActiveOngletAgent
-        String strActiveOngletAgent = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_AGENT);
-        Boolean bActiveOngletAgent = Boolean.parseBoolean(strActiveOngletAgent);
-
-        //non present dans le formulaire : ActiveOngletAgent
-        String strActiveOngletEmail = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_EMAIL);
-        Boolean bActiveOngletEmail = Boolean.parseBoolean(strActiveOngletEmail);
-
-        //non present dans le formulaire : ActiveOngletSMS
-        String strActiveOngletSMS = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_SMS);
-        Boolean bActiveOngletSMS = Boolean.parseBoolean(strActiveOngletSMS);
-        
-          //non present dans le formulaire : ActiveOngletBROADCAST
-        String strActiveOngletBROADCAST = request.getParameter(NotifyGruConstants.PARAMETER_ACTIVE_ONGLET_BROADCAST);
-        Boolean bActiveOngletBROADCAST = Boolean.parseBoolean(strActiveOngletBROADCAST);
-
-        if (strAddOnglet == null) {
-            //ajout onglet
-        }
-
-        String strRemoveOnglet = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE_REMOVE);
-
-        if (strRemoveOnglet == null) {
-
-        }
-
-        /*général*/   
-        String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
-        int nIdResource = (strIdResource == null) ? -1 : Integer.parseInt(strIdResource);
-        String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
-        int nstridUserGuid = (stridUserGuid == null) ? -1 : Integer.parseInt(stridUserGuid);
-        /*fin général*/
-
-        /*guichet*/   
-        String stridDemandGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ID_DEMAND_GUICHET);
-        int nidDemandGuichet = (stridDemandGuichet == null) ? -1 : Integer.parseInt(stridDemandGuichet);
-
-        String strCrmWebAppCodeGuichet = request.getParameter(NotifyGruConstants.PARAMETER_CRM_WEBAPP_CODE_GUICHET);
-        int nCrmWebAppCodeGuichet = (strCrmWebAppCodeGuichet == null) ? -1 : Integer.parseInt(strCrmWebAppCodeGuichet);
-
-        String strSendNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SEND_NOTIFICATION_GUICHET);
-        Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
-
-        String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
-        String strSubjectGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_GUICHET);
-        String strMessageGuichet = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_GUICHET);
-        String strSenderNameGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET);
-        String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
-
-        /*fin guichet*/
-        /*Agent*/
-        String strStatusTextAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_AGENT);
-        String strMessageAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_MESSAGE_AGENT);
-        String strLevelNotificationAgent = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_AGENT);
-
-
-        /*Fin Agent*/
-        /*email*/ 
-        String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
-        String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
-        String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL); //NON  
-        String strMessageEmail = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_EMAIL);
-        String strSenderNameEmail = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_EMAIL);
-        
-        String strRecipientsCcEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_EMAIL);
-        String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
-        String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
-
-
-        /*fin email*/
-        /*sms*/
-         //NON pour l'instant
-        String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
-        
-        String strPhoneSMS = request.getParameter(NotifyGruConstants.PARAMETER_PHONE_SMS);
-        String strMessageSMS = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_SMS);
-        String strLevelNotificationSMS = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_SMS);
-         
-         String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
-        int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
-        
-         String strsenderNameBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_BROADCAST);
-         String strsubjectBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_BROADCAST);
-         String strmessageBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_BROADCAST);  
-         String strrecipientsCcBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_BROADCAST);  
-         String strrecipientsCciBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_BROADCAST);  
-          String strLevelNotificationBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_BROADCAST);
-
-        /*fin sms*/
+        String strApply = request.getParameter(NotifyGruConstants.PARAMETER_APPY);
+        String strOngletActive = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE);
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
-        Boolean bCreate = false;
 
-        if (config.getIdTask() == 0) {
-            config = new TaskNotifyGruConfig();
-            config.setIdTask(task.getId());
-            bCreate = true;
+        Boolean bActiveOngletGuichet = (config.getIdTask() == 0) ? false : config.isActiveOngletGuichet();
+        Boolean bActiveOngletAgent = (config.getIdTask() == 0) ? false : config.isActiveOngletAgent();
+        Boolean bActiveOngletEmail = (config.getIdTask() == 0) ? false : config.isActiveOngletEmail();
+        Boolean bActiveOngletSMS = (config.getIdTask() == 0) ? false : config.isActiveOngletSMS();
+        Boolean bActiveOngletBROADCAST = (config.getIdTask() == 0) ? false : config.isActiveOngletBroadcast();
+
+        switch (strApply) {
+            case "AddOnglet":
+                bActiveOngletGuichet = ("guichet".equals(strOngletActive)) ? true : false;
+                bActiveOngletAgent = ("agent".equals(strOngletActive)) ? true : false;
+                bActiveOngletEmail = ("email".equals(strOngletActive)) ? true : false;
+                bActiveOngletSMS = ("sms".equals(strOngletActive)) ? true : false;
+                bActiveOngletBROADCAST = ("liste".equals(strOngletActive)) ? true : false;
+                break;
+            case "RemoveOnglet":
+                bActiveOngletGuichet = ("guichet".equals(strOngletActive)) ? false : config.isActiveOngletGuichet();
+                bActiveOngletAgent = ("agent".equals(strOngletActive)) ? false : config.isActiveOngletAgent();
+                bActiveOngletEmail = ("email".equals(strOngletActive)) ? false : config.isActiveOngletEmail();
+                bActiveOngletSMS = ("sms".equals(strOngletActive)) ? false : config.isActiveOngletSMS();
+                bActiveOngletBROADCAST = ("liste".equals(strOngletActive)) ? false : config.isActiveOngletBroadcast();
+                break;
         }
 
-        config.setIdRessource(nIdResource);
-        config.setIdUserGuid(nstridUserGuid);
-        config.setIdDemandGuichet(nidDemandGuichet);
-        config.setCrmWebAppCodeGuichet(nCrmWebAppCodeGuichet);
-        config.setSendNotificationGuichet(bSendNotificationGuichet);
-        config.setStatusTextGuichet(strStatusTextGuichet);
-        config.setSubjectGuichet(strSubjectGuichet);
-        config.setMessageGuichet(strMessageGuichet);
-        config.setSenderNameGuichet(strSenderNameGuichet);
-        config.setLevelNotificationGuichet(strLevelNotificationGuichet);
-        config.setActiveOngletGuichet(bActiveOngletGuichet);
+        String strError = "";
 
-        config.setStatusTextAgent(strStatusTextAgent);
-        config.setMessageAgent(strMessageAgent);
-        config.setLevelNotificationAgent(strLevelNotificationAgent);
-        config.setActiveOngletAgent(bActiveOngletAgent);
+        if (bActiveOngletGuichet || ( strApply.equals("RemoveOnglet") && "guichet".equals(strOngletActive))) {
 
-        config.setRessourceRecordEmail(strRessourceRecordEmail);
-        config.setSubjectEmail(strSubjectEmail);
-        config.setEntryEmail(strEntryEmail);
-        config.setMessageEmail(strMessageEmail);
-        config.setSenderNameEmail(strSenderNameEmail);
-      
-        config.setRecipientsCcEmail(strRecipientsCcEmail);
-        config.setRecipientsCciEmail(strRecipientsCciEmail);
+            /*général*/
+            String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
+            int nIdResource = (strIdResource == null) ? -1 : Integer.parseInt(strIdResource);
+            String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
+            int nstridUserGuid = (stridUserGuid == null) ? -1 : Integer.parseInt(stridUserGuid);
+            /*fin général*/
 
-        config.setLevelNotificationEmail(strLevelNotificationEmail);
-        config.setActiveOngletEmail(bActiveOngletEmail);
+            if (StringUtils.isBlank(strApply)) {
+                if (nIdResource == WorkflowUtils.CONSTANT_ID_NULL) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+            }
 
-        config.setRessourceRecordSMS(strRessourceRecordSMS);
-        config.setPhoneSMS(strPhoneSMS);
-        config.setMessageSMS(strMessageSMS);
+            /*guichet*/
+            String stridDemandGuichet = request.getParameter(NotifyGruConstants.PARAMETER_ID_DEMAND_GUICHET);
+            int nidDemandGuichet = (stridDemandGuichet == null) ? -1 : Integer.parseInt(stridDemandGuichet);
 
-        config.setLevelNotificationSMS(strLevelNotificationSMS);
-        config.setActiveOngletSMS(bActiveOngletSMS);
-        
-        
-config.setIdMailingListBroadcast(nIdMailingListBroadcast);
-config.setSenderNameBroadcast(strsenderNameBroadcast);
-config.setSubjectBroadcast(strsubjectBroadcast);
-config.setMessageBroadcast(strmessageBroadcast);
-config.setRecipientsCcBroadcast(strrecipientsCcBroadcast);
-config.setRecipientsCciBroadcast(strrecipientsCciBroadcast);
-config.setLevelNotificationBroadcast(strLevelNotificationBroadcast);
-config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
-        //        if ( StringUtils.isBlank( strApply ) )
-//        {
-//            if ( nIdDirectory_ongle1 == WorkflowUtils.CONSTANT_ID_NULL )
-//            {
-//                strError = NotifyGruConstants.FIELD_TASK_DIRECTORY;
-//            }
-//            else if ( nNotify == DirectoryUtils.CONSTANT_ID_NULL )
-//            {
-//                strError = NotifyGruConstants.FIELD_NOTIFY;
-//            }
-//            else if ( ( nPositionEntryDirectorySms == WorkflowUtils.CONSTANT_ID_NULL ) &&
-//                    ( ( nNotify == NotificationTypeEnum.SMS.getId(  ) ) ||
-//                    ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) ) ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_TASK_ENTRY_GRU_SMS;
-//            }
-//            else if ( ( nPositionEntryDirectoryEmail == WorkflowUtils.CONSTANT_ID_NULL ) && !bIsNotifyByUserGuid &&
-//                    ( ( nNotify == NotificationTypeEnum.EMAIL.getId(  ) ) ||
-//                    ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) ) ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_TASK_ENTRY_GRU_EMAIL;
-//            }
-//            else if ( StringUtils.isBlank( strSenderName_ongle1 ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_SENDER_NAME;
-//            }
-//            else if ( StringUtils.isBlank( strSubject_ongle1 ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_SUBJECT;
-//            }
-//            else if ( StringUtils.isBlank( strMessage_ongle1 ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_MESSAGE;
-//            }
-//            else if ( ( nPositionEntryDirectoryUserGuid_ongle1 == WorkflowUtils.CONSTANT_ID_NULL ) && bIsNotifyByUserGuid )
-//            {
-//                strError = NotifyGruConstants.FIELD_TASK_ENTRY_GRU_USER_GUID;
-//            }
-//            else if ( ( nNotify == NotificationTypeEnum.MAILING_LIST.getId(  ) ) &&
-//                    ( nIdMailingList == WorkflowUtils.CONSTANT_ID_NULL ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_MAILING_LIST;
-//            }
-//            else if ( StringUtils.isNotBlank( strEmailValidation ) )
-//            {
-//                if ( nIdState == WorkflowUtils.CONSTANT_ID_NULL )
-//                {
-//                    strError = NotifyGruConstants.FIELD_STATE;
-//                }
-//                else if ( StringUtils.isBlank( strMessageValidation ) )
-//                {
-//                    strError = NotifyGruConstants.FIELD_MESSAGE_VALIDATION;
-//                }
-//                else if ( StringUtils.isBlank( strLabelLink ) )
-//                {
-//                    strError = NotifyGruConstants.FIELD_LABEL_LINK;
-//                }
-//                else if ( nPeriodValidity == WorkflowUtils.CONSTANT_ID_NULL )
-//                {
-//                    strError = NotifyGruConstants.FIELD_LABEL_PERIOD_VALIDITY;
-//                }
-//            }
-//            else if ( StringUtils.isNotBlank( strViewRecord ) && StringUtils.isBlank( strLabelLinkViewRecord ) )
-//            {
-//                strError = NotifyGruConstants.FIELD_LABEL_LINK_VIEW_RECORD;
-//            }
-//        }
-//
-//        if ( !strError.equals( WorkflowUtils.EMPTY_STRING ) )
-//        {
-//            Object[] tabRequiredFields = { I18nService.getLocalizedString( strError, locale ) };
-//
-//            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_FIELD,
-//                tabRequiredFields, AdminMessage.TYPE_STOP );
-//        }
-//        if ( StringUtils.isBlank( strApply ) && ( nPositionEntryDirectorySms == nPositionEntryDirectoryEmail ) &&
-//                !bIsNotifyByUserGuid && ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) ) )
-//        {
-//            Object[] tabRequiredFields = 
-//                {
-//                    I18nService.getLocalizedString( NotifyGruConstants.FIELD_TASK_ENTRY_GRU_EMAIL, locale ),
-//                    I18nService.getLocalizedString( NotifyGruConstants.FIELD_TASK_ENTRY_GRU_SMS, locale ),
-//                };
-//
-//            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_EQUAL_FIELD,
-//                tabRequiredFields, AdminMessage.TYPE_STOP );
-//        }
-//        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
-//        Boolean bCreate = false;
-//
-//        if ( config == null )
-//        {
-//            config = new TaskNotifyGruConfig(  );
-//            config.setIdTask( task.getId(  ) );
-//            bCreate = true;
-//        }
-//    
-//
-//        config.setNotifyByUserGuid( bIsNotifyByUserGuid );
-//        if ( nNotify == NotificationTypeEnum.EMAIL.getId(  ) )
-//        {
-//            config.setNotifyByEmail( true );
-//            config.setNotifyBySms( false );
-//            config.setNotifyByMailingList( false );
-//        }
-//        else if ( nNotify == NotificationTypeEnum.SMS.getId(  ) )
-//        {
-//            config.setNotifyByEmail( false );
-//            config.setNotifyBySms( true );
-//            config.setNotifyByMailingList( false );
-//        }
-//        else if ( nNotify == NotificationTypeEnum.EMAIL_SMS.getId(  ) )
-//        {
-//            config.setNotifyByEmail( true );
-//            config.setNotifyBySms( true );
-//            config.setNotifyByMailingList( false );
-//        }
-//        else if ( nNotify == NotificationTypeEnum.MAILING_LIST.getId(  ) )
-//        {
-//            config.setNotifyByEmail( false );
-//            config.setNotifyBySms( false );
-//            config.setNotifyByMailingList( true );
-//        }
-//        if ( ( tabSelectedPositionEntryFile != null ) && ( tabSelectedPositionEntryFile.length > 0 ) )
-//        {
-//            List<Integer> listSelectedPositionEntryFile = new ArrayList<Integer>(  );
-//
-//            for ( int i = 0; i < tabSelectedPositionEntryFile.length; i++ )
-//            {
-//                listSelectedPositionEntryFile.add( WorkflowUtils.convertStringToInt( tabSelectedPositionEntryFile[i] ) );
-//            }
-//
-//            config.setListPositionEntryFile( listSelectedPositionEntryFile );
-//        }
-//        else
-//        {
-//            config.setListPositionEntryFile( null );
-//        }
-//
-//        if ( bCreate )
-//        {
-//            _taskNotifyGruConfigService.create( config );
-//        }
-//        else
-//        {
-//            _taskNotifyGruConfigService.update( config );
-//        }
+            if (StringUtils.isBlank(strApply)) {
+                if (nidDemandGuichet == WorkflowUtils.CONSTANT_ID_NULL) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            String strCrmWebAppCodeGuichet = request.getParameter(NotifyGruConstants.PARAMETER_CRM_WEBAPP_CODE_GUICHET);
+            int nCrmWebAppCodeGuichet = (strCrmWebAppCodeGuichet == null) ? -1 : Integer.parseInt(strCrmWebAppCodeGuichet);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (nCrmWebAppCodeGuichet == WorkflowUtils.CONSTANT_ID_NULL) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            String strSendNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SEND_NOTIFICATION_GUICHET);
+            Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
+
+            String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
+            String strSubjectGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_GUICHET);
+            String strMessageGuichet = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_GUICHET);
+            String strSenderNameGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET);
+            String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (strSenderNameGuichet == WorkflowUtils.EMPTY_STRING
+                        || strMessageGuichet == WorkflowUtils.EMPTY_STRING
+                        || strSubjectGuichet == WorkflowUtils.EMPTY_STRING
+                        || strLevelNotificationGuichet == WorkflowUtils.EMPTY_STRING
+                        || strStatusTextGuichet == WorkflowUtils.EMPTY_STRING) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            config.setIdRessource(nIdResource);
+            config.setIdUserGuid(nstridUserGuid);
+            config.setIdDemandGuichet(nidDemandGuichet);
+            config.setCrmWebAppCodeGuichet(nCrmWebAppCodeGuichet);
+            config.setSendNotificationGuichet(bSendNotificationGuichet);
+            config.setStatusTextGuichet(strStatusTextGuichet);
+            config.setSubjectGuichet(strSubjectGuichet);
+            config.setMessageGuichet(strMessageGuichet);
+            config.setSenderNameGuichet(strSenderNameGuichet);
+            config.setLevelNotificationGuichet(strLevelNotificationGuichet);
+            config.setActiveOngletGuichet(bActiveOngletGuichet);
+
+            /*fin guichet*/
+        }
+
+        if (bActiveOngletAgent || ( strApply.equals("RemoveOnglet") && "agent".equals(strOngletActive))) {
+
+            /*Agent*/
+            String strStatusTextAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_AGENT);
+            String strMessageAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_MESSAGE_AGENT);
+            String strLevelNotificationAgent = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_AGENT);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (strStatusTextAgent == WorkflowUtils.EMPTY_STRING
+                        || strMessageAgent == WorkflowUtils.EMPTY_STRING
+                        || strLevelNotificationAgent == WorkflowUtils.EMPTY_STRING) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            config.setStatusTextAgent(strStatusTextAgent);
+            config.setMessageAgent(strMessageAgent);
+            config.setLevelNotificationAgent(strLevelNotificationAgent);
+            config.setActiveOngletAgent(bActiveOngletAgent);
+
+            /*Fin Agent*/
+        }
+
+        if (bActiveOngletEmail || ( strApply.equals("RemoveOnglet") && "email".equals(strOngletActive))) {
+            /*email*/
+            String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
+            String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
+            String strEntryEmail = request.getParameter(NotifyGruConstants.PARAMETER_ENTRY_EMAIL); //NON  
+            String strMessageEmail = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_EMAIL);
+            String strSenderNameEmail = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_EMAIL);
+
+            String strRecipientsCcEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_EMAIL);
+            String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
+            String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (strRessourceRecordEmail == WorkflowUtils.EMPTY_STRING
+                        || strSubjectEmail == WorkflowUtils.EMPTY_STRING
+                        || strEntryEmail == WorkflowUtils.EMPTY_STRING
+                        || strMessageEmail == WorkflowUtils.EMPTY_STRING
+                        || strSenderNameEmail == WorkflowUtils.EMPTY_STRING
+                        || strRecipientsCcEmail == WorkflowUtils.EMPTY_STRING
+                        || strRecipientsCciEmail == WorkflowUtils.EMPTY_STRING
+                        || strLevelNotificationEmail == WorkflowUtils.EMPTY_STRING) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            config.setRessourceRecordEmail(strRessourceRecordEmail);
+            config.setSubjectEmail(strSubjectEmail);
+            config.setEntryEmail(strEntryEmail);
+            config.setMessageEmail(strMessageEmail);
+            config.setSenderNameEmail(strSenderNameEmail);
+
+            config.setRecipientsCcEmail(strRecipientsCcEmail);
+            config.setRecipientsCciEmail(strRecipientsCciEmail);
+
+            config.setLevelNotificationEmail(strLevelNotificationEmail);
+            config.setActiveOngletEmail(bActiveOngletEmail);
+
+            /*fin email*/
+        }
+
+        if (bActiveOngletSMS || ( strApply.equals("RemoveOnglet") && "sms".equals(strOngletActive))) {
+            /*sms*/
+            //NON pour l'instant
+            String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
+
+            String strPhoneSMS = request.getParameter(NotifyGruConstants.PARAMETER_PHONE_SMS);
+            String strMessageSMS = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_SMS);
+            String strLevelNotificationSMS = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_SMS);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (strRessourceRecordSMS == WorkflowUtils.EMPTY_STRING
+                        || strPhoneSMS == WorkflowUtils.EMPTY_STRING
+                        || strMessageSMS == WorkflowUtils.EMPTY_STRING
+                        || strLevelNotificationSMS == WorkflowUtils.EMPTY_STRING) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            config.setRessourceRecordSMS(strRessourceRecordSMS);
+            config.setPhoneSMS(strPhoneSMS);
+            config.setMessageSMS(strMessageSMS);
+
+            config.setLevelNotificationSMS(strLevelNotificationSMS);
+            config.setActiveOngletSMS(bActiveOngletSMS);
+
+            /*fin sms*/
+        }
+
+        if (bActiveOngletBROADCAST || ( strApply.equals("RemoveOnglet") && "liste".equals(strOngletActive))) {
+            String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
+            int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
+
+            String strsenderNameBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_BROADCAST);
+            String strsubjectBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_BROADCAST);
+            String strmessageBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_BROADCAST);
+            String strrecipientsCcBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CC_BROADCAST);
+            String strrecipientsCciBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_BROADCAST);
+            String strLevelNotificationBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_BROADCAST);
+
+            if (StringUtils.isBlank(strApply)) {
+                if (nIdMailingListBroadcast == WorkflowUtils.CONSTANT_ID_NULL
+                        || strsenderNameBroadcast == WorkflowUtils.EMPTY_STRING
+                        || strsubjectBroadcast == WorkflowUtils.EMPTY_STRING
+                        || strrecipientsCciBroadcast == WorkflowUtils.EMPTY_STRING
+                        || strrecipientsCcBroadcast == WorkflowUtils.EMPTY_STRING
+                        || strLevelNotificationBroadcast == WorkflowUtils.EMPTY_STRING) {
+                    strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
+                }
+
+            }
+
+            if (!strError.equals(WorkflowUtils.EMPTY_STRING)) {
+                Object[] tabRequiredFields = {I18nService.getLocalizedString(strError, locale)};
+
+                return AdminMessageService.getMessageUrl(request, NotifyGruConstants.MESSAGE_MANDATORY_FIELD,
+                        tabRequiredFields, AdminMessage.TYPE_STOP);
+            }
+
+            /* fin liste diffusion*/
+            config.setIdMailingListBroadcast(nIdMailingListBroadcast);
+            config.setSenderNameBroadcast(strsenderNameBroadcast);
+            config.setSubjectBroadcast(strsubjectBroadcast);
+            config.setMessageBroadcast(strmessageBroadcast);
+            config.setRecipientsCcBroadcast(strrecipientsCcBroadcast);
+            config.setRecipientsCciBroadcast(strrecipientsCciBroadcast);
+            config.setLevelNotificationBroadcast(strLevelNotificationBroadcast);
+            config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
+        }
+
+        if (bActiveOngletAgent || bActiveOngletBROADCAST || bActiveOngletEmail || bActiveOngletGuichet || bActiveOngletSMS) {
+            Boolean bCreate = false;
+            if (config.getIdTask() == 0) {
+                config = new TaskNotifyGruConfig();
+                config.setIdTask(task.getId());
+                bCreate = true;
+            }
+
+            if (bCreate) {
+                _taskNotifyGruConfigService.create(config);
+            } else {
+                _taskNotifyGruConfigService.update(config);
+            }
+
+        } else {
+            Object[] tabRequiredFields = {I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale)};
+
+            return AdminMessageService.getMessageUrl(request, NotifyGruConstants.MESSAGE_MANDATORY_ONGLET,
+                    tabRequiredFields, AdminMessage.TYPE_STOP);
+
+        }
+
         return null;
     }
 

@@ -102,7 +102,7 @@
 			<div class="controls editor">
                               <#if config?exists && config.messageGuichet?has_content>
                            
-                             <textarea name="message_guichet" id="" rows="20" cols="90" class="richtext">${messageGuichet}</textarea>
+                             <textarea name="message_guichet" id="" rows="20" cols="90" class="richtext">${config.messageGuichet}</textarea>
 			
                                 <#else>
                                 <textarea name="message_guichet" id="" rows="20" cols="90" class="richtext"></textarea>

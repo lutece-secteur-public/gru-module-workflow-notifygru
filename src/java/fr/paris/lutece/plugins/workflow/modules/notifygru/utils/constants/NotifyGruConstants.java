@@ -20,23 +20,24 @@ public final class NotifyGruConstants {
     public static final String TASK_NOTIFY_GRU_KEY = "taskNotifyGru";
 
     // FIELDS
-    public static final String FIELD_NOTIFY = "module.workflow.notifygru.task_notify_directory_config.label_notify_by";
-    public static final String FIELD_SUBJECT = "module.workflow.notifygru.task_notify_directory_config.label_subject";
-    public static final String FIELD_MESSAGE = "module.workflow.notifygru.task_notify_directory_config.label_message";
-    public static final String FIELD_SENDER_NAME = "module.workflow.notifygru.task_notify_directory_config.label_sender_name";
-    public static final String FIELD_TASK_DIRECTORY = "module.workflow.notifygru.task_notify_directory_config.label_task_directory";
-    public static final String FIELD_TASK_ENTRY_GRU_SMS = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_sms";
-    public static final String FIELD_TASK_ENTRY_GRU_EMAIL = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_email";
-    public static final String FIELD_TASK_ENTRY_GRU_USER_GUID = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_user_guid";
-    public static final String FIELD_MAILING_LIST = "module.workflow.notifygru.task_notify_directory_config.label_mailing_list";
-    public static final String FIELD_STATE = "module.workflow.notifygru.task_notify_directory_config.label_state";
-    public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifygru.task_notify_directory_config.label_message_validation";
-    public static final String FIELD_LABEL_LINK = "module.workflow.notifygru.task_notify_directory_config.label_label_link";
-    public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifygru.task_notify_directory_config.label_label_link_view_record";
-    public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_directory_config.label_period_validity";
+    public static final String FIELD_NOTIFY = "module.workflow.notifygru.task_notify_gru_config.label_notify_by";
+    public static final String FIELD_SUBJECT = "module.workflow.notifygru.task_notify_gru_config.label_subject";
+    public static final String FIELD_MESSAGE = "module.workflow.notifygru.task_notify_gru_config.label_message";
+    public static final String FIELD_SENDER_NAME = "module.workflow.notifygru.task_notify_gru_config.label_sender_name";
+    public static final String FIELD_TASK_RESSOURCE_GRU = "module.workflow.notifygru.task_notify_gru_config.label_task_ressource";
+    public static final String FIELD_TASK_ENTRY_GRU_SMS = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_sms";
+    public static final String FIELD_TASK_ENTRY_GRU_EMAIL = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email";
+    public static final String FIELD_TASK_ENTRY_GRU_USER_GUID = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid";
+    public static final String FIELD_MAILING_LIST = "module.workflow.notifygru.task_notify_gru_config.label_mailing_list";
+    public static final String FIELD_STATE = "module.workflow.notifygru.task_notify_gru_config.label_state";
+    public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifygru.task_notify_gru_config.label_message_validation";
+    public static final String FIELD_LABEL_LINK = "module.workflow.notifygru.task_notify_gru_config.label_label_link";
+    public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifygru.task_notify_gru_config.label_label_link_view_record";
+    public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_gru_config.label_period_validity";
 
     // MESSAGES
     public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifygru.message.mandatory.field";
+    public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
 
@@ -112,6 +113,7 @@ public final class NotifyGruConstants {
     // PARAMETERS GUICHET
     public static final String PARAMETER_ID_RESOURCE = "id_ressource";
     public static final String PARAMETER_ID_USER_GUID = "id_user_guid";
+    public static final String PARAMETER_APPY= "apply";
     
        
 

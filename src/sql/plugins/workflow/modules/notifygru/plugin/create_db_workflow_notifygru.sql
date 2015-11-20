@@ -27,7 +27,6 @@ CREATE TABLE task_notify_gru_cf(
  entity_email_email VARCHAR(255) DEFAULT ''  NULL,
  message_email VARCHAR(255) DEFAULT ''  NULL,
   sender_name_email VARCHAR(255) DEFAULT ''  NULL,
-  recipients_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cc_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cci_email VARCHAR(255) DEFAULT ''  NULL,
  level_notification_email VARCHAR(255) DEFAULT ''  NULL,
