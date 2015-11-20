@@ -19,9 +19,6 @@
 <#assign pane="pane-desk">
 
 
-<fieldset>
-    <legend> #i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
-
 
 <#if list_ongle?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
@@ -45,49 +42,27 @@
 
 <br/>
     <ul id="tabs" class="nav nav-tabs">
+    <#if config?exists && config.activeOngletGuichet == true>
         <li <#if pane="pane-desk">class="active"</#if> >
-            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_desk.title}</a>
+            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_guichet.title}</a>
         </li>
+    </#if>
+     <#if config?exists && config.activeOngletAgent == true>
         <li <#if pane="pane-agent">class="active"</#if> >
             <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
         </li>
+     </#if>
+     <#if config?exists && config.activeOngletEmail == true>
         <li <#if pane="pane-email">class="active"</#if> >
             <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
         </li>
+      </#if>
+      <#if config?exists && config.activeOngletSMS == true>
         <li <#if pane="pane-sms">class="active"</#if> >
             <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
         </li>
-        <li <#if pane="pane-mailing-list">class="active"</#if> >
-            <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
-        </li>
-    </ul>
-
-
-    <div class="tab-content">		
-        <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
-           <#include "config_crm.html" />
-        </div>
-        <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
-             <#include "config_agent.html" />
-        </div>
-        <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
-            <#include "config_email.html" />
-
-        </div>
-        <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
-             <#include "config_sms.html" />
-        </div>
-        <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
-             <#include "config_liste_broadcast.html" />
-        </div>
-    </div>
-    
-    
-</fieldset>
-
-
-<@initEditor />
-ig?exists && config.activeOngletBroadcast == true>
+      </#if>
+      <#if config?exists && config.activeOngletBroadcast == true>
         <li <#if pane="pane-mailing-list">class="active"</#if> >
             <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
         </li>
