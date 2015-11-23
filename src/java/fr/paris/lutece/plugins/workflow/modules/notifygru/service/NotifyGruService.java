@@ -1,20 +1,8 @@
 
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.directory.business.Directory;
-import fr.paris.lutece.plugins.directory.business.DirectoryHome;
-import fr.paris.lutece.plugins.directory.business.EntryFilter;
-import fr.paris.lutece.plugins.directory.business.EntryHome;
-import fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation;
-import fr.paris.lutece.plugins.directory.business.File;
-import fr.paris.lutece.plugins.directory.business.IEntry;
-import fr.paris.lutece.plugins.directory.business.PhysicalFileHome;
-import fr.paris.lutece.plugins.directory.business.Record;
-import fr.paris.lutece.plugins.directory.business.RecordField;
-import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
-import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
-import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.ResourceKey;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
@@ -199,7 +187,7 @@ public final class NotifyGruService implements INotifyGruService
 
             List<State> listStates = _stateService.getListStateByFilter( stateFilter );
 
-            referenceListStates.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
+       //     referenceListStates.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
             referenceListStates.addAll( ReferenceList.convert( listStates, NotifyGruConstants.ID,
                     NotifyGruConstants.NAME, true ) );
         }
@@ -213,15 +201,15 @@ public final class NotifyGruService implements INotifyGruService
     @Override
     public ReferenceList getListDirectories(  )
     {
-        Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        ReferenceList listDirectories = DirectoryHome.getDirectoryList( pluginDirectory );
+      //  Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+       // ReferenceList listDirectories = DirectoryHome.getDirectoryList( pluginDirectory );
         ReferenceList refenreceListDirectories = new ReferenceList(  );
-        refenreceListDirectories.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
+        //refenreceListDirectories.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
 
-        if ( listDirectories != null )
-        {
-            refenreceListDirectories.addAll( listDirectories );
-        }
+//        if ( listDirectories != null )
+//        {
+//            refenreceListDirectories.addAll( listDirectories );
+//        }
 
         return refenreceListDirectories;
     }
@@ -233,7 +221,7 @@ public final class NotifyGruService implements INotifyGruService
     public ReferenceList getMailingList( HttpServletRequest request )
     {
         ReferenceList refMailingList = new ReferenceList(  );
-        refMailingList.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
+     //   refMailingList.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
         refMailingList.addAll( AdminMailingListService.getMailingLists( AdminUserService.getAdminUser( request ) ) );
 
         return refMailingList;
@@ -242,25 +230,25 @@ public final class NotifyGruService implements INotifyGruService
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<IEntry> getListEntries( int nIdTask )
-    {
-        Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
-        TaskNotifyGruConfig config = _taskNotifyGruService.findByPrimaryKey( nIdTask );
-
-        List<IEntry> listEntries = new ArrayList<IEntry>(  );
-
-        if ( config != null )
-        {
-            EntryFilter entryFilter = new EntryFilter(  );
-         //   entryFilter.setIdDirectory(config.getIdDirectoryOngle1());
-
-            listEntries = EntryHome.getEntryList( entryFilter, pluginDirectory );
-        }
-
-        return listEntries;
-    }
+//    @Override
+//    public List<IEntry> getListEntries( int nIdTask )
+//    {
+//        Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+//
+//        TaskNotifyGruConfig config = _taskNotifyGruService.findByPrimaryKey( nIdTask );
+//
+//        List<IEntry> listEntries = new ArrayList<IEntry>(  );
+//
+//        if ( config != null )
+//        {
+//            EntryFilter entryFilter = new EntryFilter(  );
+//         //   entryFilter.setIdDirectory(config.getIdDirectoryOngle1());
+//
+//            listEntries = EntryHome.getEntryList( entryFilter, pluginDirectory );
+//        }
+//
+//        return listEntries;
+//    }
 
     /**
      * {@inheritDoc}
@@ -269,17 +257,17 @@ public final class NotifyGruService implements INotifyGruService
     public ReferenceList getListEntriesUserGuid( int nIdTask, Locale locale )
     {
         ReferenceList refenreceListEntries = new ReferenceList(  );
-        refenreceListEntries.addItem( DirectoryUtils.CONSTANT_ID_NULL, DirectoryUtils.EMPTY_STRING );
+       // refenreceListEntries.addItem( DirectoryUtils.CONSTANT_ID_NULL, DirectoryUtils.EMPTY_STRING );
 
-        for ( IEntry entry : getListEntries( nIdTask ) )
-        {
-            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
-
-            if ( isEntryTypeUserGuidAccepted( nIdEntryType ) )
-            {
-                refenreceListEntries.addItem( entry.getPosition(  ), buildReferenceEntryToString( entry, locale ) );
-            }
-        }
+//        for ( IEntry entry : getListEntries( nIdTask ) )
+//        {
+//            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
+//
+//            if ( isEntryTypeUserGuidAccepted( nIdEntryType ) )
+//            {
+//                refenreceListEntries.addItem( entry.getPosition(  ), buildReferenceEntryToString( entry, locale ) );
+//            }
+//        }
 
         return refenreceListEntries;
     }
@@ -291,17 +279,17 @@ public final class NotifyGruService implements INotifyGruService
     public ReferenceList getListEntriesEmailSMS( int nIdTask, Locale locale )
     {
         ReferenceList refenreceListEntries = new ReferenceList(  );
-        refenreceListEntries.addItem( DirectoryUtils.CONSTANT_ID_NULL, DirectoryUtils.EMPTY_STRING );
+      //  refenreceListEntries.addItem( DirectoryUtils.CONSTANT_ID_NULL, DirectoryUtils.EMPTY_STRING );
 
-        for ( IEntry entry : getListEntries( nIdTask ) )
-        {
-            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
-
-            if ( isEntryTypeEmailSMSAccepted( nIdEntryType ) )
-            {
-                refenreceListEntries.addItem( entry.getPosition(  ), buildReferenceEntryToString( entry, locale ) );
-            }
-        }
+//        for ( IEntry entry : getListEntries( nIdTask ) )
+//        {
+//            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
+//
+//            if ( isEntryTypeEmailSMSAccepted( nIdEntryType ) )
+//            {
+//                refenreceListEntries.addItem( entry.getPosition(  ), buildReferenceEntryToString( entry, locale ) );
+//            }
+//        }
 
         return refenreceListEntries;
     }
@@ -311,44 +299,44 @@ public final class NotifyGruService implements INotifyGruService
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<IEntry> getListEntriesFreemarker( int nIdTask )
-    {
-        List<IEntry> listEntries = new ArrayList<IEntry>(  );
-
-        for ( IEntry entry : getListEntries( nIdTask ) )
-        {
-            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
-
-            if ( !isEntryTypeRefused( nIdEntryType ) )
-            {
-                listEntries.add( entry );
-            }
-        }
-
-        return listEntries;
-    }
+//    @Override
+//    public List<IEntry> getListEntriesFreemarker( int nIdTask )
+//    {
+//        List<IEntry> listEntries = new ArrayList<IEntry>(  );
+//
+//        for ( IEntry entry : getListEntries( nIdTask ) )
+//        {
+//            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
+//
+//            if ( !isEntryTypeRefused( nIdEntryType ) )
+//            {
+//                listEntries.add( entry );
+//            }
+//        }
+//
+//        return listEntries;
+//    }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<IEntry> getListEntriesFile( int nIdTask, Locale locale )
-    {
-        List<IEntry> listEntries = new ArrayList<IEntry>(  );
-
-        for ( IEntry entry : getListEntries( nIdTask ) )
-        {
-            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
-
-            if ( isEntryTypeFileAccepted( nIdEntryType ) )
-            {
-                listEntries.add( entry );
-            }
-        }
-
-        return listEntries;
-    }
+//    @Override
+//    public List<IEntry> getListEntriesFile( int nIdTask, Locale locale )
+//    {
+//        List<IEntry> listEntries = new ArrayList<IEntry>(  );
+//
+//        for ( IEntry entry : getListEntries( nIdTask ) )
+//        {
+//            int nIdEntryType = entry.getEntryType(  ).getIdType(  );
+//
+//            if ( isEntryTypeFileAccepted( nIdEntryType ) )
+//            {
+//                listEntries.add( entry );
+//            }
+//        }
+//
+//        return listEntries;
+//    }
 
     /**
      * {@inheritDoc}
@@ -553,178 +541,178 @@ public final class NotifyGruService implements INotifyGruService
     /**
      * {@inheritDoc}
      */
-   @Override
-    public Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory,
-        Record record, Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory )
-    {
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
-        Locale locale = getLocale( request );
-        ITask task = _taskService.findByPrimaryKey( config.getIdTask(  ), locale );
-        Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
-        model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageEmail());
-     
-        model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
-        model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
-
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
-
-        List<RecordField> listRecordField = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginGru );
-
-        for ( RecordField recordField : listRecordField )
-        {
-            String strNewValue = StringUtils.EMPTY;
-
-            if ( isEntryTypeRefused( recordField.getEntry(  ).getEntryType(  ).getIdType(  ) ) )
-            {
-                continue;
-            }
-            else if ( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation &&
-                    ( ( recordField.getField(  ) == null ) ||
-                    StringUtils.isBlank( recordField.getField(  ).getTitle(  ) ) ||
-                    !EntryTypeGeolocation.CONSTANT_ADDRESS.equals( recordField.getField(  ).getTitle(  ) ) ) )
-            {
-                continue;
-            }
-            else if ( ( recordField.getField(  ) != null ) && ( recordField.getField(  ).getTitle(  ) != null ) &&
-                    !( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation ) )
-            {
-                strNewValue = recordField.getField(  ).getTitle(  );
-            }
-            else if ( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeFile &&
-                    ( recordField.getFile(  ) != null ) && ( recordField.getFile(  ).getTitle(  ) != null ) )
-            {
-                strNewValue = recordField.getFile(  ).getTitle(  );
-            }
-            else
-            {
-                strNewValue = recordField.getEntry(  ).convertRecordFieldValueToString( recordField, locale, false,
-                        false );
-            }
-
-            recordField.setEntry( EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), pluginGru ) );
-
-            String strKey = NotifyGruConstants.MARK_POSITION + recordField.getEntry(  ).getPosition(  );
-            String strOldValue = ( (String) model.get( strKey ) );
-
-            if ( StringUtils.isNotBlank( strOldValue ) && StringUtils.isNotBlank( strNewValue ) )
-            {
-                // Add markers for message
-                model.put( strKey, strNewValue + NotifyGruConstants.COMMA + strOldValue );
-            }
-            else if ( strNewValue != null )
-            {
-                model.put( strKey, strNewValue );
-            }
-            else
-            {
-                model.put( strKey, StringUtils.EMPTY );
-            }
-        }
-
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                WorkflowService.getInstance(  ).isAvailable(  ) )
-        {
-            State state = WorkflowService.getInstance(  )
-                                         .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), null );
-            model.put( NotifyGruConstants.MARK_STATUS_TEXT_GUICHET, state.getName(  ) );
-        }
-
-        // Link View record
-        String strLinkViewRecordHtml = DirectoryUtils.EMPTY_STRING;
-
-      /*  if ( config.isViewRecord(  ) )
-        {
-            StringBuilder sbBaseUrl = new StringBuilder( getBaseUrl( request ) );
-
-            if ( ( sbBaseUrl.length(  ) > 0 ) && !sbBaseUrl.toString(  ).endsWith( NotifyGruConstants.SLASH ) )
-            {
-                sbBaseUrl.append( NotifyGruConstants.SLASH );
-            }
-
-            sbBaseUrl.append( NotifyGruConstants.JSP_DO_VISUALISATION_RECORD );
-
-            UrlItem url = new UrlItem( sbBaseUrl.toString(  ) );
-            url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, directory.getIdDirectory(  ) );
-            url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord(  ) );
-
-            StringBuffer sbLinkHtml = new StringBuffer(  );
-            Map<String, String> mapParams = new HashMap<String, String>(  );
-            mapParams.put( NotifyGruConstants.ATTRIBUTE_HREF, url.getUrl(  ) );
-            XmlUtil.beginElement( sbLinkHtml, NotifyGruConstants.TAG_A, mapParams );
-            sbLinkHtml.append( config.getLabelLinkViewRecord(  ) );
-            XmlUtil.endElement( sbLinkHtml, NotifyGruConstants.TAG_A );
-
-            Map<String, Object> modelTmp = new HashMap<String, Object>(  );
-            modelTmp.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, url.getUrl(  ) );
-            strLinkViewRecordHtml = AppTemplateService.getTemplateFromStringFtl( sbLinkHtml.toString(  ), locale,
-                    modelTmp ).getHtml(  );
-        }  */
-
-        model.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, strLinkViewRecordHtml );
-
-        // Generate key
-        String linkHtml = DirectoryUtils.EMPTY_STRING;
-
-      /*  if ( config.isEmailValidation(  ) )
-        {
-            ResourceKey resourceKey = new ResourceKey(  );
-            UUID key = java.util.UUID.randomUUID(  );
-            resourceKey.setKey( key.toString(  ) );
-            resourceKey.setIdResource( record.getIdRecord(  ) );
-            resourceKey.setResourceType( resourceHistory.getResourceType(  ) );
-            resourceKey.setIdTask( config.getIdTask(  ) );
-
-            Calendar calendar = GregorianCalendar.getInstance(  );
-            calendar.add( Calendar.DAY_OF_MONTH, config.getPeriodValidity(  ) );
-            resourceKey.setDateExpiry( new Timestamp( calendar.getTimeInMillis(  ) ) );
-            _resourceKeyService.create( resourceKey, PluginService.getPlugin( NotifyGruPlugin.PLUGIN_NAME ) );
-
-            StringBuilder sbBaseUrl = new StringBuilder( getBaseUrl( request ) );
-
-            if ( ( sbBaseUrl.length(  ) > 0 ) && !sbBaseUrl.toString(  ).endsWith( NotifyGruConstants.SLASH ) )
-            {
-                sbBaseUrl.append( NotifyGruConstants.SLASH );
-            }
-
-            sbBaseUrl.append( AppPathService.getPortalUrl(  ) );
-
-            UrlItem url = new UrlItem( sbBaseUrl.toString(  ) );
-            url.addParameter( NotifyGruConstants.PARAMETER_PAGE, WorkflowPlugin.PLUGIN_NAME );
-            url.addParameter( NotifyGruConstants.PARAMETER_KEY, key.toString(  ) );
-
-            StringBuffer sbLinkHtml = new StringBuffer(  );
-            Map<String, String> mapParams = new HashMap<String, String>(  );
-            mapParams.put( NotifyGruConstants.ATTRIBUTE_HREF, url.getUrl(  ) );
-            XmlUtil.beginElement( sbLinkHtml, NotifyGruConstants.TAG_A, mapParams );
-            sbLinkHtml.append( config.getLabelLink(  ) );
-            XmlUtil.endElement( sbLinkHtml, NotifyGruConstants.TAG_A );
-
-            linkHtml = sbLinkHtml.toString(  );
-
-            Map<String, Object> modelTmp = new HashMap<String, Object>(  );
-            modelTmp.put( NotifyGruConstants.MARK_LINK, url.getUrl(  ) );
-            linkHtml = AppTemplateService.getTemplateFromStringFtl( linkHtml, locale, modelTmp ).getHtml(  );
-        }  */
-
-        model.put( NotifyGruConstants.MARK_LINK, linkHtml );
-
-        // Fill user attributes
-        String strUserGuid = getUserGuid( config, record.getIdRecord(  ), directory.getIdDirectory(  ) );
-        fillModelWithUserAttributes( model, strUserGuid );
-
-        // Fill the model with the info of other tasks
-        for ( ITask otherTask : getListBelowTasks( task, locale ) )
-        {
-            model.put( NotifyGruConstants.MARK_TASK + otherTask.getId(  ),
-                TaskInfoManager.getTaskResourceInfo( nIdHistory, otherTask.getId(  ), request ) );
-        }
-
-        return model;
-    }  
+//   @Override
+//    public Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory,
+//        Record record, Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory )
+//    {
+//        Map<String, Object> model = new HashMap<String, Object>(  );
+//
+//        Locale locale = getLocale( request );
+//        ITask task = _taskService.findByPrimaryKey( config.getIdTask(  ), locale );
+//        Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+//
+//        model.put( NotifyGruConstants.MARK_MESSAGE_EMAIL, config.getMessageEmail());
+//     
+//        model.put( NotifyGruConstants.MARK_GRU_TITLE, directory.getTitle(  ) );
+//        model.put( NotifyGruConstants.MARK_GRU_DESCRIPTION, directory.getDescription(  ) );
+//
+//        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+//        recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
+//
+//        List<RecordField> listRecordField = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginGru );
+//
+//        for ( RecordField recordField : listRecordField )
+//        {
+//            String strNewValue = StringUtils.EMPTY;
+//
+//            if ( isEntryTypeRefused( recordField.getEntry(  ).getEntryType(  ).getIdType(  ) ) )
+//            {
+//                continue;
+//            }
+//            else if ( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation &&
+//                    ( ( recordField.getField(  ) == null ) ||
+//                    StringUtils.isBlank( recordField.getField(  ).getTitle(  ) ) ||
+//                    !EntryTypeGeolocation.CONSTANT_ADDRESS.equals( recordField.getField(  ).getTitle(  ) ) ) )
+//            {
+//                continue;
+//            }
+//            else if ( ( recordField.getField(  ) != null ) && ( recordField.getField(  ).getTitle(  ) != null ) &&
+//                    !( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation ) )
+//            {
+//                strNewValue = recordField.getField(  ).getTitle(  );
+//            }
+//            else if ( recordField.getEntry(  ) instanceof fr.paris.lutece.plugins.directory.business.EntryTypeFile &&
+//                    ( recordField.getFile(  ) != null ) && ( recordField.getFile(  ).getTitle(  ) != null ) )
+//            {
+//                strNewValue = recordField.getFile(  ).getTitle(  );
+//            }
+//            else
+//            {
+//                strNewValue = recordField.getEntry(  ).convertRecordFieldValueToString( recordField, locale, false,
+//                        false );
+//            }
+//
+//            recordField.setEntry( EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), pluginGru ) );
+//
+//            String strKey = NotifyGruConstants.MARK_POSITION + recordField.getEntry(  ).getPosition(  );
+//            String strOldValue = ( (String) model.get( strKey ) );
+//
+//            if ( StringUtils.isNotBlank( strOldValue ) && StringUtils.isNotBlank( strNewValue ) )
+//            {
+//                // Add markers for message
+//                model.put( strKey, strNewValue + NotifyGruConstants.COMMA + strOldValue );
+//            }
+//            else if ( strNewValue != null )
+//            {
+//                model.put( strKey, strNewValue );
+//            }
+//            else
+//            {
+//                model.put( strKey, StringUtils.EMPTY );
+//            }
+//        }
+//
+//        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+//                WorkflowService.getInstance(  ).isAvailable(  ) )
+//        {
+//            State state = WorkflowService.getInstance(  )
+//                                         .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
+//                    directory.getIdWorkflow(  ), null );
+//            model.put( NotifyGruConstants.MARK_STATUS_TEXT_GUICHET, state.getName(  ) );
+//        }
+//
+//        // Link View record
+//        String strLinkViewRecordHtml = DirectoryUtils.EMPTY_STRING;
+//
+//      /*  if ( config.isViewRecord(  ) )
+//        {
+//            StringBuilder sbBaseUrl = new StringBuilder( getBaseUrl( request ) );
+//
+//            if ( ( sbBaseUrl.length(  ) > 0 ) && !sbBaseUrl.toString(  ).endsWith( NotifyGruConstants.SLASH ) )
+//            {
+//                sbBaseUrl.append( NotifyGruConstants.SLASH );
+//            }
+//
+//            sbBaseUrl.append( NotifyGruConstants.JSP_DO_VISUALISATION_RECORD );
+//
+//            UrlItem url = new UrlItem( sbBaseUrl.toString(  ) );
+//            url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, directory.getIdDirectory(  ) );
+//            url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord(  ) );
+//
+//            StringBuffer sbLinkHtml = new StringBuffer(  );
+//            Map<String, String> mapParams = new HashMap<String, String>(  );
+//            mapParams.put( NotifyGruConstants.ATTRIBUTE_HREF, url.getUrl(  ) );
+//            XmlUtil.beginElement( sbLinkHtml, NotifyGruConstants.TAG_A, mapParams );
+//            sbLinkHtml.append( config.getLabelLinkViewRecord(  ) );
+//            XmlUtil.endElement( sbLinkHtml, NotifyGruConstants.TAG_A );
+//
+//            Map<String, Object> modelTmp = new HashMap<String, Object>(  );
+//            modelTmp.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, url.getUrl(  ) );
+//            strLinkViewRecordHtml = AppTemplateService.getTemplateFromStringFtl( sbLinkHtml.toString(  ), locale,
+//                    modelTmp ).getHtml(  );
+//        }  */
+//
+//        model.put( NotifyGruConstants.MARK_LINK_VIEW_RECORD, strLinkViewRecordHtml );
+//
+//        // Generate key
+//        String linkHtml = DirectoryUtils.EMPTY_STRING;
+//
+//      /*  if ( config.isEmailValidation(  ) )
+//        {
+//            ResourceKey resourceKey = new ResourceKey(  );
+//            UUID key = java.util.UUID.randomUUID(  );
+//            resourceKey.setKey( key.toString(  ) );
+//            resourceKey.setIdResource( record.getIdRecord(  ) );
+//            resourceKey.setResourceType( resourceHistory.getResourceType(  ) );
+//            resourceKey.setIdTask( config.getIdTask(  ) );
+//
+//            Calendar calendar = GregorianCalendar.getInstance(  );
+//            calendar.add( Calendar.DAY_OF_MONTH, config.getPeriodValidity(  ) );
+//            resourceKey.setDateExpiry( new Timestamp( calendar.getTimeInMillis(  ) ) );
+//            _resourceKeyService.create( resourceKey, PluginService.getPlugin( NotifyGruPlugin.PLUGIN_NAME ) );
+//
+//            StringBuilder sbBaseUrl = new StringBuilder( getBaseUrl( request ) );
+//
+//            if ( ( sbBaseUrl.length(  ) > 0 ) && !sbBaseUrl.toString(  ).endsWith( NotifyGruConstants.SLASH ) )
+//            {
+//                sbBaseUrl.append( NotifyGruConstants.SLASH );
+//            }
+//
+//            sbBaseUrl.append( AppPathService.getPortalUrl(  ) );
+//
+//            UrlItem url = new UrlItem( sbBaseUrl.toString(  ) );
+//            url.addParameter( NotifyGruConstants.PARAMETER_PAGE, WorkflowPlugin.PLUGIN_NAME );
+//            url.addParameter( NotifyGruConstants.PARAMETER_KEY, key.toString(  ) );
+//
+//            StringBuffer sbLinkHtml = new StringBuffer(  );
+//            Map<String, String> mapParams = new HashMap<String, String>(  );
+//            mapParams.put( NotifyGruConstants.ATTRIBUTE_HREF, url.getUrl(  ) );
+//            XmlUtil.beginElement( sbLinkHtml, NotifyGruConstants.TAG_A, mapParams );
+//            sbLinkHtml.append( config.getLabelLink(  ) );
+//            XmlUtil.endElement( sbLinkHtml, NotifyGruConstants.TAG_A );
+//
+//            linkHtml = sbLinkHtml.toString(  );
+//
+//            Map<String, Object> modelTmp = new HashMap<String, Object>(  );
+//            modelTmp.put( NotifyGruConstants.MARK_LINK, url.getUrl(  ) );
+//            linkHtml = AppTemplateService.getTemplateFromStringFtl( linkHtml, locale, modelTmp ).getHtml(  );
+//        }  */
+//
+//        model.put( NotifyGruConstants.MARK_LINK, linkHtml );
+//
+//        // Fill user attributes
+//        String strUserGuid = getUserGuid( config, record.getIdRecord(  ), directory.getIdDirectory(  ) );
+//        fillModelWithUserAttributes( model, strUserGuid );
+//
+//        // Fill the model with the info of other tasks
+//        for ( ITask otherTask : getListBelowTasks( task, locale ) )
+//        {
+//            model.put( NotifyGruConstants.MARK_TASK + otherTask.getId(  ),
+//                TaskInfoManager.getTaskResourceInfo( nIdHistory, otherTask.getId(  ), request ) );
+//        }
+//
+//        return model;
+//    }  
 
     /**
      * {@inheritDoc}
@@ -762,37 +750,37 @@ public final class NotifyGruService implements INotifyGruService
     private String getRecordFieldValue( int nPosition, int nIdRecord, int nIdDirectory )
     {
         String strRecordFieldValue = StringUtils.EMPTY;
-        Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+      //  Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        // RecordField
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setPosition( nPosition );
-        entryFilter.setIdDirectory( nIdDirectory );
+//        // RecordField
+//        EntryFilter entryFilter = new EntryFilter(  );
+//        entryFilter.setPosition( nPosition );
+//        entryFilter.setIdDirectory( nIdDirectory );
+//
+//        List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, pluginGru );
 
-        List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, pluginGru );
-
-        if ( ( listEntries != null ) && !listEntries.isEmpty(  ) )
-        {
-            IEntry entry = listEntries.get( 0 );
-            RecordFieldFilter recordFieldFilterEmail = new RecordFieldFilter(  );
-            recordFieldFilterEmail.setIdDirectory( nIdDirectory );
-            recordFieldFilterEmail.setIdEntry( entry.getIdEntry(  ) );
-            recordFieldFilterEmail.setIdRecord( nIdRecord );
-
-            List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilterEmail,
-                    pluginGru );
-
-            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) && ( listRecordFields.get( 0 ) != null ) )
-            {
-                RecordField recordFieldIdDemand = listRecordFields.get( 0 );
-                strRecordFieldValue = recordFieldIdDemand.getValue(  );
-
-                if ( recordFieldIdDemand.getField(  ) != null )
-                {
-                    strRecordFieldValue = recordFieldIdDemand.getField(  ).getTitle(  );
-                }
-            }
-        }
+//        if ( ( listEntries != null ) && !listEntries.isEmpty(  ) )
+//        {
+//            IEntry entry = listEntries.get( 0 );
+//            RecordFieldFilter recordFieldFilterEmail = new RecordFieldFilter(  );
+//            recordFieldFilterEmail.setIdDirectory( nIdDirectory );
+//            recordFieldFilterEmail.setIdEntry( entry.getIdEntry(  ) );
+//            recordFieldFilterEmail.setIdRecord( nIdRecord );
+//
+//            List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilterEmail,
+//                    pluginGru );
+//
+//            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) && ( listRecordFields.get( 0 ) != null ) )
+//            {
+//                RecordField recordFieldIdDemand = listRecordFields.get( 0 );
+//                strRecordFieldValue = recordFieldIdDemand.getValue(  );
+//
+//                if ( recordFieldIdDemand.getField(  ) != null )
+//                {
+//                    strRecordFieldValue = recordFieldIdDemand.getField(  ).getTitle(  );
+//                }
+//            }
+//        }
 
         return strRecordFieldValue;
     }
@@ -808,61 +796,61 @@ public final class NotifyGruService implements INotifyGruService
      *            the id directory
      * @return the directory file
      */
-    private List<File> getFiles( int nPosition, int nIdRecord, int nIdDirectory )
-    {
-        Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
-        // RecordField
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setPosition( nPosition );
-        entryFilter.setIdDirectory( nIdDirectory );
-
-        List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, pluginGru );
-
-        if ( ( listEntries != null ) && !listEntries.isEmpty(  ) )
-        {
-            IEntry entry = listEntries.get( 0 );
-            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-            recordFieldFilter.setIdDirectory( nIdDirectory );
-            recordFieldFilter.setIdEntry( entry.getIdEntry(  ) );
-            recordFieldFilter.setIdRecord( nIdRecord );
-
-            List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginGru );
-
-            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) && ( listRecordFields.get( 0 ) != null ) )
-            {
-                List<File> listFiles = new ArrayList<File>(  );
-
-                for ( RecordField recordField : listRecordFields )
-                {
-                    if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeFile )
-                    {
-                        File file = recordField.getFile(  );
-
-                        if ( ( file != null ) && ( file.getPhysicalFile(  ) != null ) )
-                        {
-                            file.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                                    file.getPhysicalFile(  ).getIdPhysicalFile(  ), pluginGru ) );
-                            listFiles.add( file );
-                        }
-                    }
-                    else if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl )
-                    {
-                        File file = DirectoryUtils.doDownloadFile( recordField.getValue(  ) );
-
-                        if ( file != null )
-                        {
-                            listFiles.add( file );
-                        }
-                    }
-                }
-
-                return listFiles;
-            }
-        }
-
-        return null;
-    }
+//    private List<File> getFiles( int nPosition, int nIdRecord, int nIdDirectory )
+//    {
+//        Plugin pluginGru = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+//
+//        // RecordField
+//        EntryFilter entryFilter = new EntryFilter(  );
+//        entryFilter.setPosition( nPosition );
+//        entryFilter.setIdDirectory( nIdDirectory );
+//
+//        List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, pluginGru );
+//
+//        if ( ( listEntries != null ) && !listEntries.isEmpty(  ) )
+//        {
+//            IEntry entry = listEntries.get( 0 );
+//            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+//            recordFieldFilter.setIdDirectory( nIdDirectory );
+//            recordFieldFilter.setIdEntry( entry.getIdEntry(  ) );
+//            recordFieldFilter.setIdRecord( nIdRecord );
+//
+//            List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginGru );
+//
+//            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) && ( listRecordFields.get( 0 ) != null ) )
+//            {
+//                List<File> listFiles = new ArrayList<File>(  );
+//
+//                for ( RecordField recordField : listRecordFields )
+//                {
+//                    if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeFile )
+//                    {
+//                        File file = recordField.getFile(  );
+//
+//                        if ( ( file != null ) && ( file.getPhysicalFile(  ) != null ) )
+//                        {
+//                            file.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
+//                                    file.getPhysicalFile(  ).getIdPhysicalFile(  ), pluginGru ) );
+//                            listFiles.add( file );
+//                        }
+//                    }
+//                    else if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl )
+//                    {
+//                        File file = DirectoryUtils.doDownloadFile( recordField.getValue(  ) );
+//
+//                        if ( file != null )
+//                        {
+//                            listFiles.add( file );
+//                        }
+//                    }
+//                }
+//
+//                return listFiles;
+//            }
+//        }
+//
+//        return null;
+//    }
 
     /**
      * Get the base url
@@ -935,19 +923,19 @@ public final class NotifyGruService implements INotifyGruService
      *            the Locale
      * @return the reference entry
      */
-    private String buildReferenceEntryToString( IEntry entry, Locale locale )
-    {
-        StringBuilder sbReferenceEntry = new StringBuilder(  );
-        sbReferenceEntry.append( entry.getPosition(  ) );
-        sbReferenceEntry.append( NotifyGruConstants.SPACE + NotifyGruConstants.OPEN_BRACKET );
-        sbReferenceEntry.append( entry.getTitle(  ) );
-        sbReferenceEntry.append( NotifyGruConstants.SPACE + NotifyGruConstants.HYPHEN +
-            NotifyGruConstants.SPACE );
-        sbReferenceEntry.append( I18nService.getLocalizedString( entry.getEntryType(  ).getTitleI18nKey(  ), locale ) );
-        sbReferenceEntry.append( NotifyGruConstants.CLOSED_BRACKET );
-
-        return sbReferenceEntry.toString(  );
-    }
+//    private String buildReferenceEntryToString( IEntry entry, Locale locale )
+//    {
+//        StringBuilder sbReferenceEntry = new StringBuilder(  );
+//        sbReferenceEntry.append( entry.getPosition(  ) );
+//        sbReferenceEntry.append( NotifyGruConstants.SPACE + NotifyGruConstants.OPEN_BRACKET );
+//        sbReferenceEntry.append( entry.getTitle(  ) );
+//        sbReferenceEntry.append( NotifyGruConstants.SPACE + NotifyGruConstants.HYPHEN +
+//            NotifyGruConstants.SPACE );
+//        sbReferenceEntry.append( I18nService.getLocalizedString( entry.getEntryType(  ).getTitleI18nKey(  ), locale ) );
+//        sbReferenceEntry.append( NotifyGruConstants.CLOSED_BRACKET );
+//
+//        return sbReferenceEntry.toString(  );
+//    }
 
     /**
      * Fill the list of entry types

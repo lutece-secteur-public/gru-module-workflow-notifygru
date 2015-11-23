@@ -1,9 +1,7 @@
 
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.directory.business.Directory;
-import fr.paris.lutece.plugins.directory.business.IEntry;
-import fr.paris.lutece.plugins.directory.business.Record;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
@@ -81,7 +79,7 @@ public interface INotifyGruService
      * @param nIdTask the id task
      * @return a list of IEntry
      */
-    List<IEntry> getListEntries( int nIdTask );
+   // List<IEntry> getListEntries( int nIdTask );
 
     /**
      * Get the list of entries that have the accepted type (which are defined in
@@ -109,7 +107,7 @@ public interface INotifyGruService
      * @param nIdTask the id task
      * @return a list of {@link IEntry}
      */
-    List<IEntry> getListEntriesFreemarker( int nIdTask );
+   // List<IEntry> getListEntriesFreemarker( int nIdTask );
 
     /**
      * Get the list of entries that have the accepted type for file)
@@ -117,7 +115,7 @@ public interface INotifyGruService
      * @param locale the Locale
      * @return a List of entries
      */
-    List<IEntry> getListEntriesFile( int nIdTask, Locale locale );
+   // List<IEntry> getListEntriesFile( int nIdTask, Locale locale );
 
     /**
      * Get the email from either an entry containing the email, or an entry
@@ -204,8 +202,8 @@ public interface INotifyGruService
      * @param nIdHistory the id history
      * @return the model
      */
-    Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory, Record record,
-        Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory );
+//    Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory, Record record,
+//        Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory );
 
     /**
      * Gets the locale.

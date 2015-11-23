@@ -1,10 +1,6 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.directory.business.Directory;
-import fr.paris.lutece.plugins.directory.business.DirectoryHome;
-import fr.paris.lutece.plugins.directory.business.Record;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruPlugin;
@@ -67,7 +63,7 @@ public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
     {
         String strTaskResourceInfo = StringUtils.EMPTY;
 
-        Locale locale = _notifyDirectoryService.getLocale( request );
+   /*     Locale locale = _notifyDirectoryService.getLocale( request );
 
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( nIdTask );
@@ -88,7 +84,7 @@ public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 
             strTaskResourceInfo = t.getHtml(  );
         }
-
+        */
         return strTaskResourceInfo;
     }
 }
