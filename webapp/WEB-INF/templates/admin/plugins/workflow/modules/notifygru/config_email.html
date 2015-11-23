@@ -46,12 +46,12 @@
 
 
 		<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}</label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}</label>
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.recipientCcEmail?has_content>
-                    <input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="${config.recipientCcEmail}"  maxlength="255">
+                <#if config?exists && config.recipientsCcEmail?has_content>
+                    <input type="text" name="recipients_cc_email" id="" class="form-control input-sm" value="${config.recipientsCcEmail}"  maxlength="255">
                 <#else>
-					<input type="text" name="recipient_cc_email" id="" class="form-control input-sm" value="" maxlength="255">
+					<input type="text" name="recipients_cc_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_email}</span>
              </div>
@@ -59,12 +59,12 @@
 
 
 <div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipient_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_email}</label>
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_email}</label>
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-				<#if config?exists && config.recipientCciEmail?has_content>
-                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="${config.recipientCciEmail}"  maxlength="255">
+				<#if config?exists && config.recipientsCciEmail?has_content>
+                    <input type="text" name="recipients_cci_email" id="" class="form-control input-sm" value="${config.recipientsCciEmail}"  maxlength="255">
                 <#else>
-                    <input type="text" name="recipient_cci_email" id="" class="form-control input-sm" value="" maxlength="255">
+                    <input type="text" name="recipients_cci_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_email}</span>
             </div>

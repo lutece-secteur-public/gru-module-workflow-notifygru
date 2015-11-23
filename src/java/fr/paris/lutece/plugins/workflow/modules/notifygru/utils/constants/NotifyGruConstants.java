@@ -89,9 +89,9 @@ public final class NotifyGruConstants {
     public static final String MARK_ENTRY_EMAIL = "entry_email";
     public static final String MARK_MESSAGE_EMAIL = "message_email";
     public static final String MARK_SENDER_NAME_EMAIL = "sender_name_email";
-    public static final String MARK_RECIPIENT_EMAIL = "recipient_email";
-    public static final String MARK_RECIPIENT_CC_EMAIL = "recipient_cc_email";
-    public static final String MARK_RECIPIENT_CCI_EMAIL = "recipient_cci_email";
+    public static final String MARK_RECIPIENT_EMAIL = "recipients_email";
+    public static final String MARK_RECIPIENT_CC_EMAIL = "recipients_cc_email";
+    public static final String MARK_RECIPIENT_CCI_EMAIL = "recipients_cci_email";
     public static final String MARK_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String MARK_IS_ACTIVE_ONGLET_EMAIL = "is_active_onglet_email";
     
@@ -154,8 +154,8 @@ public final class NotifyGruConstants {
     public static final String PARAMETER_MESSAGE_EMAIL = "message_email";
     public static final String PARAMETER_SENDER_NAME_EMAIL = "sender_name_email";
 
-    public static final String PARAMETER_RECIPIENT_CC_EMAIL = "recipient_cc_email";
-    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipient_cci_email";  
+    public static final String PARAMETER_RECIPIENT_CC_EMAIL = "recipients_cc_email";
+    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipients_cci_email";  
 
     public static final String PARAMETER_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String PARAMETER_ACTIVE_ONGLET_EMAIL = "active_onglet_email";
