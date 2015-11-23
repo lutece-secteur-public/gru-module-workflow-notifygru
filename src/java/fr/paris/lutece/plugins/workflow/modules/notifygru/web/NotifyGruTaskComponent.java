@@ -3,6 +3,8 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationTypeEnum;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IProviderService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
@@ -17,6 +19,7 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -33,7 +36,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -54,6 +56,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     private INotifyGruService _notifyGRUService;
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
+    
+    private IProviderService _providerService = new ProviderService();
 
     /**
      * {@inheritDoc}
@@ -333,6 +337,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Override
     public String getDisplayConfigForm(HttpServletRequest request, Locale locale, ITask task) {
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
+        int idResource = 0;
+        LuteceUser user = null;
 
         String strDefaultSenderName = AppPropertiesService.getProperty(NotifyGruConstants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME);
         Plugin pluginWorkflow = PluginService.getPlugin(WorkflowPlugin.PLUGIN_NAME);
@@ -358,6 +364,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourceEmail());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_EMAIL, this.getListRessourceEmail());
         
+
+		model.put("status", _providerService.getStatus(idResource));
+		model.put("provider_title", _providerService.getTitle(idResource));
+		model.put("provider_desc", _providerService.getDescription(idResource));
+		model.put("name_user", _providerService.getUserName(user));
+		model.put("title_demand_1", "demande 1");
+		model.put("title_demand_2", "demande 2");
+		model.put("title_demand_3", "demande 3");
+		model.put("list_freemarker", (Map<String,String>)_providerService.getInfosHelp());
+
 //        model.put( NotifyGruConstants.MARK_STATE_LIST,
 //            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
 
