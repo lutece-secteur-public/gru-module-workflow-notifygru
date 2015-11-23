@@ -54,4 +54,17 @@ public class Validator {
 		}
 		return false;
 	}
+	/**
+	 * verify if the telephone number is valid 
+	 * @param strNumTel
+	 * @return true if the telephone number is valid false otherwise
+	 */
+	public static boolean isTelephonNumberValid(String strNumTel)
+	{
+		if(strNumTel.matches( "(0|\\+33|0033)[1-9][0-9]{8}" ))
+		{
+			return true;
+		}
+		return false;
+	}
 }
