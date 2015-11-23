@@ -224,9 +224,9 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setCrmWebAppCodeGuichet(daoUtil.getInt(++nPos));
             config.setSendNotificationGuichet(daoUtil.getBoolean(++nPos));
             config.setStatusTextGuichet(daoUtil.getString(++nPos));
-            config.setSenderNameGuichet(daoUtil.getString(++nPos));
             config.setSubjectGuichet(daoUtil.getString(++nPos));
             config.setMessageGuichet(daoUtil.getString(++nPos));
+            config.setSenderNameGuichet(daoUtil.getString(++nPos));
             config.setLevelNotificationGuichet(daoUtil.getString(++nPos));
             config.setActiveOngletGuichet(daoUtil.getBoolean(++nPos));
 
@@ -255,14 +255,14 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setActiveOngletSMS(daoUtil.getBoolean(++nPos));
             
             
-                 config.setIdMailingListBroadcast(daoUtil.getInt(++nPos));
-                 config.setSubjectBroadcast(daoUtil.getString(++nPos));
-                 config.setMessageBroadcast(daoUtil.getString(++nPos));
-                 config.setSenderNameBroadcast(daoUtil.getString(++nPos));
-                 config.setRecipientsCcBroadcast(daoUtil.getString(++nPos));
-                 config.setRecipientsCciBroadcast(daoUtil.getString(++nPos));
-                 config.setLevelNotificationBroadcast(daoUtil.getString(++nPos));
-                  config.setActiveOngletBroadcast(daoUtil.getBoolean(++nPos));
+            config.setIdMailingListBroadcast(daoUtil.getInt(++nPos));
+            config.setSubjectBroadcast(daoUtil.getString(++nPos));
+            config.setMessageBroadcast(daoUtil.getString(++nPos));
+            config.setSenderNameBroadcast(daoUtil.getString(++nPos));
+            config.setRecipientsCcBroadcast(daoUtil.getString(++nPos));
+            config.setRecipientsCciBroadcast(daoUtil.getString(++nPos));
+            config.setLevelNotificationBroadcast(daoUtil.getString(++nPos));
+            config.setActiveOngletBroadcast(daoUtil.getBoolean(++nPos));
         }
 
         daoUtil.free();
