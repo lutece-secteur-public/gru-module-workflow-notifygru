@@ -20,11 +20,11 @@
 
 
 
-<#if list_ongle?exists>
+<#if list_onglet?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
 				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose} * :</label>
 				<div class="controls">
-					<@combo name="active_ongle" items=list_ongle default_value=2 />&nbsp;
+					<@combo name="active_onglet" items=list_onglet default_value=2 />&nbsp;
 					
 
 <button class="btn btn-small btn-primary" type="submit" name="apply" value="AddOnglet">

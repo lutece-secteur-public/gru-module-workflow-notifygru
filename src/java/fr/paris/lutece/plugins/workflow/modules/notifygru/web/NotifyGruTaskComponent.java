@@ -4,6 +4,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationT
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
 import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
@@ -61,7 +62,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     public String doSaveConfig(HttpServletRequest request, Locale locale, ITask task) {
 
         String strApply = request.getParameter(NotifyGruConstants.PARAMETER_APPY);
-        String strOngletActive = request.getParameter(NotifyGruConstants.PARAMETER_ONGLE);
+        String strOngletActive = request.getParameter(NotifyGruConstants.PARAMETER_ONGLET);
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
 
         Boolean bActiveOngletGuichet = (config.getIdTask() == 0) ? false : config.isActiveOngletGuichet();
@@ -71,25 +72,25 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         Boolean bActiveOngletBROADCAST = (config.getIdTask() == 0) ? false : config.isActiveOngletBroadcast();
 
         switch (strApply) {
-            case "AddOnglet":
-                bActiveOngletGuichet = ("guichet".equals(strOngletActive)) ? true : false;
-                bActiveOngletAgent = ("agent".equals(strOngletActive)) ? true : false;
-                bActiveOngletEmail = ("email".equals(strOngletActive)) ? true : false;
-                bActiveOngletSMS = ("sms".equals(strOngletActive)) ? true : false;
-                bActiveOngletBROADCAST = ("liste".equals(strOngletActive)) ? true : false;
+            case NotifyGruConstants.PARAMETER_BUTTON_ADD:
+                bActiveOngletGuichet = (NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive)) ? true : false;
+                bActiveOngletAgent = (NotifyGruConstants. MARK_ONGLET_AGENT.equals(strOngletActive)) ? true : false;
+                bActiveOngletEmail = (NotifyGruConstants.MARK_ONGLET_EMAIL.equals(strOngletActive)) ? true : false;
+                bActiveOngletSMS = (NotifyGruConstants.MARK_ONGLET_SMS.equals(strOngletActive)) ? true : false;
+                bActiveOngletBROADCAST = (NotifyGruConstants.MARK_ONGLET_LIST.equals(strOngletActive)) ? true : false;
                 break;
-            case "RemoveOnglet":
-                bActiveOngletGuichet = ("guichet".equals(strOngletActive)) ? false : config.isActiveOngletGuichet();
-                bActiveOngletAgent = ("agent".equals(strOngletActive)) ? false : config.isActiveOngletAgent();
-                bActiveOngletEmail = ("email".equals(strOngletActive)) ? false : config.isActiveOngletEmail();
-                bActiveOngletSMS = ("sms".equals(strOngletActive)) ? false : config.isActiveOngletSMS();
-                bActiveOngletBROADCAST = ("liste".equals(strOngletActive)) ? false : config.isActiveOngletBroadcast();
+            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE:
+                bActiveOngletGuichet = (NotifyGruConstants. MARK_ONGLET_GUICHET.equals(strOngletActive)) ? false : config.isActiveOngletGuichet();
+                bActiveOngletAgent = (NotifyGruConstants. MARK_ONGLET_AGENT.equals(strOngletActive)) ? false : config.isActiveOngletAgent();
+                bActiveOngletEmail = (NotifyGruConstants.MARK_ONGLET_EMAIL.equals(strOngletActive)) ? false : config.isActiveOngletEmail();
+                bActiveOngletSMS = (NotifyGruConstants.MARK_ONGLET_SMS.equals(strOngletActive)) ? false : config.isActiveOngletSMS();
+                bActiveOngletBROADCAST = (NotifyGruConstants.MARK_ONGLET_LIST.equals(strOngletActive)) ? false : config.isActiveOngletBroadcast();
                 break;
         }
 
         String strError = "";
 
-        if (bActiveOngletGuichet || ( strApply.equals("RemoveOnglet") && "guichet".equals(strOngletActive))) {
+        if (bActiveOngletGuichet || ( strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive))) {
 
             /*général*/
             String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
@@ -160,7 +161,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             /*fin guichet*/
         }
 
-        if (bActiveOngletAgent || ( strApply.equals("RemoveOnglet") && "agent".equals(strOngletActive))) {
+        if (bActiveOngletAgent || ( strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_AGENT.equals(strOngletActive))) {
 
             /*Agent*/
             String strStatusTextAgent = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_AGENT);
@@ -184,7 +185,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             /*Fin Agent*/
         }
 
-        if (bActiveOngletEmail || ( strApply.equals("RemoveOnglet") && "email".equals(strOngletActive))) {
+        if (bActiveOngletEmail || ( strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_EMAIL.equals(strOngletActive))) {
             /*email*/
             String strRessourceRecordEmail = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_EMAIL);
             String strSubjectEmail = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_EMAIL);
@@ -200,10 +201,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                 if (strRessourceRecordEmail == WorkflowUtils.EMPTY_STRING
                         || strSubjectEmail == WorkflowUtils.EMPTY_STRING
                         || strEntryEmail == WorkflowUtils.EMPTY_STRING
+                        || Validator.isEmailValid(strEntryEmail) == false
                         || strMessageEmail == WorkflowUtils.EMPTY_STRING
                         || strSenderNameEmail == WorkflowUtils.EMPTY_STRING
                         || strRecipientsCcEmail == WorkflowUtils.EMPTY_STRING
+                        || Validator.isRecipientCcValid(strRecipientsCcEmail) == false
                         || strRecipientsCciEmail == WorkflowUtils.EMPTY_STRING
+                        || Validator.isRecipientCcValid(strRecipientsCciEmail) == false
                         || strLevelNotificationEmail == WorkflowUtils.EMPTY_STRING) {
                     strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
                 }
@@ -225,7 +229,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             /*fin email*/
         }
 
-        if (bActiveOngletSMS || ( strApply.equals("RemoveOnglet") && "sms".equals(strOngletActive))) {
+        if (bActiveOngletSMS || ( strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_SMS.equals(strOngletActive))) {
             /*sms*/
             //NON pour l'instant
             String strRessourceRecordSMS = request.getParameter(NotifyGruConstants.PARAMETER_RESOURCE_RECORD_SMS);
@@ -238,6 +242,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                 if (strRessourceRecordSMS == WorkflowUtils.EMPTY_STRING
                         || strPhoneSMS == WorkflowUtils.EMPTY_STRING
                         || strMessageSMS == WorkflowUtils.EMPTY_STRING
+                        || Validator.isSMSvalid(strMessageSMS) == false
                         || strLevelNotificationSMS == WorkflowUtils.EMPTY_STRING) {
                     strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
                 }
@@ -254,7 +259,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             /*fin sms*/
         }
 
-        if (bActiveOngletBROADCAST || ( strApply.equals("RemoveOnglet") && "liste".equals(strOngletActive))) {
+        if (bActiveOngletBROADCAST || ( strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_LIST.equals(strOngletActive))) {
             String strIdMailingListBroadcast = request.getParameter(NotifyGruConstants.PARAMETER_ID_MAILING_LIST);
             int nIdMailingListBroadcast = (strIdMailingListBroadcast == null) ? -1 : Integer.parseInt(strIdMailingListBroadcast);
 
@@ -270,7 +275,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                         || strsenderNameBroadcast == WorkflowUtils.EMPTY_STRING
                         || strsubjectBroadcast == WorkflowUtils.EMPTY_STRING
                         || strrecipientsCciBroadcast == WorkflowUtils.EMPTY_STRING
+                        || Validator.isRecipientCcValid(strrecipientsCciBroadcast) == false
                         || strrecipientsCcBroadcast == WorkflowUtils.EMPTY_STRING
+                        || Validator.isRecipientCcValid(strrecipientsCcBroadcast) == false
                         || strLevelNotificationBroadcast == WorkflowUtils.EMPTY_STRING) {
                     strError = NotifyGruConstants.MESSAGE_MANDATORY_FIELD;
                 }
@@ -295,7 +302,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             config.setActiveOngletBroadcast(bActiveOngletBROADCAST);
         }
 
-        if (bActiveOngletAgent || bActiveOngletBROADCAST || bActiveOngletEmail || bActiveOngletGuichet || bActiveOngletSMS) {
+     if (bActiveOngletAgent || bActiveOngletBROADCAST || bActiveOngletEmail || bActiveOngletGuichet || bActiveOngletSMS) {
             Boolean bCreate = false;
             if (config.getIdTask() == 0) {
                 config = new TaskNotifyGruConfig();
@@ -309,13 +316,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                 _taskNotifyGruConfigService.update(config);
             }
 
-        } else {
-            Object[] tabRequiredFields = {I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale)};
+        } /*else {
+           Object[] tabRequiredFields = {I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale)};
 
             return AdminMessageService.getMessageUrl(request, NotifyGruConstants.MESSAGE_MANDATORY_ONGLET,
-                    tabRequiredFields, AdminMessage.TYPE_STOP);
+               tabRequiredFields, AdminMessage.TYPE_STOP);
 
-        }
+        }*/
 
         return null;
     }
@@ -335,8 +342,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_CONFIG, config);
         model.put(NotifyGruConstants.MARK_DEFAULT_SENDER_NAME, strDefaultSenderName);
 
-        ReferenceList listeOnglet = this.getListOnglet();
-        model.put(NotifyGruConstants.MARK_LIST_ONGLE, listeOnglet);
+        ReferenceList listeOnglet = this.getListOnglet(config);
+        model.put(NotifyGruConstants.MARK_LIST_ONGLET, listeOnglet);
 
         ReferenceList levelNotification = this.getListNotification();
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_GUICHET, levelNotification);
@@ -350,6 +357,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourcesDemande());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourceEmail());
         model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_EMAIL, this.getListRessourceEmail());
+        
 //        model.put( NotifyGruConstants.MARK_STATE_LIST,
 //            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
 
@@ -428,14 +436,14 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return refenreceList;
     }
 
-    public ReferenceList getListOnglet() {
+    public ReferenceList getListOnglet(TaskNotifyGruConfig config) {
 
         ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem("guichet", "vue guichet");
-        refenreceList.addItem("agent", "vue agent");
-        refenreceList.addItem("email", "vue email");
-        refenreceList.addItem("sms", "vue sms");
-        refenreceList.addItem("liste", "liste diffusion");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_GUICHET, "vue guichet "+" ("+this.getOngletState(config.isActiveOngletGuichet())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_AGENT, "vue agent "+" ("+this.getOngletState(config.isActiveOngletAgent())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_EMAIL, "vue email "+" ("+this.getOngletState(config.isActiveOngletEmail())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_SMS, "vue sms "+" ("+this.getOngletState(config.isActiveOngletSMS())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_LIST, "liste diffusion "+" ("+this.getOngletState(config.isActiveOngletBroadcast())+" )");
 
         return refenreceList;
     }
@@ -458,5 +466,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         refenreceList.addItem(2, "email_3@email.com");
 
         return refenreceList;
+    }
+    public String getOngletState(boolean strboolean)
+    {
+    		if(strboolean)
+    			{
+    			return "actif";
+    		}
+    	return "inactif";
     }
 }

@@ -55,6 +55,7 @@ public final class NotifyGruConstants {
     public static final String PROPERTY_LUTECE_PROD_URL = "lutece.prod.url";
 
     // MARKS GUICHET
+    public static final String MARK_ONGLET_GUICHET = "guichet";
     public static final String MARK_LIST_ID_RESOURCE_GUICHET = "list_id_resource_guichet";
     public static final String MARK_ID_RESOURCE_GUICHET = "id_resource_guichet";
     public static final String MARK_LIST_ID_DEMAND_GUICHET = "list_id_demand_guichet";
@@ -70,7 +71,13 @@ public final class NotifyGruConstants {
     public static final String MARK_SENDER_NAME_GUICHET = "sender_name_guichet";
     public static final String MARK_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String MARK_IS_ACTIVE_ONGLET_GUICHET = "is_active_onglet_guichet";
+    
+    //MARKS AGENT
+    public static final String MARK_ONGLET_AGENT = "agent";
+    
+    
     // MARKS EMAIL
+    public static final String MARK_ONGLET_EMAIL = "email";
     public static final String MARK_LIST_ID_RESOURCE_EMAIL = "list_id_resource_email";
     public static final String MARK_ID_RESOURCE_EMAIL = "id_resource_email";
     public static final String MARK_LIST_ID_DEMAND_EMAIL = "list_id_record_email";
@@ -87,7 +94,9 @@ public final class NotifyGruConstants {
     public static final String MARK_RECIPIENT_CCI_EMAIL = "recipient_cci_email";
     public static final String MARK_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String MARK_IS_ACTIVE_ONGLET_EMAIL = "is_active_onglet_email";
+    
     // MARKS SMS
+    public static final String MARK_ONGLET_SMS = "sms";
     public static final String MARK_LIST_ID_RESOURCE_SMS = "list_id_resource_sms";
     public static final String MARK_ID_RESOURCE_SMS = "id_resource_sms";
     public static final String MARK_LIST_ID_DEMAND_SMS = "list_id_record_sms";
@@ -105,11 +114,18 @@ public final class NotifyGruConstants {
     public static final String MARK_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String MARK_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
     
+    //MARKS MAILING LIST
+   public static final String MARK_ONGLET_LIST="liste";
+    
      public static final String MARK_LEVEL_NOTIFICATION_AGENT = "level_notification_agent";
     public static final String MARK_IS_ACTIVE_ONGLET_AGENT = "is_active_onglet_agent";
     
       public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
 
+      //BUTTON ADD & REMOVE
+      public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
+      public static final String PARAMETER_BUTTON_REMOVE = "RemoveOnglet";
+      
     // PARAMETERS GUICHET
     public static final String PARAMETER_ID_RESOURCE = "id_ressource";
     public static final String PARAMETER_ID_USER_GUID = "id_user_guid";
@@ -166,7 +182,7 @@ public final class NotifyGruConstants {
     
     
        // PARAMETERS ONGLET
-     public static final String PARAMETER_ONGLE = "active_ongle";
+     public static final String PARAMETER_ONGLET = "active_onglet";
      public static final String PARAMETER_ONGLE_ADD = "add_onglet";
      public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
 
@@ -177,7 +193,7 @@ public final class NotifyGruConstants {
     public static final String MARK_LINK = "link";
     public static final String MARK_DEFAULT_SENDER_NAME = "default_sender_name";
     public static final String MARK_LIST_ENTRIES_EMAIL_SMS = "list_entries_email_sms";
-    public static final String MARK_LIST_ONGLE = "list_ongle";
+    public static final String MARK_LIST_ONGLET = "list_onglet";
     public static final String MARK_GRU_LIST = "list_ressources";    
     public static final String MARK_GRU_LIST_RESSSOURCE_DEMANDES = "list_entries_id_demand";
     public static final String MARK_GRU_LIST_RESSSOURCE_EMAIL = "list_entries_email";
