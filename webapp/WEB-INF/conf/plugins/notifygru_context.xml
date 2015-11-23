@@ -51,6 +51,9 @@
     
     <bean id="workflow-notifygru.providerService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService" />
 	
-	<bean id="workflow-notifygru.notificationFlux" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationFlux"></bean>
+	
+	<bean id="workflow-notifygru.resourceFlux" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.FluxResource">
+	
+	</bean> 
 </beans>
  	
