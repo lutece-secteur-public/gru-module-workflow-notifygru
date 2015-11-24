@@ -2,20 +2,7 @@
 	<fieldset>
 		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</legend>
 		<br />
- <#if mailing_list?exists>
-        <div id="mailing_list">
-            <div class="form-group">
-
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_mailing_list_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast} *</label>
-
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
-                    <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}</span>
-                </div>
-            </div>
-        </div> 
-            
-        </#if>
+ 
         
 
 
@@ -31,34 +18,6 @@
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_broadcast}</span>
             </div>
         </div>
-
-
-
-		<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cc_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_broadcast}</label>
-			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                <#if config?exists && config.recipientsCcBroadcast?has_content>
-                    <input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="${config.recipientsCcBroadcast}"  maxlength="255">
-                <#else>
-<input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_broadcast}</span>
-             </div>
-        </div>
-
-
-<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cci_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_broadcast}</label>
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-				<#if config?exists && config.recipientsCciBroadcast?has_content>
-                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="${config.recipientsCciBroadcast}"  maxlength="255">
-                <#else>
-                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_broadcast}</span>
-            </div>
-        </div>
-
 
 <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_broadcast} * </label>

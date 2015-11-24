@@ -32,9 +32,9 @@ public interface IProviderService {
 	
 	String getPhoneNumber (int idResource);
 	
-	Object getInfosHelp();
+	Object getInfosHelp();//HTML
 	
-	String getInfos(int idResource);
+	String getInfos(int idResource);//Object
 	
 
 }
