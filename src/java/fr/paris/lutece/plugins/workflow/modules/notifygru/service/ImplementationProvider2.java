@@ -1,19 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import fr.paris.lutece.portal.service.security.LuteceUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.paris.lutece.portal.service.security.LuteceUser;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-
-public class ProviderService extends AbstractServiceProvider{
-	
-	//private static final String BEAN_LIST_USERDASHBOARDS = "workflow-notifygru.listResources";
-
-
-	@Override
+/**
+ *
+ * @author fallphenix
+ */
+public class ImplementationProvider2 extends AbstractServiceProvider{
+  @Override
 	public String getUserGuid(LuteceUser user) {
 		// TODO Auto-generated method stub
 		return "12312";
@@ -107,11 +110,10 @@ public class ProviderService extends AbstractServiceProvider{
 	public String getDescription(int idResource) {
 		// TODO Auto-generated method stub
 		return "Desc Provider";
-	}
+	}  
         
           @Override
     public String getName() {
-    return "Implementation0";   
+    return "Implementatio2";   
     }
-
 }

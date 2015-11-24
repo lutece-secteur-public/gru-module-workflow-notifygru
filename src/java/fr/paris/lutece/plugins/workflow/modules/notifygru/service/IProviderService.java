@@ -7,7 +7,7 @@ import fr.paris.lutece.portal.service.security.LuteceUser;
 
 public interface IProviderService {
 	
-	
+
 	String getUserName(LuteceUser user);
 	
 	String getUserEmail (LuteceUser user);
@@ -35,6 +35,7 @@ public interface IProviderService {
 	Object getInfosHelp();//HTML
 	
 	String getInfos(int idResource);//Object
+	String getName();//Object
 	
 
 }

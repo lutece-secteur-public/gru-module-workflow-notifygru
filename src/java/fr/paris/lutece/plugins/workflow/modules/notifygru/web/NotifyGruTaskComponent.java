@@ -1,10 +1,11 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationTypeEnum;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IProviderService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
@@ -19,7 +20,9 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+
 import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -57,7 +60,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
     
-    private IProviderService _providerService = new ProviderService();
+    
+ 
+  
 
     /**
      * {@inheritDoc}
@@ -76,6 +81,23 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         Boolean bActiveOngletSMS = (config.getIdTask() == 0) ? false : config.isActiveOngletSMS();
         Boolean bActiveOngletBROADCAST = (config.getIdTask() == 0) ? false : config.isActiveOngletBroadcast();
 
+        
+         int nIdResource=1;
+        if(strProvider!=null){
+           
+            config.setIdRessource(nIdResource);          
+           
+        }else if(!bActiveOngletGuichet && !bActiveOngletAgent && !bActiveOngletEmail && !bActiveOngletSMS && !bActiveOngletBROADCAST){
+         
+            if(strApply.equals("")){
+              Object[] tabRequiredFields = {I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER, locale)};
+
+            return AdminMessageService.getMessageUrl(request, NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER,
+               tabRequiredFields, AdminMessage.TYPE_STOP);
+            }
+        }
+        
+        
         if(strApply!=null) {
         switch (strApply) {
             case NotifyGruConstants.PARAMETER_BUTTON_ADD:
@@ -105,12 +127,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         
         String strError = "";
         
-        int nIdResource=(strProvider== null) ? WorkflowUtils.CONSTANT_ID_NULL : Integer.parseInt(strProvider);
-        if(strProvider!=null){
-            config.setIdRessource(nIdResource);
-          
-           
-        }
+       
 
         if (bActiveOngletGuichet || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive))) {
 
@@ -381,7 +398,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_EMAIL, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_SMS, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification);
-
+        
+       
        
 //		model.put("status", _providerService.getStatus(idResource));
 //		model.put("provider_title", _providerService.getTitle(idResource));
@@ -434,10 +452,26 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return null;
     }
 
+    
+     public List<AbstractServiceProvider> getImplementationServices(  )
+    {
+      
+        return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
+    }
     public ReferenceList getListProvider() {
 
-        ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(1, "Provider");
+          ReferenceList refenreceList = new ReferenceList();
+          
+          
+        
+        for ( AbstractServiceProvider provider : this.getImplementationServices(  ) )
+        {
+          
+             refenreceList.addItem(provider.getKey(), provider.getTitle(Locale.getDefault()));
+           
+        }
+      
+       
       
 
         return refenreceList;
