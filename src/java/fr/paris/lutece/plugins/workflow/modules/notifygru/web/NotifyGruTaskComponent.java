@@ -473,8 +473,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     {
     		if(strboolean)
     			{
-    			return "actif";
+    			return NotifyGruConstants.VIEW_ACTIF;
     			}
-    	return "inactif";
+    	return NotifyGruConstants.VIEW_INACTIF;
     }
 }

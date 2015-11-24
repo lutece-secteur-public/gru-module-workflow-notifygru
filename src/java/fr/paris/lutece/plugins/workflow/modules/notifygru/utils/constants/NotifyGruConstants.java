@@ -41,6 +41,8 @@ public final class NotifyGruConstants {
     public static final String VIEW_EMAIL = "vue_email";
     public static final String VIEW_SMS = "vue sms";
     public static final String VIEW_BROADCAST_LIST="liste de diffusion";
+    public static final String VIEW_ACTIF="actif";
+    public static final String VIEW_INACTIF="inactif";
     
     //VISIBILITY
     public static final String VISIBILITY_ALL = "visible par tout le monde";
