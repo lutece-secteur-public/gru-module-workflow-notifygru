@@ -3,7 +3,7 @@
 		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</legend>
 		<br />
  
-        
+       
 
 
 
@@ -30,6 +30,44 @@
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_broadcast}</span>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3"></label>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                 <a  class="btn btn-primary" role="button" onclick="showhide()">Mettre en copie</a>
+            </div>
+            
+             </div>
+       
+       
+        <div id="copyccemail">
+            
+            <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cc_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_broadcast}</label>
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <#if config?exists && config.recipientsCcBroadcast?has_content>
+                    <input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="${config.recipientsCcBroadcast}"  maxlength="255">
+                <#else>
+<input type="text" name="recipients_cc_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_broadcast}</span>
+             </div>
+        </div>
+
+
+<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="recipients_cci_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_broadcast}</label>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<#if config?exists && config.recipientsCciBroadcast?has_content>
+                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="${config.recipientsCciBroadcast}"  maxlength="255">
+                <#else>
+                    <input type="text" name="recipients_cci_broadcast" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_broadcast}</span>
+            </div>
+        </div>
+        </div>
+        	
+
 
 
 <div class="form-group">
@@ -61,3 +99,22 @@
 </div>
 
 
+
+
+
+<script>
+    function showhide()
+     {
+         
+         var div = document.getElementById("copyccemail");
+       
+    if (div.style.display !== "none") {
+        div.style.display = "none";
+    }
+    else {
+        div.style.display = "block";
+    }
+     }
+     
+     showhide();
+  </script>

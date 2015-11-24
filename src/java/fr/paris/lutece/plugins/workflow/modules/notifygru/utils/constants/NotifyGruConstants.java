@@ -185,9 +185,11 @@ public final class NotifyGruConstants {
      public static final String PARAMETER_ONGLET = "active_onglet";
      public static final String PARAMETER_ONGLE_ADD = "add_onglet";
      public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
+     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";
+    public static final String MARK_SELECT_PROVIDER = "list_provider";
     public static final String MARK_GRU_TITLE = "directory_title";
     public static final String MARK_GRU_DESCRIPTION = "directory_description";
     public static final String MARK_LINK = "link";

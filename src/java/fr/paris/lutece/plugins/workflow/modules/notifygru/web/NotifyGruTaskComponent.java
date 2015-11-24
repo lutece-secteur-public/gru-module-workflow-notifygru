@@ -67,6 +67,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         String strApply = request.getParameter(NotifyGruConstants.PARAMETER_APPY);
         String strOngletActive = request.getParameter(NotifyGruConstants.PARAMETER_ONGLET);
+        String strProvider = request.getParameter(NotifyGruConstants.PARAMETER_SELECT_PROVIDER);
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
 
         Boolean bActiveOngletGuichet = (config.getIdTask() == 0) ? false : config.isActiveOngletGuichet();
@@ -94,7 +95,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         }
        }
         if(strApply==null && !bActiveOngletAgent && !bActiveOngletBROADCAST && 
-                !bActiveOngletEmail && !bActiveOngletGuichet &&!bActiveOngletSMS) {
+                !bActiveOngletEmail && !bActiveOngletGuichet &&!bActiveOngletSMS && strProvider==null) {
             
              Object[] tabRequiredFields = {I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale)};
 
@@ -103,11 +104,18 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         }
         
         String strError = "";
+        
+        int nIdResource=(strProvider== null) ? WorkflowUtils.CONSTANT_ID_NULL : Integer.parseInt(strProvider);
+        if(strProvider!=null){
+            config.setIdRessource(nIdResource);
+          
+           
+        }
 
         if (bActiveOngletGuichet || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive))) {
 
             /*général*/
-        	int nIdResource=1;// A SUPPRIMER
+        	// A SUPPRIMER
            /* String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
             int nIdResource = (strIdResource == null) ? WorkflowUtils.CONSTANT_ID_NULL : Integer.parseInt(strIdResource);
             String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
@@ -149,7 +157,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             Boolean bSendNotificationGuichet = Boolean.parseBoolean(strSendNotificationGuichet);
 			*/
 
-            String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
+            String strStatusTextGuichet = "status";
+           // String strStatusTextGuichet = request.getParameter(NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET);
             String strSubjectGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SUBJECT_GUICHET);
             String strMessageGuichet = request.getParameter(NotifyGruConstants.PARAMETER_MESSAGE_GUICHET);
             String strSenderNameGuichet = request.getParameter(NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET);
@@ -325,10 +334,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
      if (bActiveOngletAgent || bActiveOngletBROADCAST 
              || bActiveOngletEmail || bActiveOngletGuichet 
-             || bActiveOngletSMS || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE))) {
+             || bActiveOngletSMS 
+             || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE))
+             || strProvider!=null) {
             Boolean bCreate = false;
-            if (config.getIdTask() == 0) {
-                config = new TaskNotifyGruConfig();
+            if (config.getIdTask() == 0) {             
                 config.setIdTask(task.getId());
                 bCreate = true;
             }
@@ -360,6 +370,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         model.put(NotifyGruConstants.MARK_CONFIG, config);
         model.put(NotifyGruConstants.MARK_DEFAULT_SENDER_NAME, strDefaultSenderName);
+        model.put(NotifyGruConstants.MARK_SELECT_PROVIDER, this.getListProvider());
 
         ReferenceList listeOnglet = this.getListOnglet(config);
         model.put(NotifyGruConstants.MARK_LIST_ONGLET, listeOnglet);
@@ -371,21 +382,15 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_SMS, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification);
 
-        model.put(NotifyGruConstants.MARK_GRU_LIST, this.getListRessources());
-        model.put(NotifyGruConstants.MARK_GRU_LIST_CRM_WEBAPP, this.getListCrmWebApp());
-        model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourcesDemande());
-        model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_DEMANDES, this.getListRessourceEmail());
-        model.put(NotifyGruConstants.MARK_GRU_LIST_RESSSOURCE_EMAIL, this.getListRessourceEmail());
-        
-
-		model.put("status", _providerService.getStatus(idResource));
-		model.put("provider_title", _providerService.getTitle(idResource));
-		model.put("provider_desc", _providerService.getDescription(idResource));
-		model.put("name_user", _providerService.getUserName(user));
-		model.put("title_demand_1", "demande 1");
-		model.put("title_demand_2", "demande 2");
-		model.put("title_demand_3", "demande 3");
-		model.put("list_freemarker", (Map<String,String>)_providerService.getInfosHelp());
+       
+//		model.put("status", _providerService.getStatus(idResource));
+//		model.put("provider_title", _providerService.getTitle(idResource));
+//		model.put("provider_desc", _providerService.getDescription(idResource));
+//		model.put("name_user", _providerService.getUserName(user));
+//		model.put("title_demand_1", "demande 1");
+//		model.put("title_demand_2", "demande 2");
+//		model.put("title_demand_3", "demande 3");
+//		model.put("list_freemarker", (Map<String,String>)_providerService.getInfosHelp());
 
 //        model.put( NotifyGruConstants.MARK_STATE_LIST,
 //            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
@@ -429,41 +434,17 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return null;
     }
 
-    public ReferenceList getListRessources() {
+    public ReferenceList getListProvider() {
 
         ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(1, "Ressource 1");
-        refenreceList.addItem(2, "Ressource 2");
-        refenreceList.addItem(3, "Ressource 3");
-        refenreceList.addItem(4, "Ressource 4");
-        refenreceList.addItem(5, "Ressource 5");
+        refenreceList.addItem(1, "Provider");
+      
 
         return refenreceList;
     }
 
-    public ReferenceList getListRessourcesDemande() {
-
-        ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(1, "Demande  1");
-        refenreceList.addItem(2, "Demande  2");
-        refenreceList.addItem(3, "Demande  3");
-        refenreceList.addItem(4, "Demande  4");
-        refenreceList.addItem(5, "Demande  5");
-
-        return refenreceList;
-    }
-
-    public ReferenceList getListCrmWebApp() {
-
-        ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(1, "CRM App 1");
-        refenreceList.addItem(2, "CRM App 2");
-        refenreceList.addItem(3, "CRM App 3");
-        refenreceList.addItem(4, "CRM App 4");
-        refenreceList.addItem(5, "CRM App 5");
-
-        return refenreceList;
-    }
+  
+   
 
     public ReferenceList getListOnglet(TaskNotifyGruConfig config) {
 
@@ -487,15 +468,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return refenreceList;
     }
 
-    public ReferenceList getListRessourceEmail() {
-
-        ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(0, "email_1@email.com");
-        refenreceList.addItem(1, "email_2@email.com");
-        refenreceList.addItem(2, "email_3@email.com");
-
-        return refenreceList;
-    }
+   
     public String getOngletState(boolean strboolean)
     {
     		if(strboolean)
