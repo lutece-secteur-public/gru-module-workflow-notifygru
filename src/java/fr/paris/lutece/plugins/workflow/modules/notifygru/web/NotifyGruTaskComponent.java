@@ -115,7 +115,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         if (bActiveOngletGuichet || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive))) {
 
             /*général*/
-        	// A SUPPRIMER
            /* String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
             int nIdResource = (strIdResource == null) ? WorkflowUtils.CONSTANT_ID_NULL : Integer.parseInt(strIdResource);
             String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non

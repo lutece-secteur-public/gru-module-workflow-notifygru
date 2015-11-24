@@ -7,7 +7,7 @@
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet}  * </label>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                <#if config?exists && config.senderNameEmail?has_content>
+                <#if config?exists && config.senderNameGuichet?has_content>
                 <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="${config.senderNameGuichet}" maxlength="70">
                 <#else>
                 <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="" maxlength="70">
@@ -33,7 +33,7 @@
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <#if config?exists  && config.messageEmail?has_content>
+                <#if config?exists  && config.messageGuichet?has_content>
                 <textarea name="message_guichet" id="message_guichet" rows="5" cols="90" class="richtext">${config.messageGuichet}</textarea>
                 <#else>
                 <textarea name="message_guichet" id="message_guichet" rows="5" cols="90" class="richtext"></textarea>
