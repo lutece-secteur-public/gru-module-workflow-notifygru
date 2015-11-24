@@ -2,9 +2,9 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationTypeEnum;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IMokeServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IProviderService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.MokeServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
@@ -57,7 +57,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
     
-    private IProviderService _providerService = new ProviderService();
+    private IMokeServiceProvider _mokeProviderService = new MokeServiceProvider(  );
 
     /**
      * {@inheritDoc}
@@ -412,7 +412,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_WEBAPP_URL, AppPathService.getBaseUrl(request));
         HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
 
-        return template.getHtml();
+        return template.getHtml(  ) + _mokeProviderService.getInfosHelp(  );
     }
 
     /**

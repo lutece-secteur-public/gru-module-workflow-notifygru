@@ -1,21 +1,5 @@
 <div>
 <h4>Synthaxe freemarker à utiliser dans le message afin d'afficher les valeurs du Provider</h4>
-<div class="row">
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		<strong>Valeurs du Provider</strong>
-	</div>
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		<strong>Label Freemarker</strong>
-	</div>
-	<#list list_freemarker?keys as elm>
-		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			${elm}
-		</div>
-		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			<#assign val=list_freemarker[elm]>
-			${list_freemarker[elm]}
-		</div>
-	</#list>
-</div>
-
+last_name   :  &#36;&#123;resource.lastName&#125; <br>
+firt_name   :  &#36;&#123;resource.firstName&#125; <br>
 </div>

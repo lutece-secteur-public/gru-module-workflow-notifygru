@@ -44,16 +44,11 @@
    	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
 	
 	
-	<!-- UserDashboard 
-	<bean id="mydashboard-gru.mydashboardBillsComponent" class="fr.paris.lutece.plugins.mydashboard.modules.gru.web.MyDashboardBillsComponent" />
-    
-	-->
-    
-    <bean id="workflow-notifygru.providerService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService" />
-	
-	
-	<bean id="workflow-notifygru.resourceFlux" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.FluxResource">
-	
-	</bean> 
+	<bean id="workflow-notifygru.gruMokeProvider" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.MokeServiceProvider"/>
+	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
+		<property name="idUser"><value>12312</value></property>
+		<property name="email"><value>john.doe@somewhere.com</value>
+		</property><property name="lastName"><value>doe</value></property>
+		<property name="firstName"><value>john</value></property></bean>
 </beans>
  	
