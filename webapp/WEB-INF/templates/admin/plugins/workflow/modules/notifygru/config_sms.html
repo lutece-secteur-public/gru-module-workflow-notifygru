@@ -14,15 +14,20 @@
             </div>
  </div>
                 
-                <#if level_notification_sms?exists>
-			<div class="control-group" id="entry_id_demand">
-				<label class="control-label" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}* :</label>
-				<div class="controls">
-					<@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
-				</div>
-			</div>
-		</#if>
+                
+                   <#if level_notification_sms?exists>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                <@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
+            </div>
+        </div>        
+
+        </#if>
+        
+        
+            
                 
         
 	</fieldset>

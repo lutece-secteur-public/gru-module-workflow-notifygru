@@ -1,34 +1,35 @@
 
 <div>
-	<fieldset>
-		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</legend>
-		<br />
-<div class="control-group">
-			<label class="control-label" for="messageAgent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * :</label>
-			<div class="controls editor">
-                              <#if config?exists && config.messageAgent?has_content>
-                           
-                             <textarea name="message_agent" id="" rows="20" cols="90" class="richtext">${config.messageAgent}</textarea>
-			
-                                <#else>
-                                <textarea name="message_agent" id="" rows="20" cols="90" class="richtext"></textarea>
-                               </#if>
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
-			</div>
-		</div>   
-                
-                
-                 <#if level_notification_agent?exists>
-			<div class="control-group" id="entry_id_demand">
-				<label class="control-label" for="level_notification_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent}* :</label>
-				<div class="controls">
-					<@combo name="level_notification_agent" items=level_notification_agent default_value=1 />&nbsp;
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent}</span>
-				</div>
-			</div>
-		</#if>
-                
-                
-	</fieldset>
+    <fieldset>
+        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</legend>
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                <#if config?exists  && config.messageAgent?has_content>
+                <textarea name="message_agent" id="message_agent" rows="20" cols="90" class="richtext">${config.messageAgent}</textarea>
+                <#else>
+                <textarea name="message_agent" id="message_agent" rows="20" cols="90" class="richtext"></textarea>
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
+            </div>
+        </div>
+
+
+        <#if level_notification_agent?exists>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="level_notification_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                <@combo name="level_notification_agent" items=level_notification_agent default_value=1 />&nbsp;
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_agent}</span>
+            </div>
+        </div>        
+
+        </#if>
+
+
+
+
+    </fieldset>
 </div>
- 
