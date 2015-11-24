@@ -13,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
  *
  * @author fallphenix
  */
-public abstract class AbstractServiceProvider implements IProviderService{
+public abstract class AbstractServiceProvider implements IServiceProvider{
     
      private String _strKey;
     private String _strtitleI18nKey;

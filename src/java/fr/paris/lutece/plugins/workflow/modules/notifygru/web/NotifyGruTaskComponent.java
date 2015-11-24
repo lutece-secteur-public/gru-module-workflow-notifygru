@@ -2,9 +2,50 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IServiceProvider;
+
+
+
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
+import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
+import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
+import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
+import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
+import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
+import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
+import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.message.AdminMessage;
+import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.plugin.PluginService;
+
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.html.HtmlTemplate;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IProviderService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService;
+
+
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
@@ -60,9 +101,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
     
-    
- 
-  
+     // AbstractServiceProvider _mokeProviderService =  SpringContextService.getBean("workflow-notifygru.mooc1");
+     AbstractServiceProvider _mokeProviderService =  new Mook1ProviderService();
 
     /**
      * {@inheritDoc}
@@ -132,7 +172,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         if (bActiveOngletGuichet || (strApply!=null && strApply.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE) && NotifyGruConstants.MARK_ONGLET_GUICHET.equals(strOngletActive))) {
 
             /*général*/
-        	// A SUPPRIMER
            /* String strIdResource = request.getParameter(NotifyGruConstants.PARAMETER_ID_RESOURCE);
             int nIdResource = (strIdResource == null) ? WorkflowUtils.CONSTANT_ID_NULL : Integer.parseInt(strIdResource);
             String stridUserGuid = request.getParameter(NotifyGruConstants.PARAMETER_ID_USER_GUID);//non
@@ -431,7 +470,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_WEBAPP_URL, AppPathService.getBaseUrl(request));
         HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
 
-        return template.getHtml();
+    
+        
+        return template.getHtml(  ) + _mokeProviderService.getInfosHelp(  );
     }
 
     /**

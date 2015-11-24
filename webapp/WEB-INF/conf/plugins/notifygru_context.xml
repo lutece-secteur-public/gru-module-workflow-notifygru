@@ -44,38 +44,39 @@
    	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
 	
 	
+
 	<!-- UserDashboard 
 	<bean id="mydashboard-gru.mydashboardBillsComponent" class="fr.paris.lutece.plugins.mydashboard.modules.gru.web.MyDashboardBillsComponent" />
     
 	-->
         
-        <bean id="workflow-notifygru.providerService.Implementation0" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ProviderService"
- 		p:key="ProviderServiceImplementation0"
- 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_implementation_0"
-                p:beanName="workflow-notifygru.providerService.Implementation0" 	
+        <bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"
+ 		p:key="ProviderServiceMooc1"
+ 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_1"
+                p:beanName="workflow-notifygru.providerService.Mooc1" 	
+ 		
+ 		/>
+        <bean id="workflow-notifygru.mooc2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook2ProviderService"
+ 		p:key="ProviderServiceMooc2"
+ 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_2"
+                p:beanName="workflow-notifygru.providerService.Mooc2" 	
  		
  		/>
         
           
-        <bean id="workflow-notifygru.providerService.Implementation1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ImplementationProvider1"
- 		p:key="ProviderServiceImplementation1"
- 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_implementation_1"
- 		p:beanName="workflow-notifygru.providerService.Implementation1" 		
- 		/>
-        <bean id="workflow-notifygru.providerService.Implementation2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ImplementationProvider2"
- 		p:key="ProviderServiceImplementation2"
- 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_implementation_2"
- 		p:beanName="workflow-notifygru.providerService.Implementation2" 		
- 		/>
-        <bean id="workflow-notifygru.providerService.Implementation3" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ImplementationProvider3"
- 		p:key="ProviderServiceImplementation3"
- 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_implementation_3"
- 		p:beanName="workflow-notifygru.providerService.Implementation3" 		
- 		/>
-        	
+       
+       
     
 	<bean id="workflow-notifygru.resourceFlux" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.FluxResource">
 	
 	</bean> 
+
+	
+	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
+		<property name="idUser"><value>12312</value></property>
+		<property name="email"><value>john.doe@somewhere.com</value>
+		</property><property name="lastName"><value>doe</value></property>
+		<property name="firstName"><value>john</value></property></bean>
+
 </beans>
  	

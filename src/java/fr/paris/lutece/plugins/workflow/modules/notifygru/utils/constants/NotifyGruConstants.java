@@ -38,7 +38,7 @@ public final class NotifyGruConstants {
     //VIEW
     public static final String VIEW_GUICHET = "vue guichet";
     public static final String VIEW_AGENT = "vue agent";
-    public static final String VIEW_EMAIL = "vue_email";
+    public static final String VIEW_EMAIL = "vue email";
     public static final String VIEW_SMS = "vue sms";
     public static final String VIEW_BROADCAST_LIST="liste de diffusion";
     public static final String VIEW_ACTIF="actif";
