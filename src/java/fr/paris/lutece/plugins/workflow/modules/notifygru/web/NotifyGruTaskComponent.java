@@ -468,11 +468,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     public ReferenceList getListOnglet(TaskNotifyGruConfig config) {
 
         ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_GUICHET, "vue guichet "+" ("+this.getOngletState(config.isActiveOngletGuichet())+" )");
-        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_AGENT, "vue agent "+" ("+this.getOngletState(config.isActiveOngletAgent())+" )");
-        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_EMAIL, "vue email "+" ("+this.getOngletState(config.isActiveOngletEmail())+" )");
-        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_SMS, "vue sms "+" ("+this.getOngletState(config.isActiveOngletSMS())+" )");
-        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_LIST, "liste diffusion "+" ("+this.getOngletState(config.isActiveOngletBroadcast())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_GUICHET, NotifyGruConstants.VIEW_GUICHET+" ("+this.getOngletState(config.isActiveOngletGuichet())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_AGENT, NotifyGruConstants.VIEW_AGENT+" ("+this.getOngletState(config.isActiveOngletAgent())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_EMAIL, NotifyGruConstants.VIEW_EMAIL+" ("+this.getOngletState(config.isActiveOngletEmail())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_SMS, NotifyGruConstants.VIEW_SMS+" ("+this.getOngletState(config.isActiveOngletSMS())+" )");
+        refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_LIST, NotifyGruConstants.VIEW_BROADCAST_LIST+" ("+this.getOngletState(config.isActiveOngletBroadcast())+" )");
 
         return refenreceList;
     }
@@ -480,9 +480,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     public ReferenceList getListNotification() {
 
         ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(0, "Visible par tout le monde");
-        refenreceList.addItem(1, "Visible par domaine");
-        refenreceList.addItem(2, "Visible par Admin");
+        refenreceList.addItem(0, NotifyGruConstants.VISIBILITY_ALL);
+        refenreceList.addItem(1, NotifyGruConstants.VISIBILITY_DOMAIN);
+        refenreceList.addItem(2, NotifyGruConstants.VISIBILITY_ADMIN);
 
         return refenreceList;
     }
