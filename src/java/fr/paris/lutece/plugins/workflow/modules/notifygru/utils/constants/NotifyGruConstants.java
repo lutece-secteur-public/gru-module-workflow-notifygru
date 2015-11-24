@@ -35,6 +35,18 @@ public final class NotifyGruConstants {
     public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifygru.task_notify_gru_config.label_label_link_view_record";
     public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_gru_config.label_period_validity";
 
+    //VIEW
+    public static final String VIEW_GUICHET = "vue guichet";
+    public static final String VIEW_AGENT = "vue agent";
+    public static final String VIEW_EMAIL = "vue_email";
+    public static final String VIEW_SMS = "vue sms";
+    public static final String VIEW_BROADCAST_LIST="liste de diffusion";
+    
+    //VISIBILITY
+    public static final String VISIBILITY_ALL = "visible par tout le monde";
+    public static final String VISIBILITY_DOMAIN = "visible par domaine";
+    public static final String VISIBILITY_ADMIN = "visible par admin";
+    
     // MESSAGES
     public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifygru.message.mandatory.field";
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
