@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-public interface IMokeServiceProvider
+public interface IServiceProvider
 {
     String getUserEmail( int _nIdResource );
 
