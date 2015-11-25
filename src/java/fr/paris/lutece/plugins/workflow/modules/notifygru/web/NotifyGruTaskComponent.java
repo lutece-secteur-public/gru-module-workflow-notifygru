@@ -475,7 +475,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
     
         _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
-        return template.getHtml(  ) + _mokeProviderService.getInfosHelp(  );
+        String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
+        
+        return template.getHtml(  ) + strTemplateProvider;
     }
 
     /**
