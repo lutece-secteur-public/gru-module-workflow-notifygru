@@ -53,23 +53,17 @@
         <bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"
  		p:key="ProviderServiceMooc1"
  		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_1"
-                p:beanName="workflow-notifygru.providerService.Mooc1" 	
+                p:beanName="workflow-notifygru.providerService.Mooc1" />	
  		
- 		/>
+ 		
         <bean id="workflow-notifygru.mooc2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook2ProviderService"
  		p:key="ProviderServiceMooc2"
  		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_2"
-                p:beanName="workflow-notifygru.providerService.Mooc2" 	
+                p:beanName="workflow-notifygru.providerService.Mooc2"/> 	
  		
- 		/>
+ 		
         
-          
-       
-       
-    
-	<bean id="workflow-notifygru.resourceFlux" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.FluxResource">
-	
-	</bean> 
+         
 
 	
 	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">

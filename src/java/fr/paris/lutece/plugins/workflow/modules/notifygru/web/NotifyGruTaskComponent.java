@@ -101,8 +101,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
     
-     // AbstractServiceProvider _mokeProviderService =  SpringContextService.getBean("workflow-notifygru.mooc1");
-     AbstractServiceProvider _mokeProviderService =  new Mook1ProviderService();
+    
+    AbstractServiceProvider _mokeProviderService;
+  // AbstractServiceProvider _mokeProviderService =  new Mook1ProviderService();
 
     /**
      * {@inheritDoc}
@@ -230,6 +231,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                 }
 
             }
+            
+          
 
             config.setIdRessource(nIdResource);
            // config.setIdUserGuid(nstridUserGuid);
@@ -471,7 +474,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
 
     
-        
+        _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
         return template.getHtml(  ) + _mokeProviderService.getInfosHelp(  );
     }
 
