@@ -52,6 +52,7 @@ public final class NotifyGruConstants {
     // MESSAGES
     public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifygru.message.mandatory.field";
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
+    public static final String MESSAGE_MANDATORY_PROVIDER = "module.workflow.notifygru.message.mandatory.provider";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
 

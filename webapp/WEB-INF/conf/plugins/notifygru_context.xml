@@ -44,11 +44,33 @@
    	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
 	
 	
-	<bean id="workflow-notifygru.gruMokeProvider" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.MokeServiceProvider"/>
+
+	<!-- UserDashboard 
+	<bean id="mydashboard-gru.mydashboardBillsComponent" class="fr.paris.lutece.plugins.mydashboard.modules.gru.web.MyDashboardBillsComponent" />
+    
+	-->
+        
+        <bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"
+ 		p:key="ProviderServiceMooc1"
+ 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_1"
+                p:beanName="workflow-notifygru.providerService.Mooc1" />	
+ 		
+ 		
+        <bean id="workflow-notifygru.mooc2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook2ProviderService"
+ 		p:key="ProviderServiceMooc2"
+ 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_2"
+                p:beanName="workflow-notifygru.providerService.Mooc2"/> 	
+ 		
+ 		
+        
+         
+
+	
 	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
 		<property name="idUser"><value>12312</value></property>
 		<property name="email"><value>john.doe@somewhere.com</value>
 		</property><property name="lastName"><value>doe</value></property>
 		<property name="firstName"><value>john</value></property></bean>
+
 </beans>
  	
