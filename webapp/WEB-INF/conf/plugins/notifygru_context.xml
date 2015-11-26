@@ -68,9 +68,11 @@
 	
 	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
 		<property name="idUser"><value>12312</value></property>
-		<property name="email"><value>john.doe@somewhere.com</value>
-		</property><property name="lastName"><value>doe</value></property>
-		<property name="firstName"><value>john</value></property></bean>
+		<property name="email"><value>john.doe@somewhere.com</value></property>
+		<property name="phoneNumber"><value>0612458822</value></property>
+		<property name="lastName"><value>doe</value></property>
+		<property name="firstName"><value>john</value></property>
+	</bean>
 
 </beans>
  	

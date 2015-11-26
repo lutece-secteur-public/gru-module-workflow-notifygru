@@ -27,6 +27,7 @@ import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -39,7 +40,6 @@ import fr.paris.lutece.util.xml.XmlUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -52,7 +52,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -84,7 +83,8 @@ public final class NotifyGruService implements INotifyGruService
     private List<Integer> _listAcceptedEntryTypesUserGuid;
     private List<Integer> _listRefusedEntryTypes;
     private List<Integer> _listAcceptedEntryTypesFile;
-
+    
+    AbstractServiceProvider _mokeProviderService;
     /**
      * Private constructor
      */
@@ -345,7 +345,9 @@ public final class NotifyGruService implements INotifyGruService
     public String getEmail( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory )
     {
         String strEmail = StringUtils.EMPTY;
-
+        _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        Resource resource = (Resource)_mokeProviderService.getInfos(0);
+        strEmail = resource.getEmail();
 //        if ( config.isIsNotifyByEmail())
 //        {
 //            if ( config.i(  ) )
@@ -362,6 +364,15 @@ public final class NotifyGruService implements INotifyGruService
 
         return strEmail;
     }
+    @Override
+    public Map<String, Object> fillModelMoke(  )
+    {
+    	_mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        Map<String, Object> model = new HashMap<String, Object>(  );
+        model.put( "resource", _mokeProviderService.getInfos(0));
+
+        return model;
+    }
 
     /**
      * {@inheritDoc}
@@ -370,7 +381,9 @@ public final class NotifyGruService implements INotifyGruService
     public String getSMSPhoneNumber( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory )
     {
         String strSMSPhoneNumber = StringUtils.EMPTY;
-
+        _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        Resource resource = (Resource)_mokeProviderService.getInfos(0);
+        strSMSPhoneNumber = resource.getPhoneNumber();
 //        if ( config.isIsNotifyBySMS())
 //        {
            // strSMSPhoneNumber = getRecordFieldValue( config.getPositionEntryDirectorySms(  ), nIdRecord, nIdDirectory );

@@ -38,6 +38,7 @@ public class Resource
     private int _nId;
     private String _strIdUser;
     private String _strEmail;
+    private String _strPhoneNumber;
     private String _strLastName;
     private String _strFirstName;
 
@@ -120,4 +121,19 @@ public class Resource
     {
         this._strEmail = _strEmail;
     }
+
+	/**
+	 * @return the _strPhoneNumber
+	 */
+	public String getPhoneNumber() {
+		return _strPhoneNumber;
+	}
+
+	/**
+	 * @param _strPhoneNumber the _strPhoneNumber to set
+	 */
+	public void setPhoneNumber(String _strPhoneNumber) {
+		this._strPhoneNumber = _strPhoneNumber;
+	}
+    
 }

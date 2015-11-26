@@ -623,6 +623,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     			}
     	return NotifyGruConstants.VIEW_INACTIF;
     }
+
     /**
      * display the error message
      * @param _errors
@@ -651,3 +652,4 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
                     tabRequiredFields, AdminMessage.TYPE_WARNING);
     }
 }
+
