@@ -562,31 +562,24 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
      * @return
      */
      public List<AbstractServiceProvider> getImplementationServices(  )
-    {
-      
+    {   
         return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
     }
+     /**
+      * 
+      * @return
+      */
     public ReferenceList getListProvider() {
-
           ReferenceList refenreceList = new ReferenceList();
-          
-          
-        
         for ( AbstractServiceProvider provider : this.getImplementationServices(  ) )
         {
           
              refenreceList.addItem(provider.getKey(), provider.getTitle(Locale.getDefault()));
            
         }
-      
-       
-      
-
         return refenreceList;
     }
 
-  
-   
     /**
      * 
      * @param config
@@ -604,7 +597,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return refenreceList;
     }
     /**	
-     * 
+     * display the level of notification
      * @return
      */
     public ReferenceList getListNotification() {
