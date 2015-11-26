@@ -50,12 +50,38 @@ public final class NotifyGruConstants {
     public static final String VISIBILITY_ADMIN = "visible par admin";
     
     // MESSAGES
-    public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifygru.message.mandatory.field";
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
     public static final String MESSAGE_MANDATORY_PROVIDER = "module.workflow.notifygru.message.mandatory.provider";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
-
+    
+    //MESSAGES AGENT
+    public static final String MESSAGE_MANDATORY_FIELD_AGENT = "module.workflow.notifygru.message.mandatory.field.agent";
+    public static final String MESSAGE_AGENT_FIELD = "Message";
+    
+    //MESSAGES SMS 
+    public static final String MESSAGE_MANDATORY_FIELD_SMS = "module.workflow.notifygru.message.mandatory.field.sms";
+    public static final String MESSAGE_SMS_FIELD = "Message";
+    
+    //MESSAGES GUICHET
+    public static final String MESSAGE_GUICHET_SENDER_NAME_FIELD = "Nom de l'expéditeur";
+    public static final String MESSAGE_GUICHET_SUBJECT_FIELD = "Objet";
+    public static final String MESSAGE_GUICHET_MESSAGE_FIELD = "Message";
+    
+    public static final String MESSAGE_MANDATORY_ONE_FIELD = "module.workflow.notifygru.message.mandatory.one.field";
+    public static final String MESSAGE_MANDATORY_TWO_FIELD = "module.workflow.notifygru.message.mandatory.two.field";
+    public static final String MESSAGE_MANDATORY_THREE_FIELD= "module.workflow.notifygru.message.mandatory.three.field";
+    
+    //MESSAGES EMAIL
+    public static final String MESSAGE_EMAIL_SENDER_NAME_FIELD = "Nom de l'expéditeur";
+    public static final String MESSAGE_EMAIL_SUBJECT_FIELD = "Objet";
+    public static final String MESSAGE_EMAIL_MESSAGE_FIELD = "Message";
+    
+    //MESSAGES LISTE DE DIFFUSION
+    public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "Nom de l'expéditeur";
+    public static final String MESSAGE_LIST_SUBJECT_FIELD = "Objet";
+    public static final String MESSAGE_LIST_MESSAGE_FIELD = "Message";
+    
     // PROPERTIES
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_USER_GUID = "workflow-notifygru.acceptedDirectoryEntryTypesUserGuid";
