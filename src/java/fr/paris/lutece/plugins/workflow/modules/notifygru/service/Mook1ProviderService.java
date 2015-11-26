@@ -49,7 +49,7 @@ public class Mook1ProviderService extends AbstractServiceProvider{
         // TODO Auto-generated method stub
         Locale locale = null;
         String strResourceInfo = StringUtils.EMPTY;
-        Map<String, Object> model = fillModelMoke(  );
+        Map<String, Object> model = null;
         HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( AppTemplateService.getTemplate( 
                     TEMPLATE_FREEMARKER_LIST, locale, model ).getHtml(  ), locale, model );
 
@@ -66,14 +66,4 @@ public class Mook1ProviderService extends AbstractServiceProvider{
 
         return resource;
     }
-
-    public Map<String, Object> fillModelMoke(  )
-    {
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( "resource", getInfos( 0 ) );
-
-        return model;
-    }
-	
-
 }

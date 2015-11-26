@@ -1,7 +1,13 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.BackofficeLogging;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotificationFlux;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.UserDashboard;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.UserEmail;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.UserSms;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
@@ -15,13 +21,13 @@ import fr.paris.lutece.util.mail.FileAttachment;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -33,6 +39,8 @@ import javax.servlet.http.HttpServletRequest;
 public class TaskNotifyGru extends SimpleTask
 {
     // TEMPLATES
+    private static final String TEMPLATE_TASK_NOTIFY_DESK = "admin/plugins/workflow/modules/notifygru/task_notify_gru_desk.html";
+    private static final String TEMPLATE_TASK_NOTIFY_AGENT = "admin/plugins/workflow/modules/notifygru/task_notify_gru_agent.html";
     private static final String TEMPLATE_TASK_NOTIFY_MAIL = "admin/plugins/workflow/modules/notifygru/task_notify_gru_mail.html";
     private static final String TEMPLATE_TASK_NOTIFY_SMS = "admin/plugins/workflow/modules/notifygru/task_notify_gru_sms.html";
 
@@ -43,7 +51,7 @@ public class TaskNotifyGru extends SimpleTask
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruConfigService;
     @Inject
-    private INotifyGruService _notifyDirectoryService;
+    private INotifyGruService _notifyGruService;
 
     /**
      * {@inheritDoc}
@@ -51,74 +59,60 @@ public class TaskNotifyGru extends SimpleTask
     @Override
     public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
     {
-        ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
+        //ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
-/*
-        if ( ( config != null ) && ( resourceHistory != null ) &&
-                Record.WORKFLOW_RESOURCE_TYPE.equals( resourceHistory.getResourceType(  ) ) )
+
+        if ( ( config != null ) )
         {
-            Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+        	Map<String, Object> modelMessageContent = _notifyGruService.fillModelMoke( );
+            
+            Map<String, Object> model = new HashMap<String, Object>();
 
-            // Record
-            Record record = RecordHome.findByPrimaryKey( resourceHistory.getIdResource(  ), pluginDirectory );
-
-            if ( record != null )
+            model.put(NotifyGruConstants.MARK_CONFIG, config);
+            
+        	NotificationFlux notificationFlux = new NotificationFlux();
+        	
+        	notificationFlux.setUserGuid(_notifyGruService.getUserGuid(config, 0, 0));
+        	notificationFlux.setLabelUserEmail(_notifyGruService.getEmail( config, 0,0 ));
+        	
+         	boolean bIsNotifyByDesk = config.isActiveOngletGuichet() ;
+         	boolean bIsNotifyByViewAgent = config.isActiveOngletAgent() ;
+            boolean bIsNotifyByEmail = config.isActiveOngletEmail() ;
+            boolean bIsNotifyBySms = config.isActiveOngletSMS() ;
+            if(bIsNotifyByDesk)
             {
-                Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ),
-                        pluginDirectory );
-
-                if ( directory != null )
-                {
-                    record.setDirectory( directory );
-
-                    // Get email
-                    String strEmail = _notifyDirectoryService.getEmail( config, record.getIdRecord(  ),
-                            directory.getIdDirectory(  ) );
-                    String strEmailContent = StringUtils.EMPTY;
-
-                    // Get Sms
-                    String strSms = _notifyDirectoryService.getSMSPhoneNumber( config, record.getIdRecord(  ),
-                            directory.getIdDirectory(  ) );
-                    String strSmsContent = StringUtils.EMPTY;
-
-                    //Get Files Attachment
-                    List<FileAttachment> listFileAttachment = _notifyDirectoryService.getFilesAttachment( config,
-                            record.getIdRecord(  ), directory.getIdDirectory(  ) );
-
-                    // Get sender email
-                    String strSenderEmail = MailService.getNoReplyEmail(  );
-
-                    Map<String, Object> model = _notifyDirectoryService.fillModel( config, resourceHistory, record,
-                            directory, request, getAction(  ).getId(  ), nIdResourceHistory );
-
-                    String strSubject = AppTemplateService.getTemplateFromStringFtl( config.getSubjectOngle1(), locale,
-                            model ).getHtml(  );
-
-                    boolean bIsNotifyByEmail = config.isNotifyByEmail(  ) && StringUtils.isNotBlank( strEmail );
-                    boolean bIsNotifyBySms = config.isNotifyBySms(  ) && StringUtils.isNotBlank( strSms );
-                    boolean bIsNotifyByMailingList = config.isNotifyByMailingList(  );
-                    boolean bHasRecipients = ( StringUtils.isNotBlank( config.getRecipientsBcc(  ) ) ||
-                        StringUtils.isNotBlank( config.getRecipientsCc(  ) ) );
-
-                    if ( bIsNotifyByEmail || bIsNotifyByMailingList || bHasRecipients )
-                    {
-                        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( AppTemplateService.getTemplate( 
-                                    TEMPLATE_TASK_NOTIFY_MAIL, locale, model ).getHtml(  ), locale, model );
-                        strEmailContent = t.getHtml(  );
-                    }
-
-                    if ( bIsNotifyBySms )
-                    {
-                        HtmlTemplate tSMS = AppTemplateService.getTemplateFromStringFtl( AppTemplateService.getTemplate( 
-                                    TEMPLATE_TASK_NOTIFY_SMS, locale, model ).getHtml(  ), locale, model );
-                        strSmsContent = tSMS.toString(  );
-                    }
-
-                    _notifyDirectoryService.sendMessage( config, strEmail, strSms, strSenderEmail, strSubject,
-                        strEmailContent, strSmsContent, listFileAttachment );
-                }
-            }  
-        }  */
+            	HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(), locale, modelMessageContent );
+            	UserDashboard userDashboard = new UserDashboard();
+            	userDashboard.setStatus(config.getStatusTextGuichet());
+            	userDashboard.setMessage(t.getHtml());
+            	notificationFlux.setUserDashboard(userDashboard);
+            }
+            if(bIsNotifyByViewAgent)
+            {
+            	HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(), locale, modelMessageContent );
+            	BackofficeLogging backofficeLogging = new BackofficeLogging();
+            	backofficeLogging.setMessage(t.getHtml());
+            	notificationFlux.setBackofficeLogging(backofficeLogging);
+            }
+            if(bIsNotifyByEmail)
+            {
+            	HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale, modelMessageContent );
+            	UserEmail userEmail = new UserEmail();
+            	userEmail.setSenderName(config.getSenderNameEmail());
+            	userEmail.setSenderEmail(MailService.getNoReplyEmail(  ));
+            	userEmail.setSubject(config.getSubjectEmail());
+            	userEmail.setMessage(t.getHtml());
+            	notificationFlux.setUserEmail(userEmail);
+            }
+            if(bIsNotifyBySms)
+            {
+            	HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale, modelMessageContent );
+            	UserSms userSms = new UserSms();
+            	userSms.setPhoneNumber(_notifyGruService.getSMSPhoneNumber( config, 0,0 ));
+            	userSms.setMessage(t.getHtml());
+            	notificationFlux.setUserSms(userSms);
+            }
+        }  
     }
 
     /**

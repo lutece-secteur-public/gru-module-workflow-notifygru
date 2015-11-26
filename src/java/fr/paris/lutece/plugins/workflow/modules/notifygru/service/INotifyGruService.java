@@ -212,4 +212,6 @@ public interface INotifyGruService
      * @return the locale
      */
     Locale getLocale( HttpServletRequest request );
+    
+    Map<String, Object> fillModelMoke(  );
 }
