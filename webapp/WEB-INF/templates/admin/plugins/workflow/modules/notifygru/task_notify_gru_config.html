@@ -21,8 +21,10 @@
 </#function>
 
 <#assign pane="pane-desk">
-
-
+<div>
+<fieldset>
+        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
+        <br />
  <#if config?exists && config.idRessource?has_content && config.idRessource =0>
  
   <div id="list_provider">
@@ -46,7 +48,7 @@ $('button[name=save]').attr("name","apply");
   <#else>
   <#if list_onglet?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
-				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose} * :</label>
+				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
 				<div class="controls">
 					<@combo name="active_onglet" items=list_onglet default_value=0 />&nbsp;
 					
@@ -91,7 +93,6 @@ $('button[name=save]').attr("name","apply");
             <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
         </li>
 	  </#if>
-
     </ul>
 
 
@@ -122,15 +123,15 @@ $('button[name=save]').attr("name","apply");
         </div>
      </#if>
     </div>
-        
+    
+   </fieldset>
+ </div> 
 <script>
 $(document).ready(function(){ 
 $('#tabs li:eq(0) a').tab('show');
 }) 
 </script>
-  </#if>
-
-
+ </#if>
 <@initEditor />
 	
 

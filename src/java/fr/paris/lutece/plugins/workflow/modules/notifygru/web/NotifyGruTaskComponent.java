@@ -218,14 +218,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
 
             if (StringUtils.isBlank(strApply)) {
-                if (strSenderNameGuichet == WorkflowUtils.EMPTY_STRING)
-                {
-                   _errors.add(NotifyGruConstants.MESSAGE_GUICHET_SENDER_NAME_FIELD);
+               
                        // || strMessageGuichet == WorkflowUtils.EMPTY_STRING
                        // || strSubjectGuichet == WorkflowUtils.EMPTY_STRING
                         //|| strLevelNotificationGuichet == WorkflowUtils.EMPTY_STRING
                         //|| strStatusTextGuichet == WorkflowUtils.EMPTY_STRING) 
-                }
+                
                 if(strSubjectGuichet == WorkflowUtils.EMPTY_STRING)
                 {
                 	_errors.add(NotifyGruConstants.MESSAGE_GUICHET_SUBJECT_FIELD); 
@@ -306,8 +304,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             //String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
             String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
 
-            if (StringUtils.isBlank(strApply)) {
-            	
+            if (StringUtils.isBlank(strApply)) 
+            {
             	if(strSenderNameEmail == WorkflowUtils.EMPTY_STRING)
             	{
             		_errors.add(NotifyGruConstants.MESSAGE_EMAIL_SENDER_NAME_FIELD);
@@ -536,7 +534,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
         String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
         
-        return template.getHtml(  ) + strTemplateProvider;
+        return template.getHtml(  ) ;//+ strTemplateProvider;
     }
 
     /**
@@ -637,12 +635,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
           {
         	  tabRequiredFields[i]=_errors.get(i);
           }
-            if(tabRequiredFields.length > 2)
-            {
-            	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
-                        tabRequiredFields, AdminMessage.TYPE_WARNING);
-            }
-            else if(tabRequiredFields.length == 2)
+          if(tabRequiredFields.length > 2)
+          {
+          	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
+                      tabRequiredFields, AdminMessage.TYPE_WARNING);
+          }
+          else if(tabRequiredFields.length == 2)
             {
             	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_TWO_FIELD,
                         tabRequiredFields, AdminMessage.TYPE_WARNING);

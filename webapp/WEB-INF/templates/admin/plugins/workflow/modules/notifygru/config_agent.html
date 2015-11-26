@@ -3,7 +3,6 @@
     <fieldset>
         <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</legend>
         <br />
-
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * </label>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
@@ -13,9 +12,9 @@
                 <textarea name="message_agent" id="message_agent" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
+                <span class="help-block" > <#include "freemarker_list.html" /></span>
             </div>
-        </div>
-
+          </div>
 
         <#if level_notification_agent?exists>
         <div class="form-group">
