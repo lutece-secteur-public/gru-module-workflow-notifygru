@@ -249,9 +249,9 @@ public class TaskNotifyGru extends SimpleTask {
 
         if (config != null) {
 
-            return new String("TACHE GRU CONFIGURER");
+            return new String(NotifyGruConstants.TITLE_NOTIFY);
         }
 
-        return new String("TACHE GRU CONFIGURER");
+        return new String(NotifyGruConstants.TITLE_NOTIFY);
     }
 }

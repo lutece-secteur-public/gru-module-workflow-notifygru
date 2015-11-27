@@ -3,12 +3,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.IServiceProvider;
-
-
-
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
 import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
@@ -43,43 +38,7 @@ import javax.inject.Named;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService;
 
-
-
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
-import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
-import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
-import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
-import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
-import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
-import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.message.AdminMessage;
-import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.service.plugin.PluginService;
-
-import fr.paris.lutece.portal.service.security.LuteceUser;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppPathService;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
-import fr.paris.lutece.util.ReferenceList;
-import fr.paris.lutece.util.html.HtmlTemplate;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -218,14 +177,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
 
             if (StringUtils.isBlank(strApply)) {
-                if (strSenderNameGuichet == WorkflowUtils.EMPTY_STRING)
-                {
-                   _errors.add(NotifyGruConstants.MESSAGE_GUICHET_SENDER_NAME_FIELD);
+               
                        // || strMessageGuichet == WorkflowUtils.EMPTY_STRING
                        // || strSubjectGuichet == WorkflowUtils.EMPTY_STRING
                         //|| strLevelNotificationGuichet == WorkflowUtils.EMPTY_STRING
                         //|| strStatusTextGuichet == WorkflowUtils.EMPTY_STRING) 
-                }
+                
                 if(strSubjectGuichet == WorkflowUtils.EMPTY_STRING)
                 {
                 	_errors.add(NotifyGruConstants.MESSAGE_GUICHET_SUBJECT_FIELD); 
@@ -306,8 +263,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             //String strRecipientsCciEmail = request.getParameter(NotifyGruConstants.PARAMETER_RECIPIENT_CCI_EMAIL);
             String strLevelNotificationEmail = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_EMAIL);
 
-            if (StringUtils.isBlank(strApply)) {
-            	
+            if (StringUtils.isBlank(strApply)) 
+            {
             	if(strSenderNameEmail == WorkflowUtils.EMPTY_STRING)
             	{
             		_errors.add(NotifyGruConstants.MESSAGE_EMAIL_SENDER_NAME_FIELD);
@@ -478,8 +435,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Override
     public String getDisplayConfigForm(HttpServletRequest request, Locale locale, ITask task) {
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
-        int idResource = 0;
-        LuteceUser user = null;
 
         String strDefaultSenderName = AppPropertiesService.getProperty(NotifyGruConstants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME);
         Plugin pluginWorkflow = PluginService.getPlugin(WorkflowPlugin.PLUGIN_NAME);
@@ -536,8 +491,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
         //String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
         
-      // return template.getHtml(  ) + strTemplateProvider;
-        return template.getHtml(  );
+
+        return template.getHtml(  ) ;//+ strTemplateProvider;
     }
 
     /**
@@ -563,31 +518,24 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
      * @return
      */
      public List<AbstractServiceProvider> getImplementationServices(  )
-    {
-      
+    {   
         return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
     }
+     /**
+      * 
+      * @return
+      */
     public ReferenceList getListProvider() {
-
           ReferenceList refenreceList = new ReferenceList();
-          
-          
-        
         for ( AbstractServiceProvider provider : this.getImplementationServices(  ) )
         {
           
              refenreceList.addItem(provider.getKey(), provider.getTitle(Locale.getDefault()));
            
         }
-      
-       
-      
-
         return refenreceList;
     }
 
-  
-   
     /**
      * 
      * @param config
@@ -605,7 +553,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         return refenreceList;
     }
     /**	
-     * 
+     * display the level of notification
      * @return
      */
     public ReferenceList getListNotification() {
@@ -645,12 +593,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
           {
         	  tabRequiredFields[i]=_errors.get(i);
           }
-            if(tabRequiredFields.length > 2)
-            {
-            	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
-                        tabRequiredFields, AdminMessage.TYPE_WARNING);
-            }
-            else if(tabRequiredFields.length == 2)
+          if(tabRequiredFields.length > 2)
+          {
+          	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
+                      tabRequiredFields, AdminMessage.TYPE_WARNING);
+          }
+          else if(tabRequiredFields.length == 2)
             {
             	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_TWO_FIELD,
                         tabRequiredFields, AdminMessage.TYPE_WARNING);

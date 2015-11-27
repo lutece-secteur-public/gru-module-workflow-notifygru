@@ -2,23 +2,17 @@
 	<fieldset>
 		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</legend>
 		<br />
- 
-       
-
-
-
-<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="sender_name_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_broadcast} * </label>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+		<div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_email} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <#if config?exists && config.senderNameBroadcast?has_content>
-                    <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="${config.senderNameBroadcast}" maxlength="70">
+                <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="${config.senderNameBroadcast}" maxlength="255">
                 <#else>
-                    <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="" maxlength="70">
-				</#if>
+                <input type="text" name="sender_name_broadcast" id="" class="form-control input-sm" value="#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_value_broadcast}" maxlength="255">
+                </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_broadcast}</span>
             </div>
         </div>
-
 <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_broadcast} * </label>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -39,8 +33,6 @@
             </div>
             
              </div>
-       
-       
         <div id="copyccemail">
             
             <div class="form-group">
@@ -68,10 +60,6 @@
             </div>
         </div>
         </div>
-        	
-
-
-
 <div class="form-group">
 
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast} * </label>
@@ -82,11 +70,12 @@
                 <#else>
 					<textarea name="message_broadcast" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast_mvcomment}</span>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast_comment}</span>
+                <span class="help-block" > <#include "freemarker_list.html" /></span>
             </div>
-        </div>
-                
-                   <#if level_notification_broadcast?exists>
+</div>
+              
+      <#if level_notification_broadcast?exists>
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="level_notification_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_broadcast} * </label>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
@@ -94,18 +83,9 @@
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_broadcast}</span>
             </div>
         </div>        
-
-        </#if>
-    
-                
-                
+      </#if>           
 	</fieldset>
 </div>
-
-
-
-
-
 <script>
     function showhide()
      {
