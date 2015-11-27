@@ -9,6 +9,7 @@ import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.service.mail.MailService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -19,6 +20,7 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +56,8 @@ public class TaskNotifyGru extends SimpleTask {
     private ITaskConfigService _taskNotifyGruConfigService;
     @Inject
     private INotifyGruService _notifyGruService;
+    
+    
 
     /**
      * {@inheritDoc}
@@ -64,9 +68,13 @@ public class TaskNotifyGru extends SimpleTask {
         //ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey(nIdResourceHistory);
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(this.getId());
         
+        
         if ( ( config != null ) )
         {
-        	Map<String, Object> modelMessageContent = _notifyGruService.fillModelMoke( );
+        	AbstractServiceProvider _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        	Resource resource = (Resource) _mokeProviderService.getInfos(0);
+            Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
+            modelMessageContent.put( "resource", resource);
             
             Map<String, Object> model = new HashMap<String, Object>();
 
@@ -75,15 +83,15 @@ public class TaskNotifyGru extends SimpleTask {
         	JSONObject fluxJson = new JSONObject();
         	JSONObject notificationJson = new JSONObject();
         	
-        	notificationJson.accumulate("user_guid", "12312");
-	        notificationJson.accumulate("user_email", _notifyGruService.getEmail( config, 0,0 ));
-	        notificationJson.accumulate("notification_id", 56454);
-	        notificationJson.accumulate("notification_date", 312123212);
-	        notificationJson.accumulate("notification_type", "TYPE");
-	        notificationJson.accumulate("id_demand", 1108);
-	        notificationJson.accumulate("id_demand_type", 14);
-	        notificationJson.accumulate("demand_max_step", 5);
-	        notificationJson.accumulate("demand_user_current_step", 3);
+        	notificationJson.accumulate("user_guid", resource.getIdUser());
+	        notificationJson.accumulate("user_email", resource.getEmail());
+	        notificationJson.accumulate("notification_id", "");
+	        notificationJson.accumulate("notification_date", "");
+	        notificationJson.accumulate("notification_type", resource.getNotificationType());
+	        notificationJson.accumulate("id_demand", resource.getIdDemand());
+	        notificationJson.accumulate("id_demand_type", resource.getIdDemandType());
+	        notificationJson.accumulate("demand_max_step", resource.getDemandMaxStep());
+	        notificationJson.accumulate("demand_user_current_step", resource.getDemandUserCurrentStep());
         	
          	boolean bIsNotifyByDesk = config.isActiveOngletGuichet() ;
          	boolean bIsNotifyByViewAgent = config.isActiveOngletAgent() ;
@@ -94,8 +102,8 @@ public class TaskNotifyGru extends SimpleTask {
             	//user_dashboard
     	        JSONObject userDashBoardJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(), locale, modelMessageContent );
-    	        userDashBoardJson.accumulate("status_text",  "En attente de validation");
-    	        userDashBoardJson.accumulate("id_status_crm", 1);
+    	        userDashBoardJson.accumulate("status_text",  resource.getStatusText());
+    	        userDashBoardJson.accumulate("id_status_crm", resource.getIdStatusCrm());
     	        userDashBoardJson.accumulate("message", t.getHtml());
     	        notificationJson.accumulate("user_dashboard", userDashBoardJson);
             }
@@ -105,9 +113,9 @@ public class TaskNotifyGru extends SimpleTask {
             	//user_email
     	        JSONObject userEmailJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale, modelMessageContent );
-    	        userEmailJson.accumulate("sender_name", "Mairie de Paris");
+    	        userEmailJson.accumulate("sender_name", config.getSenderNameEmail());
     	        userEmailJson.accumulate("sender_email", MailService.getNoReplyEmail(  ));
-    	        userEmailJson.accumulate("recipient", _notifyGruService.getEmail( config, 0,0 ));
+    	        userEmailJson.accumulate("recipient", resource.getEmail());
     	        userEmailJson.accumulate("subject", config.getSubjectEmail());
     	        userEmailJson.accumulate("message", t.getHtml());
     	        userEmailJson.accumulate("cc", "");
@@ -120,7 +128,7 @@ public class TaskNotifyGru extends SimpleTask {
             	//user_sms
     	        JSONObject smsJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale, modelMessageContent );
-    	        smsJson.accumulate("phone_number", _notifyGruService.getSMSPhoneNumber( config, 0,0 ));
+    	        smsJson.accumulate("phone_number", resource.getPhoneNumber());
     	        smsJson.accumulate("message", t.getHtml());
     	        notificationJson.accumulate("user_sms", smsJson);
             }
@@ -130,8 +138,8 @@ public class TaskNotifyGru extends SimpleTask {
     	        JSONObject backOfficeLogginJson = new JSONObject();
     	        HtmlTemplate tViewAgent = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(), locale, modelMessageContent );
     	        backOfficeLogginJson.accumulate("message", tViewAgent.getHtml());
-    	        backOfficeLogginJson.accumulate("status_text", "En attente de validation");
-    	        backOfficeLogginJson.accumulate("id_status_crm", 1);
+    	        backOfficeLogginJson.accumulate("status_text", resource.getStatusText());
+    	        backOfficeLogginJson.accumulate("id_status_crm", resource.getIdStatusCrm());
     	        
     	        if(bIsNotifyByDesk)
     	        {
@@ -145,7 +153,7 @@ public class TaskNotifyGru extends SimpleTask {
     	        	HtmlTemplate tEmail = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale, modelMessageContent );
     	        	backOfficeLogginJson.accumulate("notified_by_email", 1);
         	        backOfficeLogginJson.accumulate("display_level_email_notification", 2);
-        	        backOfficeLogginJson.accumulate("view_email_notification", "Email envoyé à l'adresse : " + _notifyGruService.getEmail( config, 0,0 ) +
+        	        backOfficeLogginJson.accumulate("view_email_notification", "Email envoyé à l'adresse : " + resource.getEmail() +
         	        		" – Objet : "+ config.getSubjectEmail() +" _ Message : " + tEmail.getHtml());
                 }
     	        if(bIsNotifyBySms)
@@ -153,7 +161,7 @@ public class TaskNotifyGru extends SimpleTask {
     	        	HtmlTemplate tSms = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale, modelMessageContent );
         	        backOfficeLogginJson.accumulate("notified_by_sms", 1);
         	        backOfficeLogginJson.accumulate("display_level_sms_notification", 1);
-        	        backOfficeLogginJson.accumulate("view_sms_notification", "SMS envoyé au numéro : " + _notifyGruService.getSMSPhoneNumber( config, 0,0 ) +
+        	        backOfficeLogginJson.accumulate("view_sms_notification", "SMS envoyé au numéro : " + resource.getPhoneNumber() +
         	        		" _ Message : " + tSms.getHtml());
     	        }
     	        

@@ -531,12 +531,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_LOCALE, request.getLocale());
         model.put(NotifyGruConstants.MARK_WEBAPP_URL, AppPathService.getBaseUrl(request));
         HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
-
+        
     
         _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
-        String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
+        //String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
         
-        return template.getHtml(  ) + strTemplateProvider;
+      // return template.getHtml(  ) + strTemplateProvider;
+        return template.getHtml(  );
     }
 
     /**

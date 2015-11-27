@@ -43,35 +43,48 @@
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
    	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
 	
-	
-
-	<!-- UserDashboard 
-	<bean id="mydashboard-gru.mydashboardBillsComponent" class="fr.paris.lutece.plugins.mydashboard.modules.gru.web.MyDashboardBillsComponent" />
-    
-	-->
-        
-        <bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"
+	<bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"
  		p:key="ProviderServiceMooc1"
  		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_1"
-                p:beanName="workflow-notifygru.providerService.Mooc1" />	
+        p:beanName="workflow-notifygru.providerService.Mooc1" />	
  		
  		
-        <bean id="workflow-notifygru.mooc2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook2ProviderService"
+    <bean id="workflow-notifygru.mooc2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook2ProviderService"
  		p:key="ProviderServiceMooc2"
  		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_mooc_2"
-                p:beanName="workflow-notifygru.providerService.Mooc2"/> 	
+        p:beanName="workflow-notifygru.providerService.Mooc2"/> 	
  		
- 		
-        
-         
-
-	
-	<bean id="workflow-notifygru.gruResource" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
+ 	
+	<bean id="workflow-notifygru.gruResource1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
+		<property name="id"><value>1</value></property>
 		<property name="idUser"><value>12312</value></property>
 		<property name="email"><value>john.doe@somewhere.com</value></property>
-		<property name="phoneNumber"><value>0612458822</value></property>
+    	<property name="notificationType"><value>type de notification</value></property>
+    	<property name="idDemand"><value>1108</value></property>
+    	<property name="idDemandType"><value>14</value></property>
+    	<property name="demandMaxStep"><value>5</value></property>
+    	<property name="demandUserCurrentStep"><value>3</value></property>
+    	<property name="statusText"><value>En attente de validation</value></property>
+    	<property name="idStatusCrm"><value>1</value></property>
+   		<property name="phoneNumber"><value>0612458822</value></property>
 		<property name="lastName"><value>doe</value></property>
 		<property name="firstName"><value>john</value></property>
+	</bean>
+	
+	<bean id="workflow-notifygru.gruResource2" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource">
+		<property name="id"><value>2</value></property>
+		<property name="idUser"><value>12322</value></property>
+		<property name="email"><value>abdou.fall@somewhere.com</value></property>
+    	<property name="notificationType"><value>type de notification</value></property>
+    	<property name="idDemand"><value>1108</value></property>
+    	<property name="idDemandType"><value>14</value></property>
+    	<property name="demandMaxStep"><value>5</value></property>
+    	<property name="demandUserCurrentStep"><value>3</value></property>
+    	<property name="statusText"><value>En attente de validation</value></property>
+    	<property name="idStatusCrm"><value>1</value></property>
+   		<property name="phoneNumber"><value>0612458811</value></property>
+		<property name="lastName"><value>fall</value></property>
+		<property name="firstName"><value>abdou</value></property>
 	</bean>
 
 </beans>
