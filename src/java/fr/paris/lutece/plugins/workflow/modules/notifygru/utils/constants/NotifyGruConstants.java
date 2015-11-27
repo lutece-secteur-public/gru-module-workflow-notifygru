@@ -84,6 +84,7 @@ public final class NotifyGruConstants {
     public static final String MESSAGE_LIST_SUBJECT_FIELD = "Objet";
     public static final String MESSAGE_LIST_MESSAGE_FIELD = "Message";
     public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "Expéditeur";
+    public static final String MESSAGE_LIST= "Liste";
     
     // PROPERTIES
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
@@ -97,6 +98,7 @@ public final class NotifyGruConstants {
     public static final String PROPERTY_LUTECE_ADMIN_PROD_URL = "lutece.admin.prod.url";
     public static final String PROPERTY_LUTECE_BASE_URL = "lutece.base.url";
     public static final String PROPERTY_LUTECE_PROD_URL = "lutece.prod.url";
+    public static final String PROPERTY_GRU_ONGLET_ACTIVE = "number";
 
     // MARKS GUICHET
     public static final String MARK_ONGLET_GUICHET = "guichet";
@@ -168,7 +170,11 @@ public final class NotifyGruConstants {
 
       //BUTTON ADD & REMOVE
       public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
-      public static final String PARAMETER_BUTTON_REMOVE = "RemoveOnglet";
+      public static final String PARAMETER_BUTTON_REMOVE_GUICHET = "RemoveOngletGuichet";
+      public static final String PARAMETER_BUTTON_REMOVE_EMAIL = "RemoveOngletEmail";
+      public static final String PARAMETER_BUTTON_REMOVE_SMS = "RemoveOngletSMS";
+      public static final String PARAMETER_BUTTON_REMOVE_AGENT = "RemoveOngletAgent";
+      public static final String PARAMETER_BUTTON_REMOVE_LISTE = "RemoveOngletListe";
       
     // PARAMETERS GUICHET
     public static final String PARAMETER_ID_RESOURCE = "id_ressource";
@@ -264,6 +270,7 @@ public final class NotifyGruConstants {
     public static final String MARK_LINK_VIEW_RECORD = "link_view_record";
     public static final String MARK_LIST_POSITION_ENTRY_FILE_CHECKED = "list_position_entry_file_checked";
     public static final String MARK_LIST_ENTRIES_FILE = "list_entries_file";
+    public static final String MARK_HELPER_PROVIDER = "helper_provider";
 
    
 

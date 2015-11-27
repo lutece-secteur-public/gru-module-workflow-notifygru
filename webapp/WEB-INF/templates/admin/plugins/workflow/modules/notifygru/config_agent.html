@@ -1,7 +1,11 @@
 
 <div>
     <fieldset>
-        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</legend>
+        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}
+          <button class="btn btn-small btn-danger" type="submit" name="apply" value="RemoveOngletAgent">
+	<i class="glyphicon glyphicon-minus icon-white">&nbsp;</i>
+        </button> 
+        </legend>
         <br />
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * </label>
@@ -12,7 +16,12 @@
                 <textarea name="message_agent" id="message_agent" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
-                <span class="help-block" > <#include "freemarker_list.html" /></span>
+                
+                 <#if helper_provider?exists>
+                    <span class="help-block" > ${helper_provider} /></span>
+                  </#if>
+
+             
             </div>
           </div>
 

@@ -1,7 +1,26 @@
 <div>
 	<fieldset>
-		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</legend>
+		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}
+                  <button class="btn btn-small btn-danger" type="submit" name="apply" value="RemoveOngletListe">
+	<i class="glyphicon glyphicon-minus icon-white">&nbsp;</i>
+        </button> 
+                </legend>
 		<br />
+                
+                 <#if mailing_list?exists>
+        <div id="mailing_list">
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list} *</label>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
+                    <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment}</span>
+                </div>
+            </div>
+        </div> 
+            
+        </#if>
+        
+        
 		<div class="form-group">
             <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_email} * </label>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -71,7 +90,9 @@
 					<textarea name="message_broadcast" id="message_email" rows="20" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast_comment}</span>
-                <span class="help-block" > <#include "freemarker_list.html" /></span>
+                <#if helper_provider?exists>
+                    <span class="help-block" > ${helper_provider} /></span>
+                  </#if>
             </div>
 </div>
               

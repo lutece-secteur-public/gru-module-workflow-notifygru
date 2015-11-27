@@ -14,67 +14,47 @@ import java.util.List;
  */
 public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfig> {
 
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, "
-            + "id_ressource,id_user_guid, id_demand_guichet,id_crm_web_app_code_guichet,"
-            + "is_send_notification_guichet,status_text_guichet,subject_guichet,message_guichet,"
-            + "sender_name_guichet,level_notification_guichet,is_active_onglet_guichet,"
-            + "id_ressource_record_email,"
-            + "subject_email,entity_email_email,message_email,sender_name_email,"
-            + "recipients_cc_email,recipients_cci_email,level_notification_email,"
-            + "is_active_onglet_email,"
-            + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
-            + "id_ressource_record_sms,"
-            + "phone_sms,message_sms,"
-            + "level_notification_sms,is_active_onglet_sms,"
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,key_provider"
+            + ",message_guichet,level_notification_guichet,is_active_onglet_guichet,"
+            + "message_agent,level_notification_agent,is_active_onglet_agent,"
+            + "subject_email,message_email,sender_name_email,recipients_cc_email,"
+            + "recipients_cci_email,level_notification_email,is_active_onglet_email,"
+            + "message_sms,level_notification_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,subject_broadcast,message_broadcast,"
             + "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast,"
-            + "level_notification_broadcast,is_active_onglet_broadcast"
-            + " FROM task_notify_gru_cf  WHERE id_task = ?";
+            + "level_notification_broadcast,is_active_onglet_broadcast,set_onglet"
+            + " FROM workflow_task_notify_gru_cf  WHERE id_task = ?";
 
-    private static final String SQL_QUERY_INSERT = "INSERT INTO task_notify_gru_cf( "
-            + "id_task,id_ressource,id_user_guid,id_demand_guichet,"
-            + "id_crm_web_app_code_guichet,is_send_notification_guichet,status_text_guichet,"
-            + "subject_guichet,message_guichet,sender_name_guichet,level_notification_guichet,"
-            + "is_active_onglet_guichet,id_ressource_record_email,"
-            + "subject_email,entity_email_email,message_email,"
+    private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_cf( "
+            + "id_task,id_spring_provider,key_provider,"
+            + "message_guichet,level_notification_guichet,"
+            + "is_active_onglet_guichet,"
+            + "message_agent,level_notification_agent,is_active_onglet_agent,"
+            + "subject_email,message_email,"
             + "sender_name_email,recipients_cc_email,recipients_cci_email,"
             + "level_notification_email,is_active_onglet_email,"
-            + "status_text_agent,message_agent,level_notification_agent,is_active_onglet_agent,"
-            + "id_ressource_record_sms,"
-            + "phone_sms,message_sms,level_notification_sms,is_active_onglet_sms,"
+            + "message_sms,level_notification_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,subject_broadcast,message_broadcast,"
             + "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast,"
-            + "level_notification_broadcast,is_active_onglet_broadcast"   
+            + "level_notification_broadcast,is_active_onglet_broadcast,set_onglet"
             + ")"
-            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_QUERY_UPDATE = "UPDATE task_notify_gru_cf "
-            + " SET id_task = ?, id_ressource = ?, id_user_guid = ?, id_demand_guichet = ?"
-            + ",  id_crm_web_app_code_guichet = ?,"
-            + "is_send_notification_guichet = ?, status_text_guichet = ?,"
-            + "subject_guichet = ?, message_guichet= ?, sender_name_guichet= ?, "
-            + "level_notification_guichet = ?, is_active_onglet_guichet= ?, "
-            + "id_ressource_record_email = ?, subject_email = ?, "
-            + "entity_email_email = ?, message_email = ?, sender_name_email = ?,"
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_notify_gru_cf "
+            + " SET id_task = ?, id_spring_provider = ?, key_provider = ?,"
+            + "message_guichet = ?, level_notification_guichet = ?, is_active_onglet_guichet= ?, "
+            + "message_agent = ? ,level_notification_agent = ? ,is_active_onglet_agent = ? , "
+            + " subject_email = ?, message_email = ?, sender_name_email = ?,"
             + "recipients_cc_email = ?, recipients_cci_email = ?, "
             + "level_notification_email = ?, is_active_onglet_email= ?,"
-            + "status_text_agent = ? ,message_agent = ? ,"
-            + "level_notification_agent = ? ,is_active_onglet_agent = ? , "
-            + " id_ressource_record_sms= ?, "
-            + " phone_sms = ?, message_sms = ?, "
+            + "message_sms = ?, "
             + " level_notification_sms = ?,"
             + "is_active_onglet_sms = ?,  "
             + "id_mailing_list_broadcast = ?, subject_broadcast = ?, message_broadcast = ?,"
             + "sender_name_broadcast = ?, recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, "
-            + "level_notification_broadcast = ?, is_active_onglet_broadcast = ?"
+            + "level_notification_broadcast = ?, is_active_onglet_broadcast = ?, set_onglet = ?"
             + " WHERE id_task = ? ";
-    private static final String SQL_QUERY_DELETE = "DELETE FROM task_notify_gru_cf WHERE id_task = ? ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_notify_gru_cf WHERE id_task = ? ";
 
-    /*  private static final String SQL_QUERY_DELETE_POSITION_ENTRY_FILE = "DELETE FROM task_notify_gru_ef where id_task= ? ";
-     private static final String SQL_QUERY_INSERT_POSITION_ENTRY_FILE = "INSERT INTO task_notify_gru_ef( " +
-     "id_task,position_directory_entry_file) VALUES (?,?) ";
-     private static final String SQL_QUERY_FIND_LIST_POSITION_ENTRY_FILE = "SELECT position_directory_entry_file " +
-     "FROM task_notify_gru_ef  WHERE id_task= ?";
-     */
     /**
      * {@inheritDoc}
      */
@@ -85,52 +65,39 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         int nPos = 0;
 
         daoUtil.setInt(++nPos, config.getIdTask());
-        daoUtil.setInt(++nPos, config.getIdRessource());
-        daoUtil.setInt(++nPos, config.getIdUserGuid());
-        daoUtil.setInt(++nPos, config.getIdDemandGuichet());
-        daoUtil.setInt(++nPos, config.getCrmWebAppCodeGuichet());
-        daoUtil.setBoolean(++nPos, config.isSendNotificationGuichet());
-        daoUtil.setString(++nPos, config.getStatusTextGuichet());
-        daoUtil.setString(++nPos, config.getSubjectGuichet());
+        daoUtil.setString(++nPos, config.getIdSpringProvider());
+        daoUtil.setString(++nPos, config.getKeyProvider());
+
         daoUtil.setString(++nPos, config.getMessageGuichet());
-        daoUtil.setString(++nPos, config.getSenderNameGuichet());
         daoUtil.setString(++nPos, config.getLevelNotificationGuichet());
         daoUtil.setBoolean(++nPos, config.isActiveOngletGuichet());
 
-        daoUtil.setString(++nPos, config.getRessourceRecordEmail());
-
-        daoUtil.setString(++nPos, config.getSubjectEmail());
-        daoUtil.setString(++nPos, config.getEntryEmail());
-        daoUtil.setString(++nPos, config.getMessageEmail());
-        daoUtil.setString(++nPos, config.getSenderNameEmail());
-    
-        daoUtil.setString(++nPos, config.getRecipientsCcEmail());
-        daoUtil.setString(++nPos, config.getRecipientsCciEmail());
-       
-        daoUtil.setString(++nPos, config.getLevelNotificationEmail());
-        daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
-
-        daoUtil.setString(++nPos, config.getStatusTextAgent());
         daoUtil.setString(++nPos, config.getMessageAgent());
         daoUtil.setString(++nPos, config.getLevelNotificationAgent());
         daoUtil.setBoolean(++nPos, config.isActiveOngletAgent());
 
-        daoUtil.setString(++nPos, config.getRessourceRecordSMS());
-        daoUtil.setString(++nPos, config.getPhoneSMS());
+        daoUtil.setString(++nPos, config.getSubjectEmail());
+        daoUtil.setString(++nPos, config.getMessageEmail());
+        daoUtil.setString(++nPos, config.getSenderNameEmail());
+        daoUtil.setString(++nPos, config.getRecipientsCcEmail());
+        daoUtil.setString(++nPos, config.getRecipientsCciEmail());
+        daoUtil.setString(++nPos, config.getLevelNotificationEmail());
+        daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
+
         daoUtil.setString(++nPos, config.getMessageSMS());
-       
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
+
+        daoUtil.setInt(++nPos, config.getIdMailingListBroadcast());
+        daoUtil.setString(++nPos, config.getSubjectBroadcast());
+        daoUtil.setString(++nPos, config.getMessageBroadcast());
+        daoUtil.setString(++nPos, config.getSenderNameBroadcast());
+        daoUtil.setString(++nPos, config.getRecipientsCcBroadcast());
+        daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
+        daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
+        daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
         
-        
-         daoUtil.setInt(++nPos, config.getIdMailingListBroadcast());
-         daoUtil.setString(++nPos, config.getSubjectBroadcast());
-         daoUtil.setString(++nPos, config.getMessageBroadcast());
-         daoUtil.setString(++nPos, config.getSenderNameBroadcast());
-         daoUtil.setString(++nPos, config.getRecipientsCcBroadcast());
-         daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
-         daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
-         daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
+         daoUtil.setInt(++nPos, config.getSetOnglet());
 
         daoUtil.executeUpdate();
         daoUtil.free();
@@ -146,47 +113,30 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         int nPos = 0;
 
         daoUtil.setInt(++nPos, config.getIdTask());
-        daoUtil.setInt(++nPos, config.getIdRessource());
-        daoUtil.setInt(++nPos, config.getIdUserGuid());
-        daoUtil.setInt(++nPos, config.getIdDemandGuichet());
-        daoUtil.setInt(++nPos, config.getCrmWebAppCodeGuichet());
-        daoUtil.setBoolean(++nPos, config.isSendNotificationGuichet());
-        daoUtil.setString(++nPos, config.getStatusTextGuichet());
-        daoUtil.setString(++nPos, config.getSubjectGuichet());
+
+        daoUtil.setString(++nPos, config.getIdSpringProvider());
+        daoUtil.setString(++nPos, config.getKeyProvider());
+
         daoUtil.setString(++nPos, config.getMessageGuichet());
-        daoUtil.setString(++nPos, config.getSenderNameGuichet());
         daoUtil.setString(++nPos, config.getLevelNotificationGuichet());
         daoUtil.setBoolean(++nPos, config.isActiveOngletGuichet());
 
-        daoUtil.setString(++nPos, config.getRessourceRecordEmail());
-
-        daoUtil.setString(++nPos, config.getSubjectEmail());
-        daoUtil.setString(++nPos, config.getEntryEmail());
-        daoUtil.setString(++nPos, config.getMessageEmail());
-        daoUtil.setString(++nPos, config.getSenderNameEmail());
- 
-        daoUtil.setString(++nPos, config.getRecipientsCcEmail());
-        daoUtil.setString(++nPos, config.getRecipientsCciEmail());
-     
-        daoUtil.setString(++nPos, config.getLevelNotificationEmail());
-        daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
-
-        daoUtil.setString(++nPos, config.getStatusTextAgent());
         daoUtil.setString(++nPos, config.getMessageAgent());
         daoUtil.setString(++nPos, config.getLevelNotificationAgent());
         daoUtil.setBoolean(++nPos, config.isActiveOngletAgent());
 
-        daoUtil.setString(++nPos, config.getRessourceRecordSMS());
-
-        daoUtil.setString(++nPos, config.getPhoneSMS());
+        daoUtil.setString(++nPos, config.getSubjectEmail());
+        daoUtil.setString(++nPos, config.getMessageEmail());
+        daoUtil.setString(++nPos, config.getSenderNameEmail());
+        daoUtil.setString(++nPos, config.getRecipientsCcEmail());
+        daoUtil.setString(++nPos, config.getRecipientsCciEmail());
+        daoUtil.setString(++nPos, config.getLevelNotificationEmail());
+        daoUtil.setBoolean(++nPos, config.isActiveOngletEmail());
 
         daoUtil.setString(++nPos, config.getMessageSMS());
-
-     
         daoUtil.setString(++nPos, config.getLevelNotificationSMS());
         daoUtil.setBoolean(++nPos, config.isActiveOngletSMS());
-        
-        
+
         daoUtil.setInt(++nPos, config.getIdMailingListBroadcast());
         daoUtil.setString(++nPos, config.getSubjectBroadcast());
         daoUtil.setString(++nPos, config.getMessageBroadcast());
@@ -195,6 +145,8 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString(++nPos, config.getRecipientsCciBroadcast());
         daoUtil.setString(++nPos, config.getLevelNotificationBroadcast());
         daoUtil.setBoolean(++nPos, config.isActiveOngletBroadcast());
+        
+        daoUtil.setInt(++nPos, config.getSetOnglet());
 
         daoUtil.setInt(++nPos, config.getIdTask());
         daoUtil.executeUpdate();
@@ -218,43 +170,30 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         if (daoUtil.next()) {
 
             config.setIdTask(daoUtil.getInt(++nPos));
-            config.setIdRessource(daoUtil.getInt(++nPos));
-            config.setIdUserGuid(daoUtil.getInt(++nPos));
-            config.setIdDemandGuichet(daoUtil.getInt(++nPos));
-            config.setCrmWebAppCodeGuichet(daoUtil.getInt(++nPos));
-            config.setSendNotificationGuichet(daoUtil.getBoolean(++nPos));
-            config.setStatusTextGuichet(daoUtil.getString(++nPos));
-            config.setSubjectGuichet(daoUtil.getString(++nPos));
+
+            config.setIdSpringProvider(daoUtil.getString(++nPos));
+            config.setKeyProvider(daoUtil.getString(++nPos));
+            
             config.setMessageGuichet(daoUtil.getString(++nPos));
-            config.setSenderNameGuichet(daoUtil.getString(++nPos));
             config.setLevelNotificationGuichet(daoUtil.getString(++nPos));
             config.setActiveOngletGuichet(daoUtil.getBoolean(++nPos));
 
-            config.setRessourceRecordEmail(daoUtil.getString(++nPos));
-            config.setSubjectEmail(daoUtil.getString(++nPos));
-            config.setEntryEmail(daoUtil.getString(++nPos));
-            config.setMessageEmail(daoUtil.getString(++nPos));
-            config.setSenderNameEmail(daoUtil.getString(++nPos));
-            
-            config.setRecipientsCcEmail(daoUtil.getString(++nPos));
-            config.setRecipientsCciEmail(daoUtil.getString(++nPos));
-         
-            config.setLevelNotificationEmail(daoUtil.getString(++nPos));
-            config.setActiveOngletEmail(daoUtil.getBoolean(++nPos));
-
-            config.setStatusTextAgent(daoUtil.getString(++nPos));
             config.setMessageAgent(daoUtil.getString(++nPos));
             config.setLevelNotificationAgent(daoUtil.getString(++nPos));
             config.setActiveOngletAgent(daoUtil.getBoolean(++nPos));
 
-            config.setRessourceRecordSMS(daoUtil.getString(++nPos));
-            config.setPhoneSMS(daoUtil.getString(++nPos));
+            config.setSubjectEmail(daoUtil.getString(++nPos));
+            config.setMessageEmail(daoUtil.getString(++nPos));
+            config.setSenderNameEmail(daoUtil.getString(++nPos));
+            config.setRecipientsCcEmail(daoUtil.getString(++nPos));
+            config.setRecipientsCciEmail(daoUtil.getString(++nPos));
+            config.setLevelNotificationEmail(daoUtil.getString(++nPos));
+            config.setActiveOngletEmail(daoUtil.getBoolean(++nPos));
+
             config.setMessageSMS(daoUtil.getString(++nPos));
-           
             config.setLevelNotificationSMS(daoUtil.getString(++nPos));
             config.setActiveOngletSMS(daoUtil.getBoolean(++nPos));
-            
-            
+
             config.setIdMailingListBroadcast(daoUtil.getInt(++nPos));
             config.setSubjectBroadcast(daoUtil.getString(++nPos));
             config.setMessageBroadcast(daoUtil.getString(++nPos));
@@ -263,6 +202,8 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setRecipientsCciBroadcast(daoUtil.getString(++nPos));
             config.setLevelNotificationBroadcast(daoUtil.getString(++nPos));
             config.setActiveOngletBroadcast(daoUtil.getBoolean(++nPos));
+            
+              config.setSetOnglet(daoUtil.getInt(++nPos));
         }
 
         daoUtil.free();
@@ -282,37 +223,4 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.free();
     }
 
-//    public List<Integer> loadListPositionEntryFile( int nIdTask )
-//    {
-//        List<Integer> listIntegerPositionEntryFile = new ArrayList<Integer>(  );
-//        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_LIST_POSITION_ENTRY_FILE, NotifyGruPlugin.getPlugin(  ) );
-//        daoUtil.setInt( 1, nIdTask );
-//        daoUtil.executeQuery(  );
-//
-//        while ( daoUtil.next(  ) )
-//        {
-//            listIntegerPositionEntryFile.add( daoUtil.getInt( 1 ) );
-//        }
-//
-//        daoUtil.free(  );
-//
-//        return listIntegerPositionEntryFile;
-//    }
-//    public void deleteListPositionEntryFile( int nIdTask )
-//    {
-//        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_POSITION_ENTRY_FILE, NotifyGruPlugin.getPlugin(  ) );
-//
-//        daoUtil.setInt( 1, nIdTask );
-//        daoUtil.executeUpdate(  );
-//        daoUtil.free(  );
-//    }
-//    public void insertListPositionEntryFile( int nIdTask, int nPositionEntryFile )
-//    {
-//        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_POSITION_ENTRY_FILE, NotifyGruPlugin.getPlugin(  ) );
-//
-//        daoUtil.setInt( 1, nIdTask );
-//        daoUtil.setInt( 2, nPositionEntryFile );
-//        daoUtil.executeUpdate(  );
-//        daoUtil.free(  );
-//    }
 }

@@ -25,7 +25,7 @@
 <fieldset>
         <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
         <br />
- <#if config?exists && config.idRessource?has_content && config.idRessource =0>
+ <#if config?exists && !config.IdSpringProvider?has_content && list_provider?exists>
  
   <div id="list_provider">
             <div class="form-group">
@@ -57,10 +57,7 @@ $('button[name=save]').attr("name","apply");
 					<i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
 				</button>
 
-<button class="btn btn-small btn-danger" type="submit" name="apply" value="RemoveOnglet">
-					<i class="glyphicon glyphicon-minus icon-white">&nbsp;</i>
-
-				</button>
+                                        
 				</div>
 
 			</div>
@@ -69,27 +66,27 @@ $('button[name=save]').attr("name","apply");
 <br/>
     <ul id="tabs" class="nav nav-tabs">
     <#if config?exists && config.activeOngletGuichet == true>
-        <li <#if pane="pane-desk">class="active"</#if> >
+        <li <#if pane="pane-desk">class="active"</#if> id='0'>
             <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_guichet.title}</a>
         </li>
     </#if>
      <#if config?exists && config.activeOngletAgent == true>
-        <li <#if pane="pane-agent">class="active"</#if> >
+        <li <#if pane="pane-agent">class="active"</#if> id='1'>
             <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
         </li>
      </#if>
      <#if config?exists && config.activeOngletEmail == true>
-        <li <#if pane="pane-email">class="active"</#if> >
+        <li <#if pane="pane-email">class="active"</#if> id='2'>
             <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
         </li>
       </#if>
       <#if config?exists && config.activeOngletSMS == true>
-        <li <#if pane="pane-sms">class="active"</#if> >
+        <li <#if pane="pane-sms">class="active"</#if> id='3'>
             <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
         </li>
       </#if>
       <#if config?exists && config.activeOngletBroadcast == true>
-        <li <#if pane="pane-mailing-list">class="active"</#if> >
+        <li <#if pane="pane-mailing-list">class="active"</#if> id='4'>
             <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
         </li>
 	  </#if>
@@ -126,9 +123,18 @@ $('button[name=save]').attr("name","apply");
     
    </fieldset>
  </div> 
+ <#if config?exists>
+<input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
+</#if>
 <script>
 $(document).ready(function(){ 
-$('#tabs li:eq(0) a').tab('show');
+    var ong=$("#activeOngletHere").val();
+ 
+    if($("#"+ong).attr('class')==undefined){
+        $("#tabs li:eq(0) a").tab('show');
+    }
+
+$("#"+ong+" a").tab('show');
 }) 
 </script>
  </#if>
