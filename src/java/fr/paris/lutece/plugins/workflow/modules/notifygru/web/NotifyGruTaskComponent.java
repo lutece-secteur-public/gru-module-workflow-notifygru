@@ -438,7 +438,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
         String strDefaultSenderName = AppPropertiesService.getProperty(NotifyGruConstants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME);
         Plugin pluginWorkflow = PluginService.getPlugin(WorkflowPlugin.PLUGIN_NAME);
-
+        
+        _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        
         Map<String, Object> model = new HashMap<String, Object>();
 
         model.put(NotifyGruConstants.MARK_CONFIG, config);
@@ -454,45 +456,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_EMAIL, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_SMS, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification);
+        model.put(NotifyGruConstants.MARK_INFOS_HELP, _mokeProviderService.getInfosHelp(request, model));
         
-       
-       
-//		model.put("status", _providerService.getStatus(idResource));
-//		model.put("provider_title", _providerService.getTitle(idResource));
-//		model.put("provider_desc", _providerService.getDescription(idResource));
-//		model.put("name_user", _providerService.getUserName(user));
-//		model.put("title_demand_1", "demande 1");
-//		model.put("title_demand_2", "demande 2");
-//		model.put("title_demand_3", "demande 3");
-//		model.put("list_freemarker", (Map<String,String>)_providerService.getInfosHelp());
-
-//        model.put( NotifyGruConstants.MARK_STATE_LIST,
-//            _notifyGRUService.getListStates( task.getAction(  ).getId(  ) ) );
-
-//        model.put( NotifyGruConstants.MARK_IS_USER_ATTRIBUTE_WS_ACTIVE, _userAttributesManager.isEnabled(  ) );
-//       model.put( NotifyGruConstants.MARK_LIST_ENTRIES_USER_GUID,
-//           _notifyGRUService.getListEntriesUserGuid( task.getId(  ), locale ) );
-//        model.put( NotifyGruConstants.MARK_LIST_ENTRIES_FILE,
-//            _notifyGRUService.getListEntriesFile( task.getId(  ), locale ) );
-//        if ( config != null )
-//        {
-//            model.put( NotifyGruConstants.MARK_LIST_POSITION_ENTRY_FILE_CHECKED,
-//                config.getListPositionEntryFile(  ) );
-//        }
+      
         model.put(NotifyGruConstants.MARK_MAILING_LIST, _notifyGRUService.getMailingList(request));
-//        model.put( NotifyGruConstants.MARK_PLUGIN_WORKFLOW, pluginWorkflow );
-//        model.put( NotifyGruConstants.MARK_TASKS_LIST, _notifyGRUService.getListBelowTasks( task, locale ) );
 
         model.put(NotifyGruConstants.MARK_LOCALE, request.getLocale());
         model.put(NotifyGruConstants.MARK_WEBAPP_URL, AppPathService.getBaseUrl(request));
         HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
         
-    
-        _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
-        //String strTemplateProvider = (config.getIdRessource()<1)?"":_mokeProviderService.getInfosHelp(  );
-        
-
-        return template.getHtml(  ) ;//+ strTemplateProvider;
+        return template.getHtml(  ) ;
     }
 
     /**

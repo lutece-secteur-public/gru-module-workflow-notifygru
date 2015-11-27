@@ -264,8 +264,8 @@ public final class NotifyGruConstants {
     public static final String MARK_LINK_VIEW_RECORD = "link_view_record";
     public static final String MARK_LIST_POSITION_ENTRY_FILE_CHECKED = "list_position_entry_file_checked";
     public static final String MARK_LIST_ENTRIES_FILE = "list_entries_file";
-
-   
+    public static final String MARK_INFOS_HELP = "infosHelp";
+    
 
 
 
