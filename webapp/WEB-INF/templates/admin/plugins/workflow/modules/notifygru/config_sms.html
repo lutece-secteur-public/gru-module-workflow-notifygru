@@ -15,9 +15,11 @@
 					<textarea name="message_sms" id="message_sms" rows="10" cols="50" ></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
+
                    <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} /></span>
+                    <span class="help-block" > ${helper_provider} </span>
                   </#if>
+
             </div>
  </div>
  

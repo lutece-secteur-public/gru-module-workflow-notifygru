@@ -33,15 +33,40 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 public interface IServiceProvider
 {
+	/**
+	 * give the email of user
+	 * @return the userEmail
+	 * @param _nIdResource the _nIdResource to set
+	 */
     String getUserEmail( int _nIdResource );
-
+    
+    /**
+	 * @return the userGuid
+	 * @param _nIdResource the _nIdResource to set
+	 */
     String getUserGuid( int _nIdResource );
-
+    
+    /**
+	 * @return the status of the resource
+	 * @param _nIdResource the _nIdResource to set
+	 */
     String getStatus( int _nIdResource );
-
-    String getInfosHelp(  );
-
+    
+    /**
+	 * @return the help to put the values of the resource
+	 * @param request 
+	 */
+    String getInfosHelp( HttpServletRequest request,  Map<String, Object> model );
+    
+    /**
+	 * @return the resource of id _nIdResource
+	 * @param _nIdResource the _nIdResource to set
+	 */
     Object getInfos( int _nIdResource );
 }

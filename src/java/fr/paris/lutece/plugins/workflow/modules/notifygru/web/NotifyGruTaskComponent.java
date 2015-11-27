@@ -17,7 +17,6 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
-import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -274,10 +273,10 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
     @Override
     public String getDisplayConfigForm(HttpServletRequest request, Locale locale, ITask task) {
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(task.getId());
-        
-   
+
 
         String strDefaultSenderName = AppPropertiesService.getProperty(NotifyGruConstants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME);
+
 
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -302,21 +301,23 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification);
 
         model.put(NotifyGruConstants.MARK_MAILING_LIST, _notifyGRUService.getMailingList(request));
-//        model.put( NotifyGruConstants.MARK_PLUGIN_WORKFLOW, pluginWorkflow );
-//        model.put( NotifyGruConstants.MARK_TASKS_LIST, _notifyGRUService.getListBelowTasks( task, locale ) );
 
         model.put(NotifyGruConstants.MARK_LOCALE, request.getLocale());
         model.put(NotifyGruConstants.MARK_WEBAPP_URL, AppPathService.getBaseUrl(request));
-        HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
+     
+
 
         if (config.getIdSpringProvider() != null && ServiceConfigTaskForm.isBeanExiste(config.getIdSpringProvider())) {
             _mokeProviderService = SpringContextService.getBean(config.getIdSpringProvider());
-            String strTemplateProvider = (_mokeProviderService != null) ? "" : _mokeProviderService.getInfosHelp();
+            String strTemplateProvider = (_mokeProviderService == null) ? "" : _mokeProviderService.getInfosHelp(request, model);
 
             model.put(NotifyGruConstants.MARK_HELPER_PROVIDER, strTemplateProvider);
         }
+        
+           HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model);
 
         return template.getHtml();
+
     }
 
     /**

@@ -16,9 +16,11 @@
                 <textarea name="message_guichet" id="message_guichet" rows="5" cols="90" class="richtext"></textarea>
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
+
                     <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} /></span>
+                    <span class="help-block" > ${helper_provider} </span>
                   </#if>
+
             </div>
         </div>
         
