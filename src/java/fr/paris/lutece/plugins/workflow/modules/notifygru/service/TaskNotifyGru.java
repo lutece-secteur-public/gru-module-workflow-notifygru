@@ -4,6 +4,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.TaskNotifyGruConstants;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
@@ -71,10 +72,10 @@ public class TaskNotifyGru extends SimpleTask {
         
         if ( ( config != null ) )
         {
-        	AbstractServiceProvider _mokeProviderService=SpringContextService.getBean("workflow-notifygru.mooc1");
+        	AbstractServiceProvider _mokeProviderService=SpringContextService.getBean(TaskNotifyGruConstants.BEAN_MOOC1);
         	Resource resource = (Resource) _mokeProviderService.getInfos(0);
             Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
-            modelMessageContent.put( "resource", resource);
+            modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource);
             
             Map<String, Object> model = new HashMap<String, Object>();
 
@@ -83,29 +84,30 @@ public class TaskNotifyGru extends SimpleTask {
         	JSONObject fluxJson = new JSONObject();
         	JSONObject notificationJson = new JSONObject();
         	
-        	notificationJson.accumulate("user_guid", resource.getIdUser());
-	        notificationJson.accumulate("user_email", resource.getEmail());
-	        notificationJson.accumulate("notification_id", "");
-	        notificationJson.accumulate("notification_date", "");
-	        notificationJson.accumulate("notification_type", resource.getNotificationType());
-	        notificationJson.accumulate("id_demand", resource.getIdDemand());
-	        notificationJson.accumulate("id_demand_type", resource.getIdDemandType());
-	        notificationJson.accumulate("demand_max_step", resource.getDemandMaxStep());
-	        notificationJson.accumulate("demand_user_current_step", resource.getDemandUserCurrentStep());
+        	notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_GUID, resource.getIdUser());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_EMAIL, resource.getEmail());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_ID, "");
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_DATE, "");
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_TYPE, resource.getNotificationType());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_ID_DEMAND, resource.getIdDemand());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_ID_DEMAND_TYPE, resource.getIdDemandType());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_DEMAND_MAX_STEP, resource.getDemandMaxStep());
+	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_DEMAND_USER_CURRENT_STEP, resource.getDemandUserCurrentStep());
         	
          	boolean bIsNotifyByDesk = config.isActiveOngletGuichet() ;
          	boolean bIsNotifyByViewAgent = config.isActiveOngletAgent() ;
             boolean bIsNotifyByEmail = config.isActiveOngletEmail() ;
             boolean bIsNotifyBySms = config.isActiveOngletSMS() ;
+            
             if(bIsNotifyByDesk)
             {
             	//user_dashboard
     	        JSONObject userDashBoardJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(), locale, modelMessageContent );
-    	        userDashBoardJson.accumulate("status_text",  resource.getStatusText());
-    	        userDashBoardJson.accumulate("id_status_crm", resource.getIdStatusCrm());
-    	        userDashBoardJson.accumulate("message", t.getHtml());
-    	        notificationJson.accumulate("user_dashboard", userDashBoardJson);
+    	        userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_USERDASHBOARD,  resource.getStatusText());
+    	        userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_ID_STATUS_CRM_USERDASHBOARD, resource.getIdStatusCrm());
+    	        userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_USERDASHBOARD, t.getHtml());
+    	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_DASHBOARD, userDashBoardJson);
             }
             
             if(bIsNotifyByEmail)
@@ -113,14 +115,14 @@ public class TaskNotifyGru extends SimpleTask {
             	//user_email
     	        JSONObject userEmailJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale, modelMessageContent );
-    	        userEmailJson.accumulate("sender_name", config.getSenderNameEmail());
-    	        userEmailJson.accumulate("sender_email", MailService.getNoReplyEmail(  ));
-    	        userEmailJson.accumulate("recipient", resource.getEmail());
-    	        userEmailJson.accumulate("subject", config.getSubjectEmail());
-    	        userEmailJson.accumulate("message", t.getHtml());
-    	        userEmailJson.accumulate("cc", "");
-    	        userEmailJson.accumulate("cci", "");
-    	        notificationJson.accumulate("tab_user_email", userEmailJson);
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME, config.getSenderNameEmail());
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail(  ));
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_RECIPIENT, resource.getEmail());
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT, config.getSubjectEmail());
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_EMAIL, t.getHtml());
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CC, "");
+    	        userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CCI, "");
+    	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_TAB_USER_MAIL, userEmailJson);
             	
             }
             if(bIsNotifyBySms)
@@ -128,49 +130,49 @@ public class TaskNotifyGru extends SimpleTask {
             	//user_sms
     	        JSONObject smsJson = new JSONObject();
     	        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale, modelMessageContent );
-    	        smsJson.accumulate("phone_number", resource.getPhoneNumber());
-    	        smsJson.accumulate("message", t.getHtml());
-    	        notificationJson.accumulate("user_sms", smsJson);
+    	        smsJson.accumulate(TaskNotifyGruConstants.MARK_PHONE_NUMBER, resource.getPhoneNumber());
+    	        smsJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_SMS, t.getHtml());
+    	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_SMS, smsJson);
             }
             if(bIsNotifyByViewAgent)
             {
             	//backoffice_logging
     	        JSONObject backOfficeLogginJson = new JSONObject();
     	        HtmlTemplate tViewAgent = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(), locale, modelMessageContent );
-    	        backOfficeLogginJson.accumulate("message", tViewAgent.getHtml());
-    	        backOfficeLogginJson.accumulate("status_text", resource.getStatusText());
-    	        backOfficeLogginJson.accumulate("id_status_crm", resource.getIdStatusCrm());
+    	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_BACK_OFFICE_LOGGING, tViewAgent.getHtml());
+    	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, resource.getStatusText());
+    	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_ID_STATUS_CRM_BACK_OFFICE_LOGGING, resource.getIdStatusCrm());
     	        
     	        if(bIsNotifyByDesk)
     	        {
     	        	HtmlTemplate tDashboard = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(), locale, modelMessageContent );
-    	        	backOfficeLogginJson.accumulate("notified_on_dashboard", 1);
-        	        backOfficeLogginJson.accumulate("display_level_dashboard_notification", 2);
-        	        backOfficeLogginJson.accumulate("view_dashboard_notification", "Message : " + tDashboard.getHtml());
+    	        	backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_ON_DASHBOARD, 1);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION, 2);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_DASHBOARD_NOTIFICATION, TaskNotifyGruConstants.MARK_DISPLAY_MESSAGE + tDashboard.getHtml());
     	        }
     	        if(bIsNotifyByEmail)
                 {
     	        	HtmlTemplate tEmail = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale, modelMessageContent );
-    	        	backOfficeLogginJson.accumulate("notified_by_email", 1);
-        	        backOfficeLogginJson.accumulate("display_level_email_notification", 2);
-        	        backOfficeLogginJson.accumulate("view_email_notification", "Email envoyé à l'adresse : " + resource.getEmail() +
-        	        		" – Objet : "+ config.getSubjectEmail() +" _ Message : " + tEmail.getHtml());
+    	        	backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_BY_EMAIL, 1);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, 2);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_EMAIL_NOTIFICATION, TaskNotifyGruConstants.MESSAGE_DISPLAY_EMAIL + resource.getEmail() +
+        	        		TaskNotifyGruConstants.MESSAGE_DISPLAY_OBJECT+ config.getSubjectEmail() +TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_EMAIL + tEmail.getHtml());
                 }
     	        if(bIsNotifyBySms)
     	        {
     	        	HtmlTemplate tSms = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale, modelMessageContent );
-        	        backOfficeLogginJson.accumulate("notified_by_sms", 1);
-        	        backOfficeLogginJson.accumulate("display_level_sms_notification", 1);
-        	        backOfficeLogginJson.accumulate("view_sms_notification", "SMS envoyé au numéro : " + resource.getPhoneNumber() +
-        	        		" _ Message : " + tSms.getHtml());
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_BY_SMS, 1);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, 1);
+        	        backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_SMS_NOTIFICATION, TaskNotifyGruConstants.MESSAGE_DISPLAY_SMS + resource.getPhoneNumber() +
+        	        		TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_SMS + tSms.getHtml());
     	        }
     	        
-    	        notificationJson.accumulate("backoffice_logging", backOfficeLogginJson);
+    	        notificationJson.accumulate(TaskNotifyGruConstants.MARK_BACK_OFFICE_LOGGING, backOfficeLogginJson);
             	
             }
             //notification
 	       
-	        fluxJson.accumulate("notification", notificationJson);
+	        fluxJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION, notificationJson);
 	
 	        String strJsontoESB = fluxJson.toString(2);
 	
@@ -178,16 +180,16 @@ public class TaskNotifyGru extends SimpleTask {
 	
 	            DefaultHttpClient httpClient = new DefaultHttpClient();
 	            HttpPost postRequest = new HttpPost(
-	                    "http://localhost:8080");
+	                   TaskNotifyGruConstants.URL_ESB);
 	
 	            StringEntity input = new StringEntity(strJsontoESB);
-	            input.setContentType("application/json");
+	            input.setContentType(TaskNotifyGruConstants.CONTENT_FORMAT);
 	            postRequest.setEntity(input);
 	
 	            HttpResponse response = httpClient.execute(postRequest);
 	
 	            if (response.getStatusLine().getStatusCode() != 201) {
-	                throw new RuntimeException("Failed : HTTP error code : "
+	                throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE
 	                        + response.getStatusLine().getStatusCode());
 	            }
 	

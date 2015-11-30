@@ -49,9 +49,9 @@ public final class NotifyGruConstants {
     public static final String VIEW_INACTIF="inactif";
     
     //VISIBILITY
-    public static final String VISIBILITY_ALL = "visible par tout le monde";
-    public static final String VISIBILITY_DOMAIN = "visible par domaine";
-    public static final String VISIBILITY_ADMIN = "visible par admin";
+    public static final String VISIBILITY_ALL = "module.workflow.notifygru.task_notify_gru_config.visibility_all";
+    public static final String VISIBILITY_DOMAIN = "module.workflow.notifygru.task_notify_gru_config.visibility_domain";
+    public static final String VISIBILITY_ADMIN = "module.workflow.notifygru.task_notify_gru_config.visibility_admin";;
     
     // MESSAGES
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
@@ -60,30 +60,28 @@ public final class NotifyGruConstants {
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
     
     //MESSAGES AGENT
-    public static final String MESSAGE_MANDATORY_FIELD_AGENT = "module.workflow.notifygru.message.mandatory.field.agent";
-    public static final String MESSAGE_AGENT_FIELD = "Message";
+    public static final String MESSAGE_AGENT_FIELD = "module.workflow.notifygru.message.field.agent";
     
     //MESSAGES SMS 
-    public static final String MESSAGE_MANDATORY_FIELD_SMS = "module.workflow.notifygru.message.mandatory.field.sms";
-    public static final String MESSAGE_SMS_FIELD = "Message";
+    public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.mandatory.field.sms";
     
     //MESSAGES GUICHET
-    public static final String MESSAGE_GUICHET_SUBJECT_FIELD = "Objet";
-    public static final String MESSAGE_GUICHET_MESSAGE_FIELD = "Message";
+    public static final String MESSAGE_GUICHET_MESSAGE_FIELD = "module.workflow.notifygru.message.field.guichet";
     
+    //MANDATORY MESSAGE
     public static final String MESSAGE_MANDATORY_ONE_FIELD = "module.workflow.notifygru.message.mandatory.one.field";
     public static final String MESSAGE_MANDATORY_TWO_FIELD = "module.workflow.notifygru.message.mandatory.two.field";
     public static final String MESSAGE_MANDATORY_THREE_FIELD = "module.workflow.notifygru.message.mandatory.three.field";
     
     //MESSAGES EMAIL
-    public static final String MESSAGE_EMAIL_SUBJECT_FIELD = "Objet";
-    public static final String MESSAGE_EMAIL_MESSAGE_FIELD = "Message";
-    public static final String MESSAGE_EMAIL_SENDER_NAME_FIELD = "Expéditeur";
+    public static final String MESSAGE_EMAIL_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.email";
+    public static final String MESSAGE_EMAIL_MESSAGE_FIELD = "module.workflow.notifygru.message.field.email";
+    public static final String MESSAGE_EMAIL_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.email";
    
     //MESSAGES LISTE DE DIFFUSION
-    public static final String MESSAGE_LIST_SUBJECT_FIELD = "Objet";
-    public static final String MESSAGE_LIST_MESSAGE_FIELD = "Message";
-    public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "Expéditeur";
+    public static final String MESSAGE_LIST_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.broadcast";
+    public static final String MESSAGE_LIST_MESSAGE_FIELD = "module.workflow.notifygru.message.field.broadcast";
+    public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.broadcast";
     public static final String MESSAGE_LIST= "Liste";
     
     // PROPERTIES

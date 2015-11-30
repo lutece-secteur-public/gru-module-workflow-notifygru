@@ -7,6 +7,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -76,12 +77,12 @@ public class ServiceConfigTaskForm {
      * display the level of notification
      * @return
      */
-    public static ReferenceList getListNotification() {
+    public static ReferenceList getListNotification(Locale locale) {
 
         ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(0, NotifyGruConstants.VISIBILITY_ALL);
-        refenreceList.addItem(1, NotifyGruConstants.VISIBILITY_DOMAIN);
-        refenreceList.addItem(2, NotifyGruConstants.VISIBILITY_ADMIN);
+        refenreceList.addItem(0, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_ALL, locale));
+        refenreceList.addItem(1, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_DOMAIN, locale));
+        refenreceList.addItem(2, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_ADMIN, locale));
 
         return refenreceList;
     }

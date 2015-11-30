@@ -104,7 +104,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             String strLevelNotificationGuichet = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET);
             if (StringUtils.isBlank(strApply)) {
                 if (strMessageGuichet == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale));
                 }
             }
             if (_errors.size() != 0) {
@@ -124,7 +124,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             String strLevelNotificationAgent = request.getParameter(NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_AGENT);
             if (StringUtils.isBlank(strApply)) {
                 if (strMessageAgent == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_AGENT_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_AGENT_FIELD, locale));
                 }
             }
             if (_errors.size() != 0) {
@@ -151,13 +151,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
 
             if (StringUtils.isBlank(strApply)) {
                 if (strSenderNameEmail == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_EMAIL_SENDER_NAME_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale));
                 }
                 if (strSubjectEmail == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_EMAIL_SUBJECT_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_EMAIL_SUBJECT_FIELD, locale));
                 }
                 if (strMessageEmail == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_EMAIL_MESSAGE_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_EMAIL_MESSAGE_FIELD, locale));
                 }
 
             }
@@ -185,7 +185,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             if (StringUtils.isBlank(strApply)) {
 
                 if (strMessageSMS == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_SMS_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_SMS_FIELD, locale));
                 }
             }
             if (_errors.size() != 0) {
@@ -213,16 +213,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             if (StringUtils.isBlank(strApply)) {
 
                 if (strIdMailingListBroadcast == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_LIST);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_LIST, locale));
                 }
                 if (strsenderNameBroadcast == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_LIST_SENDER_NAME_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_LIST_SENDER_NAME_FIELD, locale));
                 }
                 if (strsubjectBroadcast == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_LIST_SUBJECT_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_LIST_SUBJECT_FIELD, locale));
                 }
                 if (strmessageBroadcast == WorkflowUtils.EMPTY_STRING) {
-                    _errors.add(NotifyGruConstants.MESSAGE_LIST_MESSAGE_FIELD);
+                    _errors.add(I18nService.getLocalizedString(NotifyGruConstants.MESSAGE_LIST_MESSAGE_FIELD, locale));
                 }
             }
             if (_errors.size() != 0) {
@@ -293,7 +293,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent {
             model.put(NotifyGruConstants.MARK_LIST_ONGLET, listeOnglet);
         }
 
-        ReferenceList levelNotification = ServiceConfigTaskForm.getListNotification();
+        ReferenceList levelNotification = ServiceConfigTaskForm.getListNotification(locale);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_GUICHET, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_AGENT, levelNotification);
         model.put(NotifyGruConstants.MARK_LEVEL_NOTIFICATION_EMAIL, levelNotification);
