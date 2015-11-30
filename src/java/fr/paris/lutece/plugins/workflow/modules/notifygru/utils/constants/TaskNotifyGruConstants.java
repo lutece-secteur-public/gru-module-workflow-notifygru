@@ -62,10 +62,10 @@ public class TaskNotifyGruConstants {
 	public static final String MESSAGE_DISPLAY_MESSAGE_SMS=" _ Message : ";
 	
 	//URL
-	public static final String URL_ESB= "http://localhost:8080";
+	public static final String URL_ESB= "workflow-notifygru.urlEsb";
 	
 	//CONTENT FORMAT
-	public static final String CONTENT_FORMAT= "application/json";
+	public static final String CONTENT_FORMAT= "application/json; charset=UTF-8";
 	
 	//HTTP ERROR MESSAGE
 	public static final String ERROR_MESSAGE="Failed : HTTP error code : ";

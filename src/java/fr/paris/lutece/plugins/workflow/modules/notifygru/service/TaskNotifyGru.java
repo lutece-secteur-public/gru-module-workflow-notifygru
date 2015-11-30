@@ -1,40 +1,29 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
-
-
-
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.api.client.WebResource;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.TaskNotifyGruConstants;
-import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.HashMap;
-
-
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONObject;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 
 /**
  *
@@ -55,8 +44,8 @@ public class TaskNotifyGru extends SimpleTask {
     @Inject
     @Named(TaskNotifyGruConfigService.BEAN_SERVICE)
     private ITaskConfigService _taskNotifyGruConfigService;
-    @Inject
-    private INotifyGruService _notifyGruService;
+   
+    private AbstractServiceProvider _notifyGruService;
     
     
 
@@ -70,10 +59,10 @@ public class TaskNotifyGru extends SimpleTask {
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(this.getId());
         
         
-        if ( ( config != null ) )
+        if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste(config.getIdSpringProvider()))
         {
-        	AbstractServiceProvider _mokeProviderService=SpringContextService.getBean(TaskNotifyGruConstants.BEAN_MOOC1);
-        	Resource resource = (Resource) _mokeProviderService.getInfos(0);
+                _notifyGruService=SpringContextService.getBean(config.getIdSpringProvider());
+        	Resource resource = (Resource) _notifyGruService.getInfos(0);
             Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
             modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource);
             
@@ -176,61 +165,34 @@ public class TaskNotifyGru extends SimpleTask {
 	
 	        String strJsontoESB = fluxJson.toString(2);
 	
-	        try {
+                
+                try {
+                Client client = Client.create();
+
+		WebResource webResource = client
+		   .resource(AppPropertiesService.getProperty(TaskNotifyGruConstants.URL_ESB));
+
 	
-	            DefaultHttpClient httpClient = new DefaultHttpClient();
-	            HttpPost postRequest = new HttpPost(
-	                   TaskNotifyGruConstants.URL_ESB);
+
+		ClientResponse response = webResource.type("application/json")
+		   .post(ClientResponse.class, strJsontoESB);
+
+		if (response.getStatus() != 201) {
+			throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE
+			     + response.getStatus());
+		}
+
+
+		String output = response.getEntity(String.class);
+
+                
+                 } catch (UniformInterfaceException | ClientHandlerException e) {
+	  }
+                
 	
-	            StringEntity input = new StringEntity(strJsontoESB);
-	            input.setContentType(TaskNotifyGruConstants.CONTENT_FORMAT);
-	            postRequest.setEntity(input);
-	
-	            HttpResponse response = httpClient.execute(postRequest);
-	
-	            if (response.getStatusLine().getStatusCode() != 201) {
-	                throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE
-	                        + response.getStatusLine().getStatusCode());
-	            }
-	
-	            BufferedReader br = new BufferedReader(
-	                    new InputStreamReader((response.getEntity().getContent())));
-	
-	            httpClient.getConnectionManager().shutdown();
-	
-	        } catch (MalformedURLException e) {
-	
-	            e.printStackTrace();
-	
-	        } catch (IOException e) {
-	
-	            e.printStackTrace();
-	
-	        }
         }
 
-        /*      try {
-         HttpAccess Client = new HttpAccess();
-         Map<String, String> data = new HashMap<String, String>();
-
-         data.put("flux", strJsontoESB);
-
-         Map<String, String> params = new HashMap<String, String>();
-         params.put("Content-Type", "application/json");
-         params.put("Accept", "application/json");
-         params.put("Authorization", "Basic (with a username and password)");
-
-         String strResponse = Client.doPost("http://localhost:8080", data, null, null, params, null);
-
-         //                     doPost( String strUrl, Map<String, String> params, RequestAuthenticator authenticator,
-         //        List<String> listElements, Map<String, String> headersRequest,Map<String, String> headersResponse )
-         System.out.println(strJsontoESB);
-         System.out.println(strResponse);
-
-         } catch (HttpAccessException e) {
-
-         }
-         */
+        
     }
 
     /**
