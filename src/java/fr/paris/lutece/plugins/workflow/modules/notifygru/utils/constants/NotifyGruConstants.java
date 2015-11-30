@@ -82,7 +82,7 @@ public final class NotifyGruConstants {
     public static final String MESSAGE_LIST_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.broadcast";
     public static final String MESSAGE_LIST_MESSAGE_FIELD = "module.workflow.notifygru.message.field.broadcast";
     public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.broadcast";
-    public static final String MESSAGE_LIST= "Liste";
+    public static final String MESSAGE_LIST= "module.workflow.notifygru.message.list.field.broadcast";
     
     // PROPERTIES
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
