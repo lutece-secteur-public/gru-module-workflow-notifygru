@@ -1,9 +1,39 @@
-
+/*
+ * Copyright (c) 2002-2015, Mairie de Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.mail.FileAttachment;
@@ -79,7 +109,8 @@ public interface INotifyGruService
      * @param nIdTask the id task
      * @return a list of IEntry
      */
-   // List<IEntry> getListEntries( int nIdTask );
+
+    // List<IEntry> getListEntries( int nIdTask );
 
     /**
      * Get the list of entries that have the accepted type (which are defined in
@@ -107,7 +138,8 @@ public interface INotifyGruService
      * @param nIdTask the id task
      * @return a list of {@link IEntry}
      */
-   // List<IEntry> getListEntriesFreemarker( int nIdTask );
+
+    // List<IEntry> getListEntriesFreemarker( int nIdTask );
 
     /**
      * Get the list of entries that have the accepted type for file)
@@ -115,7 +147,8 @@ public interface INotifyGruService
      * @param locale the Locale
      * @return a List of entries
      */
-   // List<IEntry> getListEntriesFile( int nIdTask, Locale locale );
+
+    // List<IEntry> getListEntriesFile( int nIdTask, Locale locale );
 
     /**
      * Get the email from either an entry containing the email, or an entry
@@ -202,8 +235,9 @@ public interface INotifyGruService
      * @param nIdHistory the id history
      * @return the model
      */
-//    Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory, Record record,
-//        Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory );
+
+    //    Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory, Record record,
+    //        Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory );
 
     /**
      * Gets the locale.
@@ -212,6 +246,9 @@ public interface INotifyGruService
      * @return the locale
      */
     Locale getLocale( HttpServletRequest request );
-    
+/**
+ * 
+ * @return the model 
+ */
     Map<String, Object> fillModelMoke(  );
 }

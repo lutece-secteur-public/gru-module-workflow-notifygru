@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2015, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ public enum NotificationTypeEnum
      * Private constructor
      * @param nId the id
      */
-    private NotificationTypeEnum( int nId )
+     NotificationTypeEnum( int nId )
     {
         _nId = nId;
     }

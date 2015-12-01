@@ -33,29 +33,29 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
-import fr.paris.lutece.portal.web.xpages.XPage;
-import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
+import fr.paris.lutece.portal.web.xpages.XPage;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * This class provides a simple implementation of an XPage
  */
- 
-@Controller( xpageName = "moduleworkflownotifygru" , pageTitleI18nKey = "moduleworkflownotifygru.xpage.moduleworkflownotifygru.pageTitle" , pagePathI18nKey = "moduleworkflownotifygru.xpage.moduleworkflownotifygru.pagePathLabel" )
+@Controller( xpageName = "moduleworkflownotifygru", pageTitleI18nKey = "moduleworkflownotifygru.xpage.moduleworkflownotifygru.pageTitle", pagePathI18nKey = "moduleworkflownotifygru.xpage.moduleworkflownotifygru.pagePathLabel" )
 public class NotifyGruApp extends MVCApplication
 {
     private static final String TEMPLATE_XPAGE = "/skin/plugins/moduleworkflownotifygru/moduleworkflownotifygru.html";
     private static final String VIEW_HOME = "home";
-    
+
     /**
-     * Returns the content of the page moduleworkflownotifygru. 
+     * Returns the content of the page moduleworkflownotifygru.
      * @param request The HTTP request
      * @return The view
      */
-    @View( value = VIEW_HOME , defaultView = true )
+    @View( value = VIEW_HOME, defaultView = true )
     public XPage viewHome( HttpServletRequest request )
     {
         return getXPage( TEMPLATE_XPAGE, request.getLocale(  ) );

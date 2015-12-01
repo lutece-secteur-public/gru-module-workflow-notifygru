@@ -1,35 +1,66 @@
+/*
+ * Copyright (c) 2002-2015, Mairie de Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+
 
 /**
  *
  * TaskNotifyDirectoryConfig
  *
  */
-public class TaskNotifyGruConfig extends TaskConfig {
-
-    
+public class TaskNotifyGruConfig extends TaskConfig
+{
     /**
      * provider
      */
     private String _strIdSpringProvider;
     private String _strKeyProvider;
 
-  
-     /**
-     * end provider
-     */
+    /**
+    * end provider
+    */
 
-   /**
-     * user dashboard : guichet
-     */
-    private String _strMessageGuichet;   
+    /**
+      * user dashboard : guichet
+      */
+    private String _strMessageGuichet;
     private String _strLevelNotificationGuichet;
     private boolean _bActiveOngletGuichet;
+
     /**
      * fin user dashboard : guichet
      */
@@ -37,283 +68,474 @@ public class TaskNotifyGruConfig extends TaskConfig {
     /**
      * user agent : agent
      */
+
     /**
      * fin user agent : agent     */
-   
     private String _strMessageAgent;
     private String _strLevelNotificationAgent;
     private boolean _bActiveOngletAgent;
+
     /**
      * user email : vue send email
      */
-
-
-    private String _strSubjectEmail;   
+    private String _strSubjectEmail;
     private String _strMessageEmail;
     private String _strSenderNameEmail;
     private String _strRecipientsCcEmail;
-    private String _strRecipientsCciEmail;  
+    private String _strRecipientsCciEmail;
     private String _strLevelNotificationEmail;
     private boolean _bActiveOngletEmail;
 
     /**
      * fin user email : vue send email
      */
+
     /**
      * user sms : vue sms
-     */   
-    
-    private String _strMessageSMS;  
+     */
+    private String _strMessageSMS;
     private String _strLevelNotificationSMS;
     private boolean _bActiveOngletSMS;
-
-    
-     private int _nIdMailingListBroadcast;       
-     private String _strSenderNameBroadcast;
-     private String _strSubjectBroadcast;
-      private String _strMessageBroadcast;   
+    private int _nIdMailingListBroadcast;
+    private String _strSenderNameBroadcast;
+    private String _strSubjectBroadcast;
+    private String _strMessageBroadcast;
     private String _strRecipientsCcBroadcast;
-    private String _strRecipientsCciBroadcast;  
+    private String _strRecipientsCciBroadcast;
     private String _strLevelNotificationBroadcast;
     private boolean _bActiveOngletBroadcast;
-    
-     private int _nSetOnglet; 
-
-     
-       public int getSetOnglet() {
+    private int _nSetOnglet;
+/**
+ * 
+ * @return _nSetOnglet
+ */
+    public int getSetOnglet(  )
+    {
         return _nSetOnglet;
     }
-
-    public void setSetOnglet(int nsetOnglet) {
+/**
+ * 
+ * @param nsetOnglet to set _nSetOnglet
+ */
+    public void setSetOnglet( int nsetOnglet )
+    {
         this._nSetOnglet = nsetOnglet;
     }
-    
-      public String getIdSpringProvider() {
+/**
+ * 
+ * @return _strIdSpringProvider
+ */
+    public String getIdSpringProvider(  )
+    {
         return _strIdSpringProvider;
     }
-
-    public void setIdSpringProvider(String strIdProvider) {
+/**
+ * 
+ * @param strIdProvider to set _strIdSpringProvider
+ */
+    public void setIdSpringProvider( String strIdProvider )
+    {
         this._strIdSpringProvider = strIdProvider;
     }
-
-    public String getKeyProvider() {
+/**
+ * 
+ * @return _strKeyProvide
+ */
+    public String getKeyProvider(  )
+    {
         return _strKeyProvider;
     }
-
-    public void setKeyProvider(String _strKeyProvider) {
-        this._strKeyProvider = _strKeyProvider;
+/**
+ * 
+ * @param strKeyProvider to set _strKeyProvider
+ */
+    public void setKeyProvider( String strKeyProvider )
+    {
+        this._strKeyProvider = strKeyProvider;
     }
-    
-    
-    public int getIdMailingListBroadcast() {
+/**
+ * 
+ * @return _nIdMailingListBroadcast
+ */
+    public int getIdMailingListBroadcast(  )
+    {
         return _nIdMailingListBroadcast;
     }
-
-    public void setIdMailingListBroadcast(int _nIdMailingListBroadcast) {
-        this._nIdMailingListBroadcast = _nIdMailingListBroadcast;
+/**
+ * 
+ * @param nIdMailingListBroadcast to set _nIdMailingListBroadcast
+ */
+    public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
+    {
+        this._nIdMailingListBroadcast = nIdMailingListBroadcast;
     }
-
-    public String getSenderNameBroadcast() {
+/**
+ * 
+ * @return _strSenderNameBroadcast
+ */
+    public String getSenderNameBroadcast(  )
+    {
         return _strSenderNameBroadcast;
     }
-
-    public void setSenderNameBroadcast(String _strSenderNameBroadcast) {
-        this._strSenderNameBroadcast = _strSenderNameBroadcast;
+/**
+ * 
+ * @param strSenderNameBroadcast to set _strSenderNameBroadcast
+ */
+    public void setSenderNameBroadcast( String strSenderNameBroadcast )
+    {
+        this._strSenderNameBroadcast = strSenderNameBroadcast;
     }
-
-    public String getSubjectBroadcast() {
+/**
+ * 
+ * @return _strSubjectBroadcast
+ */
+    public String getSubjectBroadcast(  )
+    {
         return _strSubjectBroadcast;
     }
-
-    public void setSubjectBroadcast(String _strSubjectBroadcast) {
-        this._strSubjectBroadcast = _strSubjectBroadcast;
+/**
+ * 
+ * @param strSubjectBroadcast to set _strSubjectBroadcast
+ */
+    public void setSubjectBroadcast( String strSubjectBroadcast )
+    {
+        this._strSubjectBroadcast = strSubjectBroadcast;
     }
-
-    public String getMessageBroadcast() {
+/**
+ * 
+ * @return _strMessageBroadcast
+ */
+    public String getMessageBroadcast(  )
+    {
         return _strMessageBroadcast;
     }
-
-    public void setMessageBroadcast(String _strMessageBroadcast) {
-        this._strMessageBroadcast = _strMessageBroadcast;
+/**
+ * 
+ * @param strMessageBroadcast to set _strMessageBroadcast
+ */
+    public void setMessageBroadcast( String strMessageBroadcast )
+    {
+        this._strMessageBroadcast = strMessageBroadcast;
     }
-
-    public String getRecipientsCcBroadcast() {
+/**
+ * 
+ * @return _strRecipientsCcBroadcast
+ */
+    public String getRecipientsCcBroadcast(  )
+    {
         return _strRecipientsCcBroadcast;
     }
-
-    public void setRecipientsCcBroadcast(String _strRecipientsCcBroadcast) {
-        this._strRecipientsCcBroadcast = _strRecipientsCcBroadcast;
+/**
+ * 
+ * @param strRecipientsCcBroadcast to set _strRecipientsCcBroadcast
+ */
+    public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
+    {
+        this._strRecipientsCcBroadcast = strRecipientsCcBroadcast;
     }
-
-    public String getRecipientsCciBroadcast() {
+/**
+ * 
+ * @return _strRecipientsCciBroadcast
+ */
+    public String getRecipientsCciBroadcast(  )
+    {
         return _strRecipientsCciBroadcast;
     }
-
-    public void setRecipientsCciBroadcast(String _strRecipientsCciBroadcast) {
-        this._strRecipientsCciBroadcast = _strRecipientsCciBroadcast;
+/**
+ * 
+ * @param strRecipientsCciBroadcast to set _strRecipientsCciBroadcast
+ */
+    public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
+    {
+        this._strRecipientsCciBroadcast = strRecipientsCciBroadcast;
     }
-
-    public String getLevelNotificationBroadcast() {
+/**
+ * 
+ * @return _strLevelNotificationBroadcast
+ */
+    public String getLevelNotificationBroadcast(  )
+    {
         return _strLevelNotificationBroadcast;
     }
-
-    public void setLevelNotificationBroadcast(String _strLevelNotificationBroadcast) {
-        this._strLevelNotificationBroadcast = _strLevelNotificationBroadcast;
+/**
+ * 
+ * @param strLevelNotificationBroadcast to set _strLevelNotificationBroadcast
+ */
+    public void setLevelNotificationBroadcast( String strLevelNotificationBroadcast )
+    {
+        this._strLevelNotificationBroadcast = strLevelNotificationBroadcast;
     }
-
-    public boolean isActiveOngletBroadcast() {
+/**
+ * 
+ * @return _bActiveOngletBroadcast
+ */
+    public boolean isActiveOngletBroadcast(  )
+    {
         return _bActiveOngletBroadcast;
     }
-
-    public void setActiveOngletBroadcast(boolean _bActiveOngletBroadcast) {
-        this._bActiveOngletBroadcast = _bActiveOngletBroadcast;
+/**
+ * 
+ * @param bActiveOngletBroadcast to set _bActiveOngletBroadcast
+ */
+    public void setActiveOngletBroadcast( boolean bActiveOngletBroadcast )
+    {
+        this._bActiveOngletBroadcast = bActiveOngletBroadcast;
     }
-    
-    
-    
-
-    public String getMessageAgent() {
+/**
+ * 
+ * @return _strMessageAgent
+ */
+    public String getMessageAgent(  )
+    {
         return _strMessageAgent;
     }
-
-    public void setMessageAgent(String _strMessageAgent) {
-        this._strMessageAgent = _strMessageAgent;
+/**
+ * 
+ * @param strMessageAgent to set _strMessageAgent
+ */
+    public void setMessageAgent( String strMessageAgent )
+    {
+        this._strMessageAgent = strMessageAgent;
     }
-
-    public String getLevelNotificationAgent() {
+/**
+ * 
+ * @return _strLevelNotificationAgent
+ */
+    public String getLevelNotificationAgent(  )
+    {
         return _strLevelNotificationAgent;
     }
-
-    public void setLevelNotificationAgent(String _strLevelNotificationAgent) {
-        this._strLevelNotificationAgent = _strLevelNotificationAgent;
+/**
+ * 
+ * @param strLevelNotificationAgent to set _strLevelNotificationAgent
+ */
+    public void setLevelNotificationAgent( String strLevelNotificationAgent )
+    {
+        this._strLevelNotificationAgent = strLevelNotificationAgent;
     }
-
-    public boolean isActiveOngletAgent() {
+/**
+ * 
+ * @return _bActiveOngletAgent
+ */
+    public boolean isActiveOngletAgent(  )
+    {
         return _bActiveOngletAgent;
     }
-
-    public void setActiveOngletAgent(boolean _bActiveOngletAgent) {
-        this._bActiveOngletAgent = _bActiveOngletAgent;
+/**
+ * 
+ * @param bActiveOngletAgent to set _bActiveOngletAgent
+ */
+    public void setActiveOngletAgent( boolean bActiveOngletAgent )
+    {
+        this._bActiveOngletAgent = bActiveOngletAgent;
     }
-
-    
-
-    public String getMessageGuichet() {
+/**
+ * 
+ * @return _strMessageGuichet
+ */
+    public String getMessageGuichet(  )
+    {
         return _strMessageGuichet;
     }
-
-    public void setMessageGuichet(String _strMessageGuichet) {
-        this._strMessageGuichet = _strMessageGuichet;
+/**
+ * 
+ * @param strMessageGuichet to set _strMessageGuichet
+ */
+    public void setMessageGuichet( String strMessageGuichet )
+    {
+        this._strMessageGuichet = strMessageGuichet;
     }
-
-   
-
-    public String getLevelNotificationGuichet() {
+/**
+ * 
+ * @return _strLevelNotificationGuichet
+ */
+    public String getLevelNotificationGuichet(  )
+    {
         return _strLevelNotificationGuichet;
     }
-
-    public void setLevelNotificationGuichet(String _strLevelNotificationGuichet) {
-        this._strLevelNotificationGuichet = _strLevelNotificationGuichet;
+/**
+ * 
+ * @param strLevelNotificationGuichet to set _strLevelNotificationGuichet
+ */
+    public void setLevelNotificationGuichet( String strLevelNotificationGuichet )
+    {
+        this._strLevelNotificationGuichet = strLevelNotificationGuichet;
     }
-
-    public boolean isActiveOngletGuichet() {
+/**
+ * 
+ * @return _bActiveOngletGuichet
+ */
+    public boolean isActiveOngletGuichet(  )
+    {
         return _bActiveOngletGuichet;
     }
-
-    public void setActiveOngletGuichet(boolean _bActiveOngletGuichet) {
-        this._bActiveOngletGuichet = _bActiveOngletGuichet;
+/**
+ * 
+ * @param bActiveOngletGuichet to set _bActiveOngletGuichet
+ */
+    public void setActiveOngletGuichet( boolean bActiveOngletGuichet )
+    {
+        this._bActiveOngletGuichet = bActiveOngletGuichet;
     }
-
-   
-
-    public String getSubjectEmail() {
+/**
+ * 
+ * @return _strSubjectEmail
+ */
+    public String getSubjectEmail(  )
+    {
         return _strSubjectEmail;
     }
-
-    public void setSubjectEmail(String _strSubjectEmail) {
-        this._strSubjectEmail = _strSubjectEmail;
+/**
+ * 
+ * @param strSubjectEmail to set _strSubjectEmail
+ */
+    public void setSubjectEmail( String strSubjectEmail )
+    {
+        this._strSubjectEmail = strSubjectEmail;
     }
-
-  
-
-    public String getMessageEmail() {
+/**
+ * 
+ * 
+ * @return _strMessageEmail
+ */
+    public String getMessageEmail(  )
+    {
         return _strMessageEmail;
     }
-
-    public void setMessageEmail(String _strMessageEmail) {
-        this._strMessageEmail = _strMessageEmail;
+/**
+ * 
+ * @param strMessageEmail to set _strMessageEmail
+ */
+    public void setMessageEmail( String strMessageEmail )
+    {
+        this._strMessageEmail = strMessageEmail;
     }
-
-    public String getSenderNameEmail() {
+/**
+ * 
+ * @return _strSenderNameEmail
+ */
+    public String getSenderNameEmail(  )
+    {
         return _strSenderNameEmail;
     }
-
-    public void setSenderNameEmail(String _strSenderNameEmail) {
-        this._strSenderNameEmail = _strSenderNameEmail;
+/**
+ * 
+ * @param strSenderNameEmail to set _strSenderNameEmail
+ */
+    public void setSenderNameEmail( String strSenderNameEmail )
+    {
+        this._strSenderNameEmail = strSenderNameEmail;
     }
-
-   
-
-    public String getRecipientsCcEmail() {
+/**
+ * 
+ * @return _strRecipientsCcEmail
+ */
+    public String getRecipientsCcEmail(  )
+    {
         return _strRecipientsCcEmail;
     }
-
-    public void setRecipientsCcEmail(String _strRecipientsCcEmail) {
-        this._strRecipientsCcEmail = _strRecipientsCcEmail;
+/**
+ * 
+ * @param strRecipientsCcEmail to set _strRecipientsCcEmail
+ */
+    public void setRecipientsCcEmail( String strRecipientsCcEmail )
+    {
+        this._strRecipientsCcEmail = strRecipientsCcEmail;
     }
-
-    public String getRecipientsCciEmail() {
+/**
+ * 
+ * @return _strRecipientsCciEmail
+ */
+    public String getRecipientsCciEmail(  )
+    {
         return _strRecipientsCciEmail;
     }
-
-    public void setRecipientsCciEmail(String _strRecipientsCciEmail) {
-        this._strRecipientsCciEmail = _strRecipientsCciEmail;
+/**
+ * 
+ * @param strRecipientsCciEmail to set _strRecipientsCciEmail
+ */
+    public void setRecipientsCciEmail( String strRecipientsCciEmail )
+    {
+        this._strRecipientsCciEmail = strRecipientsCciEmail;
     }
-
-  
-
-    public String getLevelNotificationEmail() {
+/**
+ * 
+ * @return _strLevelNotificationEmail
+ */
+    public String getLevelNotificationEmail(  )
+    {
         return _strLevelNotificationEmail;
     }
-
-    public void setLevelNotificationEmail(String _strLevelNotificationEmail) {
-        this._strLevelNotificationEmail = _strLevelNotificationEmail;
+/**
+ * 
+ * @param strLevelNotificationEmail to set _strLevelNotificationEmail
+ */
+    public void setLevelNotificationEmail( String strLevelNotificationEmail )
+    {
+        this._strLevelNotificationEmail = strLevelNotificationEmail;
     }
-
-    public boolean isActiveOngletEmail() {
+/**
+ * 
+ * @return _bActiveOngletEmail
+ */
+    public boolean isActiveOngletEmail(  )
+    {
         return _bActiveOngletEmail;
     }
-
-    public void setActiveOngletEmail(boolean _bActiveOngletEmail) {
-        this._bActiveOngletEmail = _bActiveOngletEmail;
+/**
+ * 
+ * @param bActiveOngletEmail to set _bActiveOngletEmail
+ */
+    public void setActiveOngletEmail( boolean bActiveOngletEmail )
+    {
+        this._bActiveOngletEmail = bActiveOngletEmail;
     }
-
-  
-
-    public String getMessageSMS() {
+/**
+ * 
+ * @return _strMessageSMS
+ */
+    public String getMessageSMS(  )
+    {
         return _strMessageSMS;
     }
-
-    public void setMessageSMS(String _strMessageSMS) {
-        this._strMessageSMS = _strMessageSMS;
+/**
+ * 
+ * @param strMessageSMS to set _strMessageSMS
+ */
+    public void setMessageSMS( String strMessageSMS )
+    {
+        this._strMessageSMS = strMessageSMS;
     }
-
-   
-
-    public String getLevelNotificationSMS() {
+/**
+ * 
+ * @return _strLevelNotificationSMS
+ */
+    public String getLevelNotificationSMS(  )
+    {
         return _strLevelNotificationSMS;
     }
-
-    public void setLevelNotificationSMS(String _strLevelNotificationSMS) {
-        this._strLevelNotificationSMS = _strLevelNotificationSMS;
+/**
+ * 
+ * @param strLevelNotificationSMS to set _strLevelNotificationSMS
+ */
+    public void setLevelNotificationSMS( String strLevelNotificationSMS )
+    {
+        this._strLevelNotificationSMS = strLevelNotificationSMS;
     }
-
-    public boolean isActiveOngletSMS() {
+/**
+ * 
+ * @return _bActiveOngletSMS
+ */
+    public boolean isActiveOngletSMS(  )
+    {
         return _bActiveOngletSMS;
     }
-
-    public void setActiveOngletSMS(boolean _bActiveOngletSMS) {
-        this._bActiveOngletSMS = _bActiveOngletSMS;
+/**
+ * 
+ * @param bActiveOngletSMS to set _bActiveOngletSMS
+ */
+    public void setActiveOngletSMS( boolean bActiveOngletSMS )
+    {
+        this._bActiveOngletSMS = bActiveOngletSMS;
     }
-
 }

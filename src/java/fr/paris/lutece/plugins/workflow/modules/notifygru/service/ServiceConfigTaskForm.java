@@ -1,7 +1,35 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2002-2015, Mairie de Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
@@ -12,186 +40,263 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceList;
+
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+
 
 /**
  *
- * @author root
+ * @author 
  */
-public class ServiceConfigTaskForm {
-    
-    
-    
-    
-     /**
-     * 
-     * @param strIdBean     * @
-     * @return
-     */
-    public static Boolean isBeanExiste(String strIdBean) {
-        
-        if(strIdBean==null) return false;
-        try {
-         AbstractServiceProvider _mokeProviderService =   SpringContextService.getBean(strIdBean);         
-         if(_mokeProviderService.getKey().equals(strIdBean)) return true;
-        } catch (NoSuchBeanDefinitionException e) {
-            
+public class ServiceConfigTaskForm
+{
+	/**
+    *
+    * @param strIdBean     * @
+    * @return true if the bean exist
+    */
+    public static Boolean isBeanExiste( String strIdBean )
+    {
+        if ( strIdBean == null )
+        {
             return false;
         }
-        
-         return false;
-    }
-    public static ReferenceList getListOnglet(TaskNotifyGruConfig config) {
 
-        ReferenceList refenreceList = new ReferenceList();
-        
-        if(!config.isActiveOngletGuichet()) {
-          refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_GUICHET, NotifyGruConstants.VIEW_GUICHET);
+        try
+        {
+            AbstractServiceProvider mokeProviderService = SpringContextService.getBean( strIdBean );
+
+            if ( mokeProviderService.getKey(  ).equals( strIdBean ) )
+            {
+                return true;
+            }
         }
-        
-          if(!config.isActiveOngletAgent()) {
-          refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_AGENT, NotifyGruConstants.VIEW_AGENT);
+        catch ( NoSuchBeanDefinitionException e )
+        {
+            return false;
         }
-            if(!config.isActiveOngletEmail()) {
-         refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_EMAIL, NotifyGruConstants.VIEW_EMAIL);
+
+        return false;
+    }
+/**
+ * 
+ * @param config of the task
+ * @return the  list of onglet
+ */
+    public static ReferenceList getListOnglet( TaskNotifyGruConfig config )
+    {
+        ReferenceList refenreceList = new ReferenceList(  );
+
+        if ( !config.isActiveOngletGuichet(  ) )
+        {
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET, NotifyGruConstants.VIEW_GUICHET );
         }
-            
-              if(!config.isActiveOngletSMS()) {
-           refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_SMS, NotifyGruConstants.VIEW_SMS);
+
+        if ( !config.isActiveOngletAgent(  ) )
+        {
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT, NotifyGruConstants.VIEW_AGENT );
         }
-              
-                if(!config.isActiveOngletBroadcast()) {
-          refenreceList.addItem(NotifyGruConstants.MARK_ONGLET_LIST, NotifyGruConstants.VIEW_BROADCAST_LIST);
+
+        if ( !config.isActiveOngletEmail(  ) )
+        {
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL, NotifyGruConstants.VIEW_EMAIL );
         }
-      
-      
+
+        if ( !config.isActiveOngletSMS(  ) )
+        {
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS, NotifyGruConstants.VIEW_SMS );
+        }
+
+        if ( !config.isActiveOngletBroadcast(  ) )
+        {
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST, NotifyGruConstants.VIEW_BROADCAST_LIST );
+        }
 
         return refenreceList;
     }
-    
-     /**	
-     * display the level of notification
-     * @return
-     */
-    public static ReferenceList getListNotification(Locale locale) {
 
-        ReferenceList refenreceList = new ReferenceList();
-        refenreceList.addItem(0, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_ALL, locale));
-        refenreceList.addItem(1, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_DOMAIN, locale));
-        refenreceList.addItem(2, I18nService.getLocalizedString(NotifyGruConstants.VISIBILITY_ADMIN, locale));
+    /**
+    * display the level of notification
+    * @param locale to localize resources
+    * @return the list of notification
+    */
+    public static ReferenceList getListNotification( Locale locale )
+    {
+        ReferenceList refenreceList = new ReferenceList(  );
+        refenreceList.addItem( 0, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_ALL, locale ) );
+        refenreceList.addItem( 1, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_DOMAIN, locale ) );
+        refenreceList.addItem( 2, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_ADMIN, locale ) );
 
         return refenreceList;
     }
-    
-    
+
     /**
      * display the error message
-     * @param _errors
-     * @param request
+     * @param errors the list of errors
+     * @param request the http request
      * @return the error message
      */
-    public static String displayErrorMessage(ArrayList<String> _errors, HttpServletRequest request){
-    	
-          Object[] tabRequiredFields = new Object[_errors.size()];
-          for(int i=0;i<_errors.size();i++)
-          {
-        	  tabRequiredFields[i]=_errors.get(i);
-          }
-          if(tabRequiredFields.length > 2)
-          {
-          	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
-                      tabRequiredFields, AdminMessage.TYPE_WARNING);
-          }
-          else if(tabRequiredFields.length == 2)
-            {
-            	return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_TWO_FIELD,
-                        tabRequiredFields, AdminMessage.TYPE_WARNING);
-            }
+    public static String displayErrorMessage( ArrayList<String> errors, HttpServletRequest request )
+    {
+        Object[] tabRequiredFields = new Object[errors.size(  )];
 
-            return AdminMessageService.getMessageUrl(request,NotifyGruConstants.MESSAGE_MANDATORY_ONE_FIELD,
-                    tabRequiredFields, AdminMessage.TYPE_WARNING);
+        for ( int i = 0; i < errors.size(  ); i++ )
+        {
+            tabRequiredFields[i] = errors.get( i );
+        }
+
+        if ( tabRequiredFields.length > 2 )
+        {
+            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
+                tabRequiredFields, AdminMessage.TYPE_WARNING );
+        }
+        else if ( tabRequiredFields.length == 2 )
+        {
+            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_TWO_FIELD,
+                tabRequiredFields, AdminMessage.TYPE_WARNING );
+        }
+
+        return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_ONE_FIELD,
+            tabRequiredFields, AdminMessage.TYPE_WARNING );
     }
-    
+
     /**
-     * 
-     * @return
+     *
+     * @return the different implementation
      */
-     public static List<AbstractServiceProvider> getImplementationServices(  )
-    {   
+    public static List<AbstractServiceProvider> getImplementationServices(  )
+    {
         return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
     }
-     /**
-      * 
-      * @return
-      */
-    public static ReferenceList getListProvider() {
-          ReferenceList refenreceList = new ReferenceList();
+
+    /**
+     *
+     * @return the list of providers
+     */
+    public static ReferenceList getListProvider(  )
+    {
+        ReferenceList refenreceList = new ReferenceList(  );
+
         for ( AbstractServiceProvider provider : getImplementationServices(  ) )
         {
-          
-             refenreceList.addItem(provider.getBeanName(), provider.getTitle(Locale.getDefault()));
-           
+            refenreceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
         }
+
         return refenreceList;
     }
-    
-    
-    public static Boolean setConfigOnglet(String strApply, String strOnglet, String strOngletActive, Boolean bdefault, String strRemove) {
-        
-         Boolean bStateOnglet = bdefault;
-         
-           if(strApply!=null) {
-      
-               switch (strApply) {
-            case NotifyGruConstants.PARAMETER_BUTTON_ADD:
-                if(strOnglet.equals(strOngletActive)) bStateOnglet=true;                        
-                break;
-            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET:
-                if(strRemove.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET)) bStateOnglet = false;
-                break;
-            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT:
-                if(strRemove.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT)) bStateOnglet = false;
-                break;
-            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL:
-               if(strRemove.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL))  bStateOnglet = false;
-                break;
-            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS:
-                if(strRemove.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS)) bStateOnglet = false;
-                break;
-            case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE:
-                 if(strRemove.equals(NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE)) bStateOnglet = false;
-                break;             
+/**
+ * 
+ * @param strApply 
+ * @param strOnglet 
+ * @param strOngletActive 
+ * @param bdefault 
+ * @param strRemove 
+ * @return true if the Onglet is active
+ */
+    public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault,
+        String strRemove )
+    {
+        Boolean bStateOnglet = bdefault;
+
+        if ( strApply!= null  )
+        {
+            switch ( strApply )
+            {
+                case NotifyGruConstants.PARAMETER_BUTTON_ADD:
+
+                    if ( strOnglet.equals( strOngletActive ) )
+                    {
+                        bStateOnglet = true;
+                    }
+
+                    break;
+
+                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET:
+
+                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
+                    {
+                        bStateOnglet = false;
+                    }
+
+                    break;
+
+                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT:
+
+                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT ) )
+                    {
+                        bStateOnglet = false;
+                    }
+
+                    break;
+
+                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL:
+
+                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
+                    {
+                        bStateOnglet = false;
+                    }
+
+                    break;
+
+                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS:
+
+                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS ) )
+                    {
+                        bStateOnglet = false;
+                    }
+
+                    break;
+
+                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE:
+
+                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE ) )
+                    {
+                        bStateOnglet = false;
+                    }
+                    break;
+            }
         }
-         }
-    
+
         return bStateOnglet;
     }
-    
-    
-    public static int getNumberOblet(String strOnglet){
-        
-        if(strOnglet==null) return 0;
-        if(strOnglet.equals(NotifyGruConstants.MARK_ONGLET_GUICHET)) {
+/**
+ * 
+ * @param strOnglet 
+ * @return  the number of onglet
+ */
+    public static int getNumberOblet( String strOnglet )
+    {
+        if ( strOnglet == null || strOnglet.equals( NotifyGruConstants.MARK_ONGLET_GUICHET ) )
+        {
+            return 0;
+        }
+
+        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_AGENT ) )
+        {
+            return 1;
+        }
+
+        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_EMAIL ) )
+        {
+            return 2;
+        }
+
+        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_SMS ) )
+        {
+            return 3;
+        }
+
+        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_LIST ) )
+        {
+            return 4;
+        }
+
         return 0;
-        }
-        if(strOnglet.equals(NotifyGruConstants.MARK_ONGLET_AGENT)) {
-        return 1;
-        }
-        if(strOnglet.equals(NotifyGruConstants.MARK_ONGLET_EMAIL)) {
-        return 2;
-        }
-        if(strOnglet.equals(NotifyGruConstants.MARK_ONGLET_SMS)) {
-        return 3;
-        }
-        if(strOnglet.equals(NotifyGruConstants.MARK_ONGLET_LIST)) {
-        return 4;
-        }
-        
-          return 0;
     }
-    
 }

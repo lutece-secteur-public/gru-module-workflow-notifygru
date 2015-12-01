@@ -1,12 +1,46 @@
+/*
+ * Copyright (c) 2002-2015, Mairie de Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants;
+
 
 /**
  *
  * NotifyGruConstants
  *
  */
-public final class NotifyGruConstants {
-
+public final class NotifyGruConstants
+{
     // CONSTANTS
     public static final String COMMA = ",";
     public static final String SPACE = " ";
@@ -37,53 +71,52 @@ public final class NotifyGruConstants {
     //TITLE
     public static final String TITLE_NOTIFY = "TACHE GRU CONFIGURER";
 
-    
     //VIEW
     public static final String VIEW_GUICHET = "vue guichet";
     public static final String VIEW_AGENT = "vue agent";
     public static final String VIEW_EMAIL = "vue email";
     public static final String VIEW_SMS = "vue sms";
-    public static final String VIEW_BROADCAST_LIST="liste de diffusion";
-    public static final String VIEW_ACTIF="actif";
-    public static final String VIEW_INACTIF="inactif";
-    
+    public static final String VIEW_BROADCAST_LIST = "liste de diffusion";
+    public static final String VIEW_ACTIF = "actif";
+    public static final String VIEW_INACTIF = "inactif";
+
     //VISIBILITY
     public static final String VISIBILITY_ALL = "module.workflow.notifygru.task_notify_gru_config.visibility_all";
     public static final String VISIBILITY_DOMAIN = "module.workflow.notifygru.task_notify_gru_config.visibility_domain";
-    public static final String VISIBILITY_ADMIN = "module.workflow.notifygru.task_notify_gru_config.visibility_admin";;
-    
+    public static final String VISIBILITY_ADMIN = "module.workflow.notifygru.task_notify_gru_config.visibility_admin";
+
     // MESSAGES
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.notifygru.message.mandatory.onglet";
     public static final String MESSAGE_MANDATORY_PROVIDER = "module.workflow.notifygru.message.mandatory.provider";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
     public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.notifygru.message.error_freemarker";
-    
+
     //MESSAGES AGENT
     public static final String MESSAGE_AGENT_FIELD = "module.workflow.notifygru.message.field.agent";
-    
+
     //MESSAGES SMS 
     public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.mandatory.field.sms";
-    
+
     //MESSAGES GUICHET
     public static final String MESSAGE_GUICHET_MESSAGE_FIELD = "module.workflow.notifygru.message.field.guichet";
-    
+
     //MANDATORY MESSAGE
     public static final String MESSAGE_MANDATORY_ONE_FIELD = "module.workflow.notifygru.message.mandatory.one.field";
     public static final String MESSAGE_MANDATORY_TWO_FIELD = "module.workflow.notifygru.message.mandatory.two.field";
     public static final String MESSAGE_MANDATORY_THREE_FIELD = "module.workflow.notifygru.message.mandatory.three.field";
-    
+
     //MESSAGES EMAIL
     public static final String MESSAGE_EMAIL_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.email";
     public static final String MESSAGE_EMAIL_MESSAGE_FIELD = "module.workflow.notifygru.message.field.email";
     public static final String MESSAGE_EMAIL_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.email";
-   
+
     //MESSAGES LISTE DE DIFFUSION
     public static final String MESSAGE_LIST_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.broadcast";
     public static final String MESSAGE_LIST_MESSAGE_FIELD = "module.workflow.notifygru.message.field.broadcast";
     public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.broadcast";
-    public static final String MESSAGE_LIST= "module.workflow.notifygru.message.list.field.broadcast";
-    
+    public static final String MESSAGE_LIST = "module.workflow.notifygru.message.list.field.broadcast";
+
     // PROPERTIES
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_USER_GUID = "workflow-notifygru.acceptedDirectoryEntryTypesUserGuid";
@@ -115,11 +148,10 @@ public final class NotifyGruConstants {
     public static final String MARK_SENDER_NAME_GUICHET = "sender_name_guichet";
     public static final String MARK_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String MARK_IS_ACTIVE_ONGLET_GUICHET = "is_active_onglet_guichet";
-    
+
     //MARKS AGENT
     public static final String MARK_ONGLET_AGENT = "agent";
-    
-    
+
     // MARKS EMAIL
     public static final String MARK_ONGLET_EMAIL = "email";
     public static final String MARK_LIST_ID_RESOURCE_EMAIL = "list_id_resource_email";
@@ -128,7 +160,6 @@ public final class NotifyGruConstants {
     public static final String MARK_ID_DEMAND_EMAIL = "id_record_email";
     public static final String MARK_LIST_USER_GUID_EMAIL = "list_record_user_guid_email";
     public static final String MARK_USER_GUID_EMAIL = "record_user_guid_email";
-   
     public static final String MARK_SUBJECT_EMAIL = "subject_email";
     public static final String MARK_ENTRY_EMAIL = "entry_email";
     public static final String MARK_MESSAGE_EMAIL = "message_email";
@@ -138,7 +169,7 @@ public final class NotifyGruConstants {
     public static final String MARK_RECIPIENT_CCI_EMAIL = "recipients_cci_email";
     public static final String MARK_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String MARK_IS_ACTIVE_ONGLET_EMAIL = "is_active_onglet_email";
-    
+
     // MARKS SMS
     public static final String MARK_ONGLET_SMS = "sms";
     public static final String MARK_LIST_ID_RESOURCE_SMS = "list_id_resource_sms";
@@ -157,30 +188,25 @@ public final class NotifyGruConstants {
     public static final String MARK_RECIPIENT_CCI_SMS = "recipient_cci_sms";
     public static final String MARK_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String MARK_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
-    
-    //MARKS MAILING LIST
-   public static final String MARK_ONGLET_LIST="liste";
-    
-     public static final String MARK_LEVEL_NOTIFICATION_AGENT = "level_notification_agent";
-    public static final String MARK_IS_ACTIVE_ONGLET_AGENT = "is_active_onglet_agent";
-    
-      public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
 
-      //BUTTON ADD & REMOVE
-      public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
-      public static final String PARAMETER_BUTTON_REMOVE_GUICHET = "RemoveOngletGuichet";
-      public static final String PARAMETER_BUTTON_REMOVE_EMAIL = "RemoveOngletEmail";
-      public static final String PARAMETER_BUTTON_REMOVE_SMS = "RemoveOngletSMS";
-      public static final String PARAMETER_BUTTON_REMOVE_AGENT = "RemoveOngletAgent";
-      public static final String PARAMETER_BUTTON_REMOVE_LISTE = "RemoveOngletListe";
-      
+    //MARKS MAILING LIST
+    public static final String MARK_ONGLET_LIST = "liste";
+    public static final String MARK_LEVEL_NOTIFICATION_AGENT = "level_notification_agent";
+    public static final String MARK_IS_ACTIVE_ONGLET_AGENT = "is_active_onglet_agent";
+    public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
+
+    //BUTTON ADD & REMOVE
+    public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
+    public static final String PARAMETER_BUTTON_REMOVE_GUICHET = "RemoveOngletGuichet";
+    public static final String PARAMETER_BUTTON_REMOVE_EMAIL = "RemoveOngletEmail";
+    public static final String PARAMETER_BUTTON_REMOVE_SMS = "RemoveOngletSMS";
+    public static final String PARAMETER_BUTTON_REMOVE_AGENT = "RemoveOngletAgent";
+    public static final String PARAMETER_BUTTON_REMOVE_LISTE = "RemoveOngletListe";
+
     // PARAMETERS GUICHET
     public static final String PARAMETER_ID_RESOURCE = "id_ressource";
     public static final String PARAMETER_ID_USER_GUID = "id_user_guid";
-    public static final String PARAMETER_APPY= "apply";
-    
-       
-
+    public static final String PARAMETER_APPY = "apply";
     public static final String PARAMETER_ID_DEMAND_GUICHET = "ressource_id_demand_guichet";
     public static final String PARAMETER_CRM_WEBAPP_CODE_GUICHET = "crm_web_app_code_guichet";
     public static final String PARAMETER_SEND_NOTIFICATION_GUICHET = "send_notification_guichet";
@@ -190,24 +216,24 @@ public final class NotifyGruConstants {
     public static final String PARAMETER_SENDER_NAME_GUICHET = "sender_name_guichet";
     public static final String PARAMETER_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String PARAMETER_ACTIVE_ONGLET_GUICHET = "active_onglet_guichet";
+
     // PARAMETERS AGENT
     public static final String PARAMETER_STATUS_TEXT_AGENT = "status_text_agent";
     public static final String PARAMETER_STATUS_MESSAGE_AGENT = "message_agent";
     public static final String PARAMETER_LEVEL_NOTIFICATION_AGENT = "level_notification_agent";
     public static final String PARAMETER_ACTIVE_ONGLET_AGENT = "active_onglet_agent";
+
     // PARAMETERS EMAIL
     public static final String PARAMETER_RESOURCE_RECORD_EMAIL = "resource_record_email";
     public static final String PARAMETER_SUBJECT_EMAIL = "subject_email";
     public static final String PARAMETER_ENTRY_EMAIL = "entry_email";
     public static final String PARAMETER_MESSAGE_EMAIL = "message_email";
     public static final String PARAMETER_SENDER_NAME_EMAIL = "sender_name_email";
-
     public static final String PARAMETER_RECIPIENT_CC_EMAIL = "recipients_cc_email";
-    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipients_cci_email";  
-
+    public static final String PARAMETER_RECIPIENT_CCI_EMAIL = "recipients_cci_email";
     public static final String PARAMETER_LEVEL_NOTIFICATION_EMAIL = "level_notification_email";
     public static final String PARAMETER_ACTIVE_ONGLET_EMAIL = "active_onglet_email";
-    
+
     // PARAMETERS SMS
     public static final String PARAMETER_RESOURCE_RECORD_SMS = "resource_record_sms";
     public static final String PARAMETER_PHONE_SMS = "phone_sms";
@@ -218,23 +244,22 @@ public final class NotifyGruConstants {
     public static final String PARAMETER_RECIPIENT_CCI_SMS = "recipient_cci_sms";
     public static final String PARAMETER_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String PARAMETER_ACTIVE_ONGLET_SMS = "active_onglet_sms";
-    
-     // PARAMETERS Liste Diffusion
-    public static final String PARAMETER_ID_MAILING_LIST= "id_mailing_list_broadcast";
-      public static final String PARAMETER_SUBJECT_BROADCAST = "subject_broadcast";    
+
+    // PARAMETERS Liste Diffusion
+    public static final String PARAMETER_ID_MAILING_LIST = "id_mailing_list_broadcast";
+    public static final String PARAMETER_SUBJECT_BROADCAST = "subject_broadcast";
     public static final String PARAMETER_MESSAGE_BROADCAST = "message_broadcast";
-    public static final String PARAMETER_SENDER_NAME_BROADCAST= "sender_name_broadcast"; 
+    public static final String PARAMETER_SENDER_NAME_BROADCAST = "sender_name_broadcast";
     public static final String PARAMETER_RECIPIENT_CC_BROADCAST = "recipients_cc_broadcast";
-    public static final String PARAMETER_RECIPIENT_CCI_BROADCAST = "recipients_cci_broadcast";   
+    public static final String PARAMETER_RECIPIENT_CCI_BROADCAST = "recipients_cci_broadcast";
     public static final String PARAMETER_ACTIVE_ONGLET_BROADCAST = "active_onglet_broadcast";
-     public static final String PARAMETER_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
-    
-    
-       // PARAMETERS ONGLET
-     public static final String PARAMETER_ONGLET = "active_onglet";
-     public static final String PARAMETER_ONGLE_ADD = "add_onglet";
-     public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
-     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
+    public static final String PARAMETER_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
+
+    // PARAMETERS ONGLET
+    public static final String PARAMETER_ONGLET = "active_onglet";
+    public static final String PARAMETER_ONGLE_ADD = "add_onglet";
+    public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
+    public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";
@@ -245,7 +270,7 @@ public final class NotifyGruConstants {
     public static final String MARK_DEFAULT_SENDER_NAME = "default_sender_name";
     public static final String MARK_LIST_ENTRIES_EMAIL_SMS = "list_entries_email_sms";
     public static final String MARK_LIST_ONGLET = "list_onglet";
-    public static final String MARK_GRU_LIST = "list_ressources";    
+    public static final String MARK_GRU_LIST = "list_ressources";
     public static final String MARK_GRU_LIST_RESSSOURCE_DEMANDES = "list_entries_id_demand";
     public static final String MARK_GRU_LIST_RESSSOURCE_EMAIL = "list_entries_email";
     public static final String MARK_GRU_LIST_CRM_WEBAPP = "list_entries_crm_web_app_code";
@@ -268,11 +293,7 @@ public final class NotifyGruConstants {
     public static final String MARK_LINK_VIEW_RECORD = "link_view_record";
     public static final String MARK_LIST_POSITION_ENTRY_FILE_CHECKED = "list_position_entry_file_checked";
     public static final String MARK_LIST_ENTRIES_FILE = "list_entries_file";
-
     public static final String MARK_HELPER_PROVIDER = "helper_provider";
-
-
-
 
     // TAGS
     public static final String TAG_A = "a";
@@ -286,6 +307,7 @@ public final class NotifyGruConstants {
     /**
      * Private constructor
      */
-    private NotifyGruConstants() {
+    private NotifyGruConstants(  )
+    {
     }
 }
