@@ -28,7 +28,6 @@ public final class NotifyGruConstants {
     public static final String FIELD_TASK_ENTRY_GRU_SMS = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_sms";
     public static final String FIELD_TASK_ENTRY_GRU_EMAIL = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email";
     public static final String FIELD_TASK_ENTRY_GRU_USER_GUID = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid";
-    public static final String FIELD_MAILING_LIST = "module.workflow.notifygru.task_notify_gru_config.label_mailing_list";
     public static final String FIELD_STATE = "module.workflow.notifygru.task_notify_gru_config.label_state";
     public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifygru.task_notify_gru_config.label_message_validation";
     public static final String FIELD_LABEL_LINK = "module.workflow.notifygru.task_notify_gru_config.label_label_link";
@@ -58,6 +57,7 @@ public final class NotifyGruConstants {
     public static final String MESSAGE_MANDATORY_PROVIDER = "module.workflow.notifygru.message.mandatory.provider";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
+    public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.notifygru.message.error_freemarker";
     
     //MESSAGES AGENT
     public static final String MESSAGE_AGENT_FIELD = "module.workflow.notifygru.message.field.agent";

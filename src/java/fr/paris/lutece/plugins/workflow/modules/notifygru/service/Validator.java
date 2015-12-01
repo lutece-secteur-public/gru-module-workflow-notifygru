@@ -1,5 +1,10 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import java.util.Locale;
+
+import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.util.html.HtmlTemplate;
+
 public class Validator {
 	/**
 	 * verify if an email address is correct
@@ -64,6 +69,19 @@ public class Validator {
 		if(strNumTel.matches( "(0|\\+33|0033)[1-9][0-9]{8}" ))
 		{
 			return true;
+		}
+		return false;
+	}
+	public static boolean isFreemarkerValid(String strFreemarkerTemplateData,Locale locale, Object model ){
+		try
+		{
+		 if(AppTemplateService.getTemplateFromStringFtl( strFreemarkerTemplateData, locale, model)!=null)
+		 {
+			 return true;
+		 }
+		}
+		catch(RuntimeException e){
+			e.getMessage();
 		}
 		return false;
 	}
