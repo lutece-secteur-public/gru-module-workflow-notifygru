@@ -94,9 +94,7 @@ public final class NotifyGruService implements INotifyGruService
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
     @Inject
-    private ITaskService _taskService;
-    @Inject
-    private IResourceKeyService _resourceKeyService;
+    private ITaskService _taskService;   
     private List<Integer> _listAcceptedEntryTypesEmailSMS;
     private List<Integer> _listAcceptedEntryTypesUserGuid;
     private List<Integer> _listRefusedEntryTypes;

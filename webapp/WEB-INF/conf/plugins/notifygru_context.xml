@@ -21,7 +21,7 @@
 	<!-- DAO -->
         
 	<bean id="taskNotifyGruConfigDAO" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfigDAO"/>
- 	<bean id="taskNotifyGruResourceKeyDAO" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.ResourceKeyDAO"/>
+ 
  	
 	<!-- Task -->
  	<bean id="workflow-notifygru.taskTypeNotifyGru" class="fr.paris.lutece.plugins.workflowcore.business.task.TaskType"
@@ -41,8 +41,7 @@
    	<bean id="workflow-notifygru.notifyGruService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
-   	<bean id="workflow-notifygru.resourceKeyService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.ResourceKeyService" />
-	
+   	
 
 
         

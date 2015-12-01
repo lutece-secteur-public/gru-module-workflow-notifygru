@@ -125,6 +125,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         config.setSetOnglet( ServiceConfigTaskForm.getNumberOblet( strOngletActive ) );
 
+         Resource resource;
+         Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
+         
         if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider ) )
         {
             config.setIdSpringProvider( strProvider );
@@ -140,14 +143,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER,
                 tabRequiredFields, AdminMessage.TYPE_STOP );
         }
-        else if ( ServiceConfigTaskForm.isBeanExiste( strProvider ) )
+        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
         {
             _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            
+               resource = (Resource) _mokeProviderService.getInfos( 0 );
+       
+        modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
         }
 
-        Resource resource = (Resource) _mokeProviderService.getInfos( 0 );
-        Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
-        modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
+     
 
         if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail &&
                 !bActiveOngletGuichet && !bActiveOngletSMS )

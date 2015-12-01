@@ -224,7 +224,7 @@ public class TaskNotifyGru extends SimpleTask
                 WebResource webResource = client.resource( AppPropertiesService.getProperty( 
                             TaskNotifyGruConstants.URL_ESB ) );
 
-                ClientResponse response = webResource.type( "application/json" ).post( ClientResponse.class,
+                ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT).post( ClientResponse.class,
                         strJsontoESB );
 
                 if ( response.getStatus(  ) != 201 )
