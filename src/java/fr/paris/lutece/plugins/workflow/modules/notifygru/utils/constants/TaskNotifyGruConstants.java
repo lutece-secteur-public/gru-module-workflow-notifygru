@@ -100,6 +100,7 @@ public class TaskNotifyGruConstants
 
     //URL
     public static final String URL_ESB = "workflow-notifygru.urlEsb";
+    public static final String TOKEN = "workflow-notifygru.token";
 
     //CONTENT FORMAT
     public static final String CONTENT_FORMAT = "application/json; charset=UTF-8";

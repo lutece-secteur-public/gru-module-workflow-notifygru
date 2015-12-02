@@ -59,6 +59,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 
 
 /**
@@ -220,12 +222,20 @@ public class TaskNotifyGru extends SimpleTask
             try
             {
                 Client client = Client.create(  );
+                
 
                 WebResource webResource = client.resource( AppPropertiesService.getProperty( 
                             TaskNotifyGruConstants.URL_ESB ) );
+ 
 
-                ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT).post( ClientResponse.class,
-                        strJsontoESB );
+                
+   
+                ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT)
+                                                     .header(HttpHeaders.AUTHORIZATION, "Bearer "+AppPropertiesService.getProperty( 
+                                                                 TaskNotifyGruConstants.TOKEN ))
+                                                     .accept(MediaType.APPLICATION_JSON)
+                                                     .post( ClientResponse.class,
+                                                     strJsontoESB );
 
                 if ( response.getStatus(  ) != 201 )
                 {
