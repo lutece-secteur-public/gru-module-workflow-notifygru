@@ -348,7 +348,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE ) ) )
         {
             ArrayList<String> errors = new ArrayList<String>(  );
-            String strMsgError = "";
             String strIdMailingListBroadcast = request.getParameter( NotifyGruConstants.PARAMETER_ID_MAILING_LIST );
             int nIdMailingListBroadcast = ( strIdMailingListBroadcast == null ) ? WorkflowUtils.CONSTANT_ID_NULL
                                                                                 : Integer.parseInt( strIdMailingListBroadcast );
