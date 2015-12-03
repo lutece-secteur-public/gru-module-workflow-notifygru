@@ -30,13 +30,13 @@ public class ProviderDirectory extends AbstractServiceProvider {
     public String getUserEmail(int nIdResource) {
         
         
-       return  _notifyDirectoryService.getEmail(this, nIdResource, this.getIdDirectity());
+       return  _notifyDirectoryService.getEmail(this, nIdResource, this.getIdDirectory());
         
     }
 
     @Override
     public String getUserGuid(int nIdResource) {
-        return "UserGuid disponible pour le directory";
+        return _notifyDirectoryService.getUserGuid(this, nIdResource, this.getIdDirectory());
     }
 
     @Override
@@ -60,8 +60,13 @@ public class ProviderDirectory extends AbstractServiceProvider {
              
              return directory;
     }
-    
-    public int getIdDirectity() {
+    @Override
+	public String getPhoneNumber(int nIdResource) {
+		// TODO Auto-generated method stub
+    	
+		return _notifyDirectoryService.getSMSPhoneNumber(this, nIdResource, this.getIdDirectory());
+	}
+    public int getIdDirectory() {
     
     return 1;
     }
@@ -77,6 +82,4 @@ public class ProviderDirectory extends AbstractServiceProvider {
     
     return 3;
     }
-
-
 }

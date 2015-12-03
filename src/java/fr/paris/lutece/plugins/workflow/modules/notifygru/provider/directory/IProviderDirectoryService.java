@@ -135,7 +135,7 @@ public interface IProviderDirectoryService
      * @param nIdDirectory the id directory
      * @return the sms phone number
      */
-    String getSMSPhoneNumber( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory );
+    String getSMSPhoneNumber( ProviderDirectory provider, int nIdRecord, int nIdDirectory );
 
     /**
      * The files Attachments to insert in the mail
@@ -153,7 +153,7 @@ public interface IProviderDirectoryService
      * @param nIdDirectory the id directory
      * @return the user guid, an empty string if the position is not set
      */
-    String getUserGuid( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory );
+    String getUserGuid( ProviderDirectory provider, int nIdRecord, int nIdDirectory );
 
     /**
      * Get the list of tasks that have an order below the given reference task and that

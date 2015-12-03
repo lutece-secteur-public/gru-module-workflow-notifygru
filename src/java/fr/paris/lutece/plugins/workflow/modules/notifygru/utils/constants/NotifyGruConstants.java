@@ -69,16 +69,14 @@ public final class NotifyGruConstants
     public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_gru_config.label_period_validity";
 
     //TITLE
-    public static final String TITLE_NOTIFY = "TACHE GRU CONFIGURER";
+    public static final String TITLE_NOTIFY = "module.workflow.notifygru.task_notify_title";
 
     //VIEW
-    public static final String VIEW_GUICHET = "vue guichet";
-    public static final String VIEW_AGENT = "vue agent";
-    public static final String VIEW_EMAIL = "vue email";
-    public static final String VIEW_SMS = "vue sms";
-    public static final String VIEW_BROADCAST_LIST = "liste de diffusion";
-    public static final String VIEW_ACTIF = "actif";
-    public static final String VIEW_INACTIF = "inactif";
+    public static final String VIEW_GUICHET = "module.workflow.notifygru.manage_guichet.title ";
+    public static final String VIEW_AGENT = "module.workflow.notifygru.manage_agent_view.title";
+    public static final String VIEW_EMAIL = "module.workflow.notifygru.manage_email.title";
+    public static final String VIEW_SMS = "module.workflow.notifygru.manage_sms.title";
+    public static final String VIEW_BROADCAST_LIST = "module.workflow.notifygru.manage_mailing_list.title";
 
     //VISIBILITY
     public static final String VISIBILITY_ALL = "module.workflow.notifygru.task_notify_gru_config.visibility_all";

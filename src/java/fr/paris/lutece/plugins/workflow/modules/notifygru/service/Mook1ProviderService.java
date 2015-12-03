@@ -104,4 +104,10 @@ public class Mook1ProviderService extends AbstractServiceProvider
 
         return resource;
     }
+
+	@Override
+	public String getPhoneNumber(int nIdResource) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

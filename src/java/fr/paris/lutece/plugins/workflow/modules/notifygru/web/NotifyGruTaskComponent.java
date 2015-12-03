@@ -460,7 +460,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             model.put( NotifyGruConstants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getListProvider(  ) );
         }
 
-        ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config );
+        ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config,locale );
 
         if ( listeOnglet.size(  ) > 0 )
         {

@@ -263,7 +263,7 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
         if ( config != null )
         {
             EntryFilter entryFilter = new EntryFilter(  );
-            entryFilter.setIdDirectory( _notifyGruService.getIdDirectity() );
+            entryFilter.setIdDirectory( _notifyGruService.getIdDirectory() );
 
             listEntries = EntryHome.getEntryList( entryFilter, pluginDirectory );
         }
@@ -432,14 +432,16 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
        
 
     @Override
-    public String getSMSPhoneNumber(TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory) {
+    public String getSMSPhoneNumber(ProviderDirectory provider, int nIdRecord, int nIdDirectory) {
       String strSMSPhoneNumber = StringUtils.EMPTY;
- _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+      if(provider!=null)   {
+    	  strSMSPhoneNumber = getRecordFieldValue( provider.getPositionEntryDirectorySms(), nIdRecord, nIdDirectory );
+          }
+ /*_notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
         if ( config.isActiveOngletSMS() )
         {
             strSMSPhoneNumber = getRecordFieldValue( _notifyGruService.getPositionEntryDirectorySms(  ), nIdRecord, nIdDirectory );
-        }
-
+        }*/
         return strSMSPhoneNumber;
     }    
  
@@ -476,14 +478,18 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
 
   
     @Override
-    public String getUserGuid(TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory) {
+    public String getUserGuid(ProviderDirectory provider, int nIdRecord, int nIdDirectory) {
        String strUserGuid = StringUtils.EMPTY;
- _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+       
+ /*_notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
         if ( _notifyGruService.getPositionEntryDirectoryUserGuid(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
             strUserGuid = getRecordFieldValue( _notifyGruService.getPositionEntryDirectoryUserGuid(  ), nIdRecord, nIdDirectory );
-        }
-
+        }*/
+       if(provider!=null)   {
+     	  strUserGuid = getRecordFieldValue( provider.getPositionEntryDirectoryUserGuid(), nIdRecord, nIdDirectory );
+           }
+       
         return strUserGuid;
     }
 
@@ -744,8 +750,8 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
         model.put( ProviderDirectoryConstants.MARK_LINK, linkHtml );
 
         // Fill user attributes
-        String strUserGuid = getUserGuid( config, record.getIdRecord(  ), directory.getIdDirectory(  ) );
-        fillModelWithUserAttributes( model, strUserGuid );
+       // String strUserGuid = getUserGuid( config, record.getIdRecord(  ), directory.getIdDirectory(  ) );
+        //fillModelWithUserAttributes( model, strUserGuid );
 
         // Fill the model with the info of other tasks
         for ( ITask otherTask : getListBelowTasks( task, locale ) )

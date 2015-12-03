@@ -56,7 +56,13 @@ public interface IServiceProvider
          * @param nIdResource the _nIdResource to set
          */
     String getUserGuid( int nIdResource );
-
+    
+    /**
+     * 
+     * @param nIdResource
+     * @return return the phone number
+     */
+    String getPhoneNumber(int nIdResource);
     /**
          * @return the status of the resource
          * @param nIdResource the _nIdResource to set
