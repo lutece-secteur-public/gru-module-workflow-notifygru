@@ -41,8 +41,15 @@
    	<bean id="workflow-notifygru.notifyGruService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
+        
+        <bean id="workflow-notifygru.ProviderDirectoryService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.provider.directory.ProviderDirectoryService" />
    	
 
+        
+         <bean id="workflow-notifygru.provider.directory" class="fr.paris.lutece.plugins.workflow.modules.notifygru.provider.directory.ProviderDirectory"
+ 		p:key="workflow-notifygru.provider.directory"
+ 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_directory"
+                p:beanName="workflow-notifygru.provider.directory" />
 
         
         <bean id="workflow-notifygru.mooc1" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.Mook1ProviderService"

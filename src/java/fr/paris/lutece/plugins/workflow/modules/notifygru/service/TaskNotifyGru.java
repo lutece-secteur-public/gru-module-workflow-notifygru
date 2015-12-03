@@ -96,8 +96,18 @@ public class TaskNotifyGru extends SimpleTask
         if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
         {
             _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            
+            String strUserEmail = _notifyGruService.getUserEmail(nIdResourceHistory);
+            String strUserGuid = _notifyGruService.getUserGuid(nIdResourceHistory);
+            String strStatus = _notifyGruService.getStatus(nIdResourceHistory);
+            
+            Map<String, Object> modelInfoHelp = new HashMap<String, Object>(  );
+            String strInfosHelp = _notifyGruService.getInfosHelp(request, modelInfoHelp);
+            Object InfoRessource = _notifyGruService.getInfos(nIdResourceHistory);
+            
+            
 
-            Resource resource = (Resource) _notifyGruService.getInfos( 0 );
+        /*    Resource resource = (Resource) _notifyGruService.getInfos( 0 );
             Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
             modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
 
@@ -108,7 +118,7 @@ public class TaskNotifyGru extends SimpleTask
             JSONObject fluxJson = new JSONObject(  );
             JSONObject notificationJson = new JSONObject(  );
 
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_GUID, resource.getIdUser(  ) );
+            notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_GUID, _notifyGruService.getUserGuid(nIdResourceHistory));
             notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_EMAIL, resource.getEmail(  ) );
             notificationJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION_ID, "" );
             notificationJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION_DATE, "" );
@@ -248,6 +258,7 @@ public class TaskNotifyGru extends SimpleTask
             {
                 e.getMessage();
             }
+            */
         }
     }
 

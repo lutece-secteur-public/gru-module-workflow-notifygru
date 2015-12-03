@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Resource;
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
@@ -125,7 +125,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         config.setSetOnglet( ServiceConfigTaskForm.getNumberOblet( strOngletActive ) );
 
-         Resource resource;
+        
          Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
          
         if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider ) )
@@ -147,9 +147,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         {
             _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
             
-               resource = (Resource) _mokeProviderService.getInfos( 0 );
-       
-        modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
+//               resource = (Resource) _mokeProviderService.getInfos( 0 );
+//       
+//        modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
         }
 
      
@@ -182,16 +182,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale, modelMessageContent ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
-                        };
-
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
-                        tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
+//                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale, modelMessageContent ) )
+//                {
+//                    Object[] tabRequiredFields = 
+//                        {
+//                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+//                        };
+//
+//                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+//                        tabRequiredFields, AdminMessage.TYPE_STOP );
+//                }
             }
 
             if ( errors.size(  ) != 0 )
