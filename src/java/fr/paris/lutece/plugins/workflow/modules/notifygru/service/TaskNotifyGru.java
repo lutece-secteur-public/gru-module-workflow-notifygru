@@ -43,6 +43,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.TaskNo
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -269,9 +270,9 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config != null )
         {
-            return new String( NotifyGruConstants.TITLE_NOTIFY );
+            return new String( I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale));
         }
 
-        return new String( NotifyGruConstants.TITLE_NOTIFY );
+        return new String( I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale) );
     }
 }

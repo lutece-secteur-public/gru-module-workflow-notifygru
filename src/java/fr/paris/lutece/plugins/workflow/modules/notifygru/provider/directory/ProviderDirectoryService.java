@@ -219,13 +219,15 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
         return refMailingList;
     }
 
+      
 
-    @Override
+    @Override  
     public List<IEntry> getListEntries(int nidDirectory) {
          Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );     
         List<IEntry> listEntries = new ArrayList<IEntry>(  );   
        EntryFilter entryFilter = new EntryFilter(  );
             entryFilter.setIdDirectory( nidDirectory );
+
             listEntries = EntryHome.getEntryList( entryFilter, pluginDirectory );
         return listEntries;
     }
@@ -414,6 +416,7 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
             strSMSPhoneNumber = getRecordFieldValue( nPositionPhoneNumber, nIdRecord, nIdDirectory );
       
 
+
         return strSMSPhoneNumber;
     }    
  
@@ -431,7 +434,6 @@ public final class ProviderDirectoryService implements IProviderDirectoryService
         return strUserGuid;
     }
 
-   
 
         private void fillModelWithUserAttributes( Map<String, Object> model, String strUserGuid )
     {

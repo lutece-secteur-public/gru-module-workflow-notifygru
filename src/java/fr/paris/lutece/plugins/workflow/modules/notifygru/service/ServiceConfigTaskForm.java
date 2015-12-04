@@ -89,33 +89,33 @@ public class ServiceConfigTaskForm
  * @param config of the task
  * @return the  list of onglet
  */
-    public static ReferenceList getListOnglet( TaskNotifyGruConfig config )
+    public static ReferenceList getListOnglet( TaskNotifyGruConfig config, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList(  );
 
         if ( !config.isActiveOngletGuichet(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET, NotifyGruConstants.VIEW_GUICHET );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET, I18nService.getLocalizedString(NotifyGruConstants.VIEW_GUICHET, locale) );
         }
 
         if ( !config.isActiveOngletAgent(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT, NotifyGruConstants.VIEW_AGENT );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT, I18nService.getLocalizedString(NotifyGruConstants.VIEW_AGENT, locale) );
         }
 
         if ( !config.isActiveOngletEmail(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL, NotifyGruConstants.VIEW_EMAIL );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL, I18nService.getLocalizedString(NotifyGruConstants.VIEW_EMAIL, locale) );
         }
 
         if ( !config.isActiveOngletSMS(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS, NotifyGruConstants.VIEW_SMS );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS, I18nService.getLocalizedString(NotifyGruConstants.VIEW_SMS, locale) );
         }
 
         if ( !config.isActiveOngletBroadcast(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST, NotifyGruConstants.VIEW_BROADCAST_LIST );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST, I18nService.getLocalizedString(NotifyGruConstants.VIEW_BROADCAST_LIST, locale) );
         }
 
         return refenreceList;

@@ -113,9 +113,12 @@ public interface IProviderDirectoryService
      *
      * @param nidDirectory
      * @param locale
+     * @return 
      */
     public List<IEntry> getListEntriesFile(int nidDirectory, Locale locale); 
 
+    
+    public List<IEntry> getListEntries(int nidDirectory);
   
     /**
      * Get the email from either an entry containing the email, or an entry
@@ -148,6 +151,7 @@ public interface IProviderDirectoryService
      * @param nIdDirectory the id directory
      * @return the sms phone number
      */
+
     String getSMSPhoneNumber( int nPositionPhoneNumber, int nIdRecord, int nIdDirectory );
 
   
@@ -158,6 +162,7 @@ public interface IProviderDirectoryService
      * @param nIdDirectory the id directory
      * @return the user guid, an empty string if the position is not set
      */
+
     String getUserGuid( int nPositionUserGuid , int nIdRecord, int nIdDirectory );
 
     /**
@@ -173,8 +178,7 @@ public interface IProviderDirectoryService
      *
      * @param request the request
      * @return the locale
-     */
-    
+     */    
     
     Locale getLocale( HttpServletRequest request );
     

@@ -57,6 +57,7 @@ public interface IServiceProvider
          * @param nIdResource the _nIdResource to set
          */
     String getUserGuid( int nIdResource );
+    
 
     /**
          * @return the status of the resource

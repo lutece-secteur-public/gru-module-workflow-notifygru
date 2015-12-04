@@ -59,19 +59,24 @@ public class ProviderDirectory extends AbstractServiceProvider {
 
     @Override
     public String getUserEmail(int nIdResource) {
+
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey(nIdResource);
         Record record = RecordHome.findByPrimaryKey(resourceHistory.getIdResource(), pluginDirectory);
         return _providerDirectoryService.getEmail(_nPositionUserEmail, record.getIdRecord(), _nIdDirectory);
 
+        
+    
     }
 
     @Override
     public String getUserGuid(int nIdResource) {
 
+
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey(nIdResource);
         Record record = RecordHome.findByPrimaryKey(resourceHistory.getIdResource(), pluginDirectory);
 
         return _providerDirectoryService.getUserGuid(_nPositionUserGuid, record.getIdRecord(), _nIdDirectory);
+
     }
 
     @Override
@@ -105,6 +110,7 @@ public class ProviderDirectory extends AbstractServiceProvider {
 
     @Override
     public Object getInfos(int nIdResource) {
+
         
           Map<String, Object> model = new HashMap<String, Object>(  );
           
@@ -124,6 +130,7 @@ public class ProviderDirectory extends AbstractServiceProvider {
         }
 
     
+
     
         }else {
           List<IEntry> listRecordField = _providerDirectoryService.getListEntriesFreemarker(_nIdDirectory);
@@ -261,6 +268,7 @@ public class ProviderDirectory extends AbstractServiceProvider {
         this._nIdStatusCRM = _nIdStatusCRM;
     }
 
+
     public String getStatusTexte() {
         return _strStatusTexte;
     }
@@ -268,5 +276,12 @@ public class ProviderDirectory extends AbstractServiceProvider {
     public void setStatusTexte(String _strStatusTexte) {
         this._strStatusTexte = _strStatusTexte;
     }
+
+    
+    
+   
+
+   
+
 
 }
