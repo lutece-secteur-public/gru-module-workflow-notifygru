@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,13 +63,48 @@ public interface IServiceProvider
          * @param nIdResource the _nIdResource to set
          */
     String getStatus( int nIdResource );
+    
+       /**
+         * @return the phone number 
+         * @param nIdResource the _nIdResource to set
+         */
+    String getMobilePhoneNumber( int nIdResource );
+    
+       /**
+         * @param nIdResource
+         * @return boolean
+         */
+    Boolean isMobilePhoneNumberAvailable( int nIdResource );
+    
+     /**
+         * @return the IdDemand
+         * @param nIdResource the _nIdResource to set
+         */
+    int getIdDemand( int nIdResource );
+    
+      /**
+         * @param nIdResource
+         * @return boolean
+         */
+    Boolean isIdDemandAvailable( int nIdResource );
+    
+      /**
+         * @return the IdDemandType
+         * @param nIdResource the _nIdResource to set
+         */
+    int getIdDemandType( int nIdResource );
+    
+      /**
+         * @param nIdResource
+         * @return boolean
+         */
+    Boolean isIdDemandTypeAvailable( int nIdResource );
 
     /**
-         * @return the help to put the values of the resource
-         * @param request 
-         * @param model 
+     * @param local
+         * @return the help to put the values of the resource 
          */
-    String getInfosHelp( HttpServletRequest request, Map<String, Object> model );
+    String getInfosHelp( Locale local );
 
     /**
          * @return the resource of id _nIdResource

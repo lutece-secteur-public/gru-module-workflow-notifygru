@@ -125,8 +125,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         config.setSetOnglet( ServiceConfigTaskForm.getNumberOblet( strOngletActive ) );
 
-        
-         Map<String, Object> modelMessageContent = new HashMap<String, Object>(  );
+
          
         if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider ) )
         {
@@ -147,9 +146,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         {
             _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
             
-//               resource = (Resource) _mokeProviderService.getInfos( 0 );
-//       
-//        modelMessageContent.put( TaskNotifyGruConstants.MARK_RESOURCE, resource );
+           
+        
+
         }
 
      
@@ -182,16 +181,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             locale ) );
                 }
 
-//                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale, modelMessageContent ) )
-//                {
-//                    Object[] tabRequiredFields = 
-//                        {
-//                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
-//                        };
-//
-//                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
-//                        tabRequiredFields, AdminMessage.TYPE_STOP );
-//                }
+                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale,  _mokeProviderService.getInfos(-1) ) )
+                {
+                    Object[] tabRequiredFields = 
+                        {
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                        };
+
+                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+                }
             }
 
             if ( errors.size(  ) != 0 )
@@ -221,7 +220,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_AGENT_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageAgent, locale, modelMessageContent ) )
+                if ( !Validator.isFreemarkerValid( strMessageAgent, locale, _mokeProviderService.getInfos(-1) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -276,7 +275,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageEmail, locale, modelMessageContent ) )
+                if ( !Validator.isFreemarkerValid( strMessageEmail, locale, _mokeProviderService.getInfos(-1) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -320,7 +319,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_SMS_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageSMS, locale, modelMessageContent ) )
+                if ( !Validator.isFreemarkerValid( strMessageSMS, locale, _mokeProviderService.getInfos(-1) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -382,7 +381,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strmessageBroadcast, locale, modelMessageContent ) )
+                if ( !Validator.isFreemarkerValid( strmessageBroadcast, locale, _mokeProviderService.getInfos(-1) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -485,8 +484,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
 
             String strTemplateProvider = ( _mokeProviderService == null ) ? ""
-                                                                          : _mokeProviderService.getInfosHelp( request,
-                    model );
+                                                                          : _mokeProviderService.getInfosHelp( locale );
 
             model.put( NotifyGruConstants.MARK_HELPER_PROVIDER, strTemplateProvider );
         }
