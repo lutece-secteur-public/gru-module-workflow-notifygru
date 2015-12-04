@@ -111,10 +111,12 @@ public interface IProviderDirectoryService
      List<IEntry> getListEntriesFile(int nidDirectory, Locale locale); 
 
 
+
     /**
      * @param nidDirectory
      * @return */
      List<IEntry> getListEntries(int nidDirectory);
+
   
     /**
      * Get the email from either an entry containing the email, or an entry
