@@ -1,6 +1,5 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.provider.directory;
 
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
@@ -72,13 +71,7 @@ public interface IProviderDirectoryService
      */
     ReferenceList getMailingList( HttpServletRequest request );
 
-    /**
-     * Get the list of entries from a given id task
-     * @param nidDirectory
-     * @return a list of IEntry
-     */
-    List<IEntry> getListEntries( int nidDirectory );
-
+   
     /**
      * Get the list of entries that have the accepted type (which are defined in
      * <b>workflow-notifydirectory.properties</b>)
@@ -115,10 +108,13 @@ public interface IProviderDirectoryService
      * @param locale
      * @return 
      */
-    public List<IEntry> getListEntriesFile(int nidDirectory, Locale locale); 
+     List<IEntry> getListEntriesFile(int nidDirectory, Locale locale); 
 
-    
-    public List<IEntry> getListEntries(int nidDirectory);
+
+    /**
+     * @param nidDirectory
+     * @return */
+     List<IEntry> getListEntries(int nidDirectory);
   
     /**
      * Get the email from either an entry containing the email, or an entry
