@@ -45,7 +45,7 @@ public class TaskNotifyGruConstants
     public static final String MARK_NOTIFICATION = "notification";
     public static final String MARK_RESOURCE = "resource";
     public static final String MARK_USER_GUID = "user_guid";
-    public static final String MARK_USER_EMAIL = "user_email";
+    public static final String MARK_EMAIL = "email";
     public static final String MARK_NOTIFICATION_ID = "notification_id";
     public static final String MARK_NOTIFICATION_DATE = "notification_date";
     public static final String MARK_NOTIFICATION_TYPE = "notification_type";
@@ -78,7 +78,7 @@ public class TaskNotifyGruConstants
     //MARKERS BACK OFFICE LOGGING
     public static final String MARK_MESSAGE_BACK_OFFICE_LOGGING = "message";
     public static final String MARK_STATUS_TEXT_BACK_OFFICE_LOGGING = "status_text";
-    public static final String MARK_ID_STATUS_CRM_BACK_OFFICE_LOGGING = "id_status_crm";
+    public static final String MARK_ID_STATUS_CRM_BACK_OFFICE_LOGGING = "crm_status_id";
     public static final String MARK_NOTIFIED_ON_DASHBOARD = "notified_on_dashboard";
     public static final String MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION = "display_level_dashboard_notification";
     public static final String MARK_VIEW_DASHBOARD_NOTIFICATION = "view_dashboard_notification";
@@ -86,7 +86,7 @@ public class TaskNotifyGruConstants
     public static final String MARK_NOTIFIED_BY_EMAIL = "notified_by_email";
     public static final String MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION = "display_level_email_notification";
     public static final String MARK_VIEW_EMAIL_NOTIFICATION = "view_email_notification";
-    public static final String MARK_NOTIFIED_BY_SMS = "notified by sms";
+    public static final String MARK_NOTIFIED_BY_SMS = "notified_by_sms";
     public static final String MARK_DISPLAY_LEVEL_SMS_NOTIFICATION = "display_level_sms_notification";
     public static final String MARK_VIEW_SMS_NOTIFICATION = "view_sms_notification";
     public static final String MARK_BACK_OFFICE_LOGGING = "backoffice_logging";

@@ -133,7 +133,7 @@ public class Validator
         }
         catch ( RuntimeException e )
         {
-            e.getMessage(  );
+            return false;
         }
 
         return false;

@@ -21,35 +21,35 @@ public final class ProviderDirectoryConstants
     public static final String TASK_NOTIFY_DIRECTORY_KEY = "taskNotifyDirectory";
 
     // FIELDS
-    public static final String FIELD_NOTIFY = "module.workflow.notifydirectory.task_notify_directory_config.label_notify_by";
-    public static final String FIELD_SUBJECT = "module.workflow.notifydirectory.task_notify_directory_config.label_subject";
-    public static final String FIELD_MESSAGE = "module.workflow.notifydirectory.task_notify_directory_config.label_message";
-    public static final String FIELD_SENDER_NAME = "module.workflow.notifydirectory.task_notify_directory_config.label_sender_name";
-    public static final String FIELD_TASK_DIRECTORY = "module.workflow.notifydirectory.task_notify_directory_config.label_task_directory";
-    public static final String FIELD_TASK_ENTRY_DIRECTORY_SMS = "module.workflow.notifydirectory.task_notify_directory_config.label_task_entry_directory_sms";
-    public static final String FIELD_TASK_ENTRY_DIRECTORY_EMAIL = "module.workflow.notifydirectory.task_notify_directory_config.label_task_entry_directory_email";
-    public static final String FIELD_TASK_ENTRY_DIRECTORY_USER_GUID = "module.workflow.notifydirectory.task_notify_directory_config.label_task_entry_directory_user_guid";
-    public static final String FIELD_MAILING_LIST = "module.workflow.notifydirectory.task_notify_directory_config.label_mailing_list";
-    public static final String FIELD_STATE = "module.workflow.notifydirectory.task_notify_directory_config.label_state";
-    public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifydirectory.task_notify_directory_config.label_message_validation";
-    public static final String FIELD_LABEL_LINK = "module.workflow.notifydirectory.task_notify_directory_config.label_label_link";
-    public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifydirectory.task_notify_directory_config.label_label_link_view_record";
-    public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifydirectory.task_notify_directory_config.label_period_validity";
+    public static final String FIELD_NOTIFY = "module.workflow.notifygru.task_notify_directory_config.label_notify_by";
+    public static final String FIELD_SUBJECT = "module.workflow.notifygru.task_notify_directory_config.label_subject";
+    public static final String FIELD_MESSAGE = "module.workflow.notifygru.task_notify_directory_config.label_message";
+    public static final String FIELD_SENDER_NAME = "module.workflow.notifygru.task_notify_directory_config.label_sender_name";
+    public static final String FIELD_TASK_DIRECTORY = "module.workflow.notifygru.task_notify_directory_config.label_task_directory";
+    public static final String FIELD_TASK_ENTRY_DIRECTORY_SMS = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_sms";
+    public static final String FIELD_TASK_ENTRY_DIRECTORY_EMAIL = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_email";
+    public static final String FIELD_TASK_ENTRY_DIRECTORY_USER_GUID = "module.workflow.notifygru.task_notify_directory_config.label_task_entry_directory_user_guid";
+    public static final String FIELD_MAILING_LIST = "module.workflow.notifygru.task_notify_directory_config.label_mailing_list";
+    public static final String FIELD_STATE = "module.workflow.notifygru.task_notify_directory_config.label_state";
+    public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifygru.task_notify_directory_config.label_message_validation";
+    public static final String FIELD_LABEL_LINK = "module.workflow.notifygru.task_notify_directory_config.label_label_link";
+    public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifygru.task_notify_directory_config.label_label_link_view_record";
+    public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_directory_config.label_period_validity";
 
     // MESSAGES
-    public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifydirectory.message.mandatory.field";
-    public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifydirectory.message.equal.field";
-    public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifydirectory.message.error_validation";
+    public static final String MESSAGE_MANDATORY_FIELD = "module.workflow.notifygru.message.mandatory.field";
+    public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
+    public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
 
     // PROPERTIES
-    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_EMAIL_SMS = "workflow-notifydirectory.acceptedDirectoryEntryTypesEmailSMS";
-    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_USER_GUID = "workflow-notifydirectory.acceptedDirectoryEntryTypesUserGuid";
-    public static final String PROPERTY_REFUSED_DIRECTORY_ENTRY_TYPE_USER_GUID = "workflow-notifydirectory.refusedDirectoryEntryTypes";
-    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_FILE = "workflow-notifydirectory.acceptedDirectoryEntryTypesFile";
-    public static final String PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME = "workflow-notifydirectory.notification_mail.default_sender_name";
-    public static final String PROPERTY_SERVER_SMS = "workflow-notifydirectory.email_server_sms";
-    public static final String PROPERTY_XPAGE_PAGETITLE = "module.workflow.notifydirectory.xpage.pagetitle";
-    public static final String PROPERTY_XPAGE_PATHLABEL = "module.workflow.notifydirectory.xpage.pathlabel";
+    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
+    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_USER_GUID = "workflow-notifygru.acceptedDirectoryEntryTypesUserGuid";
+    public static final String PROPERTY_REFUSED_DIRECTORY_ENTRY_TYPE_USER_GUID = "workflow-notifygru.refusedDirectoryEntryTypes";
+    public static final String PROPERTY_ACCEPTED_DIRECTORY_ENTRY_TYPE_FILE = "workflow-notifygru.acceptedDirectoryEntryTypesFile";
+    public static final String PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME = "workflow-notifygru.notification_mail.default_sender_name";
+    public static final String PROPERTY_SERVER_SMS = "workflow-notifygru.email_server_sms";
+    public static final String PROPERTY_XPAGE_PAGETITLE = "module.workflow.notifygru.xpage.pagetitle";
+    public static final String PROPERTY_XPAGE_PATHLABEL = "module.workflow.notifygru.xpage.pathlabel";
     public static final String PROPERTY_LUTECE_ADMIN_PROD_URL = "lutece.admin.prod.url";
     public static final String PROPERTY_LUTECE_BASE_URL = "lutece.base.url";
     public static final String PROPERTY_LUTECE_PROD_URL = "lutece.prod.url";
