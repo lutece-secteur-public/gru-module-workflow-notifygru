@@ -72,7 +72,7 @@ public final class NotifyGruConstants
     public static final String TITLE_NOTIFY = "module.workflow.notifygru.task_notify_title";
 
     //VIEW
-    public static final String VIEW_GUICHET = "module.workflow.notifygru.manage_guichet.title ";
+    public static final String VIEW_GUICHET = "module.workflow.notifygru.manage_guichet.title";
     public static final String VIEW_AGENT = "module.workflow.notifygru.manage_agent_view.title";
     public static final String VIEW_EMAIL = "module.workflow.notifygru.manage_email.title";
     public static final String VIEW_SMS = "module.workflow.notifygru.manage_sms.title";

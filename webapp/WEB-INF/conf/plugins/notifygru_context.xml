@@ -42,26 +42,9 @@
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
         
-        <bean id="workflow-notifygru.ProviderDirectoryService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.provider.directory.ProviderDirectoryService" />
+    
    	
 
-        
-         <bean id="workflow-notifygru.provider.directory" class="fr.paris.lutece.plugins.workflow.modules.notifygru.provider.directory.ProviderDirectory"
- 		p:key="workflow-notifygru.provider.directory"
- 		p:titleI18nKey="module.workflow.notifygru.task_notify_gru_provider_directory"
-                p:beanName="workflow-notifygru.provider.directory" 
-                p:IdDirectory="1" 
-                p:IdStatusCRM="1" 
-                p:StatusTexte="En attente de validation" 
-                p:PositionUserEmail="2" 
-                p:PositionUserGuid="4" 
-                p:PositionUserPhoneNumber="3" 
-                p:PositionDemand="5"
-                p:PositionDemandType="6" />
-        
-
-        
-      
 
 </beans>
  	
