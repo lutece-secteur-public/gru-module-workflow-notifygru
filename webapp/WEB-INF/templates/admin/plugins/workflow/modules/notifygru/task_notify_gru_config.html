@@ -46,22 +46,18 @@ $('button[name=save]').attr("name","apply");
 </script>
  
   <#else>
-  <#if list_onglet?exists>
+<#if list_onglet?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
 				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
 				<div class="controls">
-					<@combo name="active_onglet" items=list_onglet default_value=0 />&nbsp;
-					
-
-<button class="btn btn-sm btn-primary" type="submit" name="apply" value="AddOnglet">
+					<@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
+				<button class="btn btn-sm btn-primary" type="submit" name="apply" value="AddOnglet">
 					<i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
-				</button>
-
-                                        
+				</button>                        
 				</div>
 
 			</div>
-		</#if>
+</#if>
 
 <br/>
     <ul id="tabs" class="nav nav-tabs">
@@ -124,7 +120,7 @@ $('button[name=save]').attr("name","apply");
    </fieldset>
  </div> 
  <#if config?exists>
-<input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
+ <input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
 </#if>
 <script>
 $(document).ready(function(){ 
