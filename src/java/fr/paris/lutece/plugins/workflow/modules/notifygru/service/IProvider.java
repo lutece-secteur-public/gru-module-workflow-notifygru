@@ -36,80 +36,54 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * 
- * @author 
+ *
+ * @author
  *
  */
-public interface IServiceProvider
-{
+public interface IProvider {
+
+    /**
+     * @return the userGuid
+     * @param nIdResource the _nIdResource to set
+     */
+    String getUserGuid(int nIdResource);
+
     /**
      * give the email of user
+     *
      * @return the userEmail
      * @param nIdResource the _nIdResource to set
      */
-    String getUserEmail( int nIdResource );
+    String getUserEmail(int nIdResource);
 
     /**
-         * @return the userGuid
-         * @param nIdResource the _nIdResource to set
-         */
-    String getUserGuid( int nIdResource );
-    
+     * @param nIdResource
+     * @return DemandId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
+     */
+    int getOptionalDemandId(int nIdResource);
 
     /**
-         * @return the status of the resource
-         * @param nIdResource the _nIdResource to set
-         */
-    String getStatus( int nIdResource );
-    
-       /**
-         * @return the phone number 
-         * @param nIdResource the _nIdResource to set
-         */
-    String getMobilePhoneNumber( int nIdResource );
-    
-       /**
-         * @param nIdResource
-         * @return boolean
-         */
-    Boolean isMobilePhoneNumberAvailable( int nIdResource );
-    
-     /**
-         * @return the IdDemand
-         * @param nIdResource the _nIdResource to set
-         */
-    int getIdDemand( int nIdResource );
-    
-      /**
-         * @param nIdResource
-         * @return boolean
-         */
-    Boolean isIdDemandAvailable( int nIdResource );
-    
-      /**
-         * @return the IdDemandType
-         * @param nIdResource the _nIdResource to set
-         */
-    int getIdDemandType( int nIdResource );
-    
-      /**
-         * @param nIdResource
-         * @return boolean
-         */
-    Boolean isIdDemandTypeAvailable( int nIdResource );
+     * @param nIdResource
+     * @return DemandIdType if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
+     */
+    int getOptionalDemandIdType(int nIdResource);
+
+    /**
+     * @return the phone number
+     * @param nIdResource the _nIdResource to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
+     */
+    String getOptionalMobilePhoneNumber(int nIdResource);
 
     /**
      * @param local
-         * @return the help to put the values of the resource 
-         */
-    String getInfosHelp( Locale local );
+     * @return html template for maker resources attributs
+     */
+    String getInfosHelp(Locale local);
 
     /**
-         * @return the resource of id _nIdResource
-         * @param nIdResource the _nIdResource to set
-         */
-    Object getInfos( int nIdResource );
+     * @param nIdResource
+     * @return model marker from resources attributs
+     */
+    Map<String, Object> getInfos(int nIdResource);
 }

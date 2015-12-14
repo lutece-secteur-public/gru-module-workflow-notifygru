@@ -46,28 +46,34 @@ import fr.paris.lutece.util.sql.DAOUtil;
 public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfig>
 {
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,key_provider" +
-        ",message_guichet,level_notification_guichet,is_active_onglet_guichet," +
+        ",message_guichet,status_text_guichet,sender_name_guichet,"
+            + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,"
+            + "demand_state_guichet,level_notification_guichet,is_active_onglet_guichet," +
         "message_agent,level_notification_agent,is_active_onglet_agent," +
         "subject_email,message_email,sender_name_email,recipients_cc_email," +
         "recipients_cci_email,level_notification_email,is_active_onglet_email," +
         "message_sms,level_notification_sms,is_active_onglet_sms," +
         "id_mailing_list_broadcast,subject_broadcast,message_broadcast," +
         "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast," +
-        "level_notification_broadcast,is_active_onglet_broadcast,set_onglet" +
+        "level_notification_broadcast,is_active_onglet_broadcast,set_onglet,crm_status_id_commune " +
         " FROM workflow_task_notify_gru_cf  WHERE id_task = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_cf( " +
-        "id_task,id_spring_provider,key_provider," + "message_guichet,level_notification_guichet," +
-        "is_active_onglet_guichet," + "message_agent,level_notification_agent,is_active_onglet_agent," +
+        "id_task,id_spring_provider,key_provider,message_guichet,status_text_guichet,sender_name_guichet,"
+            + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,"
+            + "demand_state_guichet,level_notification_guichet,is_active_onglet_guichet," +
+            "message_agent,level_notification_agent,is_active_onglet_agent," +
         "subject_email,message_email," + "sender_name_email,recipients_cc_email,recipients_cci_email," +
         "level_notification_email,is_active_onglet_email," +
         "message_sms,level_notification_sms,is_active_onglet_sms," +
         "id_mailing_list_broadcast,subject_broadcast,message_broadcast," +
         "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast," +
-        "level_notification_broadcast,is_active_onglet_broadcast,set_onglet" + ")" +
-        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "level_notification_broadcast,is_active_onglet_broadcast,set_onglet, crm_status_id_commune )" +
+        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_notify_gru_cf " +
         " SET id_task = ?, id_spring_provider = ?, key_provider = ?," +
-        "message_guichet = ?, level_notification_guichet = ?, is_active_onglet_guichet= ?, " +
+        " message_guichet = ?, status_text_guichet = ?, sender_name_guichet = ?, "
+            + "subject_guichet = ? ,demand_max_step_guichet = ? ,demand_user_current_step_guichet = ? ,"
+            + "demand_state_guichet = ? ,level_notification_guichet = ? ,is_active_onglet_guichet = ? ,"+
         "message_agent = ? ,level_notification_agent = ? ,is_active_onglet_agent = ? , " +
         " subject_email = ?, message_email = ?, sender_name_email = ?," +
         "recipients_cc_email = ?, recipients_cci_email = ?, " +
@@ -75,7 +81,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         " level_notification_sms = ?," + "is_active_onglet_sms = ?,  " +
         "id_mailing_list_broadcast = ?, subject_broadcast = ?, message_broadcast = ?," +
         "sender_name_broadcast = ?, recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, " +
-        "level_notification_broadcast = ?, is_active_onglet_broadcast = ?, set_onglet = ?" + " WHERE id_task = ? ";
+        "level_notification_broadcast = ?, is_active_onglet_broadcast = ?, set_onglet = ?, crm_status_id_commune = ? " + " WHERE id_task = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_notify_gru_cf WHERE id_task = ? ";
 
     /**
@@ -92,7 +98,15 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString( ++nPos, config.getIdSpringProvider(  ) );
         daoUtil.setString( ++nPos, config.getKeyProvider(  ) );
 
+    
         daoUtil.setString( ++nPos, config.getMessageGuichet(  ) );
+        daoUtil.setString( ++nPos, config.getStatustextGuichet());
+        daoUtil.setString( ++nPos, config.getSenderNameGuichet());
+        daoUtil.setString( ++nPos, config.getSubjectGuichet());
+        daoUtil.setInt(++nPos, config.getDemandMaxStepGuichet());
+        daoUtil.setInt(++nPos, config.getDemandUserCurrentStepGuichet());
+        daoUtil.setInt(++nPos, config.getDemandStateGuichet());
+        
         daoUtil.setString( ++nPos, config.getLevelNotificationGuichet(  ) );
         daoUtil.setBoolean( ++nPos, config.isActiveOngletGuichet(  ) );
 
@@ -120,8 +134,12 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString( ++nPos, config.getRecipientsCciBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getLevelNotificationBroadcast(  ) );
         daoUtil.setBoolean( ++nPos, config.isActiveOngletBroadcast(  ) );
+        
+      
 
         daoUtil.setInt( ++nPos, config.getSetOnglet(  ) );
+        
+            daoUtil.setInt( ++nPos, config.getCrmStatusIdCommune());
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -142,7 +160,14 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setString( ++nPos, config.getIdSpringProvider(  ) );
         daoUtil.setString( ++nPos, config.getKeyProvider(  ) );
 
+         
         daoUtil.setString( ++nPos, config.getMessageGuichet(  ) );
+        daoUtil.setString( ++nPos, config.getStatustextGuichet());
+        daoUtil.setString( ++nPos, config.getSenderNameGuichet());
+        daoUtil.setString( ++nPos, config.getSubjectGuichet());
+        daoUtil.setInt( ++nPos, config.getDemandMaxStepGuichet());
+        daoUtil.setInt( ++nPos, config.getDemandUserCurrentStepGuichet());
+        daoUtil.setInt( ++nPos, config.getDemandStateGuichet());
         daoUtil.setString( ++nPos, config.getLevelNotificationGuichet(  ) );
         daoUtil.setBoolean( ++nPos, config.isActiveOngletGuichet(  ) );
 
@@ -173,6 +198,8 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
         daoUtil.setInt( ++nPos, config.getSetOnglet(  ) );
 
+         daoUtil.setInt( ++nPos, config.getCrmStatusIdCommune());
+         
         daoUtil.setInt( ++nPos, config.getIdTask(  ) );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -201,6 +228,12 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setKeyProvider( daoUtil.getString( ++nPos ) );
 
             config.setMessageGuichet( daoUtil.getString( ++nPos ) );
+            config.setStatustextGuichet(daoUtil.getString( ++nPos ) );
+            config.setSenderNameGuichet(daoUtil.getString( ++nPos ) );
+            config.setSubjectGuichet(daoUtil.getString( ++nPos ) );
+            config.setDemandMaxStepGuichet(daoUtil.getInt(++nPos ) );
+            config.setDemandUserCurrentStepGuichet(daoUtil.getInt(++nPos ) );
+            config.setDemandStateGuichet(daoUtil.getInt(++nPos ) );
             config.setLevelNotificationGuichet( daoUtil.getString( ++nPos ) );
             config.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
 
@@ -228,8 +261,11 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
             config.setLevelNotificationBroadcast( daoUtil.getString( ++nPos ) );
             config.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
+            
+          
 
             config.setSetOnglet( daoUtil.getInt( ++nPos ) );
+               config.setCrmStatusIdCommune(daoUtil.getInt( ++nPos ) );
         }
 
         daoUtil.free(  );

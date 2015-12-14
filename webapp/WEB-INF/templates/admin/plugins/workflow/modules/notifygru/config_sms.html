@@ -1,14 +1,22 @@
 <div>
 	<fieldset>
 		<legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_sms}
-                  <button class="btn btn-sm btn-danger" type="submit" name="apply" value="RemoveOngletSMS">
+                  <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveOngletSMS">
 	<i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
         </button> 
                 </legend>
 		<br />
-<div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} * </label>
-            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+
+
+<!------------------------------------- -->
+<div class="row">
+
+
+ <div class="col-md-6">
+
+        <div class="form-group">
+            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} *  </label>
+             <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
                 <#if config?exists  && config.messageSMS?has_content>
                     <textarea name="message_sms" id="message_sms" rows="10" cols="50" >${config.messageSMS}</textarea>
                 <#else>
@@ -21,11 +29,15 @@
                   </#if>
 
             </div>
- </div>
- 
-      <#if level_notification_sms?exists>
+        </div>
+        
+</div>
+
+ <div class="col-md-4">
+
+        <#if level_notification_sms?exists>
         <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms} * </label>
+            <label class="control-label col-xs-12 col-sm-12 col-md-5 col-lg-5" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms} * </label>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
@@ -33,7 +45,14 @@
         </div>        
 
        </#if>
-        
+</div>
+
+</div>
+<!------------------------------------- -->
+       
+
+
+
         
             
                 

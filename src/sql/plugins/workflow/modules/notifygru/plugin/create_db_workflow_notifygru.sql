@@ -13,6 +13,12 @@ CREATE TABLE workflow_task_notify_gru_cf(
  key_provider VARCHAR(255) DEFAULT '' NULL, 
 
   message_guichet VARCHAR(255) DEFAULT '' NULL,  
+  status_text_guichet VARCHAR(255) DEFAULT '' NULL,  
+  sender_name_guichet VARCHAR(255) DEFAULT '' NULL,  
+  subject_guichet VARCHAR(255) DEFAULT '' NULL,  
+  demand_max_step_guichet SMALLINT NULL DEFAULT -1,
+  demand_user_current_step_guichet SMALLINT NULL DEFAULT -1,
+  demand_state_guichet SMALLINT NULL DEFAULT -1,
   level_notification_guichet VARCHAR(255) DEFAULT '' NULL,
   is_active_onglet_guichet SMALLINT NULL DEFAULT 0,
 
@@ -32,6 +38,9 @@ CREATE TABLE workflow_task_notify_gru_cf(
  level_notification_sms VARCHAR(255) DEFAULT ''  NULL,
   is_active_onglet_sms SMALLINT NOT NULL DEFAULT 0,
 
+
+ crm_status_id_commune INT DEFAULT NULL,
+
  id_mailing_list_broadcast INT DEFAULT NULL,
 subject_broadcast VARCHAR(255) DEFAULT ''  NULL,
  message_broadcast VARCHAR(255) DEFAULT ''  NULL,
@@ -41,7 +50,7 @@ subject_broadcast VARCHAR(255) DEFAULT ''  NULL,
  level_notification_broadcast VARCHAR(255) DEFAULT ''  NULL,
   is_active_onglet_broadcast SMALLINT  NULL DEFAULT 0,
   
-set_onglet SMALLINT  NULL DEFAULT 0,
+set_onglet SMALLINT  NULL DEFAULT NULL,
 
   PRIMARY KEY  (id_task)
   );

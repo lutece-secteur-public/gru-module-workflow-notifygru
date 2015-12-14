@@ -24,20 +24,77 @@
 <div>
 <fieldset>
         <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
-        <br />
+
+
+
+ <#if !list_provider?exists>
+   <div class="row">
+  <div class="col-md-2">   
+ <a  class="btn btn-primary btn-xs" role="button" onclick="showhide_confcommune()">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_label}<span id="iconeCommune" class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a>
+ </div> 
+       <div id="configCommune">       
+  <div class="col-md-4"  > 
+ <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-4 col-lg-4" for="crm_status_id_commune">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm}* </label>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                <#if config?exists && config.crmStatusIdCommune?has_content && config.crmStatusIdCommune!=0>
+                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="${config.crmStatusIdCommune}" maxlength="255">
+                <#else>
+                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
+            </div>
+        </div>
+ </div> 
+
+  
+ </div> 
+    </div>
+
+</#if>
+
  <#if config?exists && !config.IdSpringProvider?has_content && list_provider?exists>
  
-  <div id="list_provider">
+ 
+
+  <div class="row">
+ <div class="col-md-10"  > 
+ <div id="list_provider">
             <div class="form-group">
 
-                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider} * :</label>
+                <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider} * :</label>
 
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
                     <@combo name="list_provider"  items=list_provider default_value=1 />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}</span>
                 </div>
-            </div>
-        </div> 
+  </div>
+</div> 
+ 
+  </div>
+    </div>
+
+  <div class="row">
+ <div class="col-md-10"  > 
+ <div id="list_provider">
+            <div class="form-group">
+
+                <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_label} * :</label>
+
+               <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                   <#if config?exists && config.crmStatusIdCommune?has_content && config.crmStatusIdCommune!=0>
+                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="${config.crmStatusIdCommune}" maxlength="255">
+                <#else>
+                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
+           
+                </div>
+  </div>
+</div> 
+ 
+  </div>
+    </div>
  
 <script>
 $(document).ready(function(){ 
@@ -51,7 +108,7 @@ $('button[name=save]').attr("name","apply");
 				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
 				<div class="controls">
 					<@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
-				<button class="btn btn-sm btn-primary" type="submit" name="apply" value="AddOnglet">
+				<button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddOnglet">
 					<i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
 				</button>                        
 				</div>
@@ -137,3 +194,23 @@ $("#"+ong+" a").tab('show');
 <@initEditor />
 	
 
+<script>
+    function showhide_confcommune()
+    {
+
+        var div = document.getElementById("configCommune");
+
+        if (div.style.display !== "none") {
+            div.style.display = "none";
+        document.getElementById("iconeCommune").setAttribute("class", "glyphicon glyphicon-menu-up");
+        }
+        else {
+            div.style.display = "block";
+          document.getElementById("iconeCommune").setAttribute("class", "glyphicon glyphicon-menu-down");
+        }
+    }
+
+showhide_confcommune();
+
+ 
+</script>

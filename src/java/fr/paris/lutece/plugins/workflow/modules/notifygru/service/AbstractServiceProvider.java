@@ -44,7 +44,7 @@ import java.util.Locale;
  *
  * @author fallphenix
  */
-public abstract class AbstractServiceProvider implements IServiceProvider
+public abstract class AbstractServiceProvider implements IProvider
 {
     private String _strKey;
     private String _strtitleI18nKey;

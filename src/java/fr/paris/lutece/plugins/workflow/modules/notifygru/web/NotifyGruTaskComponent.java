@@ -106,7 +106,17 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( NotifyGruConstants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( NotifyGruConstants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( NotifyGruConstants.PARAMETER_SELECT_PROVIDER );
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
+        
+         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
+        
+        String strCrmStatusId = request.getParameter( NotifyGruConstants.PARAMETER_CRM_STATUS_ID_COMMUNE );
+      
+         int nCrmStatusId = ServiceConfigTaskForm.getNumbertoString(strCrmStatusId);
+     
+       
+       config.setCrmStatusIdCommune(nCrmStatusId);
+        
+       
 
         Boolean bActiveOngletGuichet = ServiceConfigTaskForm.setConfigOnglet( strApply,
                 NotifyGruConstants.MARK_ONGLET_GUICHET, strOngletActive, config.isActiveOngletGuichet(  ),
@@ -171,11 +181,55 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             /*général*/
             ArrayList<String> errors = new ArrayList<String>(  );
             String strMessageGuichet = request.getParameter( NotifyGruConstants.PARAMETER_MESSAGE_GUICHET );
-            String strLevelNotificationGuichet = request.getParameter( NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET );
+            String strStatusTextGuichet = request.getParameter( NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET );
+            String strSenderNameGuichet = request.getParameter( NotifyGruConstants.PARAMETER_SENDER_NAME_GUICHET );
+            String strSubjectGuichet = request.getParameter( NotifyGruConstants.PARAMETER_SUBJECT_GUICHET );
+            String strDemandMaxStepGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
+            String strDemandUserCurrentStepGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
+            String strDemandStateGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_STATE_GUICHET );
+            
+             int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandMaxStepGuichet);
+             int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandUserCurrentStepGuichet);
+             int nDemandStateGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandStateGuichet);
+           
+             String strLevelNotificationGuichet = request.getParameter( NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET );
+            
+          
 
             if ( StringUtils.isBlank( strApply ) )
             {
+                if ( strDemandStateGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
+                if ( strDemandUserCurrentStepGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
+                if ( strDemandMaxStepGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
+                if ( strSubjectGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
+                if ( strSenderNameGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
                 if ( strMessageGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
+                {
+                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
+                            locale ) );
+                }
+                
+                if ( strStatusTextGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
                             locale ) );
@@ -201,6 +255,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             config.setMessageGuichet( strMessageGuichet );
             config.setLevelNotificationGuichet( strLevelNotificationGuichet );
             config.setActiveOngletGuichet( bActiveOngletGuichet );
+            
+              config.setStatustextGuichet(strStatusTextGuichet);
+            config.setSenderNameGuichet(strSenderNameGuichet);
+            config.setSubjectGuichet(strSubjectGuichet);
+            config.setDemandMaxStepGuichet(nDemandMaxStepGuichet);
+            config.setDemandUserCurrentStepGuichet(nDemandUserCurrentStepGuichet);
+            config.setDemandStateGuichet(nDemandStateGuichet);
 
             /*fin guichet*/
         }

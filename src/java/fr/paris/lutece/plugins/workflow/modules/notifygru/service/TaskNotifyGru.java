@@ -63,14 +63,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-
 /**
  *
  * TaskNotifyGru
  *
  */
-public class TaskNotifyGru extends SimpleTask
-{
+public class TaskNotifyGru extends SimpleTask {
     // TEMPLATES
     /* private static final String TEMPLATE_TASK_NOTIFY_DESK = "admin/plugins/workflow/modules/notifygru/task_notify_gru_desk.html";
      private static final String TEMPLATE_TASK_NOTIFY_AGENT = "admin/plugins/workflow/modules/notifygru/task_notify_gru_agent.html";
@@ -81,7 +79,7 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     private IResourceHistoryService _resourceHistoryService;
     @Inject
-    @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
+    @Named(TaskNotifyGruConfigService.BEAN_SERVICE)
     private ITaskConfigService _taskNotifyGruConfigService;
     private AbstractServiceProvider _notifyGruService;
 
@@ -89,165 +87,161 @@ public class TaskNotifyGru extends SimpleTask
      * {@inheritDoc}
      */
     @Override
-    public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
-    {
+    public void processTask(int nIdResourceHistory, HttpServletRequest request, Locale locale) {
         //ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey(nIdResourceHistory);
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
+        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(this.getId());
 
-        if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
-        {
-            _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
-            
-            String strUserEmail = _notifyGruService.getUserEmail(nIdResourceHistory);
-            String strUserGuid = _notifyGruService.getUserGuid(nIdResourceHistory);
-            String strStatus = _notifyGruService.getStatus(nIdResourceHistory);
-            
-          
-            
-             boolean bIsNotifyByDesk = config.isActiveOngletGuichet(  );
-            boolean bIsNotifyByViewAgent = config.isActiveOngletAgent(  );
-            boolean bIsNotifyByEmail = config.isActiveOngletEmail(  );
-            boolean bIsNotifyBySms = config.isActiveOngletSMS(  );
-            
+        if ((config != null) && ServiceConfigTaskForm.isBeanExiste(config.getIdSpringProvider())) {
+            _notifyGruService = SpringContextService.getBean(config.getIdSpringProvider());
 
-            JSONObject fluxJson = new JSONObject(  );
-            JSONObject notificationJson = new JSONObject(  );
+           
 
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_GUID, _notifyGruService.getUserGuid(nIdResourceHistory));
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_EMAIL, _notifyGruService.getUserEmail(nIdResourceHistory));
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION_ID, "" );
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION_DATE, "" );
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION_TYPE, "");        
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_ID_DEMAND, _notifyGruService.getIdDemand(nIdResourceHistory));         
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_ID_DEMAND_TYPE, _notifyGruService.getIdDemandType(nIdResourceHistory) );
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_DEMAND_MAX_STEP, "");
-            notificationJson.accumulate( TaskNotifyGruConstants.MARK_DEMAND_USER_CURRENT_STEP,"");
+            boolean bIsNotifyByDesk = config.isActiveOngletGuichet();
+            boolean bIsNotifyByViewAgent = config.isActiveOngletAgent();
+            boolean bIsNotifyByEmail = config.isActiveOngletEmail();
+            boolean bIsNotifyBySms = config.isActiveOngletSMS();
+
+            JSONObject fluxJson = new JSONObject();
+            JSONObject notificationJson = new JSONObject();
+
+            notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_GUID, _notifyGruService.getUserGuid(nIdResourceHistory));
+            notificationJson.accumulate(TaskNotifyGruConstants.MARK_EMAIL, _notifyGruService.getUserEmail(nIdResourceHistory));
+            notificationJson.accumulate(TaskNotifyGruConstants.MARK_CRM_STATUS_ID, config.getCrmStatusIdCommune());
+            notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_TYPE, "UNDEFINED SOURCE");
+
+            int nIdDemand = _notifyGruService.getOptionalDemandId(nIdResourceHistory);
+            if (nIdDemand != TaskNotifyGruConstants.OPTIONAL_INT_VALUE) {
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_ID_DEMAND, _notifyGruService.getOptionalDemandId(nIdResourceHistory));
+            }
+
+            int nIdDemandType = _notifyGruService.getOptionalDemandIdType(nIdResourceHistory);
+            if (nIdDemandType != TaskNotifyGruConstants.OPTIONAL_INT_VALUE) {
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_ID_DEMAND_TYPE, 1);
+            }
+
+            if (config.getDemandMaxStepGuichet() >= 0) {
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_DEMAND_MAX_STEP, config.getDemandMaxStepGuichet());
+            }
+            if (config.getDemandUserCurrentStepGuichet() >= 0) {
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_DEMAND_USER_CURRENT_STEP, config.getDemandUserCurrentStepGuichet());
+            }
+            if (config.getDemandStateGuichet() >= 0) {
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_DEMAND_STATE, config.getDemandStateGuichet());
+            }
+
+            String strMessageEmail = "";
+            if (bIsNotifyByEmail) {
+                //user_email
+                JSONObject userEmailJson = new JSONObject();
+                HtmlTemplate tMessageEmail = AppTemplateService.getTemplateFromStringFtl(config.getMessageEmail(), locale,
+                        _notifyGruService.getInfos(nIdResourceHistory));
+                strMessageEmail = tMessageEmail.getHtml();
+                userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME, config.getSenderNameEmail());
+                userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail());
+                userEmailJson.accumulate(TaskNotifyGruConstants.MARK_RECIPIENT, _notifyGruService.getUserEmail(nIdResourceHistory));
+                userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT, config.getSubjectEmail());
+                userEmailJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_EMAIL, strMessageEmail);
+
+                if (config.getRecipientsCcEmail() !=null && !config.getRecipientsCcEmail().equals("")) {
+                    userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CC, config.getRecipientsCcEmail());
+                }
+                if (config.getRecipientsCciEmail() !=null && !config.getRecipientsCciEmail().equals("")) {
+                    userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CCI, config.getRecipientsCciEmail());
+                }
+
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_MAIL, userEmailJson);
+            }
 
             String strMessageGuichet = "";
-             if ( bIsNotifyByDesk )
-            {
+            if (bIsNotifyByDesk) {
 //                //user_dashboard
-                JSONObject userDashBoardJson = new JSONObject(  );
-                HtmlTemplate tMessageUserDashboard = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(  ), locale,
-                        _notifyGruService.getInfos(nIdResourceHistory) );
-                strMessageGuichet = tMessageUserDashboard.getHtml();
-                userDashBoardJson.accumulate( TaskNotifyGruConstants.MARK_STATUS_TEXT_USERDASHBOARD,_notifyGruService.getStatus(nIdResourceHistory));
-                userDashBoardJson.accumulate( TaskNotifyGruConstants.MARK_ID_STATUS_CRM_USERDASHBOARD,"" );
-                userDashBoardJson.accumulate( TaskNotifyGruConstants.MARK_MESSAGE_USERDASHBOARD, strMessageGuichet );
-                notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_DASHBOARD, userDashBoardJson );
-            }
-             
-           
-
-           
- String strMessageEmail = "";
-            if ( bIsNotifyByEmail )
-            {
-                //user_email
-                JSONObject userEmailJson = new JSONObject(  );      
-                 HtmlTemplate tMessageEmail = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(), locale,
+                JSONObject userDashBoardJson = new JSONObject();
+                HtmlTemplate tMessageUserDashboard = AppTemplateService.getTemplateFromStringFtl(config.getMessageGuichet(), locale,
                         _notifyGruService.getInfos(nIdResourceHistory));
-                 strMessageEmail = tMessageEmail.getHtml();
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_SENDER_NAME, config.getSenderNameEmail(  ) );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail(  ) );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_RECIPIENT, _notifyGruService.getUserEmail(nIdResourceHistory) );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_SUBJECT, config.getSubjectEmail(  ) );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_MESSAGE_EMAIL, strMessageEmail );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_CC, "" );
-                userEmailJson.accumulate( TaskNotifyGruConstants.MARK_CCI, "" );
-                notificationJson.accumulate( TaskNotifyGruConstants.MARK_TAB_USER_MAIL, userEmailJson );
+                strMessageGuichet = tMessageUserDashboard.getHtml();
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_USERDASHBOARD, config.getStatustextGuichet());
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet());
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT_USERDASHBOARD, config.getSubjectGuichet());
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_USERDASHBOARD, strMessageGuichet);
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_DATA_USERDASHBOARD, "UNDEFINED SOURCE");
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_DASHBOARD, userDashBoardJson);
             }
 
-             String strMessageSMS= "";
-            if ( bIsNotifyBySms )
-            {
+            String strMessageSMS = "";
+            if (bIsNotifyBySms && !_notifyGruService.getOptionalMobilePhoneNumber(nIdResourceHistory).equals(TaskNotifyGruConstants.OPTIONAL_STRING_VALUE)) {
                 //user_sms
-                JSONObject smsJson = new JSONObject(  );
-               HtmlTemplate tMessageSMS = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(), locale,
-                        _notifyGruService.getInfos(nIdResourceHistory) );
-               strMessageSMS=tMessageSMS.getHtml();
-                smsJson.accumulate( TaskNotifyGruConstants.MARK_PHONE_NUMBER, _notifyGruService.getMobilePhoneNumber(nIdResourceHistory) );
-                smsJson.accumulate( TaskNotifyGruConstants.MARK_MESSAGE_SMS, strMessageSMS );
-                notificationJson.accumulate( TaskNotifyGruConstants.MARK_USER_SMS, smsJson );
+                JSONObject smsJson = new JSONObject();
+                HtmlTemplate tMessageSMS = AppTemplateService.getTemplateFromStringFtl(config.getMessageSMS(), locale,
+                        _notifyGruService.getInfos(nIdResourceHistory));
+                strMessageSMS = tMessageSMS.getHtml();
+                smsJson.accumulate(TaskNotifyGruConstants.MARK_PHONE_NUMBER, _notifyGruService.getOptionalMobilePhoneNumber(nIdResourceHistory));
+                smsJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_SMS, strMessageSMS);
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_SMS, smsJson);
             }
 
-           if ( bIsNotifyByViewAgent )
-            {
+            if (bIsNotifyByViewAgent) {
                 //backoffice_logging
-                JSONObject backOfficeLogginJson = new JSONObject(  );
-             
-                backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_MESSAGE_BACK_OFFICE_LOGGING,"");
-                backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING,_notifyGruService.getStatus(nIdResourceHistory));
-                backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_ID_STATUS_CRM_BACK_OFFICE_LOGGING,"");
-                
-                if ( bIsNotifyByDesk )
-                {
-                    
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFIED_ON_DASHBOARD, 1 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION, 2 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_VIEW_DASHBOARD_NOTIFICATION,
-                        TaskNotifyGruConstants.MARK_DISPLAY_MESSAGE + " "+strMessageGuichet );
+                JSONObject backOfficeLogginJson = new JSONObject();
+                backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, config.getStatustextGuichet());
+                HtmlTemplate tMessageAgent = AppTemplateService.getTemplateFromStringFtl(config.getMessageAgent(), locale,
+                        _notifyGruService.getInfos(nIdResourceHistory));
+                String strMessageAgent = tMessageAgent.getHtml();
+                backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent);
+                backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_ON_DASHBOARD, (bIsNotifyByDesk) ? 1 : 0);
+                backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_BY_EMAIL, (bIsNotifyByEmail) ? 1 : 0);
+                backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_BY_SMS, (bIsNotifyBySms) ? 1 : 0);
+
+                if (bIsNotifyByDesk) {
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION, config.getLevelNotificationGuichet());
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_DASHBOARD_NOTIFICATION,
+                            TaskNotifyGruConstants.MARK_DISPLAY_MESSAGE + " " + strMessageGuichet);
                 }
 
-                if ( bIsNotifyByEmail )
-                {
-                   
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFIED_BY_EMAIL, 1 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, 2 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_VIEW_EMAIL_NOTIFICATION,
-                        TaskNotifyGruConstants.MESSAGE_DISPLAY_EMAIL + "" +_notifyGruService.getUserEmail(nIdResourceHistory)+
-                        TaskNotifyGruConstants.MESSAGE_DISPLAY_OBJECT + " " +config.getSubjectEmail(  )+
-                        TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_EMAIL + " "+strMessageEmail );
+                if (bIsNotifyByEmail) {
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, config.getLevelNotificationEmail());
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_EMAIL_NOTIFICATION,
+                            TaskNotifyGruConstants.MESSAGE_DISPLAY_EMAIL + " " + _notifyGruService.getUserEmail(nIdResourceHistory)
+                            + TaskNotifyGruConstants.MESSAGE_DISPLAY_OBJECT + " " + config.getSubjectEmail()
+                            + TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_EMAIL + " " + strMessageEmail);
                 }
 
-                if ( bIsNotifyBySms )
-                {
-                  
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFIED_BY_SMS, 1 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, 1 );
-                    backOfficeLogginJson.accumulate( TaskNotifyGruConstants.MARK_VIEW_SMS_NOTIFICATION,
-                        TaskNotifyGruConstants.MESSAGE_DISPLAY_SMS + " " +_notifyGruService.getMobilePhoneNumber(nIdResourceHistory)+
-                        TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_SMS + " "+strMessageSMS );
+                if (bIsNotifyBySms && !_notifyGruService.getOptionalMobilePhoneNumber(nIdResourceHistory).equals(TaskNotifyGruConstants.OPTIONAL_STRING_VALUE)) {
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, config.getLevelNotificationSMS());
+                    backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_VIEW_SMS_NOTIFICATION,
+                            TaskNotifyGruConstants.MESSAGE_DISPLAY_SMS + " " + _notifyGruService.getOptionalMobilePhoneNumber(nIdResourceHistory)
+                            + TaskNotifyGruConstants.MESSAGE_DISPLAY_MESSAGE_SMS + " " + strMessageSMS);
                 }
 
-                notificationJson.accumulate( TaskNotifyGruConstants.MARK_BACK_OFFICE_LOGGING, backOfficeLogginJson );
+                notificationJson.accumulate(TaskNotifyGruConstants.MARK_BACK_OFFICE_LOGGING, backOfficeLogginJson);
             }
 
             //notification
-            fluxJson.accumulate( TaskNotifyGruConstants.MARK_NOTIFICATION, notificationJson );
+            fluxJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION, notificationJson);
 
-            String strJsontoESB = fluxJson.toString( 2 );
+            String strJsontoESB = fluxJson.toString(2);
 
-            try
-            {
-                Client client = Client.create(  );
-                
+            try {
+                Client client = Client.create();
 
-                WebResource webResource = client.resource( AppPropertiesService.getProperty( 
-                            TaskNotifyGruConstants.URL_ESB ) );
- 
+                WebResource webResource = client.resource(AppPropertiesService.getProperty(
+                        TaskNotifyGruConstants.URL_ESB));
 
-                
-   
                 ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT)
-                                                     .header(HttpHeaders.AUTHORIZATION, "Bearer "+AppPropertiesService.getProperty( 
-                                                                 TaskNotifyGruConstants.TOKEN ))
-                                                     .accept(MediaType.APPLICATION_JSON)
-                                                     .post( ClientResponse.class,
-                                                     strJsontoESB );
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + AppPropertiesService.getProperty(
+                                        TaskNotifyGruConstants.TOKEN))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .post(ClientResponse.class,
+                                strJsontoESB);
 
-                if ( response.getStatus(  ) != 201 )
-                {
-                    throw new RuntimeException( TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus(  ) );
+                if (response.getStatus() != 201) {
+                    throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus());
                 }
 
-                String output = response.getEntity( String.class );
-            }
-            catch ( Exception e )
-            {
+                String output = response.getEntity(String.class);
+            } catch (Exception e) {
                 e.getMessage();
             }
-          
+
         }
     }
 
@@ -255,24 +249,21 @@ public class TaskNotifyGru extends SimpleTask
      * {@inheritDoc}
      */
     @Override
-    public void doRemoveConfig(  )
-    {
-        _taskNotifyGruConfigService.remove( this.getId(  ) );
+    public void doRemoveConfig() {
+        _taskNotifyGruConfigService.remove(this.getId());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getTitle( Locale locale )
-    {
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
+    public String getTitle(Locale locale) {
+        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey(this.getId());
 
-        if ( config != null )
-        {
-            return new String( I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale));
+        if (config != null) {
+            return new String(I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale));
         }
 
-        return new String( I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale) );
+        return new String(I18nService.getLocalizedString(NotifyGruConstants.TITLE_NOTIFY, locale));
     }
 }

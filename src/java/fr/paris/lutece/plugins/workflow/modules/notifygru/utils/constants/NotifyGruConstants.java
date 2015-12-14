@@ -186,6 +186,7 @@ public final class NotifyGruConstants
     public static final String MARK_RECIPIENT_CCI_SMS = "recipient_cci_sms";
     public static final String MARK_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String MARK_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
+   
 
     //MARKS MAILING LIST
     public static final String MARK_ONGLET_LIST = "liste";
@@ -210,10 +211,16 @@ public final class NotifyGruConstants
     public static final String PARAMETER_SEND_NOTIFICATION_GUICHET = "send_notification_guichet";
     public static final String PARAMETER_STATUS_TEXT_GUICHET = "status_text_guichet";
     public static final String PARAMETER_SUBJECT_GUICHET = "subject_guichet";
+    public static final String PARAMETER_DEMAND_MAX_STEP_GUICHET = "demand_max_step_uichet";
+    public static final String PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET = "demand_user_current_step_guichet";
+    public static final String PARAMETER_DEMAND_STATE_GUICHET = "demand_state_guichet";
+  
     public static final String PARAMETER_MESSAGE_GUICHET = "message_guichet";
+  
     public static final String PARAMETER_SENDER_NAME_GUICHET = "sender_name_guichet";
     public static final String PARAMETER_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String PARAMETER_ACTIVE_ONGLET_GUICHET = "active_onglet_guichet";
+     public static final String PARAMETER_CRM_STATUS_ID_COMMUNE = "crm_status_id_commune";
 
     // PARAMETERS AGENT
     public static final String PARAMETER_STATUS_TEXT_AGENT = "status_text_agent";

@@ -121,6 +121,16 @@ public class ServiceConfigTaskForm
         return refenreceList;
     }
 
+    
+       public static int getNumbertoString(String srtNumner) {
+       
+           try {
+        return Integer.parseInt(srtNumner);
+    } catch (NumberFormatException e) {
+        return -1;
+    }
+       
+       }
     /**
     * display the level of notification
     * @param locale to localize resources

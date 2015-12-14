@@ -58,6 +58,12 @@ public class TaskNotifyGruConfig extends TaskConfig
       * user dashboard : guichet
       */
     private String _strMessageGuichet;
+    private String _strStatustextGuichet;
+    private String _strSenderNameGuichet;
+    private String _strSubjectGuichet;
+    private int _nDemandMaxStepGuichet;
+    private int _nDemandUserCurrentStepGuichet;
+    private int _nDemandStateGuichet;
     private String _strLevelNotificationGuichet;
     private boolean _bActiveOngletGuichet;
 
@@ -90,7 +96,20 @@ public class TaskNotifyGruConfig extends TaskConfig
      * fin user email : vue send email
      */
 
+     /**
+     * configuration commune
+     */
+      private int _nCrmStatusIdCommune;
+        /**
+     * fin configuration commune
+     */
+
     /**
+     * fin configuration commune
+     *
+     */
+      
+       /**
      * user sms : vue sms
      */
     private String _strMessageSMS;
@@ -105,6 +124,64 @@ public class TaskNotifyGruConfig extends TaskConfig
     private String _strLevelNotificationBroadcast;
     private boolean _bActiveOngletBroadcast;
     private int _nSetOnglet;
+      
+    public String getStatustextGuichet() {
+        return _strStatustextGuichet;
+    }
+
+    public void setStatustextGuichet(String _strStatustextGuichet) {
+        this._strStatustextGuichet = _strStatustextGuichet;
+    }
+
+    public String getSenderNameGuichet() {
+        return _strSenderNameGuichet;
+    }
+
+    public void setSenderNameGuichet(String _strSenderNameGuichet) {
+        this._strSenderNameGuichet = _strSenderNameGuichet;
+    }
+
+    public String getSubjectGuichet() {
+        return _strSubjectGuichet;
+    }
+
+    public void setSubjectGuichet(String _strSubjectGuichet) {
+        this._strSubjectGuichet = _strSubjectGuichet;
+    }
+
+    public int getDemandMaxStepGuichet() {
+        return _nDemandMaxStepGuichet;
+    }
+
+    public void setDemandMaxStepGuichet(int _nDemandMaxStepGuichet) {
+        this._nDemandMaxStepGuichet = _nDemandMaxStepGuichet;
+    }
+
+    public int getDemandUserCurrentStepGuichet() {
+        return _nDemandUserCurrentStepGuichet;
+    }
+
+    public void setDemandUserCurrentStepGuichet(int _nDemandUserCurrentStepGuichet) {
+        this._nDemandUserCurrentStepGuichet = _nDemandUserCurrentStepGuichet;
+    }
+
+    public int getDemandStateGuichet() {
+        return _nDemandStateGuichet;
+    }
+
+    public void setDemandStateGuichet(int _nDemandStateGuichet) {
+        this._nDemandStateGuichet = _nDemandStateGuichet;
+    }
+
+    public int getCrmStatusIdCommune() {
+        return _nCrmStatusIdCommune;
+    }
+
+    public void setCrmStatusIdCommune(int _nCrmStatusIdCommune) {
+        this._nCrmStatusIdCommune = _nCrmStatusIdCommune;
+    }
+     
+   
 /**
  * 
  * @return _nSetOnglet
