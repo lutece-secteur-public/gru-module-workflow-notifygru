@@ -6,13 +6,13 @@ DROP TABLE IF EXISTS workflow_task_notify_gru_cf;
 /* Table structure for table workflow_task_notify_gru_cf					*/
 /*==============================================================*/
 
-CREATE TABLE XXXworkflow_task_notify_gru_cf(
+CREATE TABLE workflow_task_notify_gru_cf(
   id_task INT DEFAULT NULL,
  
  id_spring_provider VARCHAR(255) DEFAULT '' NULL,
  key_provider VARCHAR(255) DEFAULT '' NULL, 
 
-  message_guichet text COLLATE utf8_unicode_ci DEFAULT '' NULL,  
+  message_guichet text COLLATE utf8_unicode_ci,  
   status_text_guichet VARCHAR(255) DEFAULT '' NULL,  
   sender_name_guichet VARCHAR(255) DEFAULT '' NULL,  
   subject_guichet VARCHAR(255) DEFAULT '' NULL,  
@@ -22,12 +22,12 @@ CREATE TABLE XXXworkflow_task_notify_gru_cf(
   level_notification_guichet VARCHAR(255) DEFAULT '' NULL,
   is_active_onglet_guichet SMALLINT NULL DEFAULT 0,
 
- message_agent text COLLATE utf8_unicode_ci DEFAULT '' NULL,  
+ message_agent text COLLATE utf8_unicode_ci,  
  level_notification_agent VARCHAR(255) DEFAULT ''  NULL,
   is_active_onglet_agent SMALLINT NOT NULL DEFAULT 0,
 
  subject_email VARCHAR(255) DEFAULT ''  NULL,
- message_email text COLLATE utf8_unicode_ci DEFAULT '' NULL,  
+ message_email text COLLATE utf8_unicode_ci,  
   sender_name_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cc_email VARCHAR(255) DEFAULT ''  NULL,
   recipients_cci_email VARCHAR(255) DEFAULT ''  NULL,
