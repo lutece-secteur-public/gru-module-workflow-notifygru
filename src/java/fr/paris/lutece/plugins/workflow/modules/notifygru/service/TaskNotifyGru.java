@@ -236,14 +236,14 @@ public class TaskNotifyGru extends SimpleTask {
 
              
                 AppLogService.info("\n\nFLUX ENVOYER : "+strJsontoESB+"\n\n");
-               
+                 AppLogService.info("\n\nREPONSE ESB  1 : "+response.+"\n\n");
               
                 if (response.getStatus() != 201) {
                     throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus());
                 }
 
                 String output = response.getEntity(String.class);
-                  AppLogService.info("\n\nREPONSE ESB : "+output+"\n\n");
+                  AppLogService.info("\n\nREPONSE ESB 2: "+output+"\n\n");
                 
                
                 
