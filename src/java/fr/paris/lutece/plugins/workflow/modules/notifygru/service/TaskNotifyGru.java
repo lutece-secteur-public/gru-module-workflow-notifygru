@@ -47,6 +47,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -233,11 +234,19 @@ public class TaskNotifyGru extends SimpleTask {
                         .post(ClientResponse.class,
                                 strJsontoESB);
 
+             
+                AppLogService.info("\n\nFLUX ENVOYER : "+strJsontoESB+"\n\n");
+               
+              
                 if (response.getStatus() != 201) {
                     throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus());
                 }
 
                 String output = response.getEntity(String.class);
+                  AppLogService.info("\n\nREPONSE ESB : "+output+"\n\n");
+                
+               
+                
             } catch (Exception e) {
                 e.getMessage();
             }
