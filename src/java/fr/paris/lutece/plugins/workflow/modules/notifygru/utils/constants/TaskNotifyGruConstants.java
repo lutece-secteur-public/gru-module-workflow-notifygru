@@ -77,7 +77,7 @@ public class TaskNotifyGruConstants
     public static final String MARK_USER_MAIL = "user_email";
 
     //MARKERS SMS
-    public static final String MARK_PHONE_NUMBER = "phone number";
+    public static final String MARK_PHONE_NUMBER = "phone_number";
     public static final String MARK_MESSAGE_SMS = "message";
     public static final String MARK_USER_SMS = "user_sms";
 
