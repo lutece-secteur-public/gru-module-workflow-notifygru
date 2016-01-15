@@ -234,20 +234,25 @@ public class TaskNotifyGru extends SimpleTask {
                         .post(ClientResponse.class,
                                 strJsontoESB);
 
-             
+                AppLogService.info("\n\n"+TaskNotifyGruConstants.CONTENT_FORMAT+"\n\n");
+                AppLogService.info("\n\n"+HttpHeaders.AUTHORIZATION+" : "+"Bearer " + AppPropertiesService.getProperty(
+                                        TaskNotifyGruConstants.TOKEN)+"\n\n");
                 AppLogService.info("\n\nFLUX ENVOYER : "+strJsontoESB+"\n\n");
                  AppLogService.info("\n\nREPONSE ESB  1 : "+response+"\n\n");
               
                 if (response.getStatus() != 201) {
+                     AppLogService.info("\n\nCode De REPONSE "+response.getStatus() +"\n\n");
                     throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus());
                 }
 
                 String output = response.getEntity(String.class);
                   AppLogService.info("\n\nREPONSE ESB 2: "+output+"\n\n");
+                  AppLogService.info("\n\nREPONSE ESB 2: "+response.getHeaders()+"\n\n");
                 
                
                 
             } catch (Exception e) {
+                  AppLogService.info("\n\nEXCEPTION POUR NE PLUS CONTINUER LA TACHE \n\n");
                 e.getMessage();
             }
 
