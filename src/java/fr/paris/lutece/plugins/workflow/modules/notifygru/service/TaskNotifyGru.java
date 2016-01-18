@@ -280,8 +280,9 @@ public class TaskNotifyGru extends SimpleTask {
     
     private String getHTMLEntities(String htmlData){
         
-        htmlData = htmlData.replaceAll("<","&lt;");
-        htmlData = htmlData.replaceAll(">","&gt;");
+        htmlData = htmlData.replaceAll("<","&#60;");
+        htmlData = htmlData.replaceAll(">","&#62;");
+        htmlData = htmlData.replaceAll("&nbsp;","&#160;");
 
         return htmlData;
     }
