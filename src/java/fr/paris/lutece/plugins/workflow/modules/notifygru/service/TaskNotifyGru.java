@@ -51,7 +51,11 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -63,6 +67,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import net.sf.json.JSONSerializer;
 
 /**
  *
@@ -220,23 +225,35 @@ public class TaskNotifyGru extends SimpleTask {
             fluxJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION, notificationJson);
 
             String strJsontoESB = fluxJson.toString(2);
+            
+            //recupération du token
+            
+//end recupération du token
 
             try {
+                
+                
+               JSONObject TokenAuth= this.getToken();
+                
+//                  String strToken = (String)jsonObject.get("access_token");
+//                 String strScope = (String)jsonObject.get("scope");
+//                 String strTokenType = (String)jsonObject.get("token_type");
+//                 String strExpiresIn = (String)jsonObject.get("expires_in");
                 Client client = Client.create();
 
                 WebResource webResource = client.resource(AppPropertiesService.getProperty(
                         TaskNotifyGruConstants.URL_ESB));
 
                 ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + AppPropertiesService.getProperty(
-                                        TaskNotifyGruConstants.TOKEN))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+ (String)TokenAuth.get("access_token"))
                         .accept(MediaType.APPLICATION_JSON)
                         .post(ClientResponse.class,
                                 strJsontoESB);
 
                 AppLogService.info("\n\n"+TaskNotifyGruConstants.CONTENT_FORMAT+"\n\n");
-                AppLogService.info("\n\n"+HttpHeaders.AUTHORIZATION+" : "+"Bearer " + AppPropertiesService.getProperty(
-                                        TaskNotifyGruConstants.TOKEN)+"\n\n");
+                AppLogService.info("\n\n"+(String)TokenAuth.get("token_type")+" "+ (String)TokenAuth.get("access_token")+"\n\n");
+//                AppLogService.info("\n\n"+HttpHeaders.AUTHORIZATION+" : "+"Bearer " + AppPropertiesService.getProperty(
+//                                        TaskNotifyGruConstants.TOKEN)+"\n\n");
                 AppLogService.info("\n\nFLUX ENVOYER : "+strJsontoESB+"\n\n");
                  AppLogService.info("\n\nREPONSE ESB  1 : "+response+"\n\n");
               
@@ -257,6 +274,32 @@ public class TaskNotifyGru extends SimpleTask {
             }
 
         }
+    }
+    
+    
+    private JSONObject getToken(){
+        
+         Client client = Client.create();
+
+                WebResource webResource = client.resource("http://dev.lutece.paris.fr/poc/api/token");
+
+                
+                javax.ws.rs.core.MultivaluedMap<String, String> params =
+                new com.sun.jersey.core.util.MultivaluedMapImpl();
+        params.add("grant_type", "client_credentials");
+
+                ClientResponse response = webResource.type("application/x-www-form-urlencoded")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer a0xCU3EyeFJHMF9na29jOXZHTGZNTzdVdXZ3YTpmSWd3SjhPRXRzZDV0empJMm9RXzJ4elljQVFh")                       
+                        .accept(MediaType.APPLICATION_JSON).post(ClientResponse.class,params);
+                       
+                
+                     String output = response.getEntity(String.class);
+                     
+               
+                  JSONObject jsonObject = (JSONObject) JSONSerializer
+					.toJSON(output);
+               
+                     return jsonObject;
     }
 
     /**
