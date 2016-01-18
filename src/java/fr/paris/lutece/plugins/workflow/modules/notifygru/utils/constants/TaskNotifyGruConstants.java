@@ -109,7 +109,7 @@ public class TaskNotifyGruConstants
     public static final String TOKEN = "workflow-notifygru.token";
 
     //CONTENT FORMAT
-    public static final String CONTENT_FORMAT = "application/json; charset=UTF-8";
+    public static final String CONTENT_FORMAT = "application/json; charset=utf-8";
 
     //HTTP ERROR MESSAGE
     public static final String ERROR_MESSAGE = "Failed : HTTP error code : ";

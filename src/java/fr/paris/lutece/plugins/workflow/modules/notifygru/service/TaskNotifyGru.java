@@ -50,16 +50,14 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import java.nio.charset.Charset;
 
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
-
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -68,6 +66,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import net.sf.json.JSONSerializer;
+
 
 /**
  *
@@ -89,6 +88,9 @@ public class TaskNotifyGru extends SimpleTask {
     private ITaskConfigService _taskNotifyGruConfigService;
     private AbstractServiceProvider _notifyGruService;
 
+    public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
+
     /**
      * {@inheritDoc}
      */
@@ -99,8 +101,6 @@ public class TaskNotifyGru extends SimpleTask {
 
         if ((config != null) && ServiceConfigTaskForm.isBeanExiste(config.getIdSpringProvider())) {
             _notifyGruService = SpringContextService.getBean(config.getIdSpringProvider());
-
-           
 
             boolean bIsNotifyByDesk = config.isActiveOngletGuichet();
             boolean bIsNotifyByViewAgent = config.isActiveOngletAgent();
@@ -141,17 +141,21 @@ public class TaskNotifyGru extends SimpleTask {
                 JSONObject userEmailJson = new JSONObject();
                 HtmlTemplate tMessageEmail = AppTemplateService.getTemplateFromStringFtl(config.getMessageEmail(), locale,
                         _notifyGruService.getInfos(nIdResourceHistory));
-                strMessageEmail = tMessageEmail.getHtml();
+                strMessageEmail = this.getHTMLEntities(tMessageEmail.getHtml());
+
+            
+
+
                 userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME, config.getSenderNameEmail());
                 userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail());
                 userEmailJson.accumulate(TaskNotifyGruConstants.MARK_RECIPIENT, _notifyGruService.getUserEmail(nIdResourceHistory));
                 userEmailJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT, config.getSubjectEmail());
                 userEmailJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_EMAIL, strMessageEmail);
 
-                if (config.getRecipientsCcEmail() !=null && !config.getRecipientsCcEmail().equals("")) {
+                if (config.getRecipientsCcEmail() != null && !config.getRecipientsCcEmail().equals("")) {
                     userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CC, config.getRecipientsCcEmail());
                 }
-                if (config.getRecipientsCciEmail() !=null && !config.getRecipientsCciEmail().equals("")) {
+                if (config.getRecipientsCciEmail() != null && !config.getRecipientsCciEmail().equals("")) {
                     userEmailJson.accumulate(TaskNotifyGruConstants.MARK_CCI, config.getRecipientsCciEmail());
                 }
 
@@ -164,7 +168,8 @@ public class TaskNotifyGru extends SimpleTask {
                 JSONObject userDashBoardJson = new JSONObject();
                 HtmlTemplate tMessageUserDashboard = AppTemplateService.getTemplateFromStringFtl(config.getMessageGuichet(), locale,
                         _notifyGruService.getInfos(nIdResourceHistory));
-                strMessageGuichet = tMessageUserDashboard.getHtml();
+                strMessageGuichet = this.getHTMLEntities(tMessageUserDashboard.getHtml());
+                
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_USERDASHBOARD, config.getStatustextGuichet());
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet());
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT_USERDASHBOARD, config.getSubjectGuichet());
@@ -191,7 +196,8 @@ public class TaskNotifyGru extends SimpleTask {
                 backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, config.getStatustextGuichet());
                 HtmlTemplate tMessageAgent = AppTemplateService.getTemplateFromStringFtl(config.getMessageAgent(), locale,
                         _notifyGruService.getInfos(nIdResourceHistory));
-                String strMessageAgent = tMessageAgent.getHtml();
+                String strMessageAgent =  this.getHTMLEntities(tMessageAgent.getHtml());
+                
                 backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent);
                 backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_ON_DASHBOARD, (bIsNotifyByDesk) ? 1 : 0);
                 backOfficeLogginJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFIED_BY_EMAIL, (bIsNotifyByEmail) ? 1 : 0);
@@ -224,17 +230,14 @@ public class TaskNotifyGru extends SimpleTask {
             //notification
             fluxJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION, notificationJson);
 
-            String strJsontoESB = fluxJson.toString(2);
-            
-            //recupération du token
-            
-//end recupération du token
+            String strJsontoESB = fluxJson.toString(2); 
 
+            //recupération du token
+//end recupération du token
             try {
-                
-                
-               JSONObject TokenAuth= this.getToken();
-                
+
+                JSONObject TokenAuth = this.getToken();
+
 //                  String strToken = (String)jsonObject.get("access_token");
 //                 String strScope = (String)jsonObject.get("scope");
 //                 String strTokenType = (String)jsonObject.get("token_type");
@@ -245,61 +248,63 @@ public class TaskNotifyGru extends SimpleTask {
                         TaskNotifyGruConstants.URL_ESB));
 
                 ClientResponse response = webResource.type(TaskNotifyGruConstants.CONTENT_FORMAT)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+ (String)TokenAuth.get("access_token"))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + (String) TokenAuth.get("access_token"))
                         .accept(MediaType.APPLICATION_JSON)
                         .post(ClientResponse.class,
                                 strJsontoESB);
 
-                AppLogService.info("\n\n"+TaskNotifyGruConstants.CONTENT_FORMAT+"\n\n");
-                AppLogService.info("\n\n"+(String)TokenAuth.get("token_type")+" "+ (String)TokenAuth.get("access_token")+"\n\n");
+                AppLogService.info("\n\n" + TaskNotifyGruConstants.CONTENT_FORMAT + "\n\n");
+                AppLogService.info("\n\n" + (String) TokenAuth.get("token_type") + " " + (String) TokenAuth.get("access_token") + "\n\n");
 //                AppLogService.info("\n\n"+HttpHeaders.AUTHORIZATION+" : "+"Bearer " + AppPropertiesService.getProperty(
 //                                        TaskNotifyGruConstants.TOKEN)+"\n\n");
-                AppLogService.info("\n\nFLUX ENVOYER : "+strJsontoESB+"\n\n");
-                 AppLogService.info("\n\nREPONSE ESB  1 : "+response+"\n\n");
-              
+                AppLogService.info("\n\nFLUX ENVOYER : " + strJsontoESB + "\n\n");
+                AppLogService.info("\n\nREPONSE ESB  1 : " + response + "\n\n");
+
                 if (response.getStatus() != 201) {
-                     AppLogService.info("\n\nCode De REPONSE "+response.getStatus() +"\n\n");
+                    AppLogService.info("\n\nCode De REPONSE " + response.getStatus() + "\n\n");
                     throw new RuntimeException(TaskNotifyGruConstants.ERROR_MESSAGE + response.getStatus());
                 }
 
                 String output = response.getEntity(String.class);
-                  AppLogService.info("\n\nREPONSE ESB 2: "+output+"\n\n");
-                  AppLogService.info("\n\nREPONSE ESB 2: "+response.getHeaders()+"\n\n");
-                
-               
-                
+                AppLogService.info("\n\nREPONSE ESB 2: " + output + "\n\n");
+                AppLogService.info("\n\nREPONSE ESB 2: " + response.getHeaders() + "\n\n");
+
             } catch (Exception e) {
-                  AppLogService.info("\n\nEXCEPTION POUR NE PLUS CONTINUER LA TACHE \n\n");
+                AppLogService.info("\n\nEXCEPTION POUR NE PLUS CONTINUER LA TACHE \n\n");
                 e.getMessage();
             }
 
         }
     }
+
     
-    
-    private JSONObject getToken(){
+    private String getHTMLEntities(String htmlData){
         
-         Client client = Client.create();
+        htmlData = htmlData.replaceAll("<","&lt;");
+        htmlData = htmlData.replaceAll(">","&gt;");
 
-                WebResource webResource = client.resource("http://dev.lutece.paris.fr/poc/api/token");
+        return htmlData;
+    }
+    private JSONObject getToken() {
 
-                
-                javax.ws.rs.core.MultivaluedMap<String, String> params =
-                new com.sun.jersey.core.util.MultivaluedMapImpl();
+        Client client = Client.create();
+
+        WebResource webResource = client.resource("http://dev.lutece.paris.fr/poc/api/token");
+
+        javax.ws.rs.core.MultivaluedMap<String, String> params
+                = new com.sun.jersey.core.util.MultivaluedMapImpl();
         params.add("grant_type", "client_credentials");
 
-                ClientResponse response = webResource.type("application/x-www-form-urlencoded")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer a0xCU3EyeFJHMF9na29jOXZHTGZNTzdVdXZ3YTpmSWd3SjhPRXRzZDV0empJMm9RXzJ4elljQVFh")                       
-                        .accept(MediaType.APPLICATION_JSON).post(ClientResponse.class,params);
-                       
-                
-                     String output = response.getEntity(String.class);
-                     
-               
-                  JSONObject jsonObject = (JSONObject) JSONSerializer
-					.toJSON(output);
-               
-                     return jsonObject;
+        ClientResponse response = webResource.type("application/x-www-form-urlencoded")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer a0xCU3EyeFJHMF9na29jOXZHTGZNTzdVdXZ3YTpmSWd3SjhPRXRzZDV0empJMm9RXzJ4elljQVFh")
+                .accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, params);
+
+        String output = response.getEntity(String.class);
+
+        JSONObject jsonObject = (JSONObject) JSONSerializer
+                .toJSON(output);
+
+        return jsonObject;
     }
 
     /**
