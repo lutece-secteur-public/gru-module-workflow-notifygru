@@ -10,6 +10,82 @@
 
 
 
+
+<!------------------------------------- -->
+<div class="row">
+ <div class="col-md-8">
+ <div class="form-group">
+            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet}* </label>
+            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
+                <#if config?exists && config.senderNameGuichet?has_content>
+                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="${config.senderNameGuichet}" maxlength="255">
+                <#else>
+                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_guichet}</span>
+            </div>
+  </div>
+</div>
+
+
+ 
+
+</div>
+<!------------------------------------- -->
+
+      
+<!------------------------------------- -->
+<div class="row">
+ <div class="col-md-8">
+ <div class="form-group">
+           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="subject_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_guichet}* </label>
+           <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                <#if config?exists && config.subjectGuichet?has_content>
+                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="${config.subjectGuichet}" maxlength="255">
+                <#else>
+                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="" maxlength="255">
+                </#if>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_guichet}</span>
+            </div>
+  </div>
+</div>
+</div>
+<!------------------------------------- -->
+
+<!------------------------------------- -->
+<div class="row">
+
+
+ <div class="col-md-8" >
+
+        <div class="form-group">
+            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
+             <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                <#if config?exists  && config.messageGuichet?has_content>
+                <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext">${config.messageGuichet}</textarea>
+                <#else>
+                <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext"></textarea>
+                </#if>
+               
+
+            </div>
+        </div>
+        
+</div>
+<div class="col-md-4" style="position:relative; top:-200px; height:302px">
+
+     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
+
+                    <#if helper_provider?exists>
+                    <span class="help-block" > ${helper_provider} </span>
+                  </#if>
+
+</div>
+
+</div>
+<!------------------------------------- -->
+
+
 <div class="row">
 <!------------------------------------- -->
   <div class="col-md-6" >
@@ -45,6 +121,8 @@
 
 
 </div>
+
+
 <!------------------------------------- -->
 <div class="row">
 
@@ -80,67 +158,12 @@
 </div>
 <!------------------------------------- -->
 
-<!------------------------------------- -->
-<div class="row">
 
 
- <div class="col-md-6">
- <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet}* </label>
-            <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                <#if config?exists && config.senderNameGuichet?has_content>
-                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="${config.senderNameGuichet}" maxlength="255">
-                <#else>
-                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_guichet}</span>
-            </div>
-  </div>
-</div>
-
- <div class="col-md-6">
- <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_guichet}* </label>
-           <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                <#if config?exists && config.subjectGuichet?has_content>
-                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="${config.subjectGuichet}" maxlength="255">
-                <#else>
-                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_guichet}</span>
-            </div>
-        </div>
-</div>
-
-</div>
-<!------------------------------------- -->
 
 <!------------------------------------- -->
 <div class="row">
-
-
- <div class="col-md-8">
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
-             <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
-                <#if config?exists  && config.messageGuichet?has_content>
-                <textarea name="message_guichet" id="message_guichet" rows="5" cols="90" class="richtext">${config.messageGuichet}</textarea>
-                <#else>
-                <textarea name="message_guichet" id="message_guichet" rows="5" cols="90" class="richtext"></textarea>
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
-
-                    <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} </span>
-                  </#if>
-
-            </div>
-        </div>
-        
-</div>
-
- <div class="col-md-4">
+ <div class="col-md-6">
 
         <#if level_notification_guichet?exists>
         <div class="form-group">
@@ -152,19 +175,7 @@
         </div>        
         </#if>
 </div>
-
 </div>
-<!------------------------------------- -->
-
-
-
-
-
-      
-
-
-
-
 
 
     </fieldset>

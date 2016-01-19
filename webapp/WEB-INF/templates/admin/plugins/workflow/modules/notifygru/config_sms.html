@@ -8,52 +8,59 @@
 		<br />
 
 
-<!------------------------------------- -->
+
+  <!------------------------------------- -->
 <div class="row">
 
 
- <div class="col-md-6">
+ <div class="col-md-6" >
 
         <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} *  </label>
-             <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+            <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="message_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} * </label>
+             <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
                 <#if config?exists  && config.messageSMS?has_content>
-                    <textarea name="message_sms" id="message_sms" rows="10" cols="50" >${config.messageSMS}</textarea>
+                <textarea name="message_sms" id="message_sms" rows="5" cols="50" >${config.messageSMS}</textarea>
                 <#else>
-					<textarea name="message_sms" id="message_sms" rows="10" cols="50" ></textarea>
+                <textarea name="message_sms" id="message_sms" rows="5" cols="50" ></textarea>
                 </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
-
-                   <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} </span>
-                  </#if>
+               
 
             </div>
         </div>
         
 </div>
+<div class="col-md-6">
 
- <div class="col-md-4">
+     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
 
-        <#if level_notification_sms?exists>
-        <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-5 col-lg-5" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms} * </label>
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
-            </div>
-        </div>        
+                    <#if helper_provider?exists>
+                    <span class="help-block" > ${helper_provider} </span>
+                  </#if>
 
-       </#if>
 </div>
 
 </div>
 <!------------------------------------- -->
+
        
 
 
 
         
+      <div class="row" style="position:relative; top:-300px">
+ <div class="col-md-6">
+
+        <#if level_notification_sms?exists>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-4 col-lg-4" for="level_notification_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <@combo name="level_notification_sms" items=level_notification_sms default_value=1 />&nbsp;
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_sms}</span>
+            </div>
+        </div>        
+        </#if>
+</div>
+</div>
             
                 
         

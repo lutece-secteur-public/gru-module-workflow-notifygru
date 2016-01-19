@@ -8,145 +8,154 @@
         <br />
 
 
-
 <!------------------------------------- -->
 <div class="row">
-
-
- <div class="col-md-6">
-  <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="sender_name_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_email} * </label>
-           <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+ <div class="col-md-8">
+ <div class="form-group">
+            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="sender_name_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_email}* </label>
+            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
                 <#if config?exists && config.senderNameEmail?has_content>
                 <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.senderNameEmail}" maxlength="255">
                 <#else>
-                <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_value_email}" maxlength="255">
+                <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_email}</span>
             </div>
-        </div>
- </div>
+  </div>
+</div>
 
-<div class="col-md-6">
 
-        <div class="form-group">
-            <label class="control-label col-md-2 col-lg-2 col-xs-12 col-sm-12" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_email} * </label>
-         <div class="col-md-10 col-lg-10 col-xs-12 col-sm-12">
-                <#if config?exists && config.subjectEmail?has_content>
-                <input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subjectEmail}" maxlength="255">
+ 
+
+</div>
+<!------------------------------------- -->
+
+        
+
+<!------------------------------------- -->
+<div class="row">
+ <div class="col-md-8">
+ <div class="form-group">
+           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="subject_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_email}* </label>
+           <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                <#if config?exists && config.subjectGuichet?has_content>
+                <input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subjectGuichet}" maxlength="255">
                 <#else>
                 <input type="text" name="subject_email" id="" class="form-control input-sm" value="" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_email}</span>
             </div>
-        </div>
-
- </div>
+  </div>
 </div>
-
+</div>
 <!------------------------------------- -->
-
+      
 
 <!------------------------------------- -->
 <div class="row">
-
-<div class="col-md-2">
+ <div class="col-md-8">
  <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3"></label>
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-
-                 <a  class="btn btn-primary btn-xs" role="button" onclick="showhide_email()">
+           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" ></label>
+           <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                <a  class="btn btn-primary btn-xs" role="button" onclick="showhide_email()">
 #i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}
 <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="iconeCCemail"></span>
 </a>
-
             </div>
+  </div>
+</div>
+</div>
+<!------------------------------------- -->
 
-        </div>
- </div>
+
  <div id="copy_mail_mail">
-
- <div class="col-md-5">
-   <div class="form-group">
-                <label class="control-label col-md-1 col-lg-1 col-xs-1 col-sm-1" for="recipients_cc_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}</label>
-                <div class="col-md-11 col-lg-11 col-xs-11 col-sm-11">
-                    <#if config?exists && config.recipientsCcEmail?has_content>
+<!------------------------------------- -->
+<div class="row">
+ <div class="col-md-8">
+ <div class="form-group">
+           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" >#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}</label>
+           <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+                 <#if config?exists && config.recipientsCcEmail?has_content>
                     <input type="text" name="recipients_cc_email" id="recipients_cc_email" class="form-control input-sm" value="${config.recipientsCcEmail}"  maxlength="255">
                     <#else>
                     <input type="text" name="recipients_cc_email" id="recipients_cc_email" class="form-control input-sm" value="" maxlength="255">
                     </#if>
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_email}</span>
-                </div>
             </div>
- </div>
+  </div>
+</div>
+</div>
 
- <div class="col-md-5">
 
-            <div class="form-group">
-                <label class="control-label col-md-1 col-lg-1 col-xs-1 col-sm-1" for="recipient_cci_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_email}</label>
-             <div class="col-md-11 col-lg-11 col-xs-11 col-sm-11">
-                    <#if config?exists && config.recipientsCciEmail?has_content>
+<div class="row">
+ <div class="col-md-8">
+ <div class="form-group">
+           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" >#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_email}</label>
+           <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+                <#if config?exists && config.recipientsCciEmail?has_content>
                     <input type="text" name="recipients_cci_email" id="recipients_cci_email" class="form-control input-sm" value="${config.recipientsCciEmail}"  maxlength="255">
                     <#else>
                     <input type="text" name="recipients_cci_email" id="recipients_cci_email" class="form-control input-sm" value="" maxlength="255">
                     </#if>
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_email}</span>
-                </div>
             </div>
- </div>
- </div>
+  </div>
 </div>
-      
+</div>
 <!------------------------------------- -->
-       
+  </div>
 
 
-<!------------------------------------- -->
+
+       <!------------------------------------- -->
 <div class="row">
 
 
- <div class="col-md-8">
+ <div class="col-md-8" >
 
         <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
-             <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
-                  <#if config?exists  && config.messageEmail?has_content>
-                <textarea name="message_email" id="message_email" rows="5" cols="90" class="richtext">${config.messageEmail}</textarea>
+            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_email} * </label>
+             <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                <#if config?exists  && config.messageEmail?has_content>
+                <textarea name="message_email" id="message_email" rows="5" cols="70" class="richtext">${config.messageEmail}</textarea>
                 <#else>
-                <textarea name="message_email" id="message_email" rows="5" cols="90" class="richtext"></textarea>
+                <textarea name="message_email" id="message_email" rows="5" cols="70" class="richtext"></textarea>
                 </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_email}</span>
-
-                 <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} </span>
-                  </#if>
+               
 
             </div>
         </div>
         
 </div>
+<div class="col-md-4" style="position:relative; top:-200px; height:302px">
 
- <div class="col-md-4">
+     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_email}</span>
 
-       <#if level_notification_email?exists>
-        <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-5 col-lg-5" for="level_notification_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_email} * </label>
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <@combo name="level_notification_email" items=level_notification_email default_value=1 />&nbsp;
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_email}</span>
-            </div>
-        </div>        
+                    <#if helper_provider?exists>
+                    <span class="help-block" > ${helper_provider} </span>
+                  </#if>
 
-        </#if>
 </div>
 
 </div>
 <!------------------------------------- -->
-       
-         
 
-        
-      
+
+
+      <div class="row">
+ <div class="col-md-8">
+
+        <#if level_notification_email?exists>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="level_notification_email">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_email} * </label>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <@combo name="level_notification_email" items=level_notification_email default_value=1 />&nbsp;
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_notification_level_email}</span>
+            </div>
+        </div>        
+        </#if>
+</div>
+</div>
 
 
     </fieldset>
