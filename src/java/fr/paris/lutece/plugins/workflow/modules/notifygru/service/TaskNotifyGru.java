@@ -57,6 +57,8 @@ import net.sf.json.JSONObject;
 
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import javax.inject.Inject;
@@ -66,6 +68,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import net.sf.json.JSONSerializer;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 
 /**
@@ -90,6 +93,7 @@ public class TaskNotifyGru extends SimpleTask {
 
     public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
     public static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
 
     /**
      * {@inheritDoc}
@@ -113,7 +117,7 @@ public class TaskNotifyGru extends SimpleTask {
             notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_GUID, _notifyGruService.getUserGuid(nIdResourceHistory));
             notificationJson.accumulate(TaskNotifyGruConstants.MARK_EMAIL, _notifyGruService.getUserEmail(nIdResourceHistory));
             notificationJson.accumulate(TaskNotifyGruConstants.MARK_CRM_STATUS_ID, config.getCrmStatusIdCommune());
-            notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_TYPE, "UNDEFINED SOURCE");
+            notificationJson.accumulate(TaskNotifyGruConstants.MARK_NOTIFICATION_TYPE, "");
 
             int nIdDemand = _notifyGruService.getOptionalDemandId(nIdResourceHistory);
             if (nIdDemand != TaskNotifyGruConstants.OPTIONAL_INT_VALUE) {
@@ -174,7 +178,7 @@ public class TaskNotifyGru extends SimpleTask {
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet());
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_SUBJECT_USERDASHBOARD, config.getSubjectGuichet());
                 userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_MESSAGE_USERDASHBOARD, strMessageGuichet);
-                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_DATA_USERDASHBOARD, "UNDEFINED SOURCE");
+                userDashBoardJson.accumulate(TaskNotifyGruConstants.MARK_DATA_USERDASHBOARD, "");
                 notificationJson.accumulate(TaskNotifyGruConstants.MARK_USER_DASHBOARD, userDashBoardJson);
             }
 
@@ -284,8 +288,19 @@ public class TaskNotifyGru extends SimpleTask {
 //        htmlData = htmlData.replaceAll(">","&#62;");
 //        htmlData = htmlData.replaceAll("&nbsp;","&#160;");
 
+        htmlData = StringEscapeUtils.unescapeHtml4(htmlData);
+        htmlData = removeTags(htmlData);
         return htmlData;
     }
+    
+    public static String removeTags(String string) {
+    if (string == null || string.length() == 0) {
+        return string;
+    }
+
+    Matcher m = REMOVE_TAGS.matcher(string);
+    return m.replaceAll("");
+}
     private JSONObject getToken() {
 
         Client client = Client.create();
