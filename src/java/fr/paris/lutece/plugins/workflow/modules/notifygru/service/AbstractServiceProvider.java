@@ -49,68 +49,76 @@ public abstract class AbstractServiceProvider implements IProvider
     private String _strKey;
     private String _strtitleI18nKey;
     private String _strbeanName;
-/**
- * 
- * @return _strKey
- */
+
+    /**
+     *
+     * @return _strKey
+     */
     public String getKey(  )
     {
         return _strKey;
     }
-/**
- * 
- * @return _strbeanName
- */
+
+    /**
+     *
+     * @return _strbeanName
+     */
     public String getBeanName(  )
     {
         return _strbeanName;
     }
-/**
- * 
- * @param strKey to set _strKey
- */
+
+    /**
+     *
+     * @param strKey to set _strKey
+     */
     public void setKey( String strKey )
     {
         _strKey = strKey;
     }
-/**
- * 
- * @param strbeanName to set _strbeanName
- */
+
+    /**
+     *
+     * @param strbeanName to set _strbeanName
+     */
     public void setBeanName( String strbeanName )
     {
         _strbeanName = strbeanName;
     }
-/**
- * 
- * @param locale to localize the title
- * @return the title
- */
+
+    /**
+     *
+     * @param locale to localize the title
+     * @return the title
+     */
     public String getTitle( Locale locale )
     {
         return I18nService.getLocalizedString( _strtitleI18nKey, locale );
     }
-/**
- * 
- * @return _strtitleI18nKey
- */
+
+    /**
+     *
+     * @return _strtitleI18nKey
+     */
     public String gettitleI18nKey(  )
     {
         return _strtitleI18nKey;
     }
-/**
- * 
- * @param strtitleI18nKey to set _strtitleI18nKey
- */
+
+    /**
+     *
+     * @param strtitleI18nKey to set _strtitleI18nKey
+     */
     public void settitleI18nKey( String strtitleI18nKey )
     {
         _strtitleI18nKey = strtitleI18nKey;
     }
-/**
- * 
- * @param strExtenderType 
- * @return true if the provider is invoked
- */
+
+    /**
+     *
+     * @param strExtenderType of povider
+     * @return Boolean if the provider is invoked
+     */
     public boolean isInvoked( String strExtenderType )
     {
         if ( StringUtils.isNotBlank( strExtenderType ) )

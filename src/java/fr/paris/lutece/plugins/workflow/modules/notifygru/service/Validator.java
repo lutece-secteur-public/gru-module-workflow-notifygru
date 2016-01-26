@@ -35,60 +35,56 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 
-
 import java.util.Locale;
 
+
 /**
- * 
- * @author 
+ *
+ * @author
  *
  */
-public class Validator
+public final class Validator
 {
     /**
+     * @exception Exception not instance
+     * */
+    private Validator(  ) throws Exception
+    {
+        throw new Exception(  );
+    }
+
+    /**
      * verify if an email address is correct
-     * @param email 
+     * @param email to validate
      * @return true if the email address is correct false otherwise
      */
     public static boolean isEmailValid( String email )
     {
-            if ( email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) )
-            {
-                return true;
-            }
-
-        
-
-        return false;
+        return email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" );
     }
 
     /**
      * verify if the length of a SMS don't exceed 160 characters
-     * @param sms 
+     * @param sms to validate
      * @return true if the length of a SMS don't exceed 160 characters otherwise false
      */
     public static boolean isSMSvalid( String sms )
     {
-        if ( sms.length(  ) <= 160 )
-        {
-            return true;
-        }
-
-        return false;
+        return sms.length(  ) <= 160;
     }
 
     /**
      * verify if all email address in a list are correct
-     * @param strRecipient 
+     * @param strRecipient to validate
      * @return true if all email address are correct otherwise false
      */
     public static boolean isRecipientCcValid( String strRecipient )
     {
         String[] emails = strRecipient.split( ";" );
 
-        for ( int i = 0; i < emails.length; i++ )
+        for ( String email : emails )
         {
-            if ( isEmailValid( emails[i] ) )
+            if ( isEmailValid( email ) )
             {
                 return true;
             }
@@ -103,25 +99,21 @@ public class Validator
 
     /**
      * verify if the telephone number is valid
-     * @param strNumTel 
+     * @param strNumTel to validate
      * @return true if the telephone number is valid false otherwise
      */
     public static boolean isTelephonNumberValid( String strNumTel )
     {
-        if ( strNumTel.matches( "(0|\\+33|0033)[1-9][0-9]{8}" ) )
-        {
-            return true;
-        }
-
-        return false;
+        return strNumTel.matches( "(0|\\+33|0033)[1-9][0-9]{8}" );
     }
-/**
- * 
- * @param strFreemarkerTemplateData 
- * @param locale 
- * @param model 
- * @return true if the strFreemarkerTemplateData is correct
- */
+
+    /**
+     *
+     * @param strFreemarkerTemplateData the message to send
+     * @param locale of request
+     * @param model with ressource
+     * @return true if the strFreemarkerTemplateData is correct
+     */
     public static boolean isFreemarkerValid( String strFreemarkerTemplateData, Locale locale, Object model )
     {
         try

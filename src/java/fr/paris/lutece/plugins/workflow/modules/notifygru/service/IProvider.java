@@ -36,18 +36,19 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import java.util.Locale;
 import java.util.Map;
 
+
 /**
  *
  * @author
  *
  */
-public interface IProvider {
-
+public interface IProvider
+{
     /**
      * @return the userGuid
      * @param nIdResource the _nIdResource to set
      */
-    String getUserGuid(int nIdResource);
+    String getUserGuid( int nIdResource );
 
     /**
      * give the email of user
@@ -55,35 +56,35 @@ public interface IProvider {
      * @return the userEmail
      * @param nIdResource the _nIdResource to set
      */
-    String getUserEmail(int nIdResource);
+    String getUserEmail( int nIdResource );
 
     /**
-     * @param nIdResource
+     * @param nIdResource of ressource
      * @return DemandId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
-    int getOptionalDemandId(int nIdResource);
+    int getOptionalDemandId( int nIdResource );
 
     /**
-     * @param nIdResource
+     * @param nIdResource of ressource
      * @return DemandIdType if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
-    int getOptionalDemandIdType(int nIdResource);
+    int getOptionalDemandIdType( int nIdResource );
 
     /**
      * @return the phone number
      * @param nIdResource the _nIdResource to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
      */
-    String getOptionalMobilePhoneNumber(int nIdResource);
+    String getOptionalMobilePhoneNumber( int nIdResource );
 
     /**
-     * @param local
+     * @param local of request
      * @return html template for maker resources attributs
      */
-    String getInfosHelp(Locale local);
+    String getInfosHelp( Locale local );
 
     /**
-     * @param nIdResource
+     * @param nIdResource of ressource
      * @return model marker from resources attributs
      */
-    Map<String, Object> getInfos(int nIdResource);
+    Map<String, Object> getInfos( int nIdResource );
 }

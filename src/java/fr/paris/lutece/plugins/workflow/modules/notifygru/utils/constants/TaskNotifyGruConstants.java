@@ -32,17 +32,15 @@
  * License 1.0
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants;
+
+
 /**
- * 
- * @author 
+ *
+ * @author
  *
  */
-public class TaskNotifyGruConstants
+public final class TaskNotifyGruConstants
 {
-    public static final String BEAN_MOOC1 = "workflow-notifygru.mooc1";
-    
-    public static final int OPTIONAL_INT_VALUE = -1000;
-    public static final String OPTIONAL_STRING_VALUE = "NOTHING";
     //MARKERS NOTIFICATION
     public static final String MARK_NOTIFICATION = "notification";
     public static final String MARK_RESOURCE = "resource";
@@ -106,11 +104,31 @@ public class TaskNotifyGruConstants
 
     //URL
     public static final String URL_ESB = "workflow-notifygru.urlEsb";
-    public static final String TOKEN = "workflow-notifygru.token";
+    public static final String URL_TOKEN = "workflow-notifygru.urlApiManager";
+    public static final String TOKEN = "workflow-notifygru.urlApiManagerToken";
+
+    //CONSTANT FOR SENDING JSON FLUX
+    public static final String TYPE_AUTHENTIFICATION = "Bearer";
+    public static final String PARAMS_ACCES_TOKEN = "access_token";
+    public static final String PARAMS_GRANT_TYPE = "grant_type";
+    public static final String PARAMS_GRANT_TYPE_VALUE = "client_credentials";
 
     //CONTENT FORMAT
     public static final String CONTENT_FORMAT = "application/json; charset=utf-8";
+    public static final String CONTENT_FORMAT_TOKEN = "application/x-www-form-urlencoded";
 
     //HTTP ERROR MESSAGE
     public static final String ERROR_MESSAGE = "Failed : HTTP error code : ";
+
+    //NUMBER
+    public static final int OPTIONAL_INT_VALUE = -1000;
+    public static final String OPTIONAL_STRING_VALUE = "";
+
+    /**
+         * @exception Exception not instance
+         * */
+    private TaskNotifyGruConstants(  ) throws Exception
+    {
+        throw new Exception(  );
+    }
 }

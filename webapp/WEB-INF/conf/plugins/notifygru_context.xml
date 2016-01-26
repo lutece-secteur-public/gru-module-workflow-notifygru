@@ -37,8 +37,8 @@
    		p:taskType-ref="workflow-notifygru.taskTypeNotifyGru"
    		p:taskConfigService-ref="workflow-notifygru.taskNotifyGruConfigService" />
    	
-   	<!-- Service -->
-   	<bean id="workflow-notifygru.notifyGruService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
+   	<!-- Service -->   	
+        	<bean id="workflow-notifygru.notifyGruService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
         

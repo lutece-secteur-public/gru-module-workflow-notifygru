@@ -50,13 +50,22 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 
+
 /**
  *
- * @author 
+ * @author
  */
-public class ServiceConfigTaskForm
+public final class ServiceConfigTaskForm
 {
-	/**
+    /**
+     * @exception Exception not instance
+     * */
+    private ServiceConfigTaskForm(  ) throws Exception
+    {
+        throw new Exception(  );
+    }
+
+    /**
     *
     * @param strIdBean     * @
     * @return true if the bean exist
@@ -84,53 +93,67 @@ public class ServiceConfigTaskForm
 
         return false;
     }
-/**
- * 
- * @param config of the task
- * @return the  list of onglet
- */
+
+    /**
+     *
+     * @param config of the task
+         * @param locale of request
+     * @return the  list of onglet
+     */
     public static ReferenceList getListOnglet( TaskNotifyGruConfig config, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList(  );
 
         if ( !config.isActiveOngletGuichet(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET, I18nService.getLocalizedString(NotifyGruConstants.VIEW_GUICHET, locale) );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET,
+                I18nService.getLocalizedString( NotifyGruConstants.VIEW_GUICHET, locale ) );
         }
 
         if ( !config.isActiveOngletAgent(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT, I18nService.getLocalizedString(NotifyGruConstants.VIEW_AGENT, locale) );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT,
+                I18nService.getLocalizedString( NotifyGruConstants.VIEW_AGENT, locale ) );
         }
 
         if ( !config.isActiveOngletEmail(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL, I18nService.getLocalizedString(NotifyGruConstants.VIEW_EMAIL, locale) );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL,
+                I18nService.getLocalizedString( NotifyGruConstants.VIEW_EMAIL, locale ) );
         }
 
         if ( !config.isActiveOngletSMS(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS, I18nService.getLocalizedString(NotifyGruConstants.VIEW_SMS, locale) );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS,
+                I18nService.getLocalizedString( NotifyGruConstants.VIEW_SMS, locale ) );
         }
 
         if ( !config.isActiveOngletBroadcast(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST, I18nService.getLocalizedString(NotifyGruConstants.VIEW_BROADCAST_LIST, locale) );
+            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST,
+                I18nService.getLocalizedString( NotifyGruConstants.VIEW_BROADCAST_LIST, locale ) );
         }
 
         return refenreceList;
     }
 
-    
-       public static int getNumbertoString(String srtNumner) {
-       
-           try {
-        return Integer.parseInt(srtNumner);
-    } catch (NumberFormatException e) {
-        return -1;
+    /**
+     * @param srtNumner to convert
+     * @return nimber or if exception
+     *
+     * */
+    public static int getNumbertoString( String srtNumner )
+    {
+        try
+        {
+            return Integer.parseInt( srtNumner );
+        }
+        catch ( NumberFormatException e )
+        {
+            return -1;
+        }
     }
-       
-       }
+
     /**
     * display the level of notification
     * @param locale to localize resources
@@ -200,21 +223,22 @@ public class ServiceConfigTaskForm
 
         return refenreceList;
     }
-/**
- * 
- * @param strApply 
- * @param strOnglet 
- * @param strOngletActive 
- * @param bdefault 
- * @param strRemove 
- * @return true if the Onglet is active
- */
+
+    /**
+     *
+     * @param strApply of form
+     * @param strOnglet of config
+     * @param strOngletActive the active onglet
+     * @param bdefault default onglet
+     * @param strRemove  if removing
+     * @return true if the Onglet is active
+     */
     public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault,
         String strRemove )
     {
-        Boolean bStateOnglet = bdefault;
+        boolean bStateOnglet = bdefault;
 
-        if ( strApply!= null  )
+        if ( strApply != null )
         {
             switch ( strApply )
             {
@@ -269,44 +293,41 @@ public class ServiceConfigTaskForm
                     {
                         bStateOnglet = false;
                     }
+
                     break;
+
+                default:
+                    bStateOnglet = false; break;
             }
         }
 
         return bStateOnglet;
     }
-/**
- * 
- * @param strOnglet 
- * @return  the number of onglet
- */
+
+    /**
+     *
+     * @param strOnglet of config
+     * @return  the number of onglet
+     */
     public static int getNumberOblet( String strOnglet )
     {
-        if ( strOnglet == null || strOnglet.equals( NotifyGruConstants.MARK_ONGLET_GUICHET ) )
+        int nNumber = 0;
+        
+        if( strOnglet == null ) 
         {
-            return 0;
+			return nNumber;
+		}
+        
+        switch ( strOnglet ) 
+        {       
+        case NotifyGruConstants.MARK_ONGLET_GUICHET :  nNumber = 0; break;
+        case NotifyGruConstants.MARK_ONGLET_AGENT :  nNumber = 1; break;
+        case NotifyGruConstants.MARK_ONGLET_EMAIL :  nNumber = 2; break;
+        case NotifyGruConstants.MARK_ONGLET_SMS :  nNumber = 3; break;
+        case NotifyGruConstants.MARK_ONGLET_LIST :  nNumber = 4; break;
+         default: nNumber = 0;
         }
 
-        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_AGENT ) )
-        {
-            return 1;
-        }
-
-        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_EMAIL ) )
-        {
-            return 2;
-        }
-
-        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_SMS ) )
-        {
-            return 3;
-        }
-
-        if ( strOnglet.equals( NotifyGruConstants.MARK_ONGLET_LIST ) )
-        {
-            return 4;
-        }
-
-        return 0;
+        return nNumber;
     }
 }

@@ -36,12 +36,10 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
-
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.TaskNotifyGruConstants;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
@@ -88,9 +86,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private INotifyGruService _notifyGRUService;
     @Inject
     private IWorkflowUserAttributesManager _userAttributesManager;
-    private AbstractServiceProvider _mokeProviderService;
-
-    // AbstractServiceProvider _mokeProviderService =  new Mook1ProviderService();
+    private AbstractServiceProvider _providerService;
 
     /**
      * {@inheritDoc}
@@ -106,17 +102,14 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( NotifyGruConstants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( NotifyGruConstants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( NotifyGruConstants.PARAMETER_SELECT_PROVIDER );
-        
-         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
-        
+
+        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
+
         String strCrmStatusId = request.getParameter( NotifyGruConstants.PARAMETER_CRM_STATUS_ID_COMMUNE );
-      
-         int nCrmStatusId = ServiceConfigTaskForm.getNumbertoString(strCrmStatusId);
-     
-       
-       config.setCrmStatusIdCommune(nCrmStatusId);
-        
-       
+
+        int nCrmStatusId = ServiceConfigTaskForm.getNumbertoString( strCrmStatusId );
+
+        config.setCrmStatusIdCommune( nCrmStatusId );
 
         Boolean bActiveOngletGuichet = ServiceConfigTaskForm.setConfigOnglet( strApply,
                 NotifyGruConstants.MARK_ONGLET_GUICHET, strOngletActive, config.isActiveOngletGuichet(  ),
@@ -134,9 +127,10 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE );
 
         config.setSetOnglet( ServiceConfigTaskForm.getNumberOblet( strOngletActive ) );
+        
+        Boolean bRedirector = false;
+        String strUrlRedirector = "";
 
-
-         
         if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider ) )
         {
             config.setIdSpringProvider( strProvider );
@@ -146,39 +140,35 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         {
             Object[] tabRequiredFields = 
                 {
-                    I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER, locale )
+                    I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER, locale ),
                 };
-
-            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER,
-                tabRequiredFields, AdminMessage.TYPE_STOP );
+            bRedirector = true;
+            strUrlRedirector =  AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_PROVIDER,
+                    tabRequiredFields, AdminMessage.TYPE_STOP );
+          
         }
         else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
         {
-            _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
-            
-           
-        
-
+            _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
         }
 
-     
-
-        if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail &&
+        if ( !bRedirector && ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail &&
                 !bActiveOngletGuichet && !bActiveOngletSMS )
         {
             Object[] tabRequiredFields = 
                 {
-                    I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale )
+                    I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_MANDATORY_ONGLET, locale ),
                 };
 
-            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_ONGLET,
-                tabRequiredFields, AdminMessage.TYPE_STOP );
+            bRedirector = true;
+            strUrlRedirector = AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_ONGLET,
+                    tabRequiredFields, AdminMessage.TYPE_STOP );
+           
         }
 
-        if ( bActiveOngletGuichet ||
-                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) )
+        if ( !bRedirector && ( bActiveOngletGuichet ||
+                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
         {
-            /*général*/
             ArrayList<String> errors = new ArrayList<String>(  );
             String strMessageGuichet = request.getParameter( NotifyGruConstants.PARAMETER_MESSAGE_GUICHET );
             String strStatusTextGuichet = request.getParameter( NotifyGruConstants.PARAMETER_STATUS_TEXT_GUICHET );
@@ -187,67 +177,31 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             String strDemandMaxStepGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
             String strDemandUserCurrentStepGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
             String strDemandStateGuichet = request.getParameter( NotifyGruConstants.PARAMETER_DEMAND_STATE_GUICHET );
-            
-             int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandMaxStepGuichet);
-             int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandUserCurrentStepGuichet);
-             int nDemandStateGuichet = ServiceConfigTaskForm.getNumbertoString(strDemandStateGuichet);
-           
-             String strLevelNotificationGuichet = request.getParameter( NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET );
-            
-          
+            int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandMaxStepGuichet );
+            int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandUserCurrentStepGuichet );
+            int nDemandStateGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandStateGuichet );
+            String strLevelNotificationGuichet = request.getParameter( NotifyGruConstants.PARAMETER_LEVEL_NOTIFICATION_GUICHET );
 
             if ( StringUtils.isBlank( strApply ) )
             {
-                if ( strDemandStateGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                if ( strDemandUserCurrentStepGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                if ( strDemandMaxStepGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                if ( strSubjectGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                if ( strSenderNameGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                if ( strMessageGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
-                
-                if ( strStatusTextGuichet.equals( WorkflowUtils.EMPTY_STRING )  )
-                {
-                    errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD,
-                            locale ) );
-                }
+                errors = this.mandotoryGuichet( request, locale, strDemandStateGuichet,
+                        strDemandUserCurrentStepGuichet, strDemandMaxStepGuichet, strSubjectGuichet,
+                        strSenderNameGuichet, strMessageGuichet, strStatusTextGuichet );
 
-                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale,  _mokeProviderService.getInfos(-1) ) )
+                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale ),
                         };
 
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                    bRedirector = true;
+                    strUrlRedirector = AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
                         tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
 
-            if ( errors.size(  ) != 0 )
+            if ( !errors.isEmpty(  ) )
             {
                 return ServiceConfigTaskForm.displayErrorMessage( errors, request );
             }
@@ -255,19 +209,18 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             config.setMessageGuichet( strMessageGuichet );
             config.setLevelNotificationGuichet( strLevelNotificationGuichet );
             config.setActiveOngletGuichet( bActiveOngletGuichet );
-            
-              config.setStatustextGuichet(strStatusTextGuichet);
-            config.setSenderNameGuichet(strSenderNameGuichet);
-            config.setSubjectGuichet(strSubjectGuichet);
-            config.setDemandMaxStepGuichet(nDemandMaxStepGuichet);
-            config.setDemandUserCurrentStepGuichet(nDemandUserCurrentStepGuichet);
-            config.setDemandStateGuichet(nDemandStateGuichet);
+            config.setStatustextGuichet( strStatusTextGuichet );
+            config.setSenderNameGuichet( strSenderNameGuichet );
+            config.setSubjectGuichet( strSubjectGuichet );
+            config.setDemandMaxStepGuichet( nDemandMaxStepGuichet );
+            config.setDemandUserCurrentStepGuichet( nDemandUserCurrentStepGuichet );
+            config.setDemandStateGuichet( nDemandStateGuichet );
 
             /*fin guichet*/
         }
 
-        if ( bActiveOngletAgent ||
-                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT ) ) )
+        if ( !bRedirector && ( bActiveOngletAgent ||
+                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
         {
             /*Agent*/
             ArrayList<String> errors = new ArrayList<String>(  );
@@ -281,19 +234,20 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_AGENT_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageAgent, locale, _mokeProviderService.getInfos(-1) ) )
+                if ( !Validator.isFreemarkerValid( strMessageAgent, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale ),
                         };
 
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                    bRedirector = true;
+                    strUrlRedirector =  AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
                         tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
 
-            if ( errors.size(  ) != 0 )
+            if ( !errors.isEmpty(  ) )
             {
                 return ServiceConfigTaskForm.displayErrorMessage( errors, request );
             }
@@ -305,8 +259,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             /*Fin Agent*/
         }
 
-        if ( bActiveOngletEmail ||
-                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) )
+        if ( !bRedirector && ( bActiveOngletEmail ||
+                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
         {
             /*email*/
             ArrayList<String> errors = new ArrayList<String>(  );
@@ -326,35 +280,35 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             locale ) );
                 }
 
-                if ( strSubjectEmail.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strSubjectEmail.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) );
                 }
 
-                if ( strMessageEmail.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strMessageEmail.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageEmail, locale, _mokeProviderService.getInfos(-1) ) )
+                if ( !Validator.isFreemarkerValid( strMessageEmail, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale ),
                         };
 
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                    bRedirector = true;
+                    strUrlRedirector =  AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
                         tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
 
-            if ( errors.size(  ) != 0 )
+            if ( !errors.isEmpty(  ) )
             {
                 return ServiceConfigTaskForm.displayErrorMessage( errors, request );
             }
 
             config.setSubjectEmail( strSubjectEmail );
-
             config.setMessageEmail( strMessageEmail );
             config.setSenderNameEmail( strSenderNameEmail );
             config.setRecipientsCcEmail( strRecipientsCcEmail );
@@ -365,8 +319,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             /*fin email*/
         }
 
-        if ( bActiveOngletSMS ||
-                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS ) ) )
+        if ( !bRedirector &&  ( bActiveOngletSMS ||
+                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
         {
             /*sms*/
             ArrayList<String> errors = new ArrayList<String>(  );
@@ -375,24 +329,25 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
             if ( StringUtils.isBlank( strApply ) )
             {
-                if ( strMessageSMS.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strMessageSMS.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_SMS_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageSMS, locale, _mokeProviderService.getInfos(-1) ) )
+                if ( !Validator.isFreemarkerValid( strMessageSMS, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale ),
                         };
 
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                    bRedirector = true;
+                    strUrlRedirector = AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
                         tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
 
-            if ( errors.size(  ) != 0 )
+            if ( !errors.isEmpty(  ) )
             {
                 return ServiceConfigTaskForm.displayErrorMessage( errors, request );
             }
@@ -404,8 +359,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             /*fin sms*/
         }
 
-        if ( bActiveOngletBROADCAST ||
-                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE ) ) )
+        if ( !bRedirector &&  ( bActiveOngletBROADCAST ||
+                ( ( strApply != null ) && strApply.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE ) ) ) )
         {
             ArrayList<String> errors = new ArrayList<String>(  );
             String strIdMailingListBroadcast = request.getParameter( NotifyGruConstants.PARAMETER_ID_MAILING_LIST );
@@ -421,43 +376,46 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
             if ( StringUtils.isBlank( strApply ) )
             {
-                if ( strIdMailingListBroadcast.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strIdMailingListBroadcast.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_LIST, locale ) );
                 }
 
-                if ( strsenderNameBroadcast.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strsenderNameBroadcast.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_LIST_SENDER_NAME_FIELD,
                             locale ) );
                 }
 
-                if ( strsubjectBroadcast.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strsubjectBroadcast.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_LIST_SUBJECT_FIELD, locale ) );
                 }
 
-                if ( strmessageBroadcast.equals( WorkflowUtils.EMPTY_STRING )  )
+                if ( strmessageBroadcast.equals( WorkflowUtils.EMPTY_STRING ) )
                 {
                     errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strmessageBroadcast, locale, _mokeProviderService.getInfos(-1) ) )
+                if ( !Validator.isFreemarkerValid( strmessageBroadcast, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
-                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale )
+                            I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_ERROR_FREEMARKER, locale ),
                         };
 
-                    return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
+                    bRedirector = true;
+                    strUrlRedirector =  AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_ERROR_FREEMARKER,
                         tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
 
-            if ( errors.size(  ) != 0 )
+            if ( !errors.isEmpty(  ) )
             {
                 return ServiceConfigTaskForm.displayErrorMessage( errors, request );
             }
+            
+           
 
             /* fin liste diffusion*/
             config.setIdMailingListBroadcast( nIdMailingListBroadcast );
@@ -468,6 +426,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             config.setRecipientsCciBroadcast( strrecipientsCciBroadcast );
             config.setLevelNotificationBroadcast( strLevelNotificationBroadcast );
             config.setActiveOngletBroadcast( bActiveOngletBROADCAST );
+        }
+        
+        if(bRedirector) 
+        {
+        	return strUrlRedirector;
         }
 
         if ( bActiveOngletAgent || bActiveOngletBROADCAST || bActiveOngletEmail || bActiveOngletGuichet ||
@@ -501,7 +464,67 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     }
 
     /**
+     * @param request of client
+     * @param locale of client
+     * @param strDemandStateGuichet the demand state
+     * @param strDemandUserCurrentStepGuichet the current user demand
+     * @param strDemandMaxStepGuichet the max demand step
+     * @param strSubjectGuichet the subject
+     * @param strSenderNameGuichet the sender  name
+     * @param strMessageGuichet the message
+     * @param strStatusTextGuichet the status text
+     * @return ArrayList<String> of errror
+     */
+    private ArrayList<String> mandotoryGuichet( HttpServletRequest request, Locale locale,
+        String strDemandStateGuichet, String strDemandUserCurrentStepGuichet, String strDemandMaxStepGuichet,
+        String strSubjectGuichet, String strSenderNameGuichet, String strMessageGuichet, String strStatusTextGuichet )
+    {
+        ArrayList<String> errors = new ArrayList<String>(  );
+
+        if ( strDemandStateGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strDemandUserCurrentStepGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strDemandMaxStepGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strSubjectGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strSenderNameGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strMessageGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        if ( strStatusTextGuichet.equals( WorkflowUtils.EMPTY_STRING ) )
+        {
+            errors.add( I18nService.getLocalizedString( NotifyGruConstants.MESSAGE_GUICHET_MESSAGE_FIELD, locale ) );
+        }
+
+        return errors;
+    }
+
+    /**
      * {@inheritDoc}
+     * @param request
+     * @param locale
+     * @param task
+     * @return
      */
     @Override
     public String getDisplayConfigForm( HttpServletRequest request, Locale locale, ITask task )
@@ -520,7 +543,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             model.put( NotifyGruConstants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getListProvider(  ) );
         }
 
-        ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config,locale );
+        ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config, locale );
 
         if ( listeOnglet.size(  ) > 0 )
         {
@@ -542,10 +565,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         if ( ( config.getIdSpringProvider(  ) != null ) &&
                 ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
         {
-            _mokeProviderService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
 
-            String strTemplateProvider = ( _mokeProviderService == null ) ? ""
-                                                                          : _mokeProviderService.getInfosHelp( locale );
+            String strTemplateProvider = ( _providerService == null ) ? "" : _providerService.getInfosHelp( locale );
 
             model.put( NotifyGruConstants.MARK_HELPER_PROVIDER, strTemplateProvider );
         }
@@ -557,6 +579,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
     /**
      * {@inheritDoc}
+     * @param nIdHistory
+     * @param request
+     * @param locale
+     * @param task
+     * @return
      */
     @Override
     public String getDisplayTaskInformation( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
@@ -567,6 +594,11 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
     /**
      * {@inheritDoc}
+     * @param nIdHistory
+     * @param request
+     * @param locale
+     * @param task
+     * @return
      */
     @Override
     public String getTaskInformationXml( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )

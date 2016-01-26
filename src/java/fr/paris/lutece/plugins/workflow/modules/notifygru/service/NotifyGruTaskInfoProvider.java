@@ -33,14 +33,16 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-
 import fr.paris.lutece.plugins.workflow.service.taskinfo.AbstractTaskInfoProvider;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
+
 import org.apache.commons.lang.StringUtils;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -65,6 +67,7 @@ public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 
     /**
      * {@inheritDoc}
+     * @return string plugin name
      */
     @Override
     public String getPluginName(  )
@@ -74,34 +77,14 @@ public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 
     /**
      * {@inheritDoc}
+     * @param nIdHistory id histoty
+     * @param nIdTask id task
+     * @param request request
+     * @return string
      */
     @Override
     public String getTaskResourceInfo( int nIdHistory, int nIdTask, HttpServletRequest request )
     {
-        String strTaskResourceInfo = StringUtils.EMPTY;
-
-        /*     Locale locale = _notifyDirectoryService.getLocale( request );
-
-             ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdHistory );
-             TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( nIdTask );
-             Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-             Record record = RecordHome.findByPrimaryKey( resourceHistory.getIdResource(  ), pluginDirectory );
-             ITask task = _taskService.findByPrimaryKey( nIdTask, locale );
-
-             if ( record != null )
-             {
-                 Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ),
-                         pluginDirectory );
-
-                 Map<String, Object> model = _notifyDirectoryService.fillModel( config, resourceHistory, record, directory,
-                         request, task.getAction(  ).getId(  ), nIdHistory );
-
-                 HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( AppTemplateService.getTemplate(
-                             TEMPLATE_TASK_NOTIFY_MAIL, locale, model ).getHtml(  ), locale, model );
-
-                 strTaskResourceInfo = t.getHtml(  );
-             }
-             */
-        return strTaskResourceInfo;
+        return NotifyGruPlugin.PLUGIN_NAME;
     }
 }
