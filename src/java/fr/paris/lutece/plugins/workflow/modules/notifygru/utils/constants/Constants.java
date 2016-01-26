@@ -39,7 +39,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants;
  * @author
  *
  */
-public final class TaskNotifyGruConstants
+public final class Constants
 {
     //MARKERS NOTIFICATION
     public static final String MARK_NOTIFICATION = "notification";
@@ -103,7 +103,7 @@ public final class TaskNotifyGruConstants
     public static final String MESSAGE_DISPLAY_MESSAGE_SMS = " _ Message : ";
 
     //URL
-    public static final String URL_ESB = "workflow-notifygru.urlEsb";
+    public static final String URL_NOTIFICATION_ENDPOINT = "workflow-notifygru.urlNotificationEndpoint";
     public static final String URL_TOKEN = "workflow-notifygru.urlApiManager";
     public static final String TOKEN = "workflow-notifygru.urlApiManagerToken";
 
@@ -127,7 +127,7 @@ public final class TaskNotifyGruConstants
     /**
          * @exception Exception not instance
          * */
-    private TaskNotifyGruConstants(  ) throws Exception
+    private Constants(  ) throws Exception
     {
         throw new Exception(  );
     }
