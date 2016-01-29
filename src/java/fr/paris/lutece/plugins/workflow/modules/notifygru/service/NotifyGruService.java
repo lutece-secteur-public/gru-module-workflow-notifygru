@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
 import fr.paris.lutece.plugins.workflow.service.taskinfo.ITaskInfoProvider;
 import fr.paris.lutece.plugins.workflow.service.taskinfo.TaskInfoManager;
@@ -124,8 +124,7 @@ public final class NotifyGruService implements INotifyGruService
             List<State> listStates = _stateService.getListStateByFilter( stateFilter );
 
             //     referenceListStates.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
-            referenceListStates.addAll( ReferenceList.convert( listStates, NotifyGruConstants.ID,
-                    NotifyGruConstants.NAME, true ) );
+            referenceListStates.addAll( ReferenceList.convert( listStates, Constants.ID, Constants.NAME, true ) );
         }
 
         return referenceListStates;

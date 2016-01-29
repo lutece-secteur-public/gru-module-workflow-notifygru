@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.NotifyGruConstants;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 
 /**
@@ -106,32 +105,32 @@ public final class ServiceConfigTaskForm
 
         if ( !config.isActiveOngletGuichet(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_GUICHET,
-                I18nService.getLocalizedString( NotifyGruConstants.VIEW_GUICHET, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_GUICHET,
+                I18nService.getLocalizedString( Constants.VIEW_GUICHET, locale ) );
         }
 
         if ( !config.isActiveOngletAgent(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_AGENT,
-                I18nService.getLocalizedString( NotifyGruConstants.VIEW_AGENT, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_AGENT,
+                I18nService.getLocalizedString( Constants.VIEW_AGENT, locale ) );
         }
 
         if ( !config.isActiveOngletEmail(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_EMAIL,
-                I18nService.getLocalizedString( NotifyGruConstants.VIEW_EMAIL, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_EMAIL,
+                I18nService.getLocalizedString( Constants.VIEW_EMAIL, locale ) );
         }
 
         if ( !config.isActiveOngletSMS(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_SMS,
-                I18nService.getLocalizedString( NotifyGruConstants.VIEW_SMS, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_SMS,
+                I18nService.getLocalizedString( Constants.VIEW_SMS, locale ) );
         }
 
         if ( !config.isActiveOngletBroadcast(  ) )
         {
-            refenreceList.addItem( NotifyGruConstants.MARK_ONGLET_LIST,
-                I18nService.getLocalizedString( NotifyGruConstants.VIEW_BROADCAST_LIST, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_LIST,
+                I18nService.getLocalizedString( Constants.VIEW_BROADCAST_LIST, locale ) );
         }
 
         return refenreceList;
@@ -162,9 +161,9 @@ public final class ServiceConfigTaskForm
     public static ReferenceList getListNotification( Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList(  );
-        refenreceList.addItem( 0, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_ALL, locale ) );
-        refenreceList.addItem( 1, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_DOMAIN, locale ) );
-        refenreceList.addItem( 2, I18nService.getLocalizedString( NotifyGruConstants.VISIBILITY_ADMIN, locale ) );
+        refenreceList.addItem( 0, I18nService.getLocalizedString( Constants.VISIBILITY_ALL, locale ) );
+        refenreceList.addItem( 1, I18nService.getLocalizedString( Constants.VISIBILITY_DOMAIN, locale ) );
+        refenreceList.addItem( 2, I18nService.getLocalizedString( Constants.VISIBILITY_ADMIN, locale ) );
 
         return refenreceList;
     }
@@ -186,17 +185,17 @@ public final class ServiceConfigTaskForm
 
         if ( tabRequiredFields.length > 2 )
         {
-            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_THREE_FIELD,
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD,
                 tabRequiredFields, AdminMessage.TYPE_WARNING );
         }
         else if ( tabRequiredFields.length == 2 )
         {
-            return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_TWO_FIELD,
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD,
                 tabRequiredFields, AdminMessage.TYPE_WARNING );
         }
 
-        return AdminMessageService.getMessageUrl( request, NotifyGruConstants.MESSAGE_MANDATORY_ONE_FIELD,
-            tabRequiredFields, AdminMessage.TYPE_WARNING );
+        return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields,
+            AdminMessage.TYPE_WARNING );
     }
 
     /**
@@ -242,7 +241,7 @@ public final class ServiceConfigTaskForm
         {
             switch ( strApply )
             {
-                case NotifyGruConstants.PARAMETER_BUTTON_ADD:
+                case Constants.PARAMETER_BUTTON_ADD:
 
                     if ( strOnglet.equals( strOngletActive ) )
                     {
@@ -251,45 +250,45 @@ public final class ServiceConfigTaskForm
 
                     break;
 
-                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET:
+                case Constants.PARAMETER_BUTTON_REMOVE_GUICHET:
 
-                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
+                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
                     {
                         bStateOnglet = false;
                     }
 
                     break;
 
-                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT:
+                case Constants.PARAMETER_BUTTON_REMOVE_AGENT:
 
-                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_AGENT ) )
+                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) )
                     {
                         bStateOnglet = false;
                     }
 
                     break;
 
-                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL:
+                case Constants.PARAMETER_BUTTON_REMOVE_EMAIL:
 
-                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
+                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
                     {
                         bStateOnglet = false;
                     }
 
                     break;
 
-                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS:
+                case Constants.PARAMETER_BUTTON_REMOVE_SMS:
 
-                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_SMS ) )
+                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) )
                     {
                         bStateOnglet = false;
                     }
 
                     break;
 
-                case NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE:
+                case Constants.PARAMETER_BUTTON_REMOVE_LISTE:
 
-                    if ( strRemove.equals( NotifyGruConstants.PARAMETER_BUTTON_REMOVE_LISTE ) )
+                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) )
                     {
                         bStateOnglet = false;
                     }
@@ -297,7 +296,9 @@ public final class ServiceConfigTaskForm
                     break;
 
                 default:
-                    bStateOnglet = false; break;
+                    bStateOnglet = false;
+
+                    break;
             }
         }
 
@@ -312,20 +313,41 @@ public final class ServiceConfigTaskForm
     public static int getNumberOblet( String strOnglet )
     {
         int nNumber = 0;
-        
-        if( strOnglet == null ) 
+
+        if ( strOnglet == null )
         {
-			return nNumber;
-		}
-        
-        switch ( strOnglet ) 
-        {       
-        case NotifyGruConstants.MARK_ONGLET_GUICHET :  nNumber = 0; break;
-        case NotifyGruConstants.MARK_ONGLET_AGENT :  nNumber = 1; break;
-        case NotifyGruConstants.MARK_ONGLET_EMAIL :  nNumber = 2; break;
-        case NotifyGruConstants.MARK_ONGLET_SMS :  nNumber = 3; break;
-        case NotifyGruConstants.MARK_ONGLET_LIST :  nNumber = 4; break;
-         default: nNumber = 0;
+            return nNumber;
+        }
+
+        switch ( strOnglet )
+        {
+            case Constants.MARK_ONGLET_GUICHET:
+                nNumber = 0;
+
+                break;
+
+            case Constants.MARK_ONGLET_AGENT:
+                nNumber = 1;
+
+                break;
+
+            case Constants.MARK_ONGLET_EMAIL:
+                nNumber = 2;
+
+                break;
+
+            case Constants.MARK_ONGLET_SMS:
+                nNumber = 3;
+
+                break;
+
+            case Constants.MARK_ONGLET_LIST:
+                nNumber = 4;
+
+                break;
+
+            default:
+                nNumber = 0;
         }
 
         return nNumber;
