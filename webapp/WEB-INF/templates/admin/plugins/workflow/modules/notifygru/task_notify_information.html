@@ -1,38 +1,35 @@
+    <#if information_history?exists>
 
-    <#if notify_information?exists>
-
-
-<a tabindex="0" class="btn btn-primary btn-sm" role="button"  data-html="true"  data-toggle="popover" data-trigger="focus" title="${notify_information.guichet.subjectGuichet!}"
- data-content="${notify_information.guichet.messageGuichet!}">
+<a tabindex="0" class="btn btn-primary btn-sm" role="button"  data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
+ data-content="${information_history.guichet.messageGuichet!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}
 </a>
     
     <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
- data-content="${notify_information.email.messageEmail!}">
+ data-content="${information_history.email.messageEmail!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_email}
 </a>
 
 <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
- data-content="${notify_information.agent.messageAgent!}">
+ data-content="${information_history.agent.messageAgent!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}
 </a>
     
 
 <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" 
- data-content="${notify_information.SMS.messageSMS!}">
+ data-content="${information_history.SMS.messageSMS!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}
 </a>
 
 
 
-<a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${notify_information.broadCast.subjectBroadcast!}"
- data-content="${notify_information.broadCast.messageBroadcast!}">
+<a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.broadCast.subjectBroadcast!}"
+ data-content="${information_history.broadCast.messageBroadcast!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}
 </a>
 
+</#if>
 
- 
-    </#if>
 
 
 

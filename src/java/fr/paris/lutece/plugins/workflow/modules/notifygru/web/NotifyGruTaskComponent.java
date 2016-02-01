@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
+
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
@@ -84,7 +85,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
     // MARKS
     private static final String MARK_CONFIG = "config";
-    private static final String MARK_NOTIFY_VALUE = "notify_information";
+    private static final String MARK_NOTIFY_HISTORY = "information_history";
+
 
     // SERVICES
     @Inject
@@ -597,9 +599,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         Map<String, Object> model = new HashMap<String, Object>(  );
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
         model.put( MARK_CONFIG, config );
-        model.put( MARK_NOTIFY_VALUE, notifyGruTaskHistory );
-
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_NOTIFY_INFORMATION, locale, model );
+        model.put( MARK_NOTIFY_HISTORY, notifyGruTaskHistory );
+         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_NOTIFY_INFORMATION, locale, model );
 
         return template.getHtml(  );
     }
