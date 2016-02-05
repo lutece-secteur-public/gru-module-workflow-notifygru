@@ -33,9 +33,14 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import java.util.ArrayList;
 
 import java.util.Locale;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -95,6 +100,21 @@ public final class Validator
         }
 
         return false;
+    }
+    
+     /**
+     * verify if the telephone number is valid
+     * @param strNumTel to validate
+     * @return true if the telephone number is valid false otherwise
+     */
+    public static String mandotoryParams( String strParams, String strI18nMessage,Locale locale )
+    {
+       
+        if (StringUtils.isBlank(strParams)) {
+           return I18nService.getLocalizedString(strI18nMessage, locale);
+        }
+        
+         return "";
     }
 
     /**

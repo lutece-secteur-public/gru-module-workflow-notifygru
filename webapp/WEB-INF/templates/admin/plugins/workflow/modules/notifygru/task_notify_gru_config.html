@@ -27,31 +27,6 @@
 
 
 
- <#if !list_provider?exists>
-   <div class="row">
-  <div class="col-md-2">   
- <a  class="btn btn-primary btn-xs" role="button" onclick="showhide_confcommune()">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_label}<span id="iconeCommune" class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a>
- </div> 
-       <div id="configCommune">       
-  <div class="col-md-4"  > 
- <div class="form-group">
-            <label class="control-label col-xs-12 col-sm-12 col-md-4 col-lg-4" for="crm_status_id_commune">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm}* </label>
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <#if config?exists && config.crmStatusIdCommune?has_content && config.crmStatusIdCommune!=0>
-                <input type="number" name="crm_status_id_commune" id="" class="form-control input-sm" value="${config.crmStatusIdCommune}" maxlength="255">
-                <#else>
-                <input type="number" name="crm_status_id_commune" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
-            </div>
-        </div>
- </div> 
-
-  
- </div> 
-    </div>
-
-</#if>
 
  <#if config?exists && !config.IdSpringProvider?has_content && list_provider?exists>
  
@@ -73,35 +48,16 @@
  
   </div>
     </div>
-
-  <div class="row">
- <div class="col-md-10"  > 
- <div id="list_provider">
-            <div class="form-group">
-
-                <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_label} * :</label>
-
-               <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                   <#if config?exists && config.crmStatusIdCommune?has_content && config.crmStatusIdCommune!=0>
-                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="${config.crmStatusIdCommune}" maxlength="255">
-                <#else>
-                <input type="text" name="crm_status_id_commune" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
-           
-                </div>
-  </div>
-</div> 
  
-  </div>
-    </div>
  
-<script>
+ <script>
 $(document).ready(function(){ 
 $('button[name=save]').attr("name","apply");
 }); 
 </script>
+  
  
+
   <#else>
 <#if list_onglet?exists>
 			<div class="control-group" id="entry_id_demand" style="float:right;">
@@ -188,29 +144,9 @@ $(document).ready(function(){
     }
 
 $("#"+ong+" a").tab('show');
-}) 
+}); 
 </script>
  </#if>
 <@initEditor />
 	
 
-<script>
-    function showhide_confcommune()
-    {
-
-        var div = document.getElementById("configCommune");
-
-        if (div.style.display !== "none") {
-            div.style.display = "none";
-        document.getElementById("iconeCommune").setAttribute("class", "glyphicon glyphicon-menu-up");
-        }
-        else {
-            div.style.display = "block";
-          document.getElementById("iconeCommune").setAttribute("class", "glyphicon glyphicon-menu-down");
-        }
-    }
-
-showhide_confcommune();
-
- 
-</script>

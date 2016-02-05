@@ -176,10 +176,13 @@ public final class Constants
     public static final String MESSAGE_AGENT_FIELD = "module.workflow.notifygru.message.field.agent";
 
     //MESSAGES SMS 
-    public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.mandatory.field.sms";
+    public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.field.sms";
 
     //MESSAGES GUICHET
-    public static final String MESSAGE_GUICHET_MESSAGE_FIELD = "module.workflow.notifygru.message.field.guichet";
+    public static final String MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_message_guichet_mandatory";
+    public static final String MESSAGE_MANDATORY_GUICHET_SENDER_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet_mandatory";
+    public static final String MESSAGE_MANDATORY_GUICHET_STATUS_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet_mandatory";
+    public static final String MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_subject_guichet_mandatory";
 
     //MANDATORY MESSAGE
     public static final String MESSAGE_MANDATORY_ONE_FIELD = "module.workflow.notifygru.message.mandatory.one.field";
@@ -195,7 +198,7 @@ public final class Constants
     public static final String MESSAGE_LIST_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.broadcast";
     public static final String MESSAGE_LIST_MESSAGE_FIELD = "module.workflow.notifygru.message.field.broadcast";
     public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.broadcast";
-    public static final String MESSAGE_LIST = "module.workflow.notifygru.message.list.field.broadcast";
+    public static final String MESSAGE_LIST_ID_LISTE = "module.workflow.notifygru.message.list.field.broadcast";
 
     // PROPERTIES
     public static final String PROPERTY_ACCEPTED_GRU_ENTRY_TYPE_EMAIL_SMS = "workflow-notifygru.acceptedDirectoryEntryTypesEmailSMS";
