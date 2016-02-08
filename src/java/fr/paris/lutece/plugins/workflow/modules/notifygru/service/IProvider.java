@@ -46,35 +46,35 @@ public interface IProvider
 {
     /**
      * @return the userGuid
-     * @param nIdResource the _nIdResource to set
+     * @param nIdResourceHistory the _nIdResourceHistory to set
      */
-    String getUserGuid( int nIdResource );
+    String getUserGuid( int nIdResourceHistory );
 
     /**
      * give the email of user
      *
      * @return the userEmail
-     * @param nIdResource the _nIdResource to set
+     * @param nIdResourceHistory the _nIdResourceHistory to set
      */
-    String getUserEmail( int nIdResource );
+    String getUserEmail( int nIdResourceHistory );
 
     /**
-     * @param nIdResource of ressource
+     * @param nIdResourceHistory of ressource
      * @return DemandId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
-    int getOptionalDemandId( int nIdResource );
+    int getOptionalDemandId( int nIdResourceHistory );
 
     /**
-     * @param nIdResource of ressource
+     * @param nIdResourceHistory of ressource
      * @return DemandIdType if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
-    int getOptionalDemandIdType( int nIdResource );
+    int getOptionalDemandIdType( int nIdResourceHistory );
 
     /**
      * @return the phone number
-     * @param nIdResource the _nIdResource to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
+     * @param nIdResourceHistory the _nIdResourceHistory to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
      */
-    String getOptionalMobilePhoneNumber( int nIdResource );
+    String getOptionalMobilePhoneNumber( int nIdResourceHistory );
 
     /**
      * @param local of request
@@ -83,8 +83,8 @@ public interface IProvider
     String getInfosHelp( Locale local );
 
     /**
-     * @param nIdResource of ressource
+     * @param nIdResourceHistory of ressource
      * @return model marker from resources attributs
      */
-    Map<String, Object> getInfos( int nIdResource );
+    Map<String, Object> getInfos( int nIdResourceHistory );
 }
