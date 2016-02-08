@@ -36,44 +36,44 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 /**
  * This is the business class for the object AgentHistory
- */ 
+ */
 public class AgentHistory
 {
-      // Variables declarations 
+    // Variables declarations 
     private String _strMessageAgent;
     private String _strLevelNotificationAgent;
 
     /**
         * Returns the MessageAgent
         * @return The MessageAgent
-        */ 
-    public String getMessageAgent()
+        */
+    public String getMessageAgent(  )
     {
         return _strMessageAgent;
     }
-    
-       /**
-        * Sets the MessageAgent
-        * @param strMessageAgent The MessageAgent
-        */ 
+
+    /**
+     * Sets the MessageAgent
+     * @param strMessageAgent The MessageAgent
+     */
     public void setMessageAgent( String strMessageAgent )
     {
         _strMessageAgent = strMessageAgent;
     }
-    
-       /**
-        * Returns the LevelNotificationAgent
-        * @return The LevelNotificationAgent
-        */ 
-    public String getLevelNotificationAgent()
+
+    /**
+     * Returns the LevelNotificationAgent
+     * @return The LevelNotificationAgent
+     */
+    public String getLevelNotificationAgent(  )
     {
         return _strLevelNotificationAgent;
     }
-    
-       /**
-        * Sets the LevelNotificationAgent
-        * @param strLevelNotificationAgent The LevelNotificationAgent
-        */ 
+
+    /**
+     * Sets the LevelNotificationAgent
+     * @param strLevelNotificationAgent The LevelNotificationAgent
+     */
     public void setLevelNotificationAgent( String strLevelNotificationAgent )
     {
         _strLevelNotificationAgent = strLevelNotificationAgent;

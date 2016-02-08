@@ -35,11 +35,11 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 
 /**
- *
- * BroadcastHistory
+ * This is the business class for the object BroadcastHistory
  */
 public class BroadcastHistory
 {
+    // Variables declarations 
     private int _nIdMailingListBroadcast;
     private String _strSenderNameBroadcast;
     private String _strSubjectBroadcast;
@@ -48,73 +48,129 @@ public class BroadcastHistory
     private String _strRecipientsCciBroadcast;
     private String _strLevelNotificationBroadcast;
 
+    /**
+     * Returns the IdMailingListBroadcast
+     * @return The IdMailingListBroadcast
+     */
     public int getIdMailingListBroadcast(  )
     {
         return _nIdMailingListBroadcast;
     }
 
+    /**
+     * Sets the IdMailingListBroadcast
+     * @param nIdMailingListBroadcast The IdMailingListBroadcast
+     */
     public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
     {
-        this._nIdMailingListBroadcast = nIdMailingListBroadcast;
+        _nIdMailingListBroadcast = nIdMailingListBroadcast;
     }
 
+    /**
+     * Returns the SenderNameBroadcast
+     * @return The SenderNameBroadcast
+     */
     public String getSenderNameBroadcast(  )
     {
         return _strSenderNameBroadcast;
     }
 
+    /**
+     * Sets the SenderNameBroadcast
+     * @param strSenderNameBroadcast The SenderNameBroadcast
+     */
     public void setSenderNameBroadcast( String strSenderNameBroadcast )
     {
-        this._strSenderNameBroadcast = strSenderNameBroadcast;
+        _strSenderNameBroadcast = strSenderNameBroadcast;
     }
 
+    /**
+     * Returns the SubjectBroadcast
+     * @return The SubjectBroadcast
+     */
     public String getSubjectBroadcast(  )
     {
         return _strSubjectBroadcast;
     }
 
+    /**
+     * Sets the SubjectBroadcast
+     * @param strSubjectBroadcast The SubjectBroadcast
+     */
     public void setSubjectBroadcast( String strSubjectBroadcast )
     {
-        this._strSubjectBroadcast = strSubjectBroadcast;
+        _strSubjectBroadcast = strSubjectBroadcast;
     }
 
+    /**
+     * Returns the MessageBroadcast
+     * @return The MessageBroadcast
+     */
     public String getMessageBroadcast(  )
     {
         return _strMessageBroadcast;
     }
 
+    /**
+     * Sets the MessageBroadcast
+     * @param strMessageBroadcast The MessageBroadcast
+     */
     public void setMessageBroadcast( String strMessageBroadcast )
     {
-        this._strMessageBroadcast = strMessageBroadcast;
+        _strMessageBroadcast = strMessageBroadcast;
     }
 
+    /**
+     * Returns the RecipientsCcBroadcast
+     * @return The RecipientsCcBroadcast
+     */
     public String getRecipientsCcBroadcast(  )
     {
         return _strRecipientsCcBroadcast;
     }
 
+    /**
+     * Sets the RecipientsCcBroadcast
+     * @param strRecipientsCcBroadcast The RecipientsCcBroadcast
+     */
     public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
     {
-        this._strRecipientsCcBroadcast = strRecipientsCcBroadcast;
+        _strRecipientsCcBroadcast = strRecipientsCcBroadcast;
     }
 
+    /**
+     * Returns the RecipientsCciBroadcast
+     * @return The RecipientsCciBroadcast
+     */
     public String getRecipientsCciBroadcast(  )
     {
         return _strRecipientsCciBroadcast;
     }
 
+    /**
+     * Sets the RecipientsCciBroadcast
+     * @param strRecipientsCciBroadcast The RecipientsCciBroadcast
+     */
     public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
     {
-        this._strRecipientsCciBroadcast = strRecipientsCciBroadcast;
+        _strRecipientsCciBroadcast = strRecipientsCciBroadcast;
     }
 
+    /**
+     * Returns the LevelNotificationBroadcast
+     * @return The LevelNotificationBroadcast
+     */
     public String getLevelNotificationBroadcast(  )
     {
         return _strLevelNotificationBroadcast;
     }
 
+    /**
+     * Sets the LevelNotificationBroadcast
+     * @param strLevelNotificationBroadcast The LevelNotificationBroadcast
+     */
     public void setLevelNotificationBroadcast( String strLevelNotificationBroadcast )
     {
-        this._strLevelNotificationBroadcast = strLevelNotificationBroadcast;
+        _strLevelNotificationBroadcast = strLevelNotificationBroadcast;
     }
 }

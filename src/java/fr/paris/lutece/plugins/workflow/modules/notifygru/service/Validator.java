@@ -33,33 +33,38 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
-import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
+
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
-import java.util.ArrayList;
 
-import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 
 
+import java.util.Locale;
+
+
+// TODO: Auto-generated Javadoc
 /**
+ * The Class Validator.
  *
- * @author
- *
+ * @author 
  */
 public final class Validator
 {
+    
     /**
+     * Instantiates a new validator.
+     *
      * @exception Exception not instance
-     * */
+     */
     private Validator(  ) throws Exception
     {
         throw new Exception(  );
     }
 
     /**
-     * verify if an email address is correct
+     * verify if an email address is correct.
+     *
      * @param email to validate
      * @return true if the email address is correct false otherwise
      */
@@ -69,7 +74,8 @@ public final class Validator
     }
 
     /**
-     * verify if the length of a SMS don't exceed 160 characters
+     * verify if the length of a SMS don't exceed 160 characters.
+     *
      * @param sms to validate
      * @return true if the length of a SMS don't exceed 160 characters otherwise false
      */
@@ -79,7 +85,8 @@ public final class Validator
     }
 
     /**
-     * verify if all email address in a list are correct
+     * verify if all email address in a list are correct.
+     *
      * @param strRecipient to validate
      * @return true if all email address are correct otherwise false
      */
@@ -101,24 +108,29 @@ public final class Validator
 
         return false;
     }
-    
-     /**
-     * verify if the telephone number is valid
-     * @param strNumTel to validate
-     * @return true if the telephone number is valid false otherwise
+
+  
+    /**
+     * Mandotory params.
+     *
+     * @param strParams the str params
+     * @param strI18nMessage the str i18n message
+     * @param locale the locale
+     * @return the string
      */
-    public static String mandotoryParams( String strParams, String strI18nMessage,Locale locale )
+    public static String mandotoryParams( String strParams, String strI18nMessage, Locale locale )
     {
-       
-        if (StringUtils.isBlank(strParams)) {
-           return I18nService.getLocalizedString(strI18nMessage, locale);
+        if ( StringUtils.isBlank( strParams ) )
+        {
+            return I18nService.getLocalizedString( strI18nMessage, locale );
         }
-        
-         return "";
+
+        return "";
     }
 
     /**
-     * verify if the telephone number is valid
+     * verify if the telephone number is valid.
+     *
      * @param strNumTel to validate
      * @return true if the telephone number is valid false otherwise
      */
@@ -128,6 +140,7 @@ public final class Validator
     }
 
     /**
+     * Checks if is freemarker valid.
      *
      * @param strFreemarkerTemplateData the message to send
      * @param locale of request

@@ -35,14 +35,13 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 
 /**
- *
- * NotifyGruHistory
- *
+ * This is the business class for the object NotifyGruHistory
  */
 public class NotifyGruHistory
 {
-    private int _nIdResourceHistory;
+    // Variables declarations 
     private int _nIdTask;
+    private int _nIdResourceHistory;
     private BroadcastHistory _oBroadCast;
     private EmailHistory _oEmail;
     private GuichetHistory _oGuichet;
@@ -50,42 +49,8 @@ public class NotifyGruHistory
     private AgentHistory _oAgent;
 
     /**
-     * @return
-     */
-    public AgentHistory getAgent(  )
-    {
-        return _oAgent;
-    }
-
-    /**
-        * @param oAgent
-        */
-    public void setAgent( AgentHistory oAgent )
-    {
-        this._oAgent = oAgent;
-    }
-
-    /**
-     *
-     * @return the resource history id
-     */
-    public int getIdResourceHistory(  )
-    {
-        return _nIdResourceHistory;
-    }
-
-    /**
-     * the resource history id
-     * @param id the resource history id
-     */
-    public void setIdResourceHistory( int id )
-    {
-        _nIdResourceHistory = id;
-    }
-
-    /**
-     *
-     * @return the task id
+     * Returns the IdTask
+     * @return The IdTask
      */
     public int getIdTask(  )
     {
@@ -93,16 +58,35 @@ public class NotifyGruHistory
     }
 
     /**
-     * the task id
-     * @param idTask the task id
+     * Sets the IdTask
+     * @param nIdTask The IdTask
      */
-    public void setIdTask( int idTask )
+    public void setIdTask( int nIdTask )
     {
-        _nIdTask = idTask;
+        _nIdTask = nIdTask;
     }
 
     /**
-     * @return _oBroadCast oject of BroadcastHistory
+     * Returns the IdResourceHistory
+     * @return The IdResourceHistory
+     */
+    public int getIdResourceHistory(  )
+    {
+        return _nIdResourceHistory;
+    }
+
+    /**
+     * Sets the IdResourceHistory
+     * @param nIdResourceHistory The IdResourceHistory
+     */
+    public void setIdResourceHistory( int nIdResourceHistory )
+    {
+        _nIdResourceHistory = nIdResourceHistory;
+    }
+
+    /**
+     * Returns the oBroadCast
+     * @return The oBroadCast
      */
     public BroadcastHistory getBroadCast(  )
     {
@@ -110,31 +94,35 @@ public class NotifyGruHistory
     }
 
     /**
-    * @param oBroadCast to set _oBroadCast
-    */
+     * Sets the oBroadCast
+     * @param oBroadCast The oBroadCast
+     */
     public void setBroadCast( BroadcastHistory oBroadCast )
     {
-        this._oBroadCast = oBroadCast;
+        _oBroadCast = oBroadCast;
     }
 
     /**
-    * @return _oEmail object of EmailHistory
-    */
+     * Returns the oEmail
+     * @return The oEmail
+     */
     public EmailHistory getEmail(  )
     {
         return _oEmail;
     }
 
     /**
-    * @param oEmail to set _oEmail
-    */
+     * Sets the oEmail
+     * @param oEmail The oEmail
+     */
     public void setEmail( EmailHistory oEmail )
     {
-        this._oEmail = oEmail;
+        _oEmail = oEmail;
     }
 
     /**
-     * @return  _oGuichet object of GuichetHistory
+     * Returns the oGuichet
+     * @return The oGuichet
      */
     public GuichetHistory getGuichet(  )
     {
@@ -142,26 +130,47 @@ public class NotifyGruHistory
     }
 
     /**
-         * @param oGuichet to set _oGuichet
+     * Sets the oGuichet
+     * @param oGuichet The oGuichet
      */
     public void setGuichet( GuichetHistory oGuichet )
     {
-        this._oGuichet = oGuichet;
+        _oGuichet = oGuichet;
     }
 
     /**
-    * @return _oSMS object of SMSHistory
-    */
+     * Returns the oSMS
+     * @return The oSMS
+     */
     public SMSHistory getSMS(  )
     {
         return _oSMS;
     }
 
     /**
-    * @param oSMS to set _oSMS
-    */
+     * Sets the oSMS
+     * @param oSMS The oSMS
+     */
     public void setSMS( SMSHistory oSMS )
     {
-        this._oSMS = oSMS;
+        _oSMS = oSMS;
+    }
+
+    /**
+     * Returns the oAgent
+     * @return The oAgent
+     */
+    public AgentHistory getAgent(  )
+    {
+        return _oAgent;
+    }
+
+    /**
+     * Sets the oAgent
+     * @param oAgent The oAgent
+     */
+    public void setAgent( AgentHistory oAgent )
+    {
+        _oAgent = oAgent;
     }
 }

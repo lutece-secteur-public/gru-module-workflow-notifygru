@@ -35,11 +35,11 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 
 /**
- *
- * EmailHistory
+ * This is the business class for the object EmailHistory
  */
 public class EmailHistory
 {
+    // Variables declarations 
     private String _strSubjectEmail;
     private String _strMessageEmail;
     private String _strSenderNameEmail;
@@ -47,63 +47,111 @@ public class EmailHistory
     private String _strRecipientsCciEmail;
     private String _strLevelNotificationEmail;
 
+    /**
+     * Returns the SubjectEmail
+     * @return The SubjectEmail
+     */
     public String getSubjectEmail(  )
     {
         return _strSubjectEmail;
     }
 
+    /**
+     * Sets the SubjectEmail
+     * @param strSubjectEmail The SubjectEmail
+     */
     public void setSubjectEmail( String strSubjectEmail )
     {
-        this._strSubjectEmail = strSubjectEmail;
+        _strSubjectEmail = strSubjectEmail;
     }
 
+    /**
+     * Returns the MessageEmail
+     * @return The MessageEmail
+     */
     public String getMessageEmail(  )
     {
         return _strMessageEmail;
     }
 
+    /**
+     * Sets the MessageEmail
+     * @param strMessageEmail The MessageEmail
+     */
     public void setMessageEmail( String strMessageEmail )
     {
-        this._strMessageEmail = strMessageEmail;
+        _strMessageEmail = strMessageEmail;
     }
 
+    /**
+     * Returns the SenderNameEmail
+     * @return The SenderNameEmail
+     */
     public String getSenderNameEmail(  )
     {
         return _strSenderNameEmail;
     }
 
+    /**
+     * Sets the SenderNameEmail
+     * @param strSenderNameEmail The SenderNameEmail
+     */
     public void setSenderNameEmail( String strSenderNameEmail )
     {
-        this._strSenderNameEmail = strSenderNameEmail;
+        _strSenderNameEmail = strSenderNameEmail;
     }
 
+    /**
+     * Returns the RecipientsCcEmail
+     * @return The RecipientsCcEmail
+     */
     public String getRecipientsCcEmail(  )
     {
         return _strRecipientsCcEmail;
     }
 
+    /**
+     * Sets the RecipientsCcEmail
+     * @param strRecipientsCcEmail The RecipientsCcEmail
+     */
     public void setRecipientsCcEmail( String strRecipientsCcEmail )
     {
-        this._strRecipientsCcEmail = strRecipientsCcEmail;
+        _strRecipientsCcEmail = strRecipientsCcEmail;
     }
 
+    /**
+     * Returns the RecipientsCciEmail
+     * @return The RecipientsCciEmail
+     */
     public String getRecipientsCciEmail(  )
     {
         return _strRecipientsCciEmail;
     }
 
+    /**
+     * Sets the RecipientsCciEmail
+     * @param strRecipientsCciEmail The RecipientsCciEmail
+     */
     public void setRecipientsCciEmail( String strRecipientsCciEmail )
     {
-        this._strRecipientsCciEmail = strRecipientsCciEmail;
+        _strRecipientsCciEmail = strRecipientsCciEmail;
     }
 
+    /**
+     * Returns the LevelNotificationEmail
+     * @return The LevelNotificationEmail
+     */
     public String getLevelNotificationEmail(  )
     {
         return _strLevelNotificationEmail;
     }
 
+    /**
+     * Sets the LevelNotificationEmail
+     * @param strLevelNotificationEmail The LevelNotificationEmail
+     */
     public void setLevelNotificationEmail( String strLevelNotificationEmail )
     {
-        this._strLevelNotificationEmail = strLevelNotificationEmail;
+        _strLevelNotificationEmail = strLevelNotificationEmail;
     }
 }

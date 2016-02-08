@@ -35,32 +35,47 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 
 /**
- *
-
- *  SMSHistory
+ * This is the business class for the object SMSHistory
  */
 public class SMSHistory
 {
+    // Variables declarations 
     private String _strMessageSMS;
     private String _strLevelNotificationSMS;
 
+    /**
+     * Returns the MessageSMS
+     * @return The MessageSMS
+     */
     public String getMessageSMS(  )
     {
         return _strMessageSMS;
     }
 
+    /**
+     * Sets the MessageSMS
+     * @param strMessageSMS The MessageSMS
+     */
     public void setMessageSMS( String strMessageSMS )
     {
-        this._strMessageSMS = strMessageSMS;
+        _strMessageSMS = strMessageSMS;
     }
 
+    /**
+     * Returns the LevelNotificationSMS
+     * @return The LevelNotificationSMS
+     */
     public String getLevelNotificationSMS(  )
     {
         return _strLevelNotificationSMS;
     }
 
+    /**
+     * Sets the LevelNotificationSMS
+     * @param strLevelNotificationSMS The LevelNotificationSMS
+     */
     public void setLevelNotificationSMS( String strLevelNotificationSMS )
     {
-        this._strLevelNotificationSMS = strLevelNotificationSMS;
+        _strLevelNotificationSMS = strLevelNotificationSMS;
     }
 }

@@ -40,7 +40,6 @@ import com.sun.jersey.api.client.WebResource;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
@@ -81,8 +80,8 @@ public class TaskNotifyGru extends SimpleTask
     private static final Pattern REMOVE_TAGS = Pattern.compile( "<.+?>" );
     private static final String _DEFAULT_VALUE_JSON = "";
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
-    private static final int CRM_STATUS_ID =1;
-    private static final int DISPLAY_LEVEL_NOTIFICATION =1;
+    private static final int CRM_STATUS_ID = 1;
+    private static final int DISPLAY_LEVEL_NOTIFICATION = 1;
 
     // SERVICES 
     @Inject
@@ -141,7 +140,8 @@ public class TaskNotifyGru extends SimpleTask
             //if active config for SMS : user_sms
             String strMessageSMS = "";
 
-            if ( config.isActiveOngletSMS(  ) && StringUtils.isNotBlank(_notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory )) )
+            if ( config.isActiveOngletSMS(  ) &&
+                    StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
             {
                 JSONObject smsJson = this.buildJsonMessageSMS( config, nIdResourceHistory, locale );
                 notificationJson.accumulate( Constants.MARK_USER_SMS, smsJson );
@@ -226,7 +226,7 @@ public class TaskNotifyGru extends SimpleTask
             ( ( nIdDemandType != Constants.OPTIONAL_INT_VALUE ) ? 1 : _DEFAULT_VALUE_JSON ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_MAX_STEP,
             ( ( config.getDemandMaxStepGuichet(  ) >= 0 ) ? config.getDemandMaxStepGuichet(  ) : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP,config.getDemandUserCurrentStepGuichet( ) );
+        notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP, config.getDemandUserCurrentStepGuichet(  ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_STATE,
             ( ( config.getDemandStateGuichet(  ) >= 0 ) ? config.getDemandStateGuichet(  ) : _DEFAULT_VALUE_JSON ) );
 
@@ -282,23 +282,25 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config.isActiveOngletGuichet(  ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION,DISPLAY_LEVEL_NOTIFICATION );
+            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION,
+                DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_DASHBOARD_NOTIFICATION,
                 Constants.MARK_DISPLAY_MESSAGE + " " + strMessageGuichet );
         }
 
         if ( config.isActiveOngletEmail(  ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION,DISPLAY_LEVEL_NOTIFICATION );
+            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_EMAIL_NOTIFICATION,
                 Constants.MESSAGE_DISPLAY_EMAIL + " " + _notifyGruService.getUserEmail( nIdResourceHistory ) +
                 Constants.MESSAGE_DISPLAY_OBJECT + " " + config.getSubjectEmail(  ) +
                 Constants.MESSAGE_DISPLAY_MESSAGE_EMAIL + " " + strMessageEmail );
         }
 
-        if ( config.isActiveOngletSMS(  ) && StringUtils.isNotBlank(_notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory )) )
+        if ( config.isActiveOngletSMS(  ) &&
+                StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION,DISPLAY_LEVEL_NOTIFICATION );
+            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_SMS_NOTIFICATION,
                 Constants.MESSAGE_DISPLAY_SMS + " " +
                 _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) +
@@ -400,6 +402,11 @@ public class TaskNotifyGru extends SimpleTask
         }
     }
 
+    /**
+     * Send notifications as json.
+     *
+     * @param strJson the str json
+     */
     private void sendNotificationsAsJson( String strJson )
     {
         AppLogService.debug( "Sending notification as JSON : " + strJson );

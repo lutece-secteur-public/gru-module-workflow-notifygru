@@ -35,11 +35,11 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 
 /**
- *
- * GuichetHistory
+ * This is the business class for the object GuichetHistory
  */
 public class GuichetHistory
 {
+    // Variables declarations 
     private String _strMessageGuichet;
     private String _strStatustextGuichet;
     private String _strSenderNameGuichet;
@@ -49,83 +49,147 @@ public class GuichetHistory
     private int _nDemandStateGuichet;
     private String _strLevelNotificationGuichet;
 
+    /**
+     * Returns the MessageGuichet
+     * @return The MessageGuichet
+     */
     public String getMessageGuichet(  )
     {
         return _strMessageGuichet;
     }
 
+    /**
+     * Sets the MessageGuichet
+     * @param strMessageGuichet The MessageGuichet
+     */
     public void setMessageGuichet( String strMessageGuichet )
     {
-        this._strMessageGuichet = strMessageGuichet;
+        _strMessageGuichet = strMessageGuichet;
     }
 
+    /**
+     * Returns the StatustextGuichet
+     * @return The StatustextGuichet
+     */
     public String getStatustextGuichet(  )
     {
         return _strStatustextGuichet;
     }
 
+    /**
+     * Sets the StatustextGuichet
+     * @param strStatustextGuichet The StatustextGuichet
+     */
     public void setStatustextGuichet( String strStatustextGuichet )
     {
-        this._strStatustextGuichet = strStatustextGuichet;
+        _strStatustextGuichet = strStatustextGuichet;
     }
 
+    /**
+     * Returns the SenderNameGuichet
+     * @return The SenderNameGuichet
+     */
     public String getSenderNameGuichet(  )
     {
         return _strSenderNameGuichet;
     }
 
+    /**
+     * Sets the SenderNameGuichet
+     * @param strSenderNameGuichet The SenderNameGuichet
+     */
     public void setSenderNameGuichet( String strSenderNameGuichet )
     {
-        this._strSenderNameGuichet = strSenderNameGuichet;
+        _strSenderNameGuichet = strSenderNameGuichet;
     }
 
+    /**
+     * Returns the SubjectGuichet
+     * @return The SubjectGuichet
+     */
     public String getSubjectGuichet(  )
     {
         return _strSubjectGuichet;
     }
 
+    /**
+     * Sets the SubjectGuichet
+     * @param strSubjectGuichet The SubjectGuichet
+     */
     public void setSubjectGuichet( String strSubjectGuichet )
     {
-        this._strSubjectGuichet = strSubjectGuichet;
+        _strSubjectGuichet = strSubjectGuichet;
     }
 
+    /**
+     * Returns the DemandMaxStepGuichet
+     * @return The DemandMaxStepGuichet
+     */
     public int getDemandMaxStepGuichet(  )
     {
         return _nDemandMaxStepGuichet;
     }
 
+    /**
+     * Sets the DemandMaxStepGuichet
+     * @param nDemandMaxStepGuichet The DemandMaxStepGuichet
+     */
     public void setDemandMaxStepGuichet( int nDemandMaxStepGuichet )
     {
-        this._nDemandMaxStepGuichet = nDemandMaxStepGuichet;
+        _nDemandMaxStepGuichet = nDemandMaxStepGuichet;
     }
 
+    /**
+     * Returns the DemandUserCurrentStepGuichet
+     * @return The DemandUserCurrentStepGuichet
+     */
     public int getDemandUserCurrentStepGuichet(  )
     {
         return _nDemandUserCurrentStepGuichet;
     }
 
+    /**
+     * Sets the DemandUserCurrentStepGuichet
+     * @param nDemandUserCurrentStepGuichet The DemandUserCurrentStepGuichet
+     */
     public void setDemandUserCurrentStepGuichet( int nDemandUserCurrentStepGuichet )
     {
-        this._nDemandUserCurrentStepGuichet = nDemandUserCurrentStepGuichet;
+        _nDemandUserCurrentStepGuichet = nDemandUserCurrentStepGuichet;
     }
 
+    /**
+     * Returns the DemandStateGuichet
+     * @return The DemandStateGuichet
+     */
     public int getDemandStateGuichet(  )
     {
         return _nDemandStateGuichet;
     }
 
+    /**
+     * Sets the DemandStateGuichet
+     * @param nDemandStateGuichet The DemandStateGuichet
+     */
     public void setDemandStateGuichet( int nDemandStateGuichet )
     {
-        this._nDemandStateGuichet = nDemandStateGuichet;
+        _nDemandStateGuichet = nDemandStateGuichet;
     }
 
+    /**
+     * Returns the LevelNotificationGuichet
+     * @return The LevelNotificationGuichet
+     */
     public String getLevelNotificationGuichet(  )
     {
         return _strLevelNotificationGuichet;
     }
 
+    /**
+     * Sets the LevelNotificationGuichet
+     * @param strLevelNotificationGuichet The LevelNotificationGuichet
+     */
     public void setLevelNotificationGuichet( String strLevelNotificationGuichet )
     {
-        this._strLevelNotificationGuichet = strLevelNotificationGuichet;
+        _strLevelNotificationGuichet = strLevelNotificationGuichet;
     }
 }
