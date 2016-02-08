@@ -82,7 +82,6 @@ public class TaskNotifyGru extends SimpleTask
     private static final String _DEFAULT_VALUE_JSON = "";
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
     private static final int CRM_STATUS_ID =1;
-    private static final int DEMAND_USER_CURRENT_STEP =1;
     private static final int DISPLAY_LEVEL_NOTIFICATION =1;
 
     // SERVICES 
@@ -227,7 +226,7 @@ public class TaskNotifyGru extends SimpleTask
             ( ( nIdDemandType != Constants.OPTIONAL_INT_VALUE ) ? 1 : _DEFAULT_VALUE_JSON ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_MAX_STEP,
             ( ( config.getDemandMaxStepGuichet(  ) >= 0 ) ? config.getDemandMaxStepGuichet(  ) : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP,_DEFAULT_VALUE_JSON );
+        notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP,config.getDemandUserCurrentStepGuichet( ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_STATE,
             ( ( config.getDemandStateGuichet(  ) >= 0 ) ? config.getDemandStateGuichet(  ) : _DEFAULT_VALUE_JSON ) );
 
