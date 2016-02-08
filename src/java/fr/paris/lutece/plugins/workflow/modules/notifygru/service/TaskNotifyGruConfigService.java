@@ -40,7 +40,6 @@ import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -66,7 +65,6 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     {
         super.create( config );
 
-        TaskNotifyGruConfig notifyConfig = getConfigBean( config );
     }
 
     /**
@@ -105,13 +103,5 @@ public class TaskNotifyGruConfigService extends TaskConfigService
         return (T) config;
     }
 
-    /**
-     * Find the positions entry file from a given id task
-     * @param nIdTask the id task
-     * @return a list of position
-     */
-    private List<Integer> findPositionEntryFile( int nIdTask )
-    {
-        return null;
-    }
+   
 }
