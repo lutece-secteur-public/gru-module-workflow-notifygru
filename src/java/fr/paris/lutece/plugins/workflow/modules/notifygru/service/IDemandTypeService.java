@@ -33,71 +33,17 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfigDAO;
-import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfig;
-import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.inject.Inject;
-
 
 /**
- *
- * TaskNotifyGruConfigService
- *
+ * The Interface IDemandTypeService.
  */
-public class TaskNotifyGruConfigService extends TaskConfigService
+public interface IDemandTypeService
 {
-    public static final String BEAN_SERVICE = "workflow-notifygru.taskNotifyGruConfigService";
-    @Inject
-    private TaskNotifyGruConfigDAO _taskNotifyGruConfigDAO;
-
     /**
-     * {@inheritDoc}
-     * @param config
+     * Gets the demand type.
+     *
+     * @param nidType the nid type
+     * @return the demand type
      */
-    @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
-    public void create( ITaskConfig config )
-    {
-        super.create( config );
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param config
-     */
-    @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
-    public void update( ITaskConfig config )
-    {
-        super.update( config );
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param nIdTask
-     */
-    @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
-    public void remove( int nIdTask )
-    {
-        super.remove( nIdTask );
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param <T>
-     * @param nIdTask
-     * @return
-     */
-    @Override
-    public <T> T findByPrimaryKey( int nIdTask )
-    {
-        TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
-
-        return (T) config;
-    }
+    int getDemandType( int nidType );
 }

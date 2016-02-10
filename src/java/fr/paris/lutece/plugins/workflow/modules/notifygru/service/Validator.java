@@ -33,12 +33,10 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 
 import org.apache.commons.lang.StringUtils;
-
 
 import java.util.Locale;
 
@@ -47,11 +45,10 @@ import java.util.Locale;
 /**
  * The Class Validator.
  *
- * @author 
+ * @author
  */
 public final class Validator
 {
-    
     /**
      * Instantiates a new validator.
      *
@@ -109,7 +106,6 @@ public final class Validator
         return false;
     }
 
-  
     /**
      * Mandotory params.
      *

@@ -65,6 +65,18 @@ public interface IProvider
     int getOptionalDemandId( int nIdResourceHistory );
 
     /**
+    * @param nIdResourceHistory of ressource
+    * @return strReference if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
+    */
+    String getDemandReference( int nIdResourceHistory );
+
+    /**
+     * @param nIdResourceHistory of ressource
+     * @return CustomerId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
+     */
+    String getCustomerId( int nIdResourceHistory );
+
+    /**
      * @param nIdResourceHistory of ressource
      * @return DemandIdType if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */

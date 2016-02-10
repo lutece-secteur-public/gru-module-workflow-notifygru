@@ -38,8 +38,6 @@ import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 
-
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -53,7 +51,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 {
-   
     @Inject
     private IResourceHistoryService _resourceHistoryService;
     @Inject

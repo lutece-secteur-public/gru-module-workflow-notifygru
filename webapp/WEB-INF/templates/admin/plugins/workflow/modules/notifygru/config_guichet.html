@@ -154,7 +154,7 @@
                 <#if config?exists && config.demandUserCurrentStepGuichet?has_content && config.demandUserCurrentStepGuichet!=-1>
                 <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="${config.demandUserCurrentStepGuichet}" maxlength="255">
                 <#else>
-                <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="" maxlength="255">
+                <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="1" maxlength="255">
                 </#if>
                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet_helper}</span>
             </div>

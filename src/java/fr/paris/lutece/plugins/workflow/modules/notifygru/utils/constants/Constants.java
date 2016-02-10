@@ -73,6 +73,9 @@ public final class Constants
     public static final String MARK_CC = "cc";
     public static final String MARK_CCI = "cci";
     public static final String MARK_USER_MAIL = "user_email";
+    public static final String MARK_REFERENCE_DEMAND = "demand_reference";
+    public static final String MARK_DEMAND_DATE_TIMESTAMP = "demand_date";
+    public static final String MARK_COSTUMER_ID = "customer_id";
 
     //MARKERS SMS   
     public static final String MARK_MESSAGE_SMS = "message";

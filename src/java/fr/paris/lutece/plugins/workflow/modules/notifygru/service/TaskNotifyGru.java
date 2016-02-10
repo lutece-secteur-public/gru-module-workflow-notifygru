@@ -215,6 +215,12 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_EMAIL, _notifyGruService.getUserEmail( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, CRM_STATUS_ID );
         notificationJson.accumulate( Constants.MARK_NOTIFICATION_TYPE, _DEFAULT_VALUE_JSON );
+        notificationJson.accumulate( Constants.MARK_REFERENCE_DEMAND,
+            _notifyGruService.getDemandReference( nIdResourceHistory ) );
+        notificationJson.accumulate( Constants.MARK_COSTUMER_ID, _notifyGruService.getCustomerId( nIdResourceHistory ) );
+
+        java.util.Date dateSendNotificationJson = new java.util.Date(  );
+        notificationJson.accumulate( Constants.MARK_DEMAND_DATE_TIMESTAMP, dateSendNotificationJson.getTime(  ) );
 
         int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
         notificationJson.accumulate( Constants.MARK_ID_DEMAND,
@@ -227,9 +233,9 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_DEMAND_MAX_STEP,
             ( ( config.getDemandMaxStepGuichet(  ) >= 0 ) ? config.getDemandMaxStepGuichet(  ) : _DEFAULT_VALUE_JSON ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP, config.getDemandUserCurrentStepGuichet(  ) );
-        notificationJson.accumulate( Constants.MARK_DEMAND_STATE,
-            ( ( config.getDemandStateGuichet(  ) >= 0 ) ? config.getDemandStateGuichet(  ) : _DEFAULT_VALUE_JSON ) );
 
+        //        notificationJson.accumulate( Constants.MARK_DEMAND_STATE,
+        //            ( ( config.getDemandStateGuichet(  ) >= 0 ) ? config.getDemandStateGuichet(  ) : _DEFAULT_VALUE_JSON ) );
         return notificationJson;
     }
 
@@ -282,15 +288,15 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config.isActiveOngletGuichet(  ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION,
-                DISPLAY_LEVEL_NOTIFICATION );
+            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION,
+            //                DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_DASHBOARD_NOTIFICATION,
                 Constants.MARK_DISPLAY_MESSAGE + " " + strMessageGuichet );
         }
 
         if ( config.isActiveOngletEmail(  ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
+            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_EMAIL_NOTIFICATION,
                 Constants.MESSAGE_DISPLAY_EMAIL + " " + _notifyGruService.getUserEmail( nIdResourceHistory ) +
                 Constants.MESSAGE_DISPLAY_OBJECT + " " + config.getSubjectEmail(  ) +
@@ -300,7 +306,7 @@ public class TaskNotifyGru extends SimpleTask
         if ( config.isActiveOngletSMS(  ) &&
                 StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
         {
-            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
+            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_SMS_NOTIFICATION,
                 Constants.MESSAGE_DISPLAY_SMS + " " +
                 _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) +

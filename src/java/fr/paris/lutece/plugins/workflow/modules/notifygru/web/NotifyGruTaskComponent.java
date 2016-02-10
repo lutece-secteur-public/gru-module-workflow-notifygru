@@ -138,7 +138,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         {
             config.setIdSpringProvider( strProvider );
             config.setKeyProvider( strProvider ); // à faire
-        } 
+        }
+
         /*if the provider is already register*/
         else if ( config.getIdSpringProvider(  ) == null )
         {
