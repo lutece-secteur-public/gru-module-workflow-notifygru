@@ -40,7 +40,6 @@
    	
    	<!-- Service -->   	
         	<bean id="workflow-notifygru.notifyGruService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
-        	<bean id="workflow-notifygru.DefaultDemandTypeService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.DefaultDemandTypeService" />
         	<bean id="workflow-notifygru.notifyGruHistoryService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHistoryService" />
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
