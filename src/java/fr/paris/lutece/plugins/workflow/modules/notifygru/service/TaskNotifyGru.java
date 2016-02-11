@@ -180,6 +180,7 @@ public class TaskNotifyGru extends SimpleTask
             String strJson = fluxJson.toString( 2 );
             String strToken = AppPropertiesService.getProperty( Constants.TOKEN );
 
+            AppLogService.info(" FLUX BEFORE SENDING TO ESB \n\n\n\n"+strJson+"\n\n\n\n");
             try
             {
                 if ( StringUtils.isNotBlank( strToken ) )
