@@ -230,7 +230,7 @@ public class TaskNotifyGru extends SimpleTask
 
         int nIdDemandType = _notifyGruService.getOptionalDemandIdType( nIdResourceHistory );
         notificationJson.accumulate( Constants.MARK_ID_DEMAND_TYPE,
-            ( ( nIdDemandType != Constants.OPTIONAL_INT_VALUE ) ? 1 : _DEFAULT_VALUE_JSON ) );
+            ( ( nIdDemandType != Constants.OPTIONAL_INT_VALUE ) ? nIdDemandType : _DEFAULT_VALUE_JSON ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_MAX_STEP,
             ( ( config.getDemandMaxStepGuichet(  ) >= 0 ) ? config.getDemandMaxStepGuichet(  ) : _DEFAULT_VALUE_JSON ) );
         notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP, config.getDemandUserCurrentStepGuichet(  ) );
