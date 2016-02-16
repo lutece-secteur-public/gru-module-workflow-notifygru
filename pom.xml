@@ -29,7 +29,7 @@
             <version>[5.0.0,)</version>
             <type>lutece-core</type>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-workflow</artifactId>
             <version>[4.0.0,)</version>
@@ -37,7 +37,7 @@
         </dependency>           
        
         
-          <dependency>
+        <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>library-httpaccess</artifactId>
             <version>[2.2.9-SNAPSHOT,3.0.0-SNAPSHOT)</version>
@@ -64,24 +64,18 @@
             <type>jar</type>
         </dependency>
         <dependency>
-        <groupId>net.sf.json-lib</groupId>
-        <artifactId>json-lib</artifactId>
-        <version>2.4</version>
-        <classifier>jdk15</classifier>
-    </dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
             <type>jar</type>
         </dependency>       
-       
-        
-        
     </dependencies>
-    
-    
-         
 
     <properties>
         <componentName>Module Workflow Notify GRU</componentName>
@@ -94,8 +88,8 @@
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
   
   
 </project>
