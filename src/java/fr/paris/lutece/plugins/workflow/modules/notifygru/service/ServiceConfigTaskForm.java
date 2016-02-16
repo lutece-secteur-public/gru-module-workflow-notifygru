@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+
+import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -69,26 +71,44 @@ public final class ServiceConfigTaskForm
     * @param strIdBean     * @
     * @return true if the bean exist
     */
-    public static Boolean isBeanExiste( String strIdBean )
+    public static Boolean isBeanExiste( String strIdBean, ITask task )
     {
-        if ( strIdBean == null )
+        
+         for ( AbstractServiceProvider provider : getImplementationServices(  ) )
         {
-            return false;
-        }
-
-        try
-        {
-            AbstractServiceProvider mokeProviderService = SpringContextService.getBean( strIdBean );
-
-            if ( mokeProviderService.getKey(  ).equals( strIdBean ) )
+            if(!provider.isManagerProvider() && provider.getKey() == strIdBean)
             {
-                return true;
+            return true;
             }
+            else 
+            {
+            provider.updateListProvider(task);
+            
+          return provider.isKeyProvider(strIdBean);
+           
+            }
+           
         }
-        catch ( NoSuchBeanDefinitionException e )
-        {
-            return false;
-        }
+         
+         
+//        if ( strIdBean == null )
+//        {
+//            return false;
+//        }
+//
+//        try
+//        {
+//            AbstractServiceProvider providerService = SpringContextService.getBean( strIdBean );
+//
+//            if ( providerService.getKey(  ).equals( strIdBean ) )
+//            {
+//                return true;
+//            }
+//        }
+//        catch ( NoSuchBeanDefinitionException e )
+//        {
+//            return false;
+//        }
 
         return false;
     }
@@ -211,15 +231,27 @@ public final class ServiceConfigTaskForm
      *
      * @return the list of providers
      */
-    public static ReferenceList getListProvider(  )
+    public static ReferenceList getListProvider( ITask task   )
     {
         ReferenceList refenreceList = new ReferenceList(  );
 
         for ( AbstractServiceProvider provider : getImplementationServices(  ) )
         {
-            refenreceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
+            if(!provider.isManagerProvider())
+            {
+             refenreceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
+            }
+            else 
+            {
+            provider.updateListProvider(task);
+            
+            refenreceList.addAll(provider.buildReferenteListProvider());
+           
+            }
+           
         }
-
+        
+     
         return refenreceList;
     }
 

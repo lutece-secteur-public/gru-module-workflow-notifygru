@@ -134,8 +134,10 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strUrlRedirector = "";
 
         /*if is the first time we register provider*/
-        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider ) )
+        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider, task ) )
         {
+            String[] strProviderGabarit=strProvider.split(".@.");
+            int l = strProviderGabarit.length;
             config.setIdSpringProvider( strProvider );
             config.setKeyProvider( strProvider ); // à faire
         }
@@ -151,7 +153,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
         }
-        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
+        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ), task ) )
         {
             _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
         }
@@ -513,7 +515,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         if ( config.getIdSpringProvider(  ) == null )
         {
-            model.put( Constants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getListProvider(  ) );
+            model.put( Constants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getListProvider( task ) );
         }
 
         ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config, locale );
@@ -536,7 +538,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         model.put( Constants.MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
 
         if ( ( config.getIdSpringProvider(  ) != null ) &&
-                ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
+                ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ), task ) )
         {
             _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
 

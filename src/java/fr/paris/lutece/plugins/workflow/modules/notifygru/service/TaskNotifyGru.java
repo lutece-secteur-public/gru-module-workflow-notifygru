@@ -51,6 +51,10 @@ import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
+import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
+
+
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -91,6 +95,9 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
+    
+    @Inject
+    TaskDAO _taskDOA;
 
     /**
      * {@inheritDoc}
@@ -107,9 +114,11 @@ public class TaskNotifyGru extends SimpleTask
         NotifyGruHistory notifyGruHistory = new NotifyGruHistory(  );
         notifyGruHistory.setIdTask( this.getId(  ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
+      
+        ITask task = (config!=null)?_taskDOA.load(config.getIdTask(), locale):null;
 
         /*process if Task config not null and valide provider*/
-        if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ) ) )
+        if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ),task ) )
         {
             //get provider
             _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );

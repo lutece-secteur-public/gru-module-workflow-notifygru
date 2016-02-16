@@ -33,7 +33,10 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+
+import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.util.ReferenceList;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -49,7 +52,24 @@ public abstract class AbstractServiceProvider implements IProvider
     private String _strKey;
     private String _strtitleI18nKey;
     private String _strbeanName;
+    private Boolean _bIsManagerProvider;
 
+    
+    
+     public abstract void updateListProvider(ITask task);
+     public abstract ReferenceList buildReferenteListProvider();
+     public abstract Boolean isKeyProvider(String strKey);
+    
+     public Boolean isManagerProvider(  )
+    {
+        return _bIsManagerProvider;
+    }
+     
+   public void setManagerProvider( Boolean bIsManager )
+    {
+        _bIsManagerProvider = bIsManager;
+    }
+     
     /**
      *
      * @return _strKey
