@@ -443,7 +443,7 @@ public class TaskNotifyGru extends SimpleTask
 
         ClientResponse response = webResource.type( Constants.CONTENT_FORMAT )
                                              .header( HttpHeaders.AUTHORIZATION, Constants.TYPE_AUTHENTIFICATION + " " + (String) tokenAuth.get( Constants.PARAMS_ACCES_TOKEN ) )
-                                             .header( Constants.NOTIFICATION_SENDER, AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) +" : "+ ((wf!=null)?wf.getName():"") )
+                                             .header( Constants.NOTIFICATION_SENDER, AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) +":"+ ((wf!=null)?wf.getName():"") )
                                              .accept( MediaType.APPLICATION_JSON ).post( ClientResponse.class, strJson );
 
         if ( response.getStatus(  ) != HTTP_CODE_RESPONSE_CREATED )
