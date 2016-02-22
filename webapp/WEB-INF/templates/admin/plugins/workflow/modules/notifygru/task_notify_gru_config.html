@@ -56,10 +56,12 @@
 
                 <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_status">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * :</label>
 
-               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                  
-      <input type="checkbox"  name="demand_status" />
-                 <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}</span>
+               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="margin-top:6px">
+
+              <label>
+      <input type="checkbox"  name="demand_status" /> #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}
+ </label>
+
                 </div>
   </div>
      
@@ -169,4 +171,3 @@ $("#"+ong+" a").tab('show');
  </#if>
 <@initEditor />
 	
-
