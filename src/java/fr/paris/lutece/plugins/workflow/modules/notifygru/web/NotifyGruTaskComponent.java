@@ -83,6 +83,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private static final String TEMPLATE_TASK_NOTIFY_INFORMATION = "admin/plugins/workflow/modules/notifygru/task_notify_information.html";
 
     // MARKS
+    private static final String VALUE_CHECKBOX = "on";
     private static final String MARK_CONFIG = "config";
     private static final String MARK_NOTIFY_HISTORY = "information_history";
 
@@ -113,6 +114,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( Constants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
+        int nDemandStatus= (VALUE_CHECKBOX.equals(request.getParameter( Constants.PARAMETER_DEMAND_STATUS )))?1:0;
 
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
 
@@ -134,12 +136,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strUrlRedirector = "";
 
         /*if is the first time we register provider*/
-        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider, task ) )
+        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider,task ) )
         {
-            String[] strProviderGabarit=strProvider.split(".@.");
-            int l = strProviderGabarit.length;
+           
             config.setIdSpringProvider( strProvider );
             config.setKeyProvider( strProvider ); // à faire
+            config.setDemandStateGuichet(nDemandStatus);
         }
 
         /*if the provider is already register*/
@@ -153,9 +155,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
         }
-        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ), task ) )
+        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ),task ) )
         {
-            _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            _providerService =  ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ),task );
         }
 
         /*if we are in started config of task. the provider is already register*/
@@ -215,7 +217,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageGuichet, locale, _providerService.getInfos( -1 ) ) )
+                if ( !Validator.isFreemarkerValid( strMessageGuichet +' '+strSubjectGuichet, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -318,7 +320,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strMessageEmail, locale, _providerService.getInfos( -1 ) ) )
+                if ( !Validator.isFreemarkerValid( strMessageEmail+' '+strSubjectEmail, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -431,7 +433,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                             locale ) );
                 }
 
-                if ( !Validator.isFreemarkerValid( strmessageBroadcast, locale, _providerService.getInfos( -1 ) ) )
+                if ( !Validator.isFreemarkerValid( strmessageBroadcast+' '+strsubjectBroadcast, locale, _providerService.getInfos( -1 ) ) )
                 {
                     Object[] tabRequiredFields = 
                         {
@@ -537,10 +539,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         model.put( Constants.MARK_LOCALE, request.getLocale(  ) );
         model.put( Constants.MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
 
-        if ( ( config.getIdSpringProvider(  ) != null ) &&
-                ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ), task ) )
+       
+        
+        if ( ( config.getIdSpringProvider(  ) != null ) )
         {
-            _providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            //_providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            _providerService = ServiceConfigTaskForm.getCostumizeBean(config.getIdSpringProvider(  ) , task);
 
             String strTemplateProvider = ( _providerService == null ) ? "" : _providerService.getInfosHelp( locale );
 
@@ -551,6 +555,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         return template.getHtml(  );
     }
+    
+    
 
     /**
      * {@inheritDoc}

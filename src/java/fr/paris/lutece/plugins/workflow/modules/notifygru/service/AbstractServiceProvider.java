@@ -59,6 +59,7 @@ public abstract class AbstractServiceProvider implements IProvider
      public abstract void updateListProvider(ITask task);
      public abstract ReferenceList buildReferenteListProvider();
      public abstract Boolean isKeyProvider(String strKey);
+     public abstract AbstractServiceProvider getInstanceProvider(String strKey);
     
      public Boolean isManagerProvider(  )
     {

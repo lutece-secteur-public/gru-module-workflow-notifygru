@@ -51,10 +51,11 @@ public final class Constants
     public static final String MARK_NOTIFICATION_DATE = "notification_date";
     public static final String MARK_NOTIFICATION_TYPE = "notification_type";
     public static final String MARK_ID_DEMAND = "demand_id";
-    public static final String MARK_ID_DEMAND_TYPE = "demand_id_type";
+    public static final String MARK_REMOTE_ID_DEMAND = "remote_demand_id";
+    public static final String MARK_ID_DEMAND_TYPE = "demand_type_id";
     public static final String MARK_DEMAND_MAX_STEP = "demand_max_step";
     public static final String MARK_DEMAND_USER_CURRENT_STEP = "demand_user_current_step";
-    public static final String MARK_DEMAND_STATE = "demand_state";
+    public static final String MARK_DEMAND_STATUS = "demand_status";
 
     //MARKERS USERDASHBOARD
     public static final String MARK_STATUS_TEXT_USERDASHBOARD = "status_text";
@@ -106,11 +107,13 @@ public final class Constants
 
     //URL
     public static final String URL_NOTIFICATION_ENDPOINT = "workflow-notifygru.urlNotificationEndpoint";
+    public static final String PARAMS_NOTIFICATION_SENDER = "workflow-notifygru.NotificationSender.instance";
     public static final String URL_TOKEN = "workflow-notifygru.urlApiManager";
     public static final String TOKEN = "workflow-notifygru.urlApiManagerToken";
 
     //CONSTANT FOR SENDING JSON FLUX
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
+      public static final String NOTIFICATION_SENDER = "Notification Sender";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";
     public static final String PARAMS_GRANT_TYPE_VALUE = "client_credentials";
@@ -348,6 +351,7 @@ public final class Constants
     public static final String PARAMETER_ONGLE_ADD = "add_onglet";
     public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
+      public static final String PARAMETER_DEMAND_STATUS = "demand_status";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";

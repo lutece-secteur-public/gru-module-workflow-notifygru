@@ -51,106 +51,144 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * @author
  */
-public final class ServiceConfigTaskForm
-{
+public final class ServiceConfigTaskForm {
+
     /**
      * @exception Exception not instance
-     * */
-    private ServiceConfigTaskForm(  ) throws Exception
-    {
-        throw new Exception(  );
+     *
+     */
+    private ServiceConfigTaskForm() throws Exception {
+        throw new Exception();
     }
 
     /**
-    *
-    * @param strIdBean     * @
-    * @return true if the bean exist
-    */
-    public static Boolean isBeanExiste( String strIdBean, ITask task )
-    {
-        
-         for ( AbstractServiceProvider provider : getImplementationServices(  ) )
-        {
-            if(!provider.isManagerProvider() && provider.getKey() == strIdBean)
-            {
-            return true;
-            }
-            else 
-            {
-            provider.updateListProvider(task);
-            
-          return provider.isKeyProvider(strIdBean);
-           
-            }
-           
-        }
-         
-         
-//        if ( strIdBean == null )
-//        {
-//            return false;
-//        }
-//
-//        try
-//        {
-//            AbstractServiceProvider providerService = SpringContextService.getBean( strIdBean );
-//
-//            if ( providerService.getKey(  ).equals( strIdBean ) )
-//            {
-//                return true;
-//            }
-//        }
-//        catch ( NoSuchBeanDefinitionException e )
-//        {
-//            return false;
-//        }
+     *
+     * @param strIdBean * @
+     * @return true if the bean exist
+     */
+    public static Boolean isBeanExiste(String strIdBean, ITask task) {
+        Boolean bexist = false;
+        if (strIdBean != null) {
+            if (isKeyManagerProvider(strIdBean)) {
+                String[] keys = getKeyManagerProvider(strIdBean);
 
-        return false;
+                if (isSpringBeanExiste(keys[0])) {
+                    AbstractServiceProvider providerService = SpringContextService.getBean(keys[0]);
+                    providerService.updateListProvider(task);
+
+                    bexist = providerService.isKeyProvider(strIdBean);
+                }
+
+            } else {
+
+                bexist = isSpringBeanExiste(strIdBean);
+
+            }
+        }
+
+        return bexist;
+    }
+
+    public static AbstractServiceProvider getCostumizeBean(String strIdBean, ITask task) {
+        AbstractServiceProvider provider = null;
+        if (strIdBean != null) {
+            if (isKeyManagerProvider(strIdBean)) {
+                String[] keys = getKeyManagerProvider(strIdBean);
+
+                if (isSpringBeanExiste(keys[0])) {
+                    AbstractServiceProvider providerService = SpringContextService.getBean(keys[0]);
+                    providerService.updateListProvider(task);
+
+                    provider = providerService.getInstanceProvider(strIdBean);
+                }
+
+            } else {
+
+                provider = SpringContextService.getBean(strIdBean);
+
+            }
+        }
+        return provider;
+    }
+
+    public static Boolean isSpringBeanExiste(String strIdBean) {
+        Boolean bexist = false;
+
+        if (strIdBean == null) {
+            bexist = false;
+        } else {
+            try {
+                AbstractServiceProvider providerService = SpringContextService.getBean(strIdBean);
+
+                if (providerService.getKey().equals(strIdBean)) {
+                    bexist = true;
+                }
+            } catch (NoSuchBeanDefinitionException e) {
+                bexist = false;
+            }
+        }
+
+        return bexist;
+    }
+
+    public static Boolean isKeyManagerProvider(String strfullKeyProvider) {
+        Boolean bIsIt = false;
+
+        if (strfullKeyProvider != null) {
+            String[] providerGabarit = strfullKeyProvider.split(".@.");
+            if (providerGabarit.length == 2) {
+                bIsIt = true;
+            }
+        }
+        return bIsIt;
+    }
+
+    public static String[] getKeyManagerProvider(String strfullKeyProvider) {
+        String[] Key = null;
+
+        if (strfullKeyProvider != null) {
+            Key = strfullKeyProvider.split(".@.");
+
+        }
+        return Key;
     }
 
     /**
      *
      * @param config of the task
-         * @param locale of request
-     * @return the  list of onglet
+     * @param locale of request
+     * @return the list of onglet
      */
-    public static ReferenceList getListOnglet( TaskNotifyGruConfig config, Locale locale )
-    {
-        ReferenceList refenreceList = new ReferenceList(  );
+    public static ReferenceList getListOnglet(TaskNotifyGruConfig config, Locale locale) {
+        ReferenceList refenreceList = new ReferenceList();
 
-        if ( !config.isActiveOngletGuichet(  ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_GUICHET,
-                I18nService.getLocalizedString( Constants.VIEW_GUICHET, locale ) );
+        if (!config.isActiveOngletGuichet()) {
+            refenreceList.addItem(Constants.MARK_ONGLET_GUICHET,
+                    I18nService.getLocalizedString(Constants.VIEW_GUICHET, locale));
         }
 
-        if ( !config.isActiveOngletAgent(  ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_AGENT,
-                I18nService.getLocalizedString( Constants.VIEW_AGENT, locale ) );
+        if (!config.isActiveOngletAgent()) {
+            refenreceList.addItem(Constants.MARK_ONGLET_AGENT,
+                    I18nService.getLocalizedString(Constants.VIEW_AGENT, locale));
         }
 
-        if ( !config.isActiveOngletEmail(  ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_EMAIL,
-                I18nService.getLocalizedString( Constants.VIEW_EMAIL, locale ) );
+        if (!config.isActiveOngletEmail()) {
+            refenreceList.addItem(Constants.MARK_ONGLET_EMAIL,
+                    I18nService.getLocalizedString(Constants.VIEW_EMAIL, locale));
         }
 
-        if ( !config.isActiveOngletSMS(  ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_SMS,
-                I18nService.getLocalizedString( Constants.VIEW_SMS, locale ) );
+        if (!config.isActiveOngletSMS()) {
+            refenreceList.addItem(Constants.MARK_ONGLET_SMS,
+                    I18nService.getLocalizedString(Constants.VIEW_SMS, locale));
         }
 
-        if ( !config.isActiveOngletBroadcast(  ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_LIST,
-                I18nService.getLocalizedString( Constants.VIEW_BROADCAST_LIST, locale ) );
+        if (!config.isActiveOngletBroadcast()) {
+            refenreceList.addItem(Constants.MARK_ONGLET_LIST,
+                    I18nService.getLocalizedString(Constants.VIEW_BROADCAST_LIST, locale));
         }
 
         return refenreceList;
@@ -160,98 +198,84 @@ public final class ServiceConfigTaskForm
      * @param srtNumner to convert
      * @return nimber or if exception
      *
-     * */
-    public static int getNumbertoString( String srtNumner )
-    {
-        try
-        {
-            return Integer.parseInt( srtNumner );
-        }
-        catch ( NumberFormatException e )
-        {
+     *
+     */
+    public static int getNumbertoString(String srtNumner) {
+        try {
+            return Integer.parseInt(srtNumner);
+        } catch (NumberFormatException e) {
             return -1;
         }
     }
 
     /**
-    * display the level of notification
-    * @param locale to localize resources
-    * @return the list of notification
-    */
-    public static ReferenceList getListNotification( Locale locale )
-    {
-        ReferenceList refenreceList = new ReferenceList(  );
-        refenreceList.addItem( 0, I18nService.getLocalizedString( Constants.VISIBILITY_ALL, locale ) );
-        refenreceList.addItem( 1, I18nService.getLocalizedString( Constants.VISIBILITY_DOMAIN, locale ) );
-        refenreceList.addItem( 2, I18nService.getLocalizedString( Constants.VISIBILITY_ADMIN, locale ) );
+     * display the level of notification
+     *
+     * @param locale to localize resources
+     * @return the list of notification
+     */
+    public static ReferenceList getListNotification(Locale locale) {
+        ReferenceList refenreceList = new ReferenceList();
+        refenreceList.addItem(0, I18nService.getLocalizedString(Constants.VISIBILITY_ALL, locale));
+        refenreceList.addItem(1, I18nService.getLocalizedString(Constants.VISIBILITY_DOMAIN, locale));
+        refenreceList.addItem(2, I18nService.getLocalizedString(Constants.VISIBILITY_ADMIN, locale));
 
         return refenreceList;
     }
 
     /**
      * display the error message
+     *
      * @param errors the list of errors
      * @param request the http request
      * @return the error message
      */
-    public static String displayErrorMessage( ArrayList<String> errors, HttpServletRequest request )
-    {
-        Object[] tabRequiredFields = new Object[errors.size(  )];
+    public static String displayErrorMessage(ArrayList<String> errors, HttpServletRequest request) {
+        Object[] tabRequiredFields = new Object[errors.size()];
 
-        for ( int i = 0; i < errors.size(  ); i++ )
-        {
-            tabRequiredFields[i] = errors.get( i );
+        for (int i = 0; i < errors.size(); i++) {
+            tabRequiredFields[i] = errors.get(i);
         }
 
-        if ( tabRequiredFields.length > 2 )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD,
-                tabRequiredFields, AdminMessage.TYPE_WARNING );
-        }
-        else if ( tabRequiredFields.length == 2 )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD,
-                tabRequiredFields, AdminMessage.TYPE_WARNING );
+        if (tabRequiredFields.length > 2) {
+            return AdminMessageService.getMessageUrl(request, Constants.MESSAGE_MANDATORY_THREE_FIELD,
+                    tabRequiredFields, AdminMessage.TYPE_WARNING);
+        } else if (tabRequiredFields.length == 2) {
+            return AdminMessageService.getMessageUrl(request, Constants.MESSAGE_MANDATORY_TWO_FIELD,
+                    tabRequiredFields, AdminMessage.TYPE_WARNING);
         }
 
-        return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields,
-            AdminMessage.TYPE_WARNING );
+        return AdminMessageService.getMessageUrl(request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields,
+                AdminMessage.TYPE_WARNING);
     }
 
     /**
      *
      * @return the different implementation
      */
-    public static List<AbstractServiceProvider> getImplementationServices(  )
-    {
-        return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
+    public static List<AbstractServiceProvider> getImplementationServices() {
+        return SpringContextService.getBeansOfType(AbstractServiceProvider.class);
     }
 
     /**
      *
      * @return the list of providers
      */
-    public static ReferenceList getListProvider( ITask task   )
-    {
-        ReferenceList refenreceList = new ReferenceList(  );
+    public static ReferenceList getListProvider(ITask task) {
+        ReferenceList refenreceList = new ReferenceList();
 
-        for ( AbstractServiceProvider provider : getImplementationServices(  ) )
-        {
-            if(!provider.isManagerProvider())
-            {
-             refenreceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
+        for (AbstractServiceProvider provider : getImplementationServices()) {
+            if (!provider.isManagerProvider()) {
+                refenreceList.addItem(provider.getBeanName(), provider.getTitle(Locale.getDefault()));
+            } else {
+                provider.updateListProvider(task);
+
+                refenreceList.addAll(provider.buildReferenteListProvider());
+
             }
-            else 
-            {
-            provider.updateListProvider(task);
-            
-            refenreceList.addAll(provider.buildReferenteListProvider());
-           
-            }
-           
+
         }
-        
-     
+
         return refenreceList;
     }
 
@@ -261,22 +285,18 @@ public final class ServiceConfigTaskForm
      * @param strOnglet of config
      * @param strOngletActive the active onglet
      * @param bdefault default onglet
-     * @param strRemove  if removing
+     * @param strRemove if removing
      * @return true if the Onglet is active
      */
-    public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault,
-        String strRemove )
-    {
+    public static Boolean setConfigOnglet(String strApply, String strOnglet, String strOngletActive, Boolean bdefault,
+            String strRemove) {
         boolean bStateOnglet = bdefault;
 
-        if ( strApply != null )
-        {
-            switch ( strApply )
-            {
+        if (strApply != null) {
+            switch (strApply) {
                 case Constants.PARAMETER_BUTTON_ADD:
 
-                    if ( strOnglet.equals( strOngletActive ) )
-                    {
+                    if (strOnglet.equals(strOngletActive)) {
                         bStateOnglet = true;
                     }
 
@@ -284,8 +304,7 @@ public final class ServiceConfigTaskForm
 
                 case Constants.PARAMETER_BUTTON_REMOVE_GUICHET:
 
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
-                    {
+                    if (strRemove.equals(Constants.PARAMETER_BUTTON_REMOVE_GUICHET)) {
                         bStateOnglet = false;
                     }
 
@@ -293,8 +312,7 @@ public final class ServiceConfigTaskForm
 
                 case Constants.PARAMETER_BUTTON_REMOVE_AGENT:
 
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) )
-                    {
+                    if (strRemove.equals(Constants.PARAMETER_BUTTON_REMOVE_AGENT)) {
                         bStateOnglet = false;
                     }
 
@@ -302,8 +320,7 @@ public final class ServiceConfigTaskForm
 
                 case Constants.PARAMETER_BUTTON_REMOVE_EMAIL:
 
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
-                    {
+                    if (strRemove.equals(Constants.PARAMETER_BUTTON_REMOVE_EMAIL)) {
                         bStateOnglet = false;
                     }
 
@@ -311,8 +328,7 @@ public final class ServiceConfigTaskForm
 
                 case Constants.PARAMETER_BUTTON_REMOVE_SMS:
 
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) )
-                    {
+                    if (strRemove.equals(Constants.PARAMETER_BUTTON_REMOVE_SMS)) {
                         bStateOnglet = false;
                     }
 
@@ -320,8 +336,7 @@ public final class ServiceConfigTaskForm
 
                 case Constants.PARAMETER_BUTTON_REMOVE_LISTE:
 
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) )
-                    {
+                    if (strRemove.equals(Constants.PARAMETER_BUTTON_REMOVE_LISTE)) {
                         bStateOnglet = false;
                     }
 
@@ -340,19 +355,16 @@ public final class ServiceConfigTaskForm
     /**
      *
      * @param strOnglet of config
-     * @return  the number of onglet
+     * @return the number of onglet
      */
-    public static int getNumberOblet( String strOnglet )
-    {
+    public static int getNumberOblet(String strOnglet) {
         int nNumber = 0;
 
-        if ( strOnglet == null )
-        {
+        if (strOnglet == null) {
             return nNumber;
         }
 
-        switch ( strOnglet )
-        {
+        switch (strOnglet) {
             case Constants.MARK_ONGLET_GUICHET:
                 nNumber = 0;
 

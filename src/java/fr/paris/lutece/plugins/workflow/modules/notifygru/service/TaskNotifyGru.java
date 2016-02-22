@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import fr.paris.lutece.plugins.workflow.business.action.ActionDAO;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
@@ -53,6 +54,9 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
+import fr.paris.lutece.plugins.workflow.business.workflow.WorkflowDAO;
+import fr.paris.lutece.plugins.workflowcore.business.action.Action;
+import fr.paris.lutece.plugins.workflowcore.business.workflow.Workflow;
 
 
 
@@ -98,6 +102,11 @@ public class TaskNotifyGru extends SimpleTask
     
     @Inject
     TaskDAO _taskDOA;
+    @Inject
+    WorkflowDAO _workflowDOA;
+    
+       @Inject
+    private ActionDAO _actionDAO;
 
     /**
      * {@inheritDoc}
@@ -114,14 +123,20 @@ public class TaskNotifyGru extends SimpleTask
         NotifyGruHistory notifyGruHistory = new NotifyGruHistory(  );
         notifyGruHistory.setIdTask( this.getId(  ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
+    
       
         ITask task = (config!=null)?_taskDOA.load(config.getIdTask(), locale):null;
-
+    
+     
         /*process if Task config not null and valide provider*/
         if ( ( config != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ),task ) )
         {
+            
+       Action action =  (task!=null)? _actionDAO.load(task.getAction().getId()):null;        
+       Workflow wf = (action!=null)?_workflowDOA.load(action.getWorkflow().getId()):null; 
+        
             //get provider
-            _notifyGruService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
+            _notifyGruService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ), task );
 
             JSONObject fluxJson = new JSONObject(  );
             JSONObject notificationJson = this.buildJsonGlobal( config, nIdResourceHistory, locale );
@@ -195,11 +210,11 @@ public class TaskNotifyGru extends SimpleTask
                 if ( StringUtils.isNotBlank( strToken ) )
                 {
                     JSONObject tokenAuth = getToken(  );
-                    sendNotificationsAsJson( strJson, tokenAuth );
+                    sendNotificationsAsJson( strJson, tokenAuth, wf );
                 }
                 else
                 {
-                    sendNotificationsAsJson( strJson );
+                    sendNotificationsAsJson( strJson,wf );
                 }
 
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
@@ -225,6 +240,10 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_EMAIL, _notifyGruService.getUserEmail( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, CRM_STATUS_ID );
         notificationJson.accumulate( Constants.MARK_NOTIFICATION_TYPE, _DEFAULT_VALUE_JSON );
+        /*Le champs permettra de valorisé le champs demand_status du flux notification V1.
+        La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
+                Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).*/
+        notificationJson.accumulate( Constants.MARK_DEMAND_STATUS, config.getDemandStateGuichet() );
         notificationJson.accumulate( Constants.MARK_REFERENCE_DEMAND,
             _notifyGruService.getDemandReference( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_COSTUMER_ID, _notifyGruService.getCustomerId( nIdResourceHistory ) );
@@ -234,6 +253,9 @@ public class TaskNotifyGru extends SimpleTask
 
         int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
         notificationJson.accumulate( Constants.MARK_ID_DEMAND,
+            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )
+            ? _notifyGruService.getOptionalDemandId( nIdResourceHistory ) : _DEFAULT_VALUE_JSON ) );
+        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND,
             ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )
             ? _notifyGruService.getOptionalDemandId( nIdResourceHistory ) : _DEFAULT_VALUE_JSON ) );
 
@@ -260,12 +282,14 @@ public class TaskNotifyGru extends SimpleTask
         JSONObject userDashBoardJson = new JSONObject(  );
         HtmlTemplate tMessageUserDashboard = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(  ),
                 locale, _notifyGruService.getInfos( nIdResourceHistory ) );
+        
+          HtmlTemplate tSubjectUserDashboard = AppTemplateService.getTemplateFromStringFtl( config.getSubjectGuichet(  ),
+                locale, _notifyGruService.getInfos( nIdResourceHistory ) );
 
         userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD, config.getStatustextGuichet(  ) );
         userDashBoardJson.accumulate( Constants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet(  ) );
-        userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD, config.getSubjectGuichet(  ) );
-        userDashBoardJson.accumulate( Constants.MARK_MESSAGE_USERDASHBOARD,
-            this.getHTMLEntities( tMessageUserDashboard.getHtml(  ) ) );
+        userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD, this.getHTMLEntities( tSubjectUserDashboard.getHtml() ));
+        userDashBoardJson.accumulate( Constants.MARK_MESSAGE_USERDASHBOARD, this.getHTMLEntities( tMessageUserDashboard.getHtml(  ) ) );
         userDashBoardJson.accumulate( Constants.MARK_DATA_USERDASHBOARD, _DEFAULT_VALUE_JSON );
 
         return userDashBoardJson;
@@ -289,6 +313,8 @@ public class TaskNotifyGru extends SimpleTask
         HtmlTemplate tMessageAgent = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
         String strMessageAgent = this.getHTMLEntities( tMessageAgent.getHtml(  ) );
+        
+        
 
         backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
         backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_ON_DASHBOARD,
@@ -306,10 +332,14 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( config.isActiveOngletEmail(  ) )
         {
+            
+              HtmlTemplate tSubjectEmail = AppTemplateService.getTemplateFromStringFtl( config.getSubjectEmail(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
+        String strSubjectEmail = this.getHTMLEntities( tSubjectEmail.getHtml(  ) );
             //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
             backOfficeLogginJson.accumulate( Constants.MARK_VIEW_EMAIL_NOTIFICATION,
                 Constants.MESSAGE_DISPLAY_EMAIL + " " + _notifyGruService.getUserEmail( nIdResourceHistory ) +
-                Constants.MESSAGE_DISPLAY_OBJECT + " " + config.getSubjectEmail(  ) +
+                Constants.MESSAGE_DISPLAY_OBJECT + " " + strSubjectEmail +
                 Constants.MESSAGE_DISPLAY_MESSAGE_EMAIL + " " + strMessageEmail );
         }
 
@@ -355,10 +385,14 @@ public class TaskNotifyGru extends SimpleTask
         JSONObject userEmailJson = new JSONObject(  );
         HtmlTemplate tMessageEmail = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
+        
+           HtmlTemplate tSubjectEmail = AppTemplateService.getTemplateFromStringFtl( config.getSubjectEmail(), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
+        
         userEmailJson.accumulate( Constants.MARK_SENDER_NAME, config.getSenderNameEmail(  ) );
         userEmailJson.accumulate( Constants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail(  ) );
         userEmailJson.accumulate( Constants.MARK_RECIPIENT, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailJson.accumulate( Constants.MARK_SUBJECT, config.getSubjectEmail(  ) );
+        userEmailJson.accumulate( Constants.MARK_SUBJECT, this.getHTMLEntities (tSubjectEmail.getHtml()) );
         userEmailJson.accumulate( Constants.MARK_MESSAGE_EMAIL, this.getHTMLEntities( tMessageEmail.getHtml(  ) ) );
         userEmailJson.accumulate( Constants.MARK_CC,
             ( StringUtils.isNotBlank( config.getRecipientsCcEmail(  ) ) ? config.getRecipientsCcEmail(  ) : "" ) );
@@ -400,7 +434,7 @@ public class TaskNotifyGru extends SimpleTask
      * @param strJson json to send
       * @param tokenAuth token to auth in API Manager
      * */
-    private void sendNotificationsAsJson( String strJson, JSONObject tokenAuth )
+    private void sendNotificationsAsJson( String strJson, JSONObject tokenAuth, Workflow wf )
     {
         Client client = Client.create(  );
 
@@ -408,8 +442,8 @@ public class TaskNotifyGru extends SimpleTask
                     Constants.URL_NOTIFICATION_ENDPOINT ) );
 
         ClientResponse response = webResource.type( Constants.CONTENT_FORMAT )
-                                             .header( HttpHeaders.AUTHORIZATION,
-                Constants.TYPE_AUTHENTIFICATION + " " + (String) tokenAuth.get( Constants.PARAMS_ACCES_TOKEN ) )
+                                             .header( HttpHeaders.AUTHORIZATION, Constants.TYPE_AUTHENTIFICATION + " " + (String) tokenAuth.get( Constants.PARAMS_ACCES_TOKEN ) )
+                                             .header( Constants.NOTIFICATION_SENDER, AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) +" : "+ ((wf!=null)?wf.getName():"") )
                                              .accept( MediaType.APPLICATION_JSON ).post( ClientResponse.class, strJson );
 
         if ( response.getStatus(  ) != HTTP_CODE_RESPONSE_CREATED )
@@ -423,7 +457,7 @@ public class TaskNotifyGru extends SimpleTask
      *
      * @param strJson the str json
      */
-    private void sendNotificationsAsJson( String strJson )
+    private void sendNotificationsAsJson( String strJson, Workflow wf )
     {
         AppLogService.debug( "Sending notification as JSON : " + strJson );
 
@@ -433,7 +467,8 @@ public class TaskNotifyGru extends SimpleTask
                     Constants.URL_NOTIFICATION_ENDPOINT ) );
 
         ClientResponse response = webResource.type( Constants.CONTENT_FORMAT ).accept( MediaType.APPLICATION_JSON )
-                                             .post( ClientResponse.class, strJson );
+                 .header( Constants.NOTIFICATION_SENDER, AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) +" : "+ ((wf!=null)?wf.getName():"") )
+                                .post( ClientResponse.class, strJson );
 
         if ( response.getStatus(  ) != HTTP_CODE_RESPONSE_CREATED )
         {
