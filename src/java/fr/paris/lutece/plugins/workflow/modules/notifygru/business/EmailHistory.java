@@ -40,118 +40,120 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 public class EmailHistory
 {
     // Variables declarations 
-    private String _strSubjectEmail;
-    private String _strMessageEmail;
-    private String _strSenderNameEmail;
-    private String _strRecipientsCcEmail;
-    private String _strRecipientsCciEmail;
-    private String _strLevelNotificationEmail;
+	  private String _strSubjectEmail;
+	    private String _strMessageEmail;
+	    private String _strSenderNameEmail;
+	    private String _strRecipientsCcEmail;
+	    private String _strRecipientsCciEmail;
+	    private boolean _ActiveOngletEmail;
 
-    /**
-     * Returns the SubjectEmail
-     * @return The SubjectEmail
-     */
-    public String getSubjectEmail(  )
-    {
-        return _strSubjectEmail;
-    }
+	    /**
+	        * Returns the SubjectEmail
+	        * @return The SubjectEmail
+	        */ 
+	    public String getSubjectEmail()
+	    {
+	        return _strSubjectEmail;
+	    }
+	    
+	       /**
+	        * Sets the SubjectEmail
+	        * @param strSubjectEmail The SubjectEmail
+	        */ 
+	    public void setSubjectEmail( String strSubjectEmail )
+	    {
+	        _strSubjectEmail = strSubjectEmail;
+	    }
+	    
+	       /**
+	        * Returns the MessageEmail
+	        * @return The MessageEmail
+	        */ 
+	    public String getMessageEmail()
+	    {
+	        return _strMessageEmail;
+	    }
+	    
+	       /**
+	        * Sets the MessageEmail
+	        * @param strMessageEmail The MessageEmail
+	        */ 
+	    public void setMessageEmail( String strMessageEmail )
+	    {
+	        _strMessageEmail = strMessageEmail;
+	    }
+	    
+	       /**
+	        * Returns the SenderNameEmail
+	        * @return The SenderNameEmail
+	        */ 
+	    public String getSenderNameEmail()
+	    {
+	        return _strSenderNameEmail;
+	    }
+	    
+	       /**
+	        * Sets the SenderNameEmail
+	        * @param strSenderNameEmail The SenderNameEmail
+	        */ 
+	    public void setSenderNameEmail( String strSenderNameEmail )
+	    {
+	        _strSenderNameEmail = strSenderNameEmail;
+	    }
+	    
+	       /**
+	        * Returns the RecipientsCcEmail
+	        * @return The RecipientsCcEmail
+	        */ 
+	    public String getRecipientsCcEmail()
+	    {
+	        return _strRecipientsCcEmail;
+	    }
+	    
+	       /**
+	        * Sets the RecipientsCcEmail
+	        * @param strRecipientsCcEmail The RecipientsCcEmail
+	        */ 
+	    public void setRecipientsCcEmail( String strRecipientsCcEmail )
+	    {
+	        _strRecipientsCcEmail = strRecipientsCcEmail;
+	    }
+	    
+	       /**
+	        * Returns the RecipientsCciEmail
+	        * @return The RecipientsCciEmail
+	        */ 
+	    public String getRecipientsCciEmail()
+	    {
+	        return _strRecipientsCciEmail;
+	    }
+	    
+	       /**
+	        * Sets the RecipientsCciEmail
+	        * @param strRecipientsCciEmail The RecipientsCciEmail
+	        */ 
+	    public void setRecipientsCciEmail( String strRecipientsCciEmail )
+	    {
+	        _strRecipientsCciEmail = strRecipientsCciEmail;
+	    }
+	    
+	       /**
+	        * Returns the ActiveOngletEmail
+	        * @return The ActiveOngletEmail
+	        */ 
+	    public boolean isActiveOngletEmail()
+	    {
+	        return _ActiveOngletEmail;
+	    }
+	    
+	       /**
+	        * Sets the ActiveOngletEmail
+	        * @param ActiveOngletEmail The ActiveOngletEmail
+	        */ 
+	    public void setActiveOngletEmail( boolean ActiveOngletEmail )
+	    {
+	        _ActiveOngletEmail = ActiveOngletEmail;
+	    }
 
-    /**
-     * Sets the SubjectEmail
-     * @param strSubjectEmail The SubjectEmail
-     */
-    public void setSubjectEmail( String strSubjectEmail )
-    {
-        _strSubjectEmail = strSubjectEmail;
-    }
-
-    /**
-     * Returns the MessageEmail
-     * @return The MessageEmail
-     */
-    public String getMessageEmail(  )
-    {
-        return _strMessageEmail;
-    }
-
-    /**
-     * Sets the MessageEmail
-     * @param strMessageEmail The MessageEmail
-     */
-    public void setMessageEmail( String strMessageEmail )
-    {
-        _strMessageEmail = strMessageEmail;
-    }
-
-    /**
-     * Returns the SenderNameEmail
-     * @return The SenderNameEmail
-     */
-    public String getSenderNameEmail(  )
-    {
-        return _strSenderNameEmail;
-    }
-
-    /**
-     * Sets the SenderNameEmail
-     * @param strSenderNameEmail The SenderNameEmail
-     */
-    public void setSenderNameEmail( String strSenderNameEmail )
-    {
-        _strSenderNameEmail = strSenderNameEmail;
-    }
-
-    /**
-     * Returns the RecipientsCcEmail
-     * @return The RecipientsCcEmail
-     */
-    public String getRecipientsCcEmail(  )
-    {
-        return _strRecipientsCcEmail;
-    }
-
-    /**
-     * Sets the RecipientsCcEmail
-     * @param strRecipientsCcEmail The RecipientsCcEmail
-     */
-    public void setRecipientsCcEmail( String strRecipientsCcEmail )
-    {
-        _strRecipientsCcEmail = strRecipientsCcEmail;
-    }
-
-    /**
-     * Returns the RecipientsCciEmail
-     * @return The RecipientsCciEmail
-     */
-    public String getRecipientsCciEmail(  )
-    {
-        return _strRecipientsCciEmail;
-    }
-
-    /**
-     * Sets the RecipientsCciEmail
-     * @param strRecipientsCciEmail The RecipientsCciEmail
-     */
-    public void setRecipientsCciEmail( String strRecipientsCciEmail )
-    {
-        _strRecipientsCciEmail = strRecipientsCciEmail;
-    }
-
-    /**
-     * Returns the LevelNotificationEmail
-     * @return The LevelNotificationEmail
-     */
-    public String getLevelNotificationEmail(  )
-    {
-        return _strLevelNotificationEmail;
-    }
-
-    /**
-     * Sets the LevelNotificationEmail
-     * @param strLevelNotificationEmail The LevelNotificationEmail
-     */
-    public void setLevelNotificationEmail( String strLevelNotificationEmail )
-    {
-        _strLevelNotificationEmail = strLevelNotificationEmail;
-    }
+ 
 }

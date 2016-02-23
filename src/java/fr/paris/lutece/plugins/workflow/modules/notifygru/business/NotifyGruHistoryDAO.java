@@ -44,25 +44,33 @@ import fr.paris.lutece.util.sql.DAOUtil;
  */
 public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 {
-    public static final String BEAN = "NotifyGruHistoryDAO";
-    private static final String SQL_QUERY_SELECT = "SELECT id_history,id_task " +
-        ",message_guichet,status_text_guichet,sender_name_guichet," +
-        "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet," +
-        "demand_state_guichet,level_notification_guichet," + "message_agent,level_notification_agent," +
-        "subject_email,message_email,sender_name_email,recipients_cc_email," +
-        "recipients_cci_email,level_notification_email," + "message_sms,level_notification_sms," +
-        "id_mailing_list_broadcast,subject_broadcast,message_broadcast," +
-        "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast," + "level_notification_broadcast " +
-        "FROM workflow_task_notify_gru_history WHERE id_history=? AND id_task=? ";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO  workflow_task_notify_gru_history " +
-        "( id_history,id_task, " + "message_guichet,status_text_guichet,sender_name_guichet," +
-        "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet," +
-        "demand_state_guichet,level_notification_guichet," + "message_agent,level_notification_agent," +
-        "subject_email,message_email," + "sender_name_email,recipients_cc_email,recipients_cci_email," +
-        "level_notification_email," + "message_sms,level_notification_sms," +
-        "id_mailing_list_broadcast,subject_broadcast,message_broadcast," +
-        "sender_name_broadcast,recipients_cc_broadcast,recipients_cci_broadcast," +
-        "level_notification_broadcast ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public static final String BEAN = "NotifyGruHistoryDAO"; 
+    
+    private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task," +
+            "message_guichet,status_text_guichet,sender_name_guichet," +
+            "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +      
+            "status_text_agent,message_agent,is_active_onglet_agent," +
+            "subject_email,message_email,sender_name_email,recipients_cc_email," +
+            "recipients_cci_email,is_active_onglet_email," +
+            "message_sms,is_active_onglet_sms," +
+            "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
+            "recipients_cc_broadcast,recipients_cci_broadcast," +
+            "is_active_onglet_broadcast " +
+            " FROM workflow_task_notify_gru_history  WHERE id_task = ?";
+    
+    
+    private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( " +
+            "id_history,id_task,message_guichet,status_text_guichet,sender_name_guichet," +
+            "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +     
+            "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email," +
+            "sender_name_email,recipients_cc_email,recipients_cci_email," +
+            "is_active_onglet_email," +
+            "message_sms,is_active_onglet_sms," +
+            "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
+            "recipients_cc_broadcast,recipients_cci_broadcast," +
+            "is_active_onglet_broadcast ) " +
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
 
@@ -78,36 +86,44 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 
         daoUtil.setInt( ++nPos, history.getIdResourceHistory(  ) );
         daoUtil.setInt( ++nPos, history.getIdTask(  ) );
+        
         daoUtil.setString( ++nPos, history.getGuichet(  ).getMessageGuichet(  ) );
         daoUtil.setString( ++nPos, history.getGuichet(  ).getStatustextGuichet(  ) );
         daoUtil.setString( ++nPos, history.getGuichet(  ).getSenderNameGuichet(  ) );
         daoUtil.setString( ++nPos, history.getGuichet(  ).getSubjectGuichet(  ) );
         daoUtil.setInt( ++nPos, history.getGuichet(  ).getDemandMaxStepGuichet(  ) );
         daoUtil.setInt( ++nPos, history.getGuichet(  ).getDemandUserCurrentStepGuichet(  ) );
-        daoUtil.setInt( ++nPos, history.getGuichet(  ).getDemandStateGuichet(  ) );
-        daoUtil.setString( ++nPos, history.getGuichet(  ).getLevelNotificationGuichet(  ) );
+        daoUtil.setBoolean( ++nPos, history.getGuichet(  ).isActiveOngletGuichet(  ) );
+    
 
+
+        daoUtil.setString( ++nPos, history.getAgent(  ).getStatustextAgent(  ) );
         daoUtil.setString( ++nPos, history.getAgent(  ).getMessageAgent(  ) );
-        daoUtil.setString( ++nPos, history.getAgent(  ).getLevelNotificationAgent(  ) );
+        daoUtil.setBoolean( ++nPos, history.getAgent(  ).isActiveOngletAgent(  ) );
 
+        
         daoUtil.setString( ++nPos, history.getEmail(  ).getSubjectEmail(  ) );
         daoUtil.setString( ++nPos, history.getEmail(  ).getMessageEmail(  ) );
         daoUtil.setString( ++nPos, history.getEmail(  ).getSenderNameEmail(  ) );
         daoUtil.setString( ++nPos, history.getEmail(  ).getRecipientsCcEmail(  ) );
         daoUtil.setString( ++nPos, history.getEmail(  ).getRecipientsCciEmail(  ) );
-        daoUtil.setString( ++nPos, history.getEmail(  ).getLevelNotificationEmail(  ) );
+        daoUtil.setBoolean( ++nPos, history.getEmail(  ).isActiveOngletEmail(  ) );
+        
+       
 
         daoUtil.setString( ++nPos, history.getSMS(  ).getMessageSMS(  ) );
-        daoUtil.setString( ++nPos, history.getSMS(  ).getLevelNotificationSMS(  ) );
+        daoUtil.setBoolean( ++nPos, history.getSMS(  ).isActiveOngletSMS(  ) );
+        
 
         daoUtil.setInt( ++nPos, history.getBroadCast(  ).getIdMailingListBroadcast(  ) );
         daoUtil.setString( ++nPos, history.getBroadCast(  ).getSenderNameBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getMessageBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getSenderNameBroadcast(  ) );
+        daoUtil.setString( ++nPos, history.getBroadCast(  ).getSubjectBroadcast(  ) );
+        daoUtil.setString( ++nPos, history.getBroadCast(  ).getMessageBroadcast(  ) );      
         daoUtil.setString( ++nPos, history.getBroadCast(  ).getRecipientsCcBroadcast(  ) );
         daoUtil.setString( ++nPos, history.getBroadCast(  ).getRecipientsCciBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getLevelNotificationBroadcast(  ) );
+        daoUtil.setBoolean( ++nPos, history.getBroadCast(  ).isActiveOngletBroadcast(  ) );
 
+      
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
@@ -145,29 +161,33 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             oGuichet.setSubjectGuichet( daoUtil.getString( ++nPos ) );
             oGuichet.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
             oGuichet.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
-            oGuichet.setDemandStateGuichet( daoUtil.getInt( ++nPos ) );
-            oGuichet.setLevelNotificationGuichet( daoUtil.getString( ++nPos ) );
-
+            oGuichet.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
+         
+         
+            oAgent.setStatustextAgent( daoUtil.getString( ++nPos ) );
             oAgent.setMessageAgent( daoUtil.getString( ++nPos ) );
-            oAgent.setLevelNotificationAgent( daoUtil.getString( ++nPos ) );
-
+            oAgent.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
+          
+          
             oEmail.setSubjectEmail( daoUtil.getString( ++nPos ) );
             oEmail.setMessageEmail( daoUtil.getString( ++nPos ) );
             oEmail.setSenderNameEmail( daoUtil.getString( ++nPos ) );
             oEmail.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
             oEmail.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
-            oEmail.setLevelNotificationEmail( daoUtil.getString( ++nPos ) );
+            oEmail.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
+            
+           
 
             oSMS.setMessageSMS( daoUtil.getString( ++nPos ) );
-            oSMS.setLevelNotificationSMS( daoUtil.getString( ++nPos ) );
+            oSMS.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
 
             oBroadcast.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
-            oBroadcast.setSubjectBroadcast( daoUtil.getString( ++nPos ) );
-            oBroadcast.setMessageBroadcast( daoUtil.getString( ++nPos ) );
             oBroadcast.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
+            oBroadcast.setSubjectBroadcast( daoUtil.getString( ++nPos ) );
+            oBroadcast.setMessageBroadcast( daoUtil.getString( ++nPos ) );          
             oBroadcast.setRecipientsCcBroadcast( daoUtil.getString( ++nPos ) );
             oBroadcast.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
-            oBroadcast.setLevelNotificationBroadcast( daoUtil.getString( ++nPos ) );
+            oBroadcast.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
         }
 
         oNotifyGru.setGuichet( oGuichet );

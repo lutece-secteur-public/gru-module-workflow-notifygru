@@ -243,7 +243,8 @@ public class TaskNotifyGru extends SimpleTask
         /*Le champs permettra de valorisé le champs demand_status du flux notification V1.
         La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
                 Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).*/
-        notificationJson.accumulate( Constants.MARK_DEMAND_STATUS, config.getDemandStateGuichet() );
+      
+        notificationJson.accumulate( Constants.MARK_DEMAND_STATUS, config.getDemandStatus() );
         notificationJson.accumulate( Constants.MARK_REFERENCE_DEMAND,
             _notifyGruService.getDemandReference( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_COSTUMER_ID, _notifyGruService.getCustomerId( nIdResourceHistory ) );

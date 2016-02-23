@@ -83,7 +83,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private static final String TEMPLATE_TASK_NOTIFY_INFORMATION = "admin/plugins/workflow/modules/notifygru/task_notify_information.html";
 
     // MARKS
-    private static final String VALUE_CHECKBOX = "on";
+   
     private static final String MARK_CONFIG = "config";
     private static final String MARK_NOTIFY_HISTORY = "information_history";
 
@@ -114,7 +114,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( Constants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
-        int nDemandStatus= (VALUE_CHECKBOX.equals(request.getParameter( Constants.PARAMETER_DEMAND_STATUS )))?1:0;
+       
 
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
 
@@ -130,35 +130,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 strOngletActive, config.isActiveOngletBroadcast(  ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
 
         //set the active onglet
-        config.setSetOnglet( ServiceConfigTaskForm.getNumberOblet( strOngletActive ) );
+        int nOngletActive=ServiceConfigTaskForm.getNumberOblet( strOngletActive ); 
+        config.setSetOnglet( nOngletActive );
 
-        Boolean bRedirector = false;
-        String strUrlRedirector = "";
+       /*validate and build provider*/
+        String strUrlRedirector = Validator.isValideBuildProviderService(request, config, _providerService, locale, task);        
+        Boolean bRedirector = (StringUtils.isBlank(strUrlRedirector)) ?false:true;
 
-        /*if is the first time we register provider*/
-        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider,task ) )
-        {
-           
-            config.setIdSpringProvider( strProvider );
-            config.setKeyProvider( strProvider ); // à faire
-            config.setDemandStateGuichet(nDemandStatus);
-        }
-
-        /*if the provider is already register*/
-        else if ( config.getIdSpringProvider(  ) == null )
-        {
-            Object[] tabRequiredFields = 
-                {
-                    I18nService.getLocalizedString( Constants.MESSAGE_MANDATORY_PROVIDER, locale ),
-                };
-            bRedirector = true;
-            strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER,
-                    tabRequiredFields, AdminMessage.TYPE_STOP );
-        }
-        else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ),task ) )
-        {
-            _providerService =  ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ),task );
-        }
 
         /*if we are in started config of task. the provider is already register*/
         if ( ( strProvider == null ) && !bRedirector && ( strApply == null ) && !bActiveOngletAgent &&
@@ -169,221 +147,65 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             bRedirector = true;
             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
+           
         }
 
-        if ( !bRedirector &&
-                ( bActiveOngletGuichet ||
-                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
+        /*validate and build guichet*/
+        if ( !bRedirector &&   ( bActiveOngletGuichet ||  ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
         {
-            ArrayList<String> errors = new ArrayList<String>(  );
-            String strMessageGuichet = request.getParameter( Constants.PARAMETER_MESSAGE_GUICHET );
-            String strStatusTextGuichet = request.getParameter( Constants.PARAMETER_STATUS_TEXT_GUICHET );
-            String strSenderNameGuichet = request.getParameter( Constants.PARAMETER_SENDER_NAME_GUICHET );
-            String strSubjectGuichet = request.getParameter( Constants.PARAMETER_SUBJECT_GUICHET );
-
-            //optional
-            String strDemandMaxStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
-            int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandMaxStepGuichet );
-            String strDemandUserCurrentStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
-            int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandUserCurrentStepGuichet );
-
-            if ( StringUtils.isBlank( strApply ) )
-            {
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageGuichet,
-                                Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strMessageGuichet,
-                            Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatusTextGuichet,
-                                Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strStatusTextGuichet,
-                            Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameGuichet,
-                                Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strSenderNameGuichet,
-                            Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectGuichet,
-                                Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strSubjectGuichet,
-                            Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
-                }
-
-                if ( !Validator.isFreemarkerValid( strMessageGuichet +' '+strSubjectGuichet, locale, _providerService.getInfos( -1 ) ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                        };
-                    bRedirector = true;
-                    strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-            }
-
-            if ( !errors.isEmpty(  ) )
-            {
-                return ServiceConfigTaskForm.displayErrorMessage( errors, request );
-            }
-
-            config.setMessageGuichet( strMessageGuichet );
+           
+        	strUrlRedirector = Validator.isValideBuildGuichet(request, config, _providerService, locale, strApply);         
             config.setActiveOngletGuichet( bActiveOngletGuichet );
-            config.setStatustextGuichet( strStatusTextGuichet );
-            config.setSenderNameGuichet( strSenderNameGuichet );
-            config.setSubjectGuichet( strSubjectGuichet );
-            config.setDemandMaxStepGuichet( nDemandMaxStepGuichet );
-            config.setDemandUserCurrentStepGuichet( nDemandUserCurrentStepGuichet );
-
-            /*fin guichet*/
+            
+            if(StringUtils.isNotBlank(strUrlRedirector))
+            {
+            	bRedirector=true;
+            	
+            }
+         
         }
-
-        if ( !bRedirector &&
-                ( bActiveOngletAgent ||
-                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
+        /*validate and build agent*/
+        if ( !bRedirector &&   ( bActiveOngletAgent ||    ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
         {
-            /*Agent*/
-            ArrayList<String> errors = new ArrayList<String>(  );
-            String strMessageAgent = request.getParameter( Constants.PARAMETER_STATUS_MESSAGE_AGENT );
-
-            if ( StringUtils.isBlank( strApply ) )
-            {
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD,
-                                locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD, locale ) );
-                }
-
-                if ( !Validator.isFreemarkerValid( strMessageAgent, locale, _providerService.getInfos( -1 ) ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                        };
-                    bRedirector = true;
-                    strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-            }
-
-            if ( !errors.isEmpty(  ) )
-            {
-                return ServiceConfigTaskForm.displayErrorMessage( errors, request );
-            }
-
-            config.setMessageAgent( strMessageAgent );
+           
+        	strUrlRedirector = Validator.isValideBuildAgent(request, config, _providerService, locale, strApply);
             config.setActiveOngletAgent( bActiveOngletAgent );
+            
+            if(StringUtils.isNotBlank(strUrlRedirector))
+            {
+            	bRedirector=true;
+           
+            }
 
-            /*Fin Agent*/
+        
         }
 
-        if ( !bRedirector &&
-                ( bActiveOngletEmail ||
-                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
+        if ( !bRedirector &&  ( bActiveOngletEmail ||   ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
         {
-            /*email*/
-            ArrayList<String> errors = new ArrayList<String>(  );
-
-            String strSubjectEmail = request.getParameter( Constants.PARAMETER_SUBJECT_EMAIL );
-            String strMessageEmail = request.getParameter( Constants.PARAMETER_MESSAGE_EMAIL );
-            String strSenderNameEmail = request.getParameter( Constants.PARAMETER_SENDER_NAME_EMAIL );
-            String strRecipientsCcEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_EMAIL );
-            String strRecipientsCciEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_EMAIL );
-
-            if ( StringUtils.isBlank( strApply ) )
-            {
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectEmail,
-                                Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strSubjectEmail, Constants.MESSAGE_EMAIL_SUBJECT_FIELD,
-                            locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameEmail,
-                                Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strSenderNameEmail,
-                            Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageEmail,
-                                Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD,
-                            locale ) );
-                }
-
-                if ( !Validator.isFreemarkerValid( strMessageEmail+' '+strSubjectEmail, locale, _providerService.getInfos( -1 ) ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                        };
-                    bRedirector = true;
-                    strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-            }
-
-            if ( !errors.isEmpty(  ) )
-            {
-                return ServiceConfigTaskForm.displayErrorMessage( errors, request );
-            }
-
-            config.setSubjectEmail( strSubjectEmail );
-            config.setMessageEmail( strMessageEmail );
-            config.setSenderNameEmail( strSenderNameEmail );
-            config.setRecipientsCcEmail( strRecipientsCcEmail );
-            config.setRecipientsCciEmail( strRecipientsCciEmail );
+         
+        	strUrlRedirector = Validator.isValideBuildEmail(request, config, _providerService, locale, strApply);
             config.setActiveOngletEmail( bActiveOngletEmail );
+            
+            if(StringUtils.isNotBlank(strUrlRedirector))
+            {
+            	bRedirector=true;
+            	
+            }
 
-            /*fin email*/
+       
         }
 
-        if ( !bRedirector &&
-                ( bActiveOngletSMS ||
-                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
+        if ( !bRedirector &&  ( bActiveOngletSMS || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
         {
-            /*sms*/
-            ArrayList<String> errors = new ArrayList<String>(  );
-            String strMessageSMS = request.getParameter( Constants.PARAMETER_MESSAGE_SMS );
-            String strLevelNotificationSMS = request.getParameter( Constants.PARAMETER_LEVEL_NOTIFICATION_SMS );
-
-            if ( StringUtils.isBlank( strApply ) )
-            {
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD,
-                                locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
-                }
-
-                if ( !Validator.isFreemarkerValid( strMessageSMS, locale, _providerService.getInfos( -1 ) ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                        };
-                    bRedirector = true;
-                    strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-            }
-
-            if ( !errors.isEmpty(  ) )
-            {
-                return ServiceConfigTaskForm.displayErrorMessage( errors, request );
-            }
-
-            config.setMessageSMS( strMessageSMS );
-            config.setLevelNotificationSMS( strLevelNotificationSMS );
+             
             config.setActiveOngletSMS( bActiveOngletSMS );
+        	strUrlRedirector = Validator.isValideBuildSMS(request, config, _providerService, locale, strApply);
+            
+            if(StringUtils.isNotBlank(strUrlRedirector))
+            {
+            	bRedirector=true;
+            	
+            }
 
             /*fin sms*/
         }
@@ -392,76 +214,20 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 ( bActiveOngletBROADCAST ||
                 ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) ) )
         {
-            ArrayList<String> errors = new ArrayList<String>(  );
-            String strIdMailingListBroadcast = request.getParameter( Constants.PARAMETER_ID_MAILING_LIST );
-            int nIdMailingListBroadcast = ( strIdMailingListBroadcast == null ) ? WorkflowUtils.CONSTANT_ID_NULL
-                                                                                : Integer.parseInt( strIdMailingListBroadcast );
-
-            String strsenderNameBroadcast = request.getParameter( Constants.PARAMETER_SENDER_NAME_BROADCAST );
-            String strsubjectBroadcast = request.getParameter( Constants.PARAMETER_SUBJECT_BROADCAST );
-            String strmessageBroadcast = request.getParameter( Constants.PARAMETER_MESSAGE_BROADCAST );
-            String strrecipientsCcBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_BROADCAST );
-            String strrecipientsCciBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_BROADCAST );
-
-            if ( StringUtils.isBlank( strApply ) )
-            {
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strIdMailingListBroadcast,
-                                Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
-                            locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsenderNameBroadcast,
-                                Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strsenderNameBroadcast,
-                            Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsubjectBroadcast,
-                                Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strsubjectBroadcast, Constants.MESSAGE_LIST_SUBJECT_FIELD,
-                            locale ) );
-                }
-
-                if ( StringUtils.isNotBlank( Validator.mandotoryParams( strmessageBroadcast,
-                                Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) ) )
-                {
-                    errors.add( Validator.mandotoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD,
-                            locale ) );
-                }
-
-                if ( !Validator.isFreemarkerValid( strmessageBroadcast+' '+strsubjectBroadcast, locale, _providerService.getInfos( -1 ) ) )
-                {
-                    Object[] tabRequiredFields = 
-                        {
-                            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                        };
-                    bRedirector = true;
-                    strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-            }
-
-            if ( !errors.isEmpty(  ) )
-            {
-                return ServiceConfigTaskForm.displayErrorMessage( errors, request );
-            }
-
-            /* fin liste diffusion*/
-            config.setIdMailingListBroadcast( nIdMailingListBroadcast );
-            config.setSenderNameBroadcast( strsenderNameBroadcast );
-            config.setSubjectBroadcast( strsubjectBroadcast );
-            config.setMessageBroadcast( strmessageBroadcast );
-            config.setRecipientsCcBroadcast( strrecipientsCcBroadcast );
-            config.setRecipientsCciBroadcast( strrecipientsCciBroadcast );
+            
+        	strUrlRedirector = Validator.isValideBuildBroadcast(request, config, _providerService, locale, strApply);
+        	  if(StringUtils.isNotBlank(strUrlRedirector))
+              {
+              	bRedirector=true;
+           
+              }
+        	  
             config.setActiveOngletBroadcast( bActiveOngletBROADCAST );
         }
 
         if ( bRedirector )
         {
+         
             return strUrlRedirector;
         }
 
@@ -527,12 +293,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             model.put( Constants.MARK_LIST_ONGLET, listeOnglet );
         }
 
-        ReferenceList levelNotification = ServiceConfigTaskForm.getListNotification( locale );
-        model.put( Constants.MARK_LEVEL_NOTIFICATION_GUICHET, levelNotification );
-        model.put( Constants.MARK_LEVEL_NOTIFICATION_AGENT, levelNotification );
-        model.put( Constants.MARK_LEVEL_NOTIFICATION_EMAIL, levelNotification );
-        model.put( Constants.MARK_LEVEL_NOTIFICATION_SMS, levelNotification );
-        model.put( Constants.MARK_LEVEL_NOTIFICATION_BROADCAST, levelNotification );
+    
 
         model.put( Constants.MARK_MAILING_LIST, _notifyGRUService.getMailingList( request ) );
 

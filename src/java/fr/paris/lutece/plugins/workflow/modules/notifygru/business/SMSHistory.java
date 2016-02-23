@@ -40,42 +40,44 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 public class SMSHistory
 {
     // Variables declarations 
-    private String _strMessageSMS;
-    private String _strLevelNotificationSMS;
+	 private String _strMessageSMS;  
+	    private boolean _ActiveOngletSMS;
 
-    /**
-     * Returns the MessageSMS
-     * @return The MessageSMS
-     */
-    public String getMessageSMS(  )
-    {
-        return _strMessageSMS;
-    }
-
-    /**
-     * Sets the MessageSMS
-     * @param strMessageSMS The MessageSMS
-     */
-    public void setMessageSMS( String strMessageSMS )
-    {
-        _strMessageSMS = strMessageSMS;
-    }
-
-    /**
-     * Returns the LevelNotificationSMS
-     * @return The LevelNotificationSMS
-     */
-    public String getLevelNotificationSMS(  )
-    {
-        return _strLevelNotificationSMS;
-    }
-
-    /**
-     * Sets the LevelNotificationSMS
-     * @param strLevelNotificationSMS The LevelNotificationSMS
-     */
-    public void setLevelNotificationSMS( String strLevelNotificationSMS )
-    {
-        _strLevelNotificationSMS = strLevelNotificationSMS;
-    }
+	      /**
+	        * Returns the MessageSMS
+	        * @return The MessageSMS
+	        */ 
+	    public String getMessageSMS()
+	    {
+	        return _strMessageSMS;
+	    }
+	    
+	       /**
+	        * Sets the MessageSMS
+	        * @param strMessageSMS The MessageSMS
+	        */ 
+	    public void setMessageSMS( String strMessageSMS )
+	    {
+	        _strMessageSMS = strMessageSMS;
+	    }
+	    
+	    
+	    
+	       /**
+	        * Returns the ActiveOngletSMS
+	        * @return The ActiveOngletSMS
+	        */ 
+	    public boolean isActiveOngletSMS()
+	    {
+	        return _ActiveOngletSMS;
+	    }
+	    
+	       /**
+	        * Sets the ActiveOngletSMS
+	        * @param ActiveOngletSMS The ActiveOngletSMS
+	        */ 
+	    public void setActiveOngletSMS( boolean ActiveOngletSMS )
+	    {
+	        _ActiveOngletSMS = ActiveOngletSMS;
+	    }
 }

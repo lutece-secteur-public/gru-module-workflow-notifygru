@@ -167,6 +167,13 @@ $(document).ready(function(){
 
 $("#"+ong+" a").tab('show');
 }); 
+
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+$("#activeOngletHere").val($(e.target).parent().attr("id"));
+})
+
+
 </script>
  </#if>
 <@initEditor />

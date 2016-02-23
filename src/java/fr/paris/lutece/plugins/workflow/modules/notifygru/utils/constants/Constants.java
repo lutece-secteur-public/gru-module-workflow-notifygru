@@ -179,7 +179,8 @@ public final class Constants
     public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.notifygru.message.error_freemarker";
 
     //MESSAGES AGENT
-    public static final String MESSAGE_AGENT_FIELD = "module.workflow.notifygru.message.field.agent";
+    public static final String MESSAGE_AGENT_FIELD_MESSAGE = "module.workflow.notifygru.message.field.agent.message";
+    public static final String MESSAGE_AGENT_FIELD_STATUS = "module.workflow.notifygru.message.field.agent.status";
 
     //MESSAGES SMS 
     public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.field.sms";

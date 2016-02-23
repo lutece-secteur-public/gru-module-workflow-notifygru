@@ -40,42 +40,64 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 public class AgentHistory
 {
     // Variables declarations 
-    private String _strMessageAgent;
-    private String _strLevelNotificationAgent;
+	    private String _strStatustextAgent;
+	    private String _strMessageAgent;
+	    private boolean _ActiveOngletAgent;
 
-    /**
-        * Returns the MessageAgent
-        * @return The MessageAgent
-        */
-    public String getMessageAgent(  )
-    {
-        return _strMessageAgent;
-    }
 
-    /**
-     * Sets the MessageAgent
-     * @param strMessageAgent The MessageAgent
-     */
-    public void setMessageAgent( String strMessageAgent )
-    {
-        _strMessageAgent = strMessageAgent;
-    }
+	    /**
+	        * Returns the StatustextAgent
+	        * @return The StatustextAgent
+	        */ 
+	    public String getStatustextAgent()
+	    {
+	        return _strStatustextAgent;
+	    }
+	    
+	       /**
+	        * Sets the StatustextAgent
+	        * @param strStatustextAgent The StatustextAgent
+	        */ 
+	    public void setStatustextAgent( String strStatustextAgent )
+	    {
+	        _strStatustextAgent = strStatustextAgent;
+	    }
+	    
+	       /**
+	        * Returns the MessageAgent
+	        * @return The MessageAgent
+	        */ 
+	    public String getMessageAgent()
+	    {
+	        return _strMessageAgent;
+	    }
+	    
+	       /**
+	        * Sets the MessageAgent
+	        * @param strMessageAgent The MessageAgent
+	        */ 
+	    public void setMessageAgent( String strMessageAgent )
+	    {
+	        _strMessageAgent = strMessageAgent;
+	    }
+	    
+	       /**
+	        * Returns the ActiveOngletAgent
+	        * @return The ActiveOngletAgent
+	        */ 
+	    public boolean isActiveOngletAgent()
+	    {
+	        return _ActiveOngletAgent;
+	    }
+	    
+	       /**
+	        * Sets the ActiveOngletAgent
+	        * @param ActiveOnglet The ActiveOngletAgent
+	        */ 
+	    public void setActiveOngletAgent( boolean ActiveOngletAgent )
+	    {
+	        _ActiveOngletAgent = ActiveOngletAgent;
+	    }
 
-    /**
-     * Returns the LevelNotificationAgent
-     * @return The LevelNotificationAgent
-     */
-    public String getLevelNotificationAgent(  )
-    {
-        return _strLevelNotificationAgent;
-    }
-
-    /**
-     * Sets the LevelNotificationAgent
-     * @param strLevelNotificationAgent The LevelNotificationAgent
-     */
-    public void setLevelNotificationAgent( String strLevelNotificationAgent )
-    {
-        _strLevelNotificationAgent = strLevelNotificationAgent;
-    }
+ 
 }
