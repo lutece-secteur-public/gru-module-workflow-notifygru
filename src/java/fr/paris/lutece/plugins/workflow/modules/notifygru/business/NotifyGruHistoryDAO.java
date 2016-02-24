@@ -56,7 +56,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
             "recipients_cc_broadcast,recipients_cci_broadcast," +
             "is_active_onglet_broadcast " +
-            " FROM workflow_task_notify_gru_history  WHERE id_task = ?";
+            " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
     
     
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( " +

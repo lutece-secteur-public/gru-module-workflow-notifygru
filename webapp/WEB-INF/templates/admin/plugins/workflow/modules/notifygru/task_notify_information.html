@@ -1,32 +1,55 @@
     <#if information_history?exists>
-
-<a tabindex="0" class="btn btn-primary btn-sm" role="button"  data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
+    
+    <#if information_history.guichet.activeOngletGuichet>
+    <a tabindex="0" class="btn btn-primary btn-sm" role="button"  data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
  data-content="${information_history.guichet.messageGuichet!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}
 </a>
+    </#if>
+    <br/>
     
-    <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
+      <#if information_history.email.activeOngletEmail>
+      
+        <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
  data-content="${information_history.email.messageEmail!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_email}
 </a>
 
-<a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
+    </#if>
+     <br/>
+      <#if information_history.agent.activeOngletAgent>
+      <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
  data-content="${information_history.agent.messageAgent!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}
 </a>
-    
-
-<a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" 
+    </#if>
+     <br/>
+      <#if information_history.SMS.activeOngletSMS>
+      <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" 
  data-content="${information_history.SMS.messageSMS!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}
 </a>
+    </#if>
+ <br/>
 
-
-
+   <#if information_history.broadCast.activeOngletBroadcast>
+   
 <a tabindex="0" class="btn btn-primary btn-sm" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.broadCast.subjectBroadcast!}"
  data-content="${information_history.broadCast.messageBroadcast!}">
 #i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}
 </a>
+    </#if>
+
+    
+  
+
+
+    
+
+
+
+
+
 
 </#if>
 

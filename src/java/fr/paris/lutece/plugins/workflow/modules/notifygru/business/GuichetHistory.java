@@ -165,6 +165,15 @@ public class GuichetHistory
 	        return _ActiveOngletGuichet;
 	    }
 	    
+	    /**
+	        * Returns the ActiveOngletGuichet
+	        * @return The ActiveOngletGuichet
+	        */ 
+	    public boolean getActiveOngletGuichet()
+	    {
+	        return _ActiveOngletGuichet;
+	    }
+	    
 	       /**
 	        * Sets the ActiveOngletGuichet
 	        * @param ActiveOngletGuichet The ActiveOngletGuichet
