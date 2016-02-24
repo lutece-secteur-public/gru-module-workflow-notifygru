@@ -309,15 +309,16 @@ public class TaskNotifyGru extends SimpleTask
         String strMessageEmail, TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         JSONObject backOfficeLogginJson = new JSONObject(  );
-        backOfficeLogginJson.accumulate( Constants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, config.getStatustextGuichet(  ) );
+        backOfficeLogginJson.accumulate( Constants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, config.getStatustextAgent(  ) );
 
         HtmlTemplate tMessageAgent = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
         String strMessageAgent = this.getHTMLEntities( tMessageAgent.getHtml(  ) );
         
-        
+    
 
         backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
+        /*  
         backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_ON_DASHBOARD,
             ( config.isActiveOngletGuichet(  ) ) ? 1 : 0 );
         backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_BY_EMAIL, ( config.isActiveOngletEmail(  ) ) ? 1 : 0 );
@@ -352,7 +353,7 @@ public class TaskNotifyGru extends SimpleTask
                 Constants.MESSAGE_DISPLAY_SMS + " " +
                 _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) +
                 Constants.MESSAGE_DISPLAY_MESSAGE_SMS + " " + strMessageSMS );
-        }
+        } */
 
         return backOfficeLogginJson;
     }
