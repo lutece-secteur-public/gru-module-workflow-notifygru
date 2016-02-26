@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS workflow_task_notify_gru_history;
 /* Table structure for table workflow_task_notify_gru_cf					*/
 /*==============================================================*/
 
+
+  
+  
 CREATE TABLE workflow_task_notify_gru_cf(
   id_task INT DEFAULT NULL, 
  id_spring_provider VARCHAR(255) DEFAULT NULL,

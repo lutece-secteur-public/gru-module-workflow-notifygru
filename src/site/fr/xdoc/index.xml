@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
     <properties>
-        <title>Plugin moduleworkflownotifygru</title>
+        <title>       
+          Module NotifyGru : Tâche (module) du PLugin Workflow
+           
+        </title>
     </properties>
     <body>
-        <section name="Plugin moduleworkflownotifygru">
+        <section name="Module NotifyGru">
             <!--
             <p>
                 <img src="images/moduleworkflownotifygru.png" />
             </p>
             -->
-            <subsection name="Introduction">
+             <subsection name="Introduction">
+                Le module NotifyGru est une tâche du Workflow qui
+           permet à partir d'une ressource de construire un FLux 
+           JSON associé et de l'envoyé  vers une entité de traitement
+            </subsection>
+           
+            <subsection name="Fournisseur de ressource">
                 <p></p>
             </subsection>
-            <subsection name="Configuration">
+            
+            <subsection name="Configuration de la tâche">
                 <p></p>
             </subsection>
-            <subsection name="Usage">
+            
+            <subsection name="Utilisation de la tâche">
                 <p></p>
             </subsection>
+            
         </section>
     </body>
 </document>

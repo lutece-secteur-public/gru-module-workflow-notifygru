@@ -88,8 +88,8 @@ public class TaskNotifyGru extends SimpleTask
     private static final Pattern REMOVE_TAGS = Pattern.compile( "<.+?>" );
     private static final String _DEFAULT_VALUE_JSON = "";
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
-    private static final int CRM_STATUS_ID = 1;
-    private static final int DISPLAY_LEVEL_NOTIFICATION = 1;
+    private static final int CRM_STATUS_ID = 1;    
+    private static final int _DEFAULT_VALUE_ID_DEMAND = -1;
 
     // SERVICES 
     @Inject
@@ -123,7 +123,7 @@ public class TaskNotifyGru extends SimpleTask
         NotifyGruHistory notifyGruHistory = new NotifyGruHistory(  );
         notifyGruHistory.setIdTask( this.getId(  ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
-    
+        
       
         ITask task = (config!=null)?_taskDOA.load(config.getIdTask(), locale):null;
     
@@ -253,9 +253,7 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_DEMAND_DATE_TIMESTAMP, dateSendNotificationJson.getTime(  ) );
 
         int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
-        notificationJson.accumulate( Constants.MARK_ID_DEMAND,
-            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )
-            ? _notifyGruService.getOptionalDemandId( nIdResourceHistory ) : _DEFAULT_VALUE_JSON ) );
+        notificationJson.accumulate( Constants.MARK_ID_DEMAND, _DEFAULT_VALUE_ID_DEMAND );
         notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND,
             ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )
             ? _notifyGruService.getOptionalDemandId( nIdResourceHistory ) : _DEFAULT_VALUE_JSON ) );
@@ -318,42 +316,7 @@ public class TaskNotifyGru extends SimpleTask
     
 
         backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
-        /*  
-        backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_ON_DASHBOARD,
-            ( config.isActiveOngletGuichet(  ) ) ? 1 : 0 );
-        backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_BY_EMAIL, ( config.isActiveOngletEmail(  ) ) ? 1 : 0 );
-        backOfficeLogginJson.accumulate( Constants.MARK_NOTIFIED_BY_SMS, ( config.isActiveOngletSMS(  ) ) ? 1 : 0 );
-
-        if ( config.isActiveOngletGuichet(  ) )
-        {
-            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_DASHBOARD_NOTIFICATION,
-            //                DISPLAY_LEVEL_NOTIFICATION );
-            backOfficeLogginJson.accumulate( Constants.MARK_VIEW_DASHBOARD_NOTIFICATION,
-                Constants.MARK_DISPLAY_MESSAGE + " " + strMessageGuichet );
-        }
-
-        if ( config.isActiveOngletEmail(  ) )
-        {
-            
-              HtmlTemplate tSubjectEmail = AppTemplateService.getTemplateFromStringFtl( config.getSubjectEmail(  ), locale,
-                _notifyGruService.getInfos( nIdResourceHistory ) );
-        String strSubjectEmail = this.getHTMLEntities( tSubjectEmail.getHtml(  ) );
-            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_EMAIL_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
-            backOfficeLogginJson.accumulate( Constants.MARK_VIEW_EMAIL_NOTIFICATION,
-                Constants.MESSAGE_DISPLAY_EMAIL + " " + _notifyGruService.getUserEmail( nIdResourceHistory ) +
-                Constants.MESSAGE_DISPLAY_OBJECT + " " + strSubjectEmail +
-                Constants.MESSAGE_DISPLAY_MESSAGE_EMAIL + " " + strMessageEmail );
-        }
-
-        if ( config.isActiveOngletSMS(  ) &&
-                StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
-        {
-            //            backOfficeLogginJson.accumulate( Constants.MARK_DISPLAY_LEVEL_SMS_NOTIFICATION, DISPLAY_LEVEL_NOTIFICATION );
-            backOfficeLogginJson.accumulate( Constants.MARK_VIEW_SMS_NOTIFICATION,
-                Constants.MESSAGE_DISPLAY_SMS + " " +
-                _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) +
-                Constants.MESSAGE_DISPLAY_MESSAGE_SMS + " " + strMessageSMS );
-        } */
+ 
 
         return backOfficeLogginJson;
     }

@@ -2,17 +2,17 @@
 <project>
     <body>
         <links>
-            <item name="FR" href="/fr/index.html" />
+            <item name="EN" href="/fr/index.html" />
         </links>
         
-        <menu name="Plugin moduleworkflownotifygru">
+        <!-- <menu name="Plugin moduleworkflownotifygru">
             <item name="Home" href="index.html"/>
         </menu>
         
         <menu name="Downloads" inherit="bottom">
             <item name="Released versions" href="../../stable_builds/plugins/plugin-moduleworkflownotifygru/"/>
             <item name="Nightly builds" href="../../nightly_builds/plugins/plugin-moduleworkflownotifygru/" />
-        </menu>
+        </menu> -->
 
     <!--
         <menu name="Other links">

@@ -2,10 +2,10 @@
 <project>
     <body>
         <links>
-            <item name="EN" href="../index.html" />
+            <item name="FR" href="../index.html" />
         </links>
         
-        <menu name="Plugin moduleworkflownotifygru">
+        <!-- <menu name="Plugin moduleworkflownotifygru">
             <item name="Accueil" href="index.html"/>
         </menu>
         
@@ -13,7 +13,7 @@
             <item name="Versions stables" href="../../../stable_builds/plugins/plugin-moduleworkflownotifygru/"/>
             <item name="Nightly builds" href="../../../nightly_builds/plugins/plugin-moduleworkflownotifygru/" />
         </menu>
-
+ -->
     <!--
         <menu name="Other links">
             <item name="" href="" target="_blank"/>
