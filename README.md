@@ -21,11 +21,60 @@ Un gestionnaire de fournisseur de ressource fait le lien entre la tâche notifyG
 
 ##Configuration de la tâche
 
+La configuration de NotifyGru se fait en deux étapes :
 
+ 
+* Une première page avec deux champs immutables:
+ 
+* Un liste de choix pour choisir le fournisseur de ressource parmi les différentes implémentations des fournisseurs disponibles
+* Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
+
+
+La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signetsdu fournisseur de ressource afin de parametrer le message ou l'object du message qui sera traité lors de l'exécution de la tâche
+
+ 
+* Onglet Tableau de Bord :
+ 
+* Statut de la demande (obligatoire)
+* Nom de l'expediteur (obligatoire)
+* Objet (obligatoire)
+* message (obligatoire)
+* Message (obligatoire)
+* Nombre d'étapes (optionnel)
+* Etape actuelle (optionnel)
+
+* Onglet Vue Agent 306°:
+ 
+* Statut dans la Vue 360° (obligatoire)
+* Description de l’événement dans la Vue 360° (obligatoire)
+
+* Onglet MAIL :
+ 
+* Expéditeur (obligatoire)
+* Objet (obligatoire)
+* Cc (optionnel)
+* Cci (optionnel)
+* Message (ogligatoire)
+
+* Onglet SMS :
+ 
+* Message (ogligatoire)
+
+* Onglet Liste de diffusion :
+ 
+* Liste de diffusion (obligatoire)
+* Expéditeur (obligatoire)
+* Objet (obligatoire)
+* Cc (optionnel)
+* Cci (optionnel)
+* Message (obligatoire)
+
+
+Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner les paramètres (URL, TOKEN, ORIGIN) de l'entité externe qui recevra le Flux Json.
 
 ##Utilisation de la tâche
 
-
+Lorsque le service reçoit une demande, la tâche est lancé (automatique ou manuelle) et le fournisseur indiqué lors de la configuration se charge de recupérer toutes les informations nécessaires pour construirele flux JSON à envoyé à l'entité externe
 
 
 [Maven documentation and reports](http://dev.lutece.paris.fr/plugins/module-workflow-notifygru/)
