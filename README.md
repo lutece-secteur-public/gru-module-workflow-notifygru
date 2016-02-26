@@ -22,13 +22,10 @@ Un gestionnaire de fournisseur de ressource fait le lien entre la tâche notifyG
 ##Configuration de la tâche
 
  **La configuration de NotifyGru se fait en deux étapes :** 
-
- 
-*  **Une première page avec deux champs immutables:** 
+ **Une première page avec deux champs immutables:** 
  
 * Un liste de choix pour choisir le fournisseur de ressource parmi les différentes implémentations des fournisseurs disponibles
 * Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
-
 
 La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signetsdu fournisseur de ressource afin de parametrer le message ou l'object du message qui sera traité lors de l'exécution de la tâche
 

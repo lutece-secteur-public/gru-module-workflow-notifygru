@@ -43,9 +43,10 @@
             
             <subsection name="Configuration de la tâche">
                     <p> <strong>La configuration de NotifyGru se fait en deux étapes : </strong></p>
-                    <ul>
                     
-                    <li> <strong>Une première page avec deux champs immutables:  </strong> </li>
+                    <strong>Une première page avec deux champs immutables:  </strong>
+                 
+                 
                      <ul>
                      <li> Un liste de choix pour choisir le fournisseur de ressource parmi les différentes implémentations des fournisseurs disponibles</li>
                      <li>Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. 
@@ -54,7 +55,7 @@
                      </ul>
                     
                    
-                    </ul>
+                    
                 
                 <p>La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet
                 il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signets
