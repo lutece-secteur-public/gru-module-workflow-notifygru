@@ -61,9 +61,8 @@
                 il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signets
                 du fournisseur de ressource afin de parametrer 
                 le message ou l'object du message qui sera traité lors de l'exécution de la tâche </p>
-                
-                  <ol>
-         <li> <strong>Onglet Tableau de Bord  :  </strong>
+               
+                <strong>Onglet Tableau de Bord  :  </strong>
          
          <ul>
          <li>Statut de la demande (obligatoire) </li>
@@ -74,20 +73,21 @@
          <li>Nombre d'étapes (optionnel)</li>
          <li>Etape actuelle  (optionnel)</li>
          </ul>
-         </li>
+      
+<p></p>
          
          
-         <li> <strong>Onglet Vue Agent 306°: </strong>
+       <strong>Onglet Vue Agent 306°: </strong>
          
          <ul>
          <li>Statut dans la Vue 360° (obligatoire)</li>
          <li>Description de l’événement dans la Vue 360° (obligatoire)</li>
          </ul>
+  <p></p>       
+        
          
-         </li>
          
-         
-         <li> <strong>Onglet MAIL : </strong>
+         <strong>Onglet MAIL : </strong>
          <ul>
          <li>Expéditeur (obligatoire)</li>
          <li>Objet (obligatoire)</li>
@@ -95,13 +95,17 @@
          <li>Cci (optionnel)</li>
          <li>Message  (ogligatoire)</li>
          </ul>
-         </li>
-         <li> <strong>Onglet SMS : </strong>
+     
+     <p></p>
+     
+      
+ <strong>Onglet SMS : </strong>
          <ul>
          <li>Message (ogligatoire)</li>
          </ul>
-         </li>
-         <li> <strong>Onglet Liste de diffusion : </strong>
+      
+<p></p>
+      <strong>Onglet Liste de diffusion : </strong>
          
           <ul>
          <li>Liste de diffusion (obligatoire)</li>
@@ -111,8 +115,8 @@
          <li>Cci (optionnel)</li>
          <li>Message (obligatoire)</li>
          </ul>
-         </li>
-          </ol>
+       <p></p>
+       
           
           
           <p>Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner 

@@ -28,8 +28,7 @@ Un gestionnaire de fournisseur de ressource fait le lien entre la tâche notifyG
 * Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
 
 La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signetsdu fournisseur de ressource afin de parametrer le message ou l'object du message qui sera traité lors de l'exécution de la tâche
-
-*  **Onglet Tableau de Bord :** 
+ **Onglet Tableau de Bord :** 
  
 * Statut de la demande (obligatoire)
 * Nom de l'expediteur (obligatoire)
@@ -39,12 +38,14 @@ La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet i
 * Nombre d'étapes (optionnel)
 * Etape actuelle (optionnel)
 
-*  **Onglet Vue Agent 306°:** 
+
+ **Onglet Vue Agent 306°:** 
  
 * Statut dans la Vue 360° (obligatoire)
 * Description de l’événement dans la Vue 360° (obligatoire)
 
-*  **Onglet MAIL :** 
+
+ **Onglet MAIL :** 
  
 * Expéditeur (obligatoire)
 * Objet (obligatoire)
@@ -52,11 +53,13 @@ La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet i
 * Cci (optionnel)
 * Message (ogligatoire)
 
-*  **Onglet SMS :** 
+
+ **Onglet SMS :** 
  
 * Message (ogligatoire)
 
-*  **Onglet Liste de diffusion :** 
+
+ **Onglet Liste de diffusion :** 
  
 * Liste de diffusion (obligatoire)
 * Expéditeur (obligatoire)
@@ -64,6 +67,8 @@ La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet i
 * Cc (optionnel)
 * Cci (optionnel)
 * Message (obligatoire)
+
+
 
 Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner les paramètres (URL, TOKEN, ORIGIN) de l'entité externe qui recevra le Flux Json.
 
