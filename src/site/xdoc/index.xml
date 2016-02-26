@@ -39,12 +39,90 @@
    </p>
             </subsection>
             
+            
+            
             <subsection name="Configuration de la tâche">
-                <p></p>
+                    <p>La configuration de NotifyGru se fait en deux étapes :</p>
+                    <ul>
+                    
+                    <li>Une première page avec deux champs immutables: 
+                     <ul>
+                     <li> Un liste de choix pour choisir le fournisseur de ressource parmi les différentes implémentations des fournisseurs disponibles</li>
+                     <li>Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. 
+                      La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
+                </li>
+                     </ul>
+                    
+                    </li>
+                    </ul>
+                
+                <p>La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet
+                il faut l'activer via l'option "Ajouter une notification*". Pour chaque onglet vous pouvez utiliser les signets
+                du fournisseur de ressource afin de parametrer 
+                le message ou l'object du message qui sera traité lors de l'exécution de la tâche </p>
+                
+                  <ul>
+         <li>Onglet Tableau de Bord  : 
+         
+         <ul>
+         <li>Statut de la demande (obligatoire) </li>
+         <li>Nom de l'expediteur (obligatoire)</li>
+         <li>Objet (obligatoire)</li>
+         <li>message (obligatoire)</li>
+         <li>Message (obligatoire)</li>
+         <li>Nombre d'étapes (optionnel)</li>
+         <li>Etape actuelle  (optionnel)</li>
+         </ul>
+         </li>
+         
+         
+         <li>Onglet Vue Agent 306°:
+         
+         <ul>
+         <li>Statut dans la Vue 360° (obligatoire)</li>
+         <li>Description de l’événement dans la Vue 360° (obligatoire)</li>
+         </ul>
+         
+         </li>
+         
+         
+         <li>Onglet MAIL :
+         <ul>
+         <li>Expéditeur (obligatoire)</li>
+         <li>Objet (obligatoire)</li>
+         <li>Cc (optionnel)</li>
+         <li>Cci (optionnel)</li>
+         <li>Message  (ogligatoire)</li>
+         </ul>
+         </li>
+         <li>Onglet SMS :
+         <ul>
+         <li>Message (ogligatoire)</li>
+         </ul>
+         </li>
+         <li>Onglet Liste de diffusion :
+         
+          <ul>
+         <li>Liste de diffusion (obligatoire)</li>
+         <li>Expéditeur (obligatoire)</li>
+         <li>Objet (obligatoire)</li>
+         <li>Cc (optionnel)</li>
+         <li>Cci (optionnel)</li>
+         <li>Message (obligatoire)</li>
+         </ul>
+         </li>
+          </ul>
+          
+          
+          <p>Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner 
+          les paramètres (URL, TOKEN, ORIGIN) de l'entité externe qui recevra le Flux Json.</p>
+         
             </subsection>
             
             <subsection name="Utilisation de la tâche">
-                <p></p>
+                <p>Lorsque le service reçoit une demande, la tâche est lancé (automatique ou manuelle) et le fournisseur
+                indiqué lors de la configuration se charge de recupérer toutes les informations nécessaires pour construire 
+                le flux JSON à envoyé à l'entité externe</p>
             </subsection>
             
         </section>
