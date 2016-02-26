@@ -28,11 +28,11 @@
                 <p>On distingue deux types de fournisseur de ressource :  </p>
                 <p>
       <ul>
-         <li>Les fournisseurs de ressource :  <p></p>
+         <li> <strong>Les fournisseurs de ressource :  </strong> <p></p>
           Un fournisseur de ressource fait le lien antre la tâche NotifyGru et un seul et unique formulaire se service d'un plugin.
           C'est le cas du plugin ticketing contitué d'un unique formulaire de ressource. 
          </li>
-         <li>Les gestionnaires de fournisseurs de ressource : <p></p>
+         <li> <strong>Les gestionnaires de fournisseurs de ressource :  </strong><p></p>
          Un gestionnaire de fournisseur de ressource fait le lien entre la tâche notifyGru et chaque formulaire se service d'un plugin.
          C'est le cas de rendez-vous, directory où on peut avoir plusieurs formulaire de services </li>
       </ul>
@@ -42,10 +42,10 @@
             
             
             <subsection name="Configuration de la tâche">
-                    <p>La configuration de NotifyGru se fait en deux étapes :</p>
+                    <p> <strong>La configuration de NotifyGru se fait en deux étapes : </strong></p>
                     <ul>
                     
-                    <li>Une première page avec deux champs immutables: 
+                    <li> <strong>Une première page avec deux champs immutables:  </strong> </li>
                      <ul>
                      <li> Un liste de choix pour choisir le fournisseur de ressource parmi les différentes implémentations des fournisseurs disponibles</li>
                      <li>Le champs checkbox permettra de valorisé le champs demand_status du flux notification V1. 
@@ -53,7 +53,7 @@
                 </li>
                      </ul>
                     
-                    </li>
+                   
                     </ul>
                 
                 <p>La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet
@@ -61,8 +61,8 @@
                 du fournisseur de ressource afin de parametrer 
                 le message ou l'object du message qui sera traité lors de l'exécution de la tâche </p>
                 
-                  <ul>
-         <li>Onglet Tableau de Bord  : 
+                  <ol>
+         <li> <strong>Onglet Tableau de Bord  :  </strong>
          
          <ul>
          <li>Statut de la demande (obligatoire) </li>
@@ -76,7 +76,7 @@
          </li>
          
          
-         <li>Onglet Vue Agent 306°:
+         <li> <strong>Onglet Vue Agent 306°: </strong>
          
          <ul>
          <li>Statut dans la Vue 360° (obligatoire)</li>
@@ -86,7 +86,7 @@
          </li>
          
          
-         <li>Onglet MAIL :
+         <li> <strong>Onglet MAIL : </strong>
          <ul>
          <li>Expéditeur (obligatoire)</li>
          <li>Objet (obligatoire)</li>
@@ -95,12 +95,12 @@
          <li>Message  (ogligatoire)</li>
          </ul>
          </li>
-         <li>Onglet SMS :
+         <li> <strong>Onglet SMS : </strong>
          <ul>
          <li>Message (ogligatoire)</li>
          </ul>
          </li>
-         <li>Onglet Liste de diffusion :
+         <li> <strong>Onglet Liste de diffusion : </strong>
          
           <ul>
          <li>Liste de diffusion (obligatoire)</li>
@@ -111,7 +111,7 @@
          <li>Message (obligatoire)</li>
          </ul>
          </li>
-          </ul>
+          </ol>
           
           
           <p>Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner 
