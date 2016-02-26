@@ -2,9 +2,21 @@
 #Module NotifyGru
 
 ##Introduction
-Le module NotifyGru est une tâche du Workflow qui permet à partir d'une ressource de construire un FLuxJSON associé et de l'envoyé vers une entité de traitement
+Le module NotifyGru est une tâche du Workflow qui permet, à partir d'une ressource, de construire un FLuxJSON associé et de l'envoyer vers une entité de traitement
 ##Fournisseur de ressource
 
+NotifyGru est une tâche générique dans la mesure où elle permet de travailler avec n'importe quel fournisseur de ressource (ticketing, rende-vous, annuaire,...).Ainsi pour chaque service (ticketing, rendez-vous, annuaire...) un provider sera implémenté pour fournir le maximumd'information sur la ressource.
+
+On distingue deux types de fournisseur de ressource :
+
+
+ 
+* Les fournisseurs de ressource :
+
+Un fournisseur de ressource fait le lien antre la tâche NotifyGru et un seul et unique formulaire se service d'un plugin. C'est le cas du plugin ticketing contitué d'un unique formulaire de ressource.
+* Les gestionnaires de fournisseurs de ressource :
+
+Un gestionnaire de fournisseur de ressource fait le lien entre la tâche notifyGru et chaque formulaire se service d'un plugin. C'est le cas de rendez-vous, directory où on peut avoir plusieurs formulaire de services
 
 
 ##Configuration de la tâche
