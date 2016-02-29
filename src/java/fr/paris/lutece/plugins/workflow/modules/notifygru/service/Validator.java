@@ -58,8 +58,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class Validator
 {
-	
-	 private static final String VALUE_CHECKBOX = "on";
+    
+    /** The Constant VALUE_CHECKBOX. */
+    private static final String VALUE_CHECKBOX = "on";
+
     /**
      * Instantiates a new validator.
      *
@@ -170,355 +172,418 @@ public final class Validator
 
         return false;
     }
-    
-    public static String isValideBuildProviderService( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, ITask task )
+
+    /**
+     * Checks if is valide build provider service.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param task the task
+     * @return the string
+     */
+    public static String isValideBuildProviderService( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, ITask task )
     {
-    	  String  strUrlRedirector="";
-    	  String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
-    	  int nDemandStatus= (VALUE_CHECKBOX.equals(request.getParameter( Constants.PARAMETER_DEMAND_STATUS )))?1:0;
-    	  
-    	  if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider,task ) )
-          {
-             
-              config.setIdSpringProvider( strProvider );     
-              config.setDemandStatus(nDemandStatus);
-             
-          }
+        String strUrlRedirector = "";
+        String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
+        int nDemandStatus = ( VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
 
-          /*if the provider is already register*/
-          else if ( config.getIdSpringProvider(  ) == null )
-          {
-              Object[] tabRequiredFields = 
-                  {
-                      I18nService.getLocalizedString( Constants.MESSAGE_MANDATORY_PROVIDER, locale ),
-                  };
-           
-              strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER,
-                      tabRequiredFields, AdminMessage.TYPE_STOP );
-          }
-          else if ( ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ),task ) )
-          {
-              _providerService =  ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ),task );
-          }
-    	  
-    	  
-    	return strUrlRedirector;
-    }
-    
-    public static String isValideBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, String strApply )
-    {
-    	 String  strUrlRedirector="";
-    	
-             ArrayList<String> errors = new ArrayList<String>(  );
-             String strMessageGuichet = request.getParameter( Constants.PARAMETER_MESSAGE_GUICHET );
-             String strStatusTextGuichet = request.getParameter( Constants.PARAMETER_STATUS_TEXT_GUICHET );
-             String strSenderNameGuichet = request.getParameter( Constants.PARAMETER_SENDER_NAME_GUICHET );
-             String strSubjectGuichet = request.getParameter( Constants.PARAMETER_SUBJECT_GUICHET );
-
-             //optional
-             String strDemandMaxStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
-             int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandMaxStepGuichet );
-             String strDemandUserCurrentStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
-             int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandUserCurrentStepGuichet );
-
-             if ( StringUtils.isBlank( strApply ) )
-             {
-                 if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageGuichet,
-                                 Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) ) )
-                 {
-                     errors.add( Validator.mandotoryParams( strMessageGuichet,
-                             Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) );
-                 }
-
-                 if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatusTextGuichet,
-                                 Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) ) )
-                 {
-                     errors.add( Validator.mandotoryParams( strStatusTextGuichet,
-                             Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) );
-                 }
-
-                 if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameGuichet,
-                                 Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) ) )
-                 {
-                     errors.add( Validator.mandotoryParams( strSenderNameGuichet,
-                             Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) );
-                 }
-
-                 if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectGuichet,
-                                 Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) ) )
-                 {
-                     errors.add( Validator.mandotoryParams( strSubjectGuichet,
-                             Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
-                 }
-
-                 if ( !Validator.isFreemarkerValid( strMessageGuichet +' '+strSubjectGuichet, locale, _providerService.getInfos( -1 ) ) )
-                 {
-                     Object[] tabRequiredFields = 
-                         {
-                             I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                         };
-                   
-                     strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                             tabRequiredFields, AdminMessage.TYPE_STOP );
-                 }
-             }
-
-             if ( !errors.isEmpty(  ) )
-             {
-            	 strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
-             }
-
-             if(StringUtils.isBlank(strUrlRedirector))
-             {            	 
-            	 config.setMessageGuichet( strMessageGuichet );          
-                 config.setStatustextGuichet( strStatusTextGuichet );
-                 config.setSenderNameGuichet( strSenderNameGuichet );
-                 config.setSubjectGuichet( strSubjectGuichet );
-                 config.setDemandMaxStepGuichet( nDemandMaxStepGuichet );
-                 config.setDemandUserCurrentStepGuichet( nDemandUserCurrentStepGuichet );
-             }
-            
-
-             /*fin guichet*/
-      
-    	
-    	 return strUrlRedirector;
-    }
-    
-    public static String isValideBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, String strApply )
-    {
-    	
-    	 String  strUrlRedirector="";
-    	 
-    	 /*Agent*/
-         ArrayList<String> errors = new ArrayList<String>(  );
-         String strMessageAgent = request.getParameter( Constants.PARAMETER_STATUS_MESSAGE_AGENT );
-         String strStatutTextAgent = request.getParameter( Constants.PARAMETER_STATUS_TEXT_AGENT );
-
-         if ( StringUtils.isBlank( strApply ) )
-         {
-             if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD_MESSAGE,
-                             locale ) ) )
-             {
-                 errors.add( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) );
-             }
-             
-             if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS,
-                     locale ) ) )
-     {
-         errors.add( Validator.mandotoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) );
-     }
-
-             if ( !Validator.isFreemarkerValid( strMessageAgent, locale, _providerService.getInfos( -1 ) ) )
-             {
-                 Object[] tabRequiredFields = 
-                     {
-                         I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                     };
-               
-                 strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                         tabRequiredFields, AdminMessage.TYPE_STOP );
-             }
-         }
-
-         if ( !errors.isEmpty(  ) )
-         {
-        	 strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
-         }
-         if(StringUtils.isBlank(strUrlRedirector))
-         {   
-         config.setMessageAgent( strMessageAgent );
-         config.setStatustextAgent( strStatutTextAgent );
-         }
-    	 
-    	 return strUrlRedirector;
-    }
-    
-    public static String isValideBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, String strApply )
-    {
-    
-   	 String  strUrlRedirector="";
-   	 
-   	/*email*/
-     ArrayList<String> errors = new ArrayList<String>(  );
-
-     String strSubjectEmail = request.getParameter( Constants.PARAMETER_SUBJECT_EMAIL );
-     String strMessageEmail = request.getParameter( Constants.PARAMETER_MESSAGE_EMAIL );
-     String strSenderNameEmail = request.getParameter( Constants.PARAMETER_SENDER_NAME_EMAIL );
-     String strRecipientsCcEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_EMAIL );
-     String strRecipientsCciEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_EMAIL );
-
-     if ( StringUtils.isBlank( strApply ) )
-     {
-         if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectEmail,
-                         Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) ) )
-         {
-             errors.add( Validator.mandotoryParams( strSubjectEmail, Constants.MESSAGE_EMAIL_SUBJECT_FIELD,
-                     locale ) );
-         }
-
-         if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameEmail,
-                         Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) ) )
-         {
-             errors.add( Validator.mandotoryParams( strSenderNameEmail,
-                     Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) );
-         }
-
-         if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageEmail,
-                         Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) ) )
-         {
-             errors.add( Validator.mandotoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD,
-                     locale ) );
-         }
-
-         if ( !Validator.isFreemarkerValid( strMessageEmail+' '+strSubjectEmail, locale, _providerService.getInfos( -1 ) ) )
-         {
-             Object[] tabRequiredFields = 
-                 {
-                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                 };
-          
-             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                     tabRequiredFields, AdminMessage.TYPE_STOP );
-         }
-     }
-
-     if ( !errors.isEmpty(  ) )
-     {
-    	 strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
-     }
-
-     if(StringUtils.isBlank(strUrlRedirector))
-     {   
-     config.setSubjectEmail( strSubjectEmail );
-     config.setMessageEmail( strMessageEmail );
-     config.setSenderNameEmail( strSenderNameEmail );
-     config.setRecipientsCcEmail( strRecipientsCcEmail );
-     config.setRecipientsCciEmail( strRecipientsCciEmail );
-     }
-     
-   	 return strUrlRedirector;
-    
-    }
-    
-    public static String isValideBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, String strApply )
-    {
-    
-   	 String  strUrlRedirector="";
-   	 
-   	 /*sms*/
-     ArrayList<String> errors = new ArrayList<String>(  );
-     String strMessageSMS = request.getParameter( Constants.PARAMETER_MESSAGE_SMS );
-  
-
-     if ( StringUtils.isBlank( strApply ) )
-     {
-         if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD,
-                         locale ) ) )
-         {
-             errors.add( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
-         }
-
-         if ( !Validator.isFreemarkerValid( strMessageSMS, locale, _providerService.getInfos( -1 ) ) )
-         {
-             Object[] tabRequiredFields = 
-                 {
-                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
-                 };
-          
-             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
-                     tabRequiredFields, AdminMessage.TYPE_STOP );
-         }
-     }
-
-     if ( !errors.isEmpty(  ) )
-     {
-    	 strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
-     }
-     
-     
-     if(StringUtils.isBlank(strUrlRedirector))
-     {   
-     config.setMessageSMS( strMessageSMS );     
-     }
-    
- 	 return strUrlRedirector;
-    }
-    
-    public static String isValideBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider _providerService, Locale locale, String strApply )
-    {
-    
-   	 String  strUrlRedirector="";
-    
-   	ArrayList<String> errors = new ArrayList<String>(  );
-    String strIdMailingListBroadcast = request.getParameter( Constants.PARAMETER_ID_MAILING_LIST );
-    int nIdMailingListBroadcast = ( strIdMailingListBroadcast == null ) ? WorkflowUtils.CONSTANT_ID_NULL
-                                                                        : Integer.parseInt( strIdMailingListBroadcast );
-
-    String strsenderNameBroadcast = request.getParameter( Constants.PARAMETER_SENDER_NAME_BROADCAST );
-    String strsubjectBroadcast = request.getParameter( Constants.PARAMETER_SUBJECT_BROADCAST );
-    String strmessageBroadcast = request.getParameter( Constants.PARAMETER_MESSAGE_BROADCAST );
-    String strrecipientsCcBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_BROADCAST );
-    String strrecipientsCciBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_BROADCAST );
-
-    if ( StringUtils.isBlank( strApply ) )
-    {
-        if ( StringUtils.isNotBlank( Validator.mandotoryParams( strIdMailingListBroadcast,
-                        Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
+        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider, task ) )
         {
-            errors.add( Validator.mandotoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
-                    locale ) );
+            config.setIdSpringProvider( strProvider );
+            config.setDemandStatus( nDemandStatus );
         }
 
-        if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsenderNameBroadcast,
-                        Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) ) )
-        {
-            errors.add( Validator.mandotoryParams( strsenderNameBroadcast,
-                    Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) );
-        }
-
-        if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsubjectBroadcast,
-                        Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) ) )
-        {
-            errors.add( Validator.mandotoryParams( strsubjectBroadcast, Constants.MESSAGE_LIST_SUBJECT_FIELD,
-                    locale ) );
-        }
-
-        if ( StringUtils.isNotBlank( Validator.mandotoryParams( strmessageBroadcast,
-                        Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) ) )
-        {
-            errors.add( Validator.mandotoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD,
-                    locale ) );
-        }
-
-        if ( !Validator.isFreemarkerValid( strmessageBroadcast+' '+strsubjectBroadcast, locale, _providerService.getInfos( -1 ) ) )
+        /*if the provider is already register*/
+        else if ( config.getIdSpringProvider(  ) == null )
         {
             Object[] tabRequiredFields = 
                 {
-                    I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    I18nService.getLocalizedString( Constants.MESSAGE_MANDATORY_PROVIDER, locale ),
                 };
-        
-            strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+
+            strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
         }
+
+        return strUrlRedirector;
     }
 
-    if ( !errors.isEmpty(  ) )
+    /**
+     * Gets the valide build provider service.
+     *
+     * @param config the config
+     * @param task the task
+     * @return the valide build provider service
+     */
+    public static AbstractServiceProvider getValideBuildProviderService( TaskNotifyGruConfig config, ITask task )
     {
-    	strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        AbstractServiceProvider providerService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ),
+                task );
+
+        return providerService;
     }
 
-    /* fin liste diffusion*/
-    if(StringUtils.isBlank(strUrlRedirector))
-    {   
-    config.setIdMailingListBroadcast( nIdMailingListBroadcast );
-    config.setSenderNameBroadcast( strsenderNameBroadcast );
-    config.setSubjectBroadcast( strsubjectBroadcast );
-    config.setMessageBroadcast( strmessageBroadcast );
-    config.setRecipientsCcBroadcast( strrecipientsCcBroadcast );
-    config.setRecipientsCciBroadcast( strrecipientsCciBroadcast );
+    /**
+     * Checks if is valide build guichet.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param strApply the str apply
+     * @return the string
+     */
+    public static String isValideBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, String strApply )
+    {
+        String strUrlRedirector = "";
+
+        ArrayList<String> errors = new ArrayList<String>(  );
+        String strMessageGuichet = request.getParameter( Constants.PARAMETER_MESSAGE_GUICHET );
+        String strStatusTextGuichet = request.getParameter( Constants.PARAMETER_STATUS_TEXT_GUICHET );
+        String strSenderNameGuichet = request.getParameter( Constants.PARAMETER_SENDER_NAME_GUICHET );
+        String strSubjectGuichet = request.getParameter( Constants.PARAMETER_SUBJECT_GUICHET );
+
+        //optional
+        String strDemandMaxStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
+        int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandMaxStepGuichet );
+        String strDemandUserCurrentStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
+        int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandUserCurrentStepGuichet );
+
+        if ( StringUtils.isBlank( strApply ) )
+        {
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageGuichet,
+                            Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strMessageGuichet,
+                        Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatusTextGuichet,
+                            Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strStatusTextGuichet,
+                        Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameGuichet,
+                            Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strSenderNameGuichet,
+                        Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectGuichet,
+                            Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strSubjectGuichet,
+                        Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
+            }
+
+            if ( !Validator.isFreemarkerValid( strMessageGuichet + ' ' + strSubjectGuichet, locale,
+                        providerService.getInfos( -1 ) ) )
+            {
+                Object[] tabRequiredFields = 
+                    {
+                        I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    };
+
+                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+            }
+        }
+
+        if ( !errors.isEmpty(  ) )
+        {
+            strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        }
+
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            config.setMessageGuichet( strMessageGuichet );
+            config.setStatustextGuichet( strStatusTextGuichet );
+            config.setSenderNameGuichet( strSenderNameGuichet );
+            config.setSubjectGuichet( strSubjectGuichet );
+            config.setDemandMaxStepGuichet( nDemandMaxStepGuichet );
+            config.setDemandUserCurrentStepGuichet( nDemandUserCurrentStepGuichet );
+        }
+
+        /*fin guichet*/
+        return strUrlRedirector;
     }
-    
- 	 return strUrlRedirector;
+
+    /**
+     * Checks if is valide build agent.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param strApply the str apply
+     * @return the string
+     */
+    public static String isValideBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, String strApply )
+    {
+        String strUrlRedirector = "";
+
+        /*Agent*/
+        ArrayList<String> errors = new ArrayList<String>(  );
+        String strMessageAgent = request.getParameter( Constants.PARAMETER_STATUS_MESSAGE_AGENT );
+        String strStatutTextAgent = request.getParameter( Constants.PARAMETER_STATUS_TEXT_AGENT );
+
+        if ( StringUtils.isBlank( strApply ) )
+        {
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageAgent,
+                            Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatutTextAgent,
+                            Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) );
+            }
+
+            if ( !Validator.isFreemarkerValid( strMessageAgent, locale, providerService.getInfos( -1 ) ) )
+            {
+                Object[] tabRequiredFields = 
+                    {
+                        I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    };
+
+                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+            }
+        }
+
+        if ( !errors.isEmpty(  ) )
+        {
+            strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        }
+
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            config.setMessageAgent( strMessageAgent );
+            config.setStatustextAgent( strStatutTextAgent );
+        }
+
+        return strUrlRedirector;
+    }
+
+    /**
+     * Checks if is valide build email.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param strApply the str apply
+     * @return the string
+     */
+    public static String isValideBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, String strApply )
+    {
+        String strUrlRedirector = "";
+
+        /*email*/
+        ArrayList<String> errors = new ArrayList<String>(  );
+
+        String strSubjectEmail = request.getParameter( Constants.PARAMETER_SUBJECT_EMAIL );
+        String strMessageEmail = request.getParameter( Constants.PARAMETER_MESSAGE_EMAIL );
+        String strSenderNameEmail = request.getParameter( Constants.PARAMETER_SENDER_NAME_EMAIL );
+        String strRecipientsCcEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_EMAIL );
+        String strRecipientsCciEmail = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_EMAIL );
+
+        if ( StringUtils.isBlank( strApply ) )
+        {
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectEmail,
+                            Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strSubjectEmail, Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameEmail,
+                            Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strSenderNameEmail, Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD,
+                        locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageEmail,
+                            Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
+            }
+
+            if ( !Validator.isFreemarkerValid( strMessageEmail + ' ' + strSubjectEmail, locale,
+                        providerService.getInfos( -1 ) ) )
+            {
+                Object[] tabRequiredFields = 
+                    {
+                        I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    };
+
+                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+            }
+        }
+
+        if ( !errors.isEmpty(  ) )
+        {
+            strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        }
+
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            config.setSubjectEmail( strSubjectEmail );
+            config.setMessageEmail( strMessageEmail );
+            config.setSenderNameEmail( strSenderNameEmail );
+            config.setRecipientsCcEmail( strRecipientsCcEmail );
+            config.setRecipientsCciEmail( strRecipientsCciEmail );
+        }
+
+        return strUrlRedirector;
+    }
+
+    /**
+     * Checks if is valide build sms.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param strApply the str apply
+     * @return the string
+     */
+    public static String isValideBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, String strApply )
+    {
+        String strUrlRedirector = "";
+
+        /*sms*/
+        ArrayList<String> errors = new ArrayList<String>(  );
+        String strMessageSMS = request.getParameter( Constants.PARAMETER_MESSAGE_SMS );
+
+        if ( StringUtils.isBlank( strApply ) )
+        {
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
+            }
+
+            if ( !Validator.isFreemarkerValid( strMessageSMS, locale, providerService.getInfos( -1 ) ) )
+            {
+                Object[] tabRequiredFields = 
+                    {
+                        I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    };
+
+                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+            }
+        }
+
+        if ( !errors.isEmpty(  ) )
+        {
+            strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        }
+
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            config.setMessageSMS( strMessageSMS );
+        }
+
+        return strUrlRedirector;
+    }
+
+    /**
+     * Checks if is valide build broadcast.
+     *
+     * @param request the request
+     * @param config the config
+     * @param providerService the _provider service
+     * @param locale the locale
+     * @param strApply the str apply
+     * @return the string
+     */
+    public static String isValideBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config,
+        AbstractServiceProvider providerService, Locale locale, String strApply )
+    {
+        String strUrlRedirector = "";
+
+        ArrayList<String> errors = new ArrayList<String>(  );
+        String strIdMailingListBroadcast = request.getParameter( Constants.PARAMETER_ID_MAILING_LIST );
+        int nIdMailingListBroadcast = ( strIdMailingListBroadcast == null ) ? WorkflowUtils.CONSTANT_ID_NULL
+                                                                            : Integer.parseInt( strIdMailingListBroadcast );
+
+        String strsenderNameBroadcast = request.getParameter( Constants.PARAMETER_SENDER_NAME_BROADCAST );
+        String strsubjectBroadcast = request.getParameter( Constants.PARAMETER_SUBJECT_BROADCAST );
+        String strmessageBroadcast = request.getParameter( Constants.PARAMETER_MESSAGE_BROADCAST );
+        String strrecipientsCcBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CC_BROADCAST );
+        String strrecipientsCciBroadcast = request.getParameter( Constants.PARAMETER_RECIPIENT_CCI_BROADCAST );
+
+        if ( StringUtils.isBlank( strApply ) )
+        {
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strIdMailingListBroadcast,
+                            Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
+                        locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsenderNameBroadcast,
+                            Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strsenderNameBroadcast,
+                        Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsubjectBroadcast,
+                            Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strsubjectBroadcast, Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) );
+            }
+
+            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strmessageBroadcast,
+                            Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) ) )
+            {
+                errors.add( Validator.mandotoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
+            }
+
+            if ( !Validator.isFreemarkerValid( strmessageBroadcast + ' ' + strsubjectBroadcast, locale,
+                        providerService.getInfos( -1 ) ) )
+            {
+                Object[] tabRequiredFields = 
+                    {
+                        I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
+                    };
+
+                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_ERROR_FREEMARKER,
+                        tabRequiredFields, AdminMessage.TYPE_STOP );
+            }
+        }
+
+        if ( !errors.isEmpty(  ) )
+        {
+            strUrlRedirector = ServiceConfigTaskForm.displayErrorMessage( errors, request );
+        }
+
+        /* fin liste diffusion*/
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            config.setIdMailingListBroadcast( nIdMailingListBroadcast );
+            config.setSenderNameBroadcast( strsenderNameBroadcast );
+            config.setSubjectBroadcast( strsubjectBroadcast );
+            config.setMessageBroadcast( strmessageBroadcast );
+            config.setRecipientsCcBroadcast( strrecipientsCcBroadcast );
+            config.setRecipientsCciBroadcast( strrecipientsCciBroadcast );
+        }
+
+        return strUrlRedirector;
     }
 }

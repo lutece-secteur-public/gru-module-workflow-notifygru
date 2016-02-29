@@ -46,133 +46,131 @@ public class BroadcastHistory
     private String _strMessageBroadcast;
     private String _strRecipientsCcBroadcast;
     private String _strRecipientsCciBroadcast;
-    private boolean _ActiveOngletBroadcast;
+    private boolean _activeOngletBroadcast;
 
     /**
      * Returns the IdMailingListBroadcast
      * @return The IdMailingListBroadcast
-     */ 
- public int getIdMailingListBroadcast()
- {
-     return _nIdMailingListBroadcast;
- }
- 
+     */
+    public int getIdMailingListBroadcast(  )
+    {
+        return _nIdMailingListBroadcast;
+    }
+
     /**
      * Sets the IdMailingListBroadcast
      * @param nIdMailingListBroadcast The IdMailingListBroadcast
-     */ 
- public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
- {
-     _nIdMailingListBroadcast = nIdMailingListBroadcast;
- }
- 
+     */
+    public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
+    {
+        _nIdMailingListBroadcast = nIdMailingListBroadcast;
+    }
+
     /**
      * Returns the SenderNameBroadcast
      * @return The SenderNameBroadcast
-     */ 
- public String getSenderNameBroadcast()
- {
-     return _strSenderNameBroadcast;
- }
- 
+     */
+    public String getSenderNameBroadcast(  )
+    {
+        return _strSenderNameBroadcast;
+    }
+
     /**
      * Sets the SenderNameBroadcast
      * @param strSenderNameBroadcast The SenderNameBroadcast
-     */ 
- public void setSenderNameBroadcast( String strSenderNameBroadcast )
- {
-     _strSenderNameBroadcast = strSenderNameBroadcast;
- }
- 
+     */
+    public void setSenderNameBroadcast( String strSenderNameBroadcast )
+    {
+        _strSenderNameBroadcast = strSenderNameBroadcast;
+    }
+
     /**
      * Returns the SubjectBroadcast
      * @return The SubjectBroadcast
-     */ 
- public String getSubjectBroadcast()
- {
-     return _strSubjectBroadcast;
- }
- 
+     */
+    public String getSubjectBroadcast(  )
+    {
+        return _strSubjectBroadcast;
+    }
+
     /**
      * Sets the SubjectBroadcast
      * @param strSubjectBroadcast The SubjectBroadcast
-     */ 
- public void setSubjectBroadcast( String strSubjectBroadcast )
- {
-     _strSubjectBroadcast = strSubjectBroadcast;
- }
- 
+     */
+    public void setSubjectBroadcast( String strSubjectBroadcast )
+    {
+        _strSubjectBroadcast = strSubjectBroadcast;
+    }
+
     /**
      * Returns the MessageBroadcast
      * @return The MessageBroadcast
-     */ 
- public String getMessageBroadcast()
- {
-     return _strMessageBroadcast;
- }
- 
+     */
+    public String getMessageBroadcast(  )
+    {
+        return _strMessageBroadcast;
+    }
+
     /**
      * Sets the MessageBroadcast
      * @param strMessageBroadcast The MessageBroadcast
-     */ 
- public void setMessageBroadcast( String strMessageBroadcast )
- {
-     _strMessageBroadcast = strMessageBroadcast;
- }
- 
+     */
+    public void setMessageBroadcast( String strMessageBroadcast )
+    {
+        _strMessageBroadcast = strMessageBroadcast;
+    }
+
     /**
      * Returns the RecipientsCcBroadcast
      * @return The RecipientsCcBroadcast
-     */ 
- public String getRecipientsCcBroadcast()
- {
-     return _strRecipientsCcBroadcast;
- }
- 
+     */
+    public String getRecipientsCcBroadcast(  )
+    {
+        return _strRecipientsCcBroadcast;
+    }
+
     /**
      * Sets the RecipientsCcBroadcast
      * @param strRecipientsCcBroadcast The RecipientsCcBroadcast
-     */ 
- public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
- {
-     _strRecipientsCcBroadcast = strRecipientsCcBroadcast;
- }
- 
+     */
+    public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
+    {
+        _strRecipientsCcBroadcast = strRecipientsCcBroadcast;
+    }
+
     /**
      * Returns the RecipientsCciBroadcast
      * @return The RecipientsCciBroadcast
-     */ 
- public String getRecipientsCciBroadcast()
- {
-     return _strRecipientsCciBroadcast;
- }
- 
+     */
+    public String getRecipientsCciBroadcast(  )
+    {
+        return _strRecipientsCciBroadcast;
+    }
+
     /**
      * Sets the RecipientsCciBroadcast
      * @param strRecipientsCciBroadcast The RecipientsCciBroadcast
-     */ 
- public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
- {
-     _strRecipientsCciBroadcast = strRecipientsCciBroadcast;
- }
- 
+     */
+    public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
+    {
+        _strRecipientsCciBroadcast = strRecipientsCciBroadcast;
+    }
+
     /**
      * Returns the ActiveOngletBroadcast
      * @return The ActiveOngletBroadcast
-     */ 
- public boolean isActiveOngletBroadcast()
- {
-     return _ActiveOngletBroadcast;
- }
- 
+     */
+    public boolean isActiveOngletBroadcast(  )
+    {
+        return _activeOngletBroadcast;
+    }
+
     /**
      * Sets the ActiveOngletBroadcast
-     * @param ActiveOngletBroadcast The ActiveOngletBroadcast
-     */ 
- public void setActiveOngletBroadcast( boolean ActiveOngletBroadcast )
- {
-     _ActiveOngletBroadcast = ActiveOngletBroadcast;
- }
-
-  
+     * @param activeOngletBroadcast The ActiveOngletBroadcast
+     */
+    public void setActiveOngletBroadcast( boolean activeOngletBroadcast )
+    {
+        _activeOngletBroadcast = activeOngletBroadcast;
+    }
 }

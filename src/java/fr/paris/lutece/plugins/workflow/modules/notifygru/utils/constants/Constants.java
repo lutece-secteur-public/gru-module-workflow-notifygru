@@ -113,7 +113,7 @@ public final class Constants
 
     //CONSTANT FOR SENDING JSON FLUX
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
-      public static final String NOTIFICATION_SENDER = "NotificationSender";
+    public static final String NOTIFICATION_SENDER = "NotificationSender";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";
     public static final String PARAMS_GRANT_TYPE_VALUE = "client_credentials";
@@ -352,7 +352,7 @@ public final class Constants
     public static final String PARAMETER_ONGLE_ADD = "add_onglet";
     public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
-      public static final String PARAMETER_DEMAND_STATUS = "demand_status";
+    public static final String PARAMETER_DEMAND_STATUS = "demand_status";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";

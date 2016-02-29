@@ -40,64 +40,61 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 public class AgentHistory
 {
     // Variables declarations 
-	    private String _strStatustextAgent;
-	    private String _strMessageAgent;
-	    private boolean _ActiveOngletAgent;
+    private String _strStatustextAgent;
+    private String _strMessageAgent;
+    private boolean _activeOngletAgent;
 
+    /**
+        * Returns the StatustextAgent
+        * @return The StatustextAgent
+        */
+    public String getStatustextAgent(  )
+    {
+        return _strStatustextAgent;
+    }
 
-	    /**
-	        * Returns the StatustextAgent
-	        * @return The StatustextAgent
-	        */ 
-	    public String getStatustextAgent()
-	    {
-	        return _strStatustextAgent;
-	    }
-	    
-	       /**
-	        * Sets the StatustextAgent
-	        * @param strStatustextAgent The StatustextAgent
-	        */ 
-	    public void setStatustextAgent( String strStatustextAgent )
-	    {
-	        _strStatustextAgent = strStatustextAgent;
-	    }
-	    
-	       /**
-	        * Returns the MessageAgent
-	        * @return The MessageAgent
-	        */ 
-	    public String getMessageAgent()
-	    {
-	        return _strMessageAgent;
-	    }
-	    
-	       /**
-	        * Sets the MessageAgent
-	        * @param strMessageAgent The MessageAgent
-	        */ 
-	    public void setMessageAgent( String strMessageAgent )
-	    {
-	        _strMessageAgent = strMessageAgent;
-	    }
-	    
-	       /**
-	        * Returns the ActiveOngletAgent
-	        * @return The ActiveOngletAgent
-	        */ 
-	    public boolean isActiveOngletAgent()
-	    {
-	        return _ActiveOngletAgent;
-	    }
-	    
-	       /**
-	        * Sets the ActiveOngletAgent
-	        * @param ActiveOnglet The ActiveOngletAgent
-	        */ 
-	    public void setActiveOngletAgent( boolean ActiveOngletAgent )
-	    {
-	        _ActiveOngletAgent = ActiveOngletAgent;
-	    }
+    /**
+     * Sets the StatustextAgent
+     * @param strStatustextAgent The StatustextAgent
+     */
+    public void setStatustextAgent( String strStatustextAgent )
+    {
+        _strStatustextAgent = strStatustextAgent;
+    }
 
- 
+    /**
+     * Returns the MessageAgent
+     * @return The MessageAgent
+     */
+    public String getMessageAgent(  )
+    {
+        return _strMessageAgent;
+    }
+
+    /**
+     * Sets the MessageAgent
+     * @param strMessageAgent The MessageAgent
+     */
+    public void setMessageAgent( String strMessageAgent )
+    {
+        _strMessageAgent = strMessageAgent;
+    }
+
+    /**
+     * Returns the activeOngletAgent
+     * @return The activeOngletAgent
+     */
+    public boolean isActiveOngletAgent(  )
+    {
+        return _activeOngletAgent;
+    }
+
+    /**
+     * Sets the ActiveOngletAgent
+     * @param activeOngletAgent The ActiveOngletAgent
+     */
+    public void setActiveOngletAgent( boolean activeOngletAgent )
+    {
+    	_activeOngletAgent = activeOngletAgent;
+    }
 }

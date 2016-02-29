@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.util.ReferenceList;
@@ -43,35 +42,79 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Locale;
 
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class AbstractServiceProvider.
  *
  * @author fallphenix
  */
 public abstract class AbstractServiceProvider implements IProvider
 {
+    
+    /** The _str key. */
     private String _strKey;
+    
+    /** The _strtitle i18n key. */
     private String _strtitleI18nKey;
+    
+    /** The _strbean name. */
     private String _strbeanName;
+    
+    /** The _b is manager provider. */
     private Boolean _bIsManagerProvider;
 
-    
-    
-     public abstract void updateListProvider(ITask task);
-     public abstract ReferenceList buildReferenteListProvider();
-     public abstract Boolean isKeyProvider(String strKey);
-     public abstract AbstractServiceProvider getInstanceProvider(String strKey);
-    
-     public Boolean isManagerProvider(  )
+    /**
+     * Update list provider.
+     *
+     * @param task the task
+     */
+    public abstract void updateListProvider( ITask task );
+
+    /**
+     * Builds the referente list provider.
+     *
+     * @return the reference list
+     */
+    public abstract ReferenceList buildReferenteListProvider(  );
+
+    /**
+     * Checks if is key provider.
+     *
+     * @param strKey the str key
+     * @return the boolean
+     */
+    public abstract Boolean isKeyProvider( String strKey );
+
+    /**
+     * Gets the instance provider.
+     *
+     * @param strKey the str key
+     * @return the instance provider
+     */
+    public abstract AbstractServiceProvider getInstanceProvider( String strKey );
+
+    /**
+     * Checks if is manager provider.
+     *
+     * @return the boolean
+     */
+    public Boolean isManagerProvider(  )
     {
         return _bIsManagerProvider;
     }
-     
-   public void setManagerProvider( Boolean bIsManager )
+
+    /**
+     * Sets the manager provider.
+     *
+     * @param bIsManager the new manager provider
+     */
+    public void setManagerProvider( Boolean bIsManager )
     {
         _bIsManagerProvider = bIsManager;
     }
-     
+
     /**
+     * Gets the key.
      *
      * @return _strKey
      */
@@ -81,6 +124,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Gets the bean name.
      *
      * @return _strbeanName
      */
@@ -90,6 +134,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Sets the key.
      *
      * @param strKey to set _strKey
      */
@@ -99,6 +144,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Sets the bean name.
      *
      * @param strbeanName to set _strbeanName
      */
@@ -108,6 +154,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Gets the title.
      *
      * @param locale to localize the title
      * @return the title
@@ -118,6 +165,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Gets the title i18n key.
      *
      * @return _strtitleI18nKey
      */
@@ -127,6 +175,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Sets the title i18n key.
      *
      * @param strtitleI18nKey to set _strtitleI18nKey
      */
@@ -136,6 +185,7 @@ public abstract class AbstractServiceProvider implements IProvider
     }
 
     /**
+     * Checks if is invoked.
      *
      * @param strExtenderType of povider
      * @return Boolean if the provider is invoked

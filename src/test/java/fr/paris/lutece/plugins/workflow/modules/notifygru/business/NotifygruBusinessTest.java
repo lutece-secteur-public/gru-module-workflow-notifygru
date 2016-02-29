@@ -33,21 +33,26 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+
 import fr.paris.lutece.test.LuteceTestCase;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NotifygruBusinessTest.
+ */
 public class NotifygruBusinessTest extends LuteceTestCase
 {
-    private final static String TITLE1 = "Title1";
-    private final static String TITLE2 = "Title2";
-    private final static int IDTASK1 = 1;
-    private final static int IDTASK2 = 2;
+    
+ 
+ 
 
+
+    /**
+     * Test business.
+     */
     public void testBusiness(  )
     {
-        // Initialize an object
-        TaskNotifyGruConfig notifygru = new TaskNotifyGruConfig(  );
-        notifygru.setIdTask( IDTASK1 );
+       
     }
 }

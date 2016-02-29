@@ -51,7 +51,6 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -60,7 +59,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -83,7 +82,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private static final String TEMPLATE_TASK_NOTIFY_INFORMATION = "admin/plugins/workflow/modules/notifygru/task_notify_information.html";
 
     // MARKS
-   
     private static final String MARK_CONFIG = "config";
     private static final String MARK_NOTIFY_HISTORY = "information_history";
 
@@ -114,7 +112,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( Constants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
-       
 
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
 
@@ -130,13 +127,23 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 strOngletActive, config.isActiveOngletBroadcast(  ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
 
         //set the active onglet
-        int nOngletActive=ServiceConfigTaskForm.getNumberOblet( strOngletActive ); 
+        int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
         config.setSetOnglet( nOngletActive );
 
-       /*validate and build provider*/
-        String strUrlRedirector = Validator.isValideBuildProviderService(request, config, _providerService, locale, task);        
-        Boolean bRedirector = (StringUtils.isBlank(strUrlRedirector)) ?false:true;
+        Boolean bRedirector = false;
 
+        /*validate and build provider*/
+        String strUrlRedirector = Validator.isValideBuildProviderService( request, config, _providerService, locale,
+                task );
+
+        if ( StringUtils.isBlank( strUrlRedirector ) )
+        {
+            _providerService = Validator.getValideBuildProviderService( config, task );
+        }
+        else
+        {
+            bRedirector = true;
+        }
 
         /*if we are in started config of task. the provider is already register*/
         if ( ( strProvider == null ) && !bRedirector && ( strApply == null ) && !bActiveOngletAgent &&
@@ -147,64 +154,59 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             bRedirector = true;
             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
-           
         }
 
         /*validate and build guichet*/
-        if ( !bRedirector &&   ( bActiveOngletGuichet ||  ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
+        if ( !bRedirector &&
+                ( bActiveOngletGuichet ||
+                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
         {
-           
-        	strUrlRedirector = Validator.isValideBuildGuichet(request, config, _providerService, locale, strApply);         
+            strUrlRedirector = Validator.isValideBuildGuichet( request, config, _providerService, locale, strApply );
             config.setActiveOngletGuichet( bActiveOngletGuichet );
-            
-            if(StringUtils.isNotBlank(strUrlRedirector))
+
+            if ( StringUtils.isNotBlank( strUrlRedirector ) )
             {
-            	bRedirector=true;
-            	
+                bRedirector = true;
             }
-         
         }
+
         /*validate and build agent*/
-        if ( !bRedirector &&   ( bActiveOngletAgent ||    ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
+        if ( !bRedirector &&
+                ( bActiveOngletAgent ||
+                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
         {
-           
-        	strUrlRedirector = Validator.isValideBuildAgent(request, config, _providerService, locale, strApply);
+            strUrlRedirector = Validator.isValideBuildAgent( request, config, _providerService, locale, strApply );
             config.setActiveOngletAgent( bActiveOngletAgent );
-            
-            if(StringUtils.isNotBlank(strUrlRedirector))
-            {
-            	bRedirector=true;
-           
-            }
 
-        
+            if ( StringUtils.isNotBlank( strUrlRedirector ) )
+            {
+                bRedirector = true;
+            }
         }
 
-        if ( !bRedirector &&  ( bActiveOngletEmail ||   ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
+        if ( !bRedirector &&
+                ( bActiveOngletEmail ||
+                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
         {
-         
-        	strUrlRedirector = Validator.isValideBuildEmail(request, config, _providerService, locale, strApply);
+            strUrlRedirector = Validator.isValideBuildEmail( request, config, _providerService, locale, strApply );
             config.setActiveOngletEmail( bActiveOngletEmail );
-            
-            if(StringUtils.isNotBlank(strUrlRedirector))
-            {
-            	bRedirector=true;
-            	
-            }
 
-       
+            if ( StringUtils.isNotBlank( strUrlRedirector ) )
+            {
+                bRedirector = true;
+            }
         }
 
-        if ( !bRedirector &&  ( bActiveOngletSMS || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
+        if ( !bRedirector &&
+                ( bActiveOngletSMS ||
+                ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
         {
-             
             config.setActiveOngletSMS( bActiveOngletSMS );
-        	strUrlRedirector = Validator.isValideBuildSMS(request, config, _providerService, locale, strApply);
-            
-            if(StringUtils.isNotBlank(strUrlRedirector))
+            strUrlRedirector = Validator.isValideBuildSMS( request, config, _providerService, locale, strApply );
+
+            if ( StringUtils.isNotBlank( strUrlRedirector ) )
             {
-            	bRedirector=true;
-            	
+                bRedirector = true;
             }
 
             /*fin sms*/
@@ -214,20 +216,18 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 ( bActiveOngletBROADCAST ||
                 ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) ) )
         {
-            
-        	strUrlRedirector = Validator.isValideBuildBroadcast(request, config, _providerService, locale, strApply);
-        	  if(StringUtils.isNotBlank(strUrlRedirector))
-              {
-              	bRedirector=true;
-           
-              }
-        	  
+            strUrlRedirector = Validator.isValideBuildBroadcast( request, config, _providerService, locale, strApply );
+
+            if ( StringUtils.isNotBlank( strUrlRedirector ) )
+            {
+                bRedirector = true;
+            }
+
             config.setActiveOngletBroadcast( bActiveOngletBROADCAST );
         }
 
         if ( bRedirector )
         {
-         
             return strUrlRedirector;
         }
 
@@ -293,19 +293,15 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             model.put( Constants.MARK_LIST_ONGLET, listeOnglet );
         }
 
-    
-
         model.put( Constants.MARK_MAILING_LIST, _notifyGRUService.getMailingList( request ) );
 
         model.put( Constants.MARK_LOCALE, request.getLocale(  ) );
         model.put( Constants.MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
 
-       
-        
         if ( ( config.getIdSpringProvider(  ) != null ) )
         {
             //_providerService = SpringContextService.getBean( config.getIdSpringProvider(  ) );
-            _providerService = ServiceConfigTaskForm.getCostumizeBean(config.getIdSpringProvider(  ) , task);
+            _providerService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ), task );
 
             String strTemplateProvider = ( _providerService == null ) ? "" : _providerService.getInfosHelp( locale );
 
@@ -316,8 +312,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         return template.getHtml(  );
     }
-    
-    
 
     /**
      * {@inheritDoc}
