@@ -268,10 +268,12 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_DEMAND_DATE_TIMESTAMP, dateSendNotificationJson.getTime(  ) );
 
         int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
-        notificationJson.accumulate( Constants.MARK_ID_DEMAND, _DEFAULT_VALUE_ID_DEMAND );
-        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND,
-            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )
-            ? _notifyGruService.getOptionalDemandId( nIdResourceHistory ) : _DEFAULT_VALUE_JSON ) );
+        
+      
+        notificationJson.accumulate( Constants.MARK_ID_DEMAND, ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )  ? nIdDemand : _DEFAULT_VALUE_JSON ) );
+        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND, ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )  ? nIdDemand : _DEFAULT_VALUE_JSON ) );
+        
+     
 
         int nIdDemandType = _notifyGruService.getOptionalDemandIdType( nIdResourceHistory );
         notificationJson.accumulate( Constants.MARK_ID_DEMAND_TYPE,
