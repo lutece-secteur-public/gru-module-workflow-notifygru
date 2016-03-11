@@ -95,6 +95,6 @@ public class AgentHistory
      */
     public void setActiveOngletAgent( boolean activeOngletAgent )
     {
-    	_activeOngletAgent = activeOngletAgent;
+        _activeOngletAgent = activeOngletAgent;
     }
 }

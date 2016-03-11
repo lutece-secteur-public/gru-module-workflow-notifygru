@@ -55,11 +55,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * The Class ServiceConfigTaskForm.
  *
- * @author 
+ * @author
  */
 public final class ServiceConfigTaskForm
 {
-    
     /**
      * Instantiates a new service config task form.
      *
@@ -73,7 +72,7 @@ public final class ServiceConfigTaskForm
     /**
      * Checks if is bean existe.
      *
-     * @param strIdBean 
+     * @param strIdBean
      * @param task the task
      * @return true if the bean exist
      */

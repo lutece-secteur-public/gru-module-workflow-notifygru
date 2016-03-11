@@ -50,16 +50,15 @@ import java.util.Locale;
  */
 public abstract class AbstractServiceProvider implements IProvider
 {
-    
     /** The _str key. */
     private String _strKey;
-    
+
     /** The _strtitle i18n key. */
     private String _strtitleI18nKey;
-    
+
     /** The _strbean name. */
     private String _strbeanName;
-    
+
     /** The _b is manager provider. */
     private Boolean _bIsManagerProvider;
 

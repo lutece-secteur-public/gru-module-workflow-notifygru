@@ -63,6 +63,7 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,19 +82,18 @@ import javax.ws.rs.core.MediaType;
  */
 public class TaskNotifyGru extends SimpleTask
 {
-    
     /** The Constant REMOVE_TAGS. */
     private static final Pattern REMOVE_TAGS = Pattern.compile( "<.+?>" );
-    
+
     /** The Constant _DEFAULT_VALUE_JSON. */
     private static final String _DEFAULT_VALUE_JSON = "";
-    
+
     /** The Constant HTTP_CODE_RESPONSE_CREATED. */
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
-    
+
     /** The Constant CRM_STATUS_ID. */
     private static final int CRM_STATUS_ID = 1;
-    
+
     /** The Constant _DEFAULT_VALUE_ID_DEMAND. */
     private static final int _DEFAULT_VALUE_ID_DEMAND = -1;
 
@@ -102,23 +102,23 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruConfigService;
-    
+
     /** The _notify gru service. */
     private AbstractServiceProvider _notifyGruService;
-    
+
     /** The _task notify gru history service. */
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
-    
+
     /** The _task doa. */
     @Inject
     private TaskDAO _taskDOA;
-    
+
     /** The _workflow doa. */
     @Inject
     private WorkflowDAO _workflowDOA;
-    
+
     /** The _action dao. */
     @Inject
     private ActionDAO _actionDAO;
@@ -240,7 +240,6 @@ public class TaskNotifyGru extends SimpleTask
         }
     }
 
-  
     /**
      * Builds the json global.
      *
@@ -268,12 +267,11 @@ public class TaskNotifyGru extends SimpleTask
         notificationJson.accumulate( Constants.MARK_DEMAND_DATE_TIMESTAMP, dateSendNotificationJson.getTime(  ) );
 
         int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
-        
-      
-        notificationJson.accumulate( Constants.MARK_ID_DEMAND, ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )  ? nIdDemand : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND, ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE )  ? nIdDemand : _DEFAULT_VALUE_JSON ) );
-        
-     
+
+        notificationJson.accumulate( Constants.MARK_ID_DEMAND,
+            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE ) ? nIdDemand : _DEFAULT_VALUE_JSON ) );
+        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND,
+            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE ) ? nIdDemand : _DEFAULT_VALUE_JSON ) );
 
         int nIdDemandType = _notifyGruService.getOptionalDemandIdType( nIdResourceHistory );
         notificationJson.accumulate( Constants.MARK_ID_DEMAND_TYPE,
@@ -287,7 +285,6 @@ public class TaskNotifyGru extends SimpleTask
         return notificationJson;
     }
 
-   
     /**
      * Builds the json message guichet.
      *
@@ -299,24 +296,23 @@ public class TaskNotifyGru extends SimpleTask
     private JSONObject buildJsonMessageGuichet( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         JSONObject userDashBoardJson = new JSONObject(  );
-        HtmlTemplate tMessageUserDashboard = AppTemplateService.getTemplateFromStringFtl( config.getMessageGuichet(  ),
-                locale, _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        HtmlTemplate tSubjectUserDashboard = AppTemplateService.getTemplateFromStringFtl( config.getSubjectGuichet(  ),
-                locale, _notifyGruService.getInfos( nIdResourceHistory ) );
+        String strMessageUserDashboardl = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
+        String strSubjectUserDashboardl = giveMeTexteWithValueOfMarker( config.getSubjectGuichet(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
 
         userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD, config.getStatustextGuichet(  ) );
         userDashBoardJson.accumulate( Constants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet(  ) );
         userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD,
-            this.getHTMLEntities( tSubjectUserDashboard.getHtml(  ) ) );
+            this.getHTMLEntities( strSubjectUserDashboardl ) );
         userDashBoardJson.accumulate( Constants.MARK_MESSAGE_USERDASHBOARD,
-            this.getHTMLEntities( tMessageUserDashboard.getHtml(  ) ) );
+            this.getHTMLEntities( strMessageUserDashboardl ) );
         userDashBoardJson.accumulate( Constants.MARK_DATA_USERDASHBOARD, _DEFAULT_VALUE_JSON );
 
         return userDashBoardJson;
     }
 
-  
     /**
      * Builds the json message back office loggin.
      *
@@ -332,18 +328,35 @@ public class TaskNotifyGru extends SimpleTask
         String strMessageEmail, TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         JSONObject backOfficeLogginJson = new JSONObject(  );
-        backOfficeLogginJson.accumulate( Constants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, config.getStatustextAgent(  ) );
 
-        HtmlTemplate tMessageAgent = AppTemplateService.getTemplateFromStringFtl( config.getMessageAgent(  ), locale,
+        String strStatustextAgent = giveMeTexteWithValueOfMarker( config.getStatustextAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        String strMessageAgent = this.getHTMLEntities( tMessageAgent.getHtml(  ) );
+        backOfficeLogginJson.accumulate( Constants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, strStatustextAgent );
 
+        String strMessageAgent = giveMeTexteWithValueOfMarker( config.getMessageAgent(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
         backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
 
-        return backOfficeLogginJson;
+        return backOfficeLogginJson;, 
     }
 
-   
+    /**
+     * Give me texte with value of marker.
+     *
+     * @param strMessage the str message
+     * @param locale the locale
+     * @param model the model
+     * @return the string
+     */
+    private String giveMeTexteWithValueOfMarker( String strMessage, Locale locale, Map<String, Object> model )
+    {
+        @SuppressWarnings( "deprecation" )
+        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, locale, model );
+        String strmessageFinal = this.getHTMLEntities( template.getHtml(  ) );
+
+        return strmessageFinal;
+    }
+
     /**
      * Builds the json message sms.
      *
@@ -355,16 +368,17 @@ public class TaskNotifyGru extends SimpleTask
     private JSONObject buildJsonMessageSMS( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         JSONObject smsJson = new JSONObject(  );
-        HtmlTemplate tMessageSMS = AppTemplateService.getTemplateFromStringFtl( config.getMessageSMS(  ), locale,
+
+        String strMessageSMS = giveMeTexteWithValueOfMarker( config.getMessageSMS(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
+        smsJson.accumulate( Constants.MARK_MESSAGE_SMS, strMessageSMS );
+
         smsJson.accumulate( Constants.MARK_PHONE_NUMBER,
             _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) );
-        smsJson.accumulate( Constants.MARK_MESSAGE_SMS, tMessageSMS.getHtml(  ) );
 
         return smsJson;
     }
 
-  
     /**
      * Builds the json message email.
      *
@@ -376,17 +390,17 @@ public class TaskNotifyGru extends SimpleTask
     private JSONObject buildJsonMessageEmail( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         JSONObject userEmailJson = new JSONObject(  );
-        HtmlTemplate tMessageEmail = AppTemplateService.getTemplateFromStringFtl( config.getMessageEmail(  ), locale,
-                _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        HtmlTemplate tSubjectEmail = AppTemplateService.getTemplateFromStringFtl( config.getSubjectEmail(  ), locale,
+        String strMessageEmail = giveMeTexteWithValueOfMarker( config.getMessageEmail(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
+        String strSubjectEmail = giveMeTexteWithValueOfMarker( config.getSubjectEmail(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
         userEmailJson.accumulate( Constants.MARK_SENDER_NAME, config.getSenderNameEmail(  ) );
         userEmailJson.accumulate( Constants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail(  ) );
         userEmailJson.accumulate( Constants.MARK_RECIPIENT, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailJson.accumulate( Constants.MARK_SUBJECT, this.getHTMLEntities( tSubjectEmail.getHtml(  ) ) );
-        userEmailJson.accumulate( Constants.MARK_MESSAGE_EMAIL, this.getHTMLEntities( tMessageEmail.getHtml(  ) ) );
+        userEmailJson.accumulate( Constants.MARK_SUBJECT, this.getHTMLEntities( strSubjectEmail ) );
+        userEmailJson.accumulate( Constants.MARK_MESSAGE_EMAIL, this.getHTMLEntities( strMessageEmail ) );
         userEmailJson.accumulate( Constants.MARK_CC,
             ( StringUtils.isNotBlank( config.getRecipientsCcEmail(  ) ) ? config.getRecipientsCcEmail(  ) : "" ) );
         userEmailJson.accumulate( Constants.MARK_CCI,
@@ -395,7 +409,6 @@ public class TaskNotifyGru extends SimpleTask
         return userEmailJson;
     }
 
-   
     /**
      * Gets the HTML entities.
      *
@@ -410,7 +423,6 @@ public class TaskNotifyGru extends SimpleTask
         return htmlData;
     }
 
-   
     /**
      * Removes the tags.
      *
@@ -429,7 +441,6 @@ public class TaskNotifyGru extends SimpleTask
         return m.replaceAll( "" );
     }
 
-    
     /**
      * Send notifications as json.
      *
@@ -458,7 +469,6 @@ public class TaskNotifyGru extends SimpleTask
         }
     }
 
-   
     /**
      * Send notifications as json.
      *
@@ -485,7 +495,6 @@ public class TaskNotifyGru extends SimpleTask
         }
     }
 
-   
     /**
      * Gets the token.
      *
@@ -512,7 +521,6 @@ public class TaskNotifyGru extends SimpleTask
         return jsonObject;
     }
 
-   
     /* (non-Javadoc)
      * @see fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask#doRemoveConfig()
      */
