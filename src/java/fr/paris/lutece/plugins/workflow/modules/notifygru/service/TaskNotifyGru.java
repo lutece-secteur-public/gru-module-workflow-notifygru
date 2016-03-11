@@ -337,7 +337,7 @@ public class TaskNotifyGru extends SimpleTask
                 _notifyGruService.getInfos( nIdResourceHistory ) );
         backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
 
-        return backOfficeLogginJson;, 
+        return backOfficeLogginJson;
     }
 
     /**
