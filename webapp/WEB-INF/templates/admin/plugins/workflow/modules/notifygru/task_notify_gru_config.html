@@ -23,7 +23,7 @@
 <#assign pane="pane-desk">
 <div>
 <fieldset>
-        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>
+        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>  
 
 
 
@@ -42,6 +42,7 @@
                <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
                     <@combo name="list_provider"  items=list_provider default_value=1 />
                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}</span>
+
                 </div>
   </div>
      
@@ -78,10 +79,11 @@ $('button[name=save]').attr("name","apply");
 }); 
 </script>
   
- 
+
 
   <#else>
 <#if list_onglet?exists>
+
 			<div class="control-group" id="entry_id_demand" style="float:right;">
 				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
 				<div class="controls">
@@ -94,6 +96,7 @@ $('button[name=save]').attr("name","apply");
 			</div>
 </#if>
 
+ <label><input type="checkbox" name="demand_status" <#if config.demandStatus = 1> checked</#if>  />  #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper} ( #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * )</label>
 <br/>
     <ul id="tabs" class="nav nav-tabs">
     <#if config?exists && config.activeOngletGuichet == true>

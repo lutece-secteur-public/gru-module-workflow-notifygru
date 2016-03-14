@@ -59,7 +59,7 @@ import javax.servlet.http.HttpServletRequest;
 public final class Validator
 {
     /** The Constant VALUE_CHECKBOX. */
-    private static final String VALUE_CHECKBOX = "on";
+    public static final String VALUE_CHECKBOX = "on";
 
     /**
      * Instantiates a new validator.
