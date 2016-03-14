@@ -59,7 +59,6 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
 
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -155,7 +154,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET,
                     tabRequiredFields, AdminMessage.TYPE_STOP );
         }
-
+        
+        
+        /*set demand statut params*/
+        
+        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
+         config.setDemandStatus(nDemandStatus);
+         
         /*validate and build guichet*/
         if ( !bRedirector &&
                 ( bActiveOngletGuichet ||

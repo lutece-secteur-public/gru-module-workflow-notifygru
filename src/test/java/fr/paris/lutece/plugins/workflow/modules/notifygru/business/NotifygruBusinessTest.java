@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 import fr.paris.lutece.test.LuteceTestCase;
 
 
@@ -43,16 +42,10 @@ import fr.paris.lutece.test.LuteceTestCase;
  */
 public class NotifygruBusinessTest extends LuteceTestCase
 {
-    
- 
- 
-
-
     /**
      * Test business.
      */
     public void testBusiness(  )
     {
-       
     }
 }
