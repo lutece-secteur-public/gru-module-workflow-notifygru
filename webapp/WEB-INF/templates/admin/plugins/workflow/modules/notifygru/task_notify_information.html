@@ -1,4 +1,5 @@
 <#if information_history?exists>
+    <link href="css/plugins/workflow/modules/notifygru/workflow_notifygru.css" rel="stylesheet" >
     
     <#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content) 
         || (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content)
@@ -11,8 +12,8 @@
     
     <div class="row">
         <#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
-            <div class="col-xs-12 col-sm-3">
-                <a tabindex="0" class="btn btn-primary btn-sm col-sm-12" role="button" data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
+            <div class="col-xs-12 col-sm-3 workflow-notifygru-btn-info">
+                <a tabindex="0" class="btn btn-primary btn-sm col-xs-6 col-sm-12" role="button" data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
                     data-content="${information_history.guichet.messageGuichet!}">
                     #i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}
                 </a>
@@ -20,8 +21,8 @@
         </#if>
         
         <#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
-            <div class="col-xs-12 col-sm-3">
-                <a tabindex="0" class="btn btn-primary btn-sm col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
+            <div class="col-xs-12 col-sm-3 workflow-notifygru-btn-info">
+                <a tabindex="0" class="btn btn-primary btn-sm col-xs-6 col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!}"
                     data-content="${information_history.email.messageEmail!}">
                     #i18n{module.workflow.notifygru.task_notify_gru_history.label_email}
                 </a>
@@ -29,8 +30,8 @@
         </#if>
          
         <#if information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content>
-            <div class="col-xs-12 col-sm-3">
-                <a tabindex="0" class="btn btn-primary btn-sm col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
+            <div class="col-xs-12 col-sm-3 workflow-notifygru-btn-info">
+                <a tabindex="0" class="btn btn-primary btn-sm col-xs-6 col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus"
                     data-content="${information_history.agent.messageAgent!}">
                     #i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}
                 </a>
@@ -38,8 +39,8 @@
         </#if>
          
         <#if information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content>
-            <div class="col-xs-12 col-sm-3">
-                <a tabindex="0" class="btn btn-primary btn-sm col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" 
+            <div class="col-xs-12 col-sm-3 workflow-notifygru-btn-info">
+                <a tabindex="0" class="btn btn-primary btn-sm col-xs-6 col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" 
                     data-content="${information_history.SMS.messageSMS!}">
                     #i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}
                 </a>
@@ -47,8 +48,8 @@
         </#if>
     
         <#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
-            <div class="col-xs-12 col-sm-3">
-                <a tabindex="0" class="btn btn-primary btn-sm col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.broadCast.subjectBroadcast!}"
+            <div class="col-xs-12 col-sm-3 workflow-notifygru-btn-info">
+                <a tabindex="0" class="btn btn-primary btn-sm col-xs-6 col-sm-12" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.broadCast.subjectBroadcast!}"
                     data-content="${information_history.broadCast.messageBroadcast!}">
                     #i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}
                 </a>

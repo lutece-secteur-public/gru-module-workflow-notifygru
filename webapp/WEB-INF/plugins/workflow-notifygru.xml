@@ -34,4 +34,9 @@
     <!-- Portlet parameters -->
     <portlets>
    </portlets>
+   
+   <css-stylesheets>
+        <css-stylesheets-scope>portal</css-stylesheets-scope>
+        <css-stylesheet>workflow/modules/notifygru/workflow_notifygru.css</css-stylesheet>
+    </css-stylesheets>
 </plug-in>
