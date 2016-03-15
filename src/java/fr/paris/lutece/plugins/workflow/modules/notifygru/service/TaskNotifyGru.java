@@ -203,13 +203,15 @@ public class TaskNotifyGru extends SimpleTask
             notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strSubjectEmail, strMessageEmail ) );
 
             //populate desk data for history
-            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, strSubjectGuichet, strMessageGuichet ) );
+            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, strSubjectGuichet,
+                    strMessageGuichet ) );
 
             //populate sms data for history
             notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, strMessageSMS ) );
 
             //populate Broadcast data for history
-            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strSubjectGuichet, strMessageGuichet ) );
+            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strSubjectGuichet,
+                    strMessageGuichet ) );
 
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );

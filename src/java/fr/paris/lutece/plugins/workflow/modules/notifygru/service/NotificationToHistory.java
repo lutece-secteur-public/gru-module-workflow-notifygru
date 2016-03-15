@@ -102,7 +102,8 @@ public final class NotificationToHistory
      * @param strMessageBroadcast the str message broadcast
      * @return the broadcast history
      */
-    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strSubjectBroadcast, String strMessageBroadcast )
+    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strSubjectBroadcast,
+        String strMessageBroadcast )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory(  );
 
@@ -143,7 +144,8 @@ public final class NotificationToHistory
      * @param strMessageGuichet the str message guichet
      * @return the guichet history
      */
-    public static GuichetHistory populateGuichet( TaskNotifyGruConfig config, String strSubjectGuichet, String strMessageGuichet )
+    public static GuichetHistory populateGuichet( TaskNotifyGruConfig config, String strSubjectGuichet,
+        String strMessageGuichet )
     {
         GuichetHistory oGuichetHistory = new GuichetHistory(  );
 
