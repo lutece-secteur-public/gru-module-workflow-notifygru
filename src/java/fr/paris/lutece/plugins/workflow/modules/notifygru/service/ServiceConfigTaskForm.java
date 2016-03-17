@@ -72,7 +72,7 @@ public final class ServiceConfigTaskForm
     /**
      * Checks if is bean existe.
      *
-     * @param strIdBean
+     * @param strIdBean the str id bean
      * @param task the task
      * @return true if the bean exist
      */
