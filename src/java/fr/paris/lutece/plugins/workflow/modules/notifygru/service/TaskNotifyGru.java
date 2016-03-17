@@ -155,26 +155,30 @@ public class TaskNotifyGru extends SimpleTask
 
             //if active config for Mail : user_email
             String strMessageEmail = _DEFAULT_VALUE_JSON;
+            String strSubjectEmail = _DEFAULT_VALUE_JSON;
 
             if ( config.isActiveOngletEmail(  ) )
             {
                 JSONObject userEmailJson = this.buildJsonMessageEmail( config, nIdResourceHistory, locale );
                 notificationJson.accumulate( Constants.MARK_USER_MAIL, userEmailJson );
                 strMessageEmail = userEmailJson.getString( Constants.MARK_MESSAGE_EMAIL );
+                strSubjectEmail = userEmailJson.getString( Constants.MARK_SUBJECT );
             }
 
             //if active config for Desk : user_dashboard
-            String strMessageGuichet = "";
+            String strMessageGuichet = _DEFAULT_VALUE_JSON;
+            String strSubjectGuichet = _DEFAULT_VALUE_JSON;
 
             if ( config.isActiveOngletGuichet(  ) )
             {
                 JSONObject userDashBoardJson = this.buildJsonMessageGuichet( config, nIdResourceHistory, locale );
                 notificationJson.accumulate( Constants.MARK_USER_DASHBOARD, userDashBoardJson );
                 strMessageGuichet = userDashBoardJson.getString( Constants.MARK_MESSAGE_USERDASHBOARD );
+                strSubjectGuichet = userDashBoardJson.getString( Constants.MARK_SUBJECT_USERDASHBOARD );
             }
 
             //if active config for SMS : user_sms
-            String strMessageSMS = "";
+            String strMessageSMS = _DEFAULT_VALUE_JSON;
 
             if ( config.isActiveOngletSMS(  ) &&
                     StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
@@ -185,7 +189,7 @@ public class TaskNotifyGru extends SimpleTask
             }
 
             //if active config for Agent : backoffice_logging
-            String strMessageAgent = "";
+            String strMessageAgent = _DEFAULT_VALUE_JSON;
 
             if ( config.isActiveOngletAgent(  ) )
             {
@@ -196,16 +200,18 @@ public class TaskNotifyGru extends SimpleTask
             }
 
             //populate email data for history
-            notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strMessageEmail ) );
+            notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strSubjectEmail, strMessageEmail ) );
 
             //populate desk data for history
-            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, strMessageGuichet ) );
+            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, strSubjectGuichet,
+                    strMessageGuichet ) );
 
             //populate sms data for history
             notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, strMessageSMS ) );
 
             //populate Broadcast data for history
-            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strMessageGuichet ) );
+            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strSubjectGuichet,
+                    strMessageGuichet ) );
 
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );

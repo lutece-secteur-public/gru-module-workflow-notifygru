@@ -128,8 +128,8 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         int nPos = 0;
-        daoUtil.setInt( ++nPos, nIdHistory );
         daoUtil.setInt( ++nPos, nIdTask );
+        daoUtil.setInt( ++nPos, nIdHistory );
 
         nPos = 0;
 
