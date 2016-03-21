@@ -1,217 +1,184 @@
 <div>
-    <fieldset>
-        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}
-        
-        <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveOngletGuichet">
-	<i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
-        </button> 
-        </legend>
-        <br />
-
-
-        <!------------------------------------- -->
-<div class="row">
- <div class="col-md-8">
- <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="status_text_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet}* </label>
-            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
-                <#if config?exists && config.statustextGuichet?has_content>
-                <input type="text" name="status_text_guichet" id="" class="form-control input-sm" value="${config.statustextGuichet}" maxlength="255">
-                <#else>
-                <input type="text" name="status_text_guichet" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet_helper}</span>
-            </div>
-  </div>
-</div>
-
-
- 
-
-</div>
-<!------------------------------------- -->
-
-
-<!------------------------------------- -->
-<div class="row">
- <div class="col-md-8">
- <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet}* </label>
-            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
-                <#if config?exists && config.senderNameGuichet?has_content>
-                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="${config.senderNameGuichet}" maxlength="255">
-                <#else>
-                <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_guichet}</span>
-            </div>
-  </div>
-</div>
-
-
- 
-
-</div>
-<!------------------------------------- -->
-
-      
-<!------------------------------------- -->
-<div class="row">
- <div class="col-md-8">
- <div class="form-group">
-           <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="subject_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_guichet}* </label>
-           <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                <#if config?exists && config.subjectGuichet?has_content>
-                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="${config.subjectGuichet}" maxlength="255">
-                <#else>
-                <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_guichet}</span>
-            </div>
-  </div>
-</div>
-</div>
-<!------------------------------------- -->
-
-<!------------------------------------- -->
-<div class="row">
-
-
- <div class="col-md-8" >
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
-             <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                <#if config?exists  && config.messageGuichet?has_content>
-                <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext">${config.messageGuichet}</textarea>
-                <#else>
-                <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext"></textarea>
-                </#if>
-               
-
-            </div>
-        </div>
-        
-</div>
-<div class="col-md-4" style="position:relative; top:-200px; height:302px">
-
-     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
-
-                    <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} </span>
+   <fieldset>
+      <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}
+         <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveOngletGuichet">
+         <i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
+         </button> 
+      </legend>
+      <br />
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8">
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="status_text_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet}* </label>
+               <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
+                  <#if config?exists && config.statustextGuichet?has_content>
+                  <input type="text" name="status_text_guichet" id="" class="form-control input-sm" value="${config.statustextGuichet}" maxlength="255">
+                  <#else>
+                  <input type="text" name="status_text_guichet" id="" class="form-control input-sm" value="" maxlength="255">
                   </#if>
-
-</div>
-
-</div>
-<!------------------------------------- -->
-
-<div class="row">
-
-
-<!------------------------------------- -->
-  <div class="col-md-6" >
- <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="">
-  <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" onclick="showhideConfEtapes()">
-  #i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state} <span class="glyphicon glyphicon-menu-up" aria-hidden="true" id="iconeConfEtapes"></span>
-</button>
-</label>
-            <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-            
+                  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet_helper}</span>
+               </div>
             </div>
-        </div>
-
-</div>
-</div>
-
-<div id="conf_etapes">
-<div class="row">
-
-<!------------------------------------- -->
-  <div class="col-md-6" >
- <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_max_step_uichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet} </label>
-            <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                <#if config?exists && config.demandMaxStepGuichet?has_content && config.demandMaxStepGuichet!=-1>
-                <input type="number" name="demand_max_step_uichet" id="demand_max_step_uichet" class="form-control input-sm" value="${config.demandMaxStepGuichet}" maxlength="255">
-                <#else>
-                <input type="number" name="demand_max_step_uichet" id="demand_max_step_uichet" class="form-control input-sm" value="1" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet_helper}</span>
+         </div>
+      </div>
+      <!------------------------------------- -->
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8">
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="sender_name_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet}* </label>
+               <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
+                  <#if config?exists && config.senderNameGuichet?has_content>
+                  <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="${config.senderNameGuichet}" maxlength="255">
+                  <#else>
+                  <input type="text" name="sender_name_guichet" id="" class="form-control input-sm" value="" maxlength="255">
+                  </#if>
+                  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_guichet}</span>
+               </div>
             </div>
-        </div>
-
-</div>
-</div>
-<div class="row">
-<!------------------------------------- -->
- <div class="col-md-6">
-
- <div class="form-group">
-            <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_user_current_step_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet} </label>
-            <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                <#if config?exists && config.demandUserCurrentStepGuichet?has_content && config.demandUserCurrentStepGuichet!=-1>
-                <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="${config.demandUserCurrentStepGuichet}" maxlength="255">
-                <#else>
-                <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="1" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet_helper}</span>
+         </div>
+      </div>
+      <!------------------------------------- -->
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8">
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="subject_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_guichet}* </label>
+               <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                  <#if config?exists && config.subjectGuichet?has_content>
+                  <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="${config.subjectGuichet}" maxlength="255">
+                  <#else>
+                  <input type="text" name="subject_guichet" id="" class="form-control input-sm" value="" maxlength="255">
+                  </#if>
+                  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_guichet}</span>
+               </div>
             </div>
-        </div>
-  
+         </div>
+      </div>
+      <!------------------------------------- -->
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8" >
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet} * </label>
+               <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                  <#if config?exists  && config.messageGuichet?has_content>
+                  <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext">${config.messageGuichet}</textarea>
+                  <#else>
+                  <textarea name="message_guichet" id="message_guichet" rows="5" cols="70" class="richtext"></textarea>
+                  </#if>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4" style="position:relative; top:-200px; height:302px">
+            <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}</span>
+            <#if helper_provider?exists>
+            <span class="help-block" > ${helper_provider} </span>
+            </#if>
+         </div>
+      </div>
+      <!------------------------------------- -->
+      <div class="row">
+         <!------------------------------------- -->
+         <div class="col-md-6" >
+            <div class="form-group">
+               <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="">
+               <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" onclick="showhideConfEtapes()">
+               #i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state} <span class="glyphicon glyphicon-menu-up" aria-hidden="true" id="iconeConfEtapes"></span>
+               </button>
+               </label>
+               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="conf_etapes">
+         <div class="row">
+            <!------------------------------------- -->
+            <div class="col-md-6" >
+               <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_max_step_uichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet} </label>
+                  <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+                     <#if config?exists && config.demandMaxStepGuichet?has_content && config.demandMaxStepGuichet!=-1>
+                     <input type="number" name="demand_max_step_uichet" id="demand_max_step_uichet" class="form-control input-sm" value="${config.demandMaxStepGuichet}" maxlength="255">
+                     <#else>
+                     <input type="number" name="demand_max_step_uichet" id="demand_max_step_uichet" class="form-control input-sm" value="1" maxlength="255">
+                     </#if>
+                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet_helper}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <!------------------------------------- -->
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_user_current_step_guichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet} </label>
+                  <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+                     <#if config?exists && config.demandUserCurrentStepGuichet?has_content && config.demandUserCurrentStepGuichet!=-1>
+                     <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="${config.demandUserCurrentStepGuichet}" maxlength="255">
+                     <#else>
+                     <input type="number" name="demand_user_current_step_guichet" id="" class="form-control input-sm" value="1" maxlength="255">
+                     </#if>
+                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet_helper}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="crm_status_id">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet} </label>
+         <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+            <#if config?exists && config.demandUserCurrentStepGuichet?has_content && config.demandUserCurrentStepGuichet!=-1>
+            <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="${config.demandUserCurrentStepGuichet}" maxlength="255">
+            <#else>
+            <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="1" maxlength="255">
+            </#if>
+            <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_current_step_guichet_helper}</span>
+         </div>
+      </div>
+   </fieldset>
 </div>
-
-</div>
-
-</div>
-
-
-
-
-
-
-    </fieldset>
-</div>
-
 <style>
-#conf_etapes{
-display:none;
-}
+   #conf_etapes{
+   display:none;
+   }
 </style>
 <script>
-var Firstime=true;
-    function showhideConfEtapes()
-     {
-
-
-
-  var div = document.getElementById("conf_etapes");
-
-    
-    if (div.style.display !== "none") {
-        div.style.display = "none";
- document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-up");
-    }
-    else {
-        div.style.display = "block";
- document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-down");
-    }  
-
-
-
-     if(document.getElementById("demand_max_step_uichet").value.length>0 || document.getElementById("demand_state_guichet").value.length>0 )
-{
-if(Firstime) {
-div.style.display = "block";
- document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-up");
-}
-Firstime=false;
-}
+   var Firstime=true;
+       function showhideConfEtapes()
+        {
    
-
-
-     }
+   
+   
+     var div = document.getElementById("conf_etapes");
+   
+       
+       if (div.style.display !== "none") {
+           div.style.display = "none";
+    document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-up");
+       }
+       else {
+           div.style.display = "block";
+    document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-down");
+       }  
+   
+   
+   
+        if(document.getElementById("demand_max_step_uichet").value.length>0 || document.getElementById("demand_state_guichet").value.length>0 )
+   {
+   if(Firstime) {
+   div.style.display = "block";
+    document.getElementById("iconeConfEtapes").setAttribute("class", "glyphicon glyphicon-menu-up");
+   }
+   Firstime=false;
+   }
+      
+   
+   
+        }
+        
+        showhideConfEtapes();
      
-     showhideConfEtapes();
-  </script>
+</script>

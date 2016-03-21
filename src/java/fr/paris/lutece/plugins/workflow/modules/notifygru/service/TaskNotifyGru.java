@@ -236,13 +236,15 @@ public class TaskNotifyGru extends SimpleTask
                     sendNotificationsAsJson( strJson, wf );
                 }
 
-                _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
+              
             }
             catch ( Exception e )
             {
                 AppLogService.error( "Error sending JSON to Notification EndPoint : " + e.getMessage(  ), e );
                 throw new AppException( e.getMessage(  ), e );
             }
+            
+            _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
         }
     }
 
@@ -303,17 +305,21 @@ public class TaskNotifyGru extends SimpleTask
     {
         JSONObject userDashBoardJson = new JSONObject(  );
 
-        String strMessageUserDashboardl = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
+        String strMessageUserDashboard = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        String strSubjectUserDashboardl = giveMeTexteWithValueOfMarker( config.getSubjectGuichet(  ), locale,
+      
+        String strSubjectUserDashboard = giveMeTexteWithValueOfMarker( config.getSubjectGuichet(  ), locale,
+                _notifyGruService.getInfos( nIdResourceHistory ) );
+        
+        String strStatustextDashboard = giveMeTexteWithValueOfMarker( config.getStatustextGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD, config.getStatustextGuichet(  ) );
+        userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD,  this.getHTMLEntities( strStatustextDashboard ) );       
         userDashBoardJson.accumulate( Constants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet(  ) );
         userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD,
-            this.getHTMLEntities( strSubjectUserDashboardl ) );
+            this.getHTMLEntities( strSubjectUserDashboard ) );
         userDashBoardJson.accumulate( Constants.MARK_MESSAGE_USERDASHBOARD,
-            this.getHTMLEntities( strMessageUserDashboardl ) );
+            this.getHTMLEntities( strMessageUserDashboard ) );
         userDashBoardJson.accumulate( Constants.MARK_DATA_USERDASHBOARD, _DEFAULT_VALUE_JSON );
 
         return userDashBoardJson;

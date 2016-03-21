@@ -1,77 +1,49 @@
-
 <div>
-    <fieldset>
-        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}
-          <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveOngletAgent">
-	<i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
-        </button> 
-        </legend>
-        <br />
-        
-        
-          <!------------------------------------- -->
-<div class="row">
- <div class="col-md-8">
- <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="status_text_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent}* </label>
-            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
-                <#if config?exists && config.statustextAgent?has_content>
-                <input type="text" name="status_text_agent" id="" class="form-control input-sm" value="${config.statustextAgent}" maxlength="255">
-                <#else>
-                <input type="text" name="status_text_agent" id="" class="form-control input-sm" value="" maxlength="255">
-                </#if>
-                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent_helper}</span>
-            </div>
-  </div>
-</div>
-
-
- 
-
-</div>
-<!------------------------------------- -->
-        
-        <!------------------------------------- -->
-<div class="row">
-
-
- <div class="col-md-8" >
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * </label>
-             <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                <#if config?exists  && config.messageAgent?has_content>
-                <textarea name="message_agent" id="message_agent" rows="5" cols="70" class="richtext">${config.messageAgent}</textarea>
-                <#else>
-                <textarea name="message_agent" id="message_agent" rows="5" cols="70" class="richtext"></textarea>
-                </#if>
-               
-
-            </div>
-        </div>
-        
-</div>
-<div class="col-md-4">
-
-     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
-
-                    <#if helper_provider?exists>
-                    <span class="help-block" > ${helper_provider} </span>
+   <fieldset>
+      <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}
+         <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveOngletAgent">
+         <i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
+         </button> 
+      </legend>
+      <br />
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8">
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="status_text_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent}* </label>
+               <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
+                  <#if config?exists && config.statustextAgent?has_content>
+                  <input type="text" name="status_text_agent" id="" class="form-control input-sm" value="${config.statustextAgent}" maxlength="255">
+                  <#else>
+                  <input type="text" name="status_text_agent" id="" class="form-control input-sm" value="" maxlength="255">
                   </#if>
-
-</div>
-
-</div>
-<!------------------------------------- -->
-
-
-
-
-
-
-
-        
-
-
-    </fieldset>
+                  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent_helper}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!------------------------------------- -->
+      <!------------------------------------- -->
+      <div class="row">
+         <div class="col-md-8" >
+            <div class="form-group">
+               <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} * </label>
+               <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                  <#if config?exists  && config.messageAgent?has_content>
+                  <textarea name="message_agent" id="message_agent" rows="5" cols="70" class="richtext">${config.messageAgent}</textarea>
+                  <#else>
+                  <textarea name="message_agent" id="message_agent" rows="5" cols="70" class="richtext"></textarea>
+                  </#if>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
+            <#if helper_provider?exists>
+            <span class="help-block" > ${helper_provider} </span>
+            </#if>
+         </div>
+      </div>
+      <!------------------------------------- -->
+   </fieldset>
 </div>

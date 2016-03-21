@@ -1,0 +1,26 @@
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel">Configuration commune de la tâche Notify Gru</h4>
+         </div>
+         <div class="modal-body text-center">
+            <div class="row">
+               <div class="col-md-10">
+                  <div class="form-group">
+                     <label>
+                     <#if config.demandStatus = 1> 
+                     <input type="checkbox" name="demand_status" checked/> 
+                     <#else>
+                     <input type="checkbox" name="demand_status" /> 
+                     </#if>
+                     #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper} ( #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * )
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

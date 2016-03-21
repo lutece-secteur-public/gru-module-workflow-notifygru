@@ -1,14 +1,10 @@
 <#include "/admin/util/editor/editor.html" />
-
 <#assign message_desk = "">
 <#assign message_agent = "">
 <#assign message_email = "">
 <#assign message_sms = "">
-
 <#if config?exists >	
-	
 </#if>
-
 <#function isSelected entry  default_values >
 <#if default_values?has_content>
 <#list default_values as default_value>
@@ -19,165 +15,143 @@
 </#if>
 <#return false>
 </#function>
-
 <#assign pane="pane-desk">
 <div>
-<fieldset>
-        <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</legend>  
-
-
-
-
- <#if config?exists && !config.IdSpringProvider?has_content && list_provider?exists>
- 
- 
-
-  <div class="row">
- <div class="col-md-10"  > 
- <div id="list_provider">
-            <div class="form-group">
-
-                <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider} * :</label>
-
-               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-                    <@combo name="list_provider"  items=list_provider default_value=1 />
-                    <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}</span>
-
-                </div>
-  </div>
-     
-</div> 
- 
-  </div>
-      
-      
-       <div class="col-md-10"  > 
- <div id="list_provider">
-            <div class="form-group">
-
-                <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_status">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * :</label>
-
-               <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="margin-top:6px">
-
-              <label>
-      <input type="checkbox"  name="demand_status" /> #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}
- </label>
-
-                </div>
-  </div>
-     
-</div> 
- 
-  </div>
-      
-    </div>
- 
- 
- <script>
-$(document).ready(function(){ 
-$('button[name=save]').attr("name","apply");
-}); 
-</script>
-  
-
-
-  <#else>
-<#if list_onglet?exists>
-
-			<div class="control-group" id="entry_id_demand" style="float:right;">
-				<label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
-				<div class="controls">
-					<@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
-				<button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddOnglet">
-					<i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
-				</button>                        
-				</div>
-
-			</div>
-</#if>
-
- <label><input type="checkbox" name="demand_status" <#if config.demandStatus = 1> checked</#if>  />  #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper} ( #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * )</label>
-<br/>
-    <ul id="tabs" class="nav nav-tabs">
-    <#if config?exists && config.activeOngletGuichet == true>
-        <li <#if pane="pane-desk">class="active"</#if> id='0'>
-            <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_guichet.title}</a>
-        </li>
-    </#if>
-     <#if config?exists && config.activeOngletAgent == true>
-        <li <#if pane="pane-agent">class="active"</#if> id='1'>
-            <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
-        </li>
-     </#if>
-     <#if config?exists && config.activeOngletEmail == true>
-        <li <#if pane="pane-email">class="active"</#if> id='2'>
-            <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
-        </li>
+   <fieldset>
+      <legend>
+         <span>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</span>
+         <!-------------------------------------------------------------------------------------------------->
+         <#if config?exists && config.idSpringProvider?has_content >
+         <span>
+         <a class="btn btn-primary btn-sm pull-right" href="return false;" data-toggle="modal" data-target=".bs-example-modal-lg">
+         <i class="glyphicon glyphicon-wrench">&nbsp;</i>&nbsp;Configuration avancée
+         </a>
+         </span>
+         </#if>
+         <!-------------------------------------------------------------------------------------------------->
+      </legend>
+      <#if config?exists && config.idSpringProvider?has_content >
+      <#include "config_global.html" />
       </#if>
-      <#if config?exists && config.activeOngletSMS == true>
-        <li <#if pane="pane-sms">class="active"</#if> id='3'>
-            <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
-        </li>
+      <#if config?exists && !config.IdSpringProvider?has_content && list_provider?exists>
+      <div class="row">
+         <div class="col-md-10"  >
+            <div id="list_provider">
+               <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="list_provider">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider} * :</label>
+                  <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+                     <@combo name="list_provider"  items=list_provider default_value=1 />
+                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-10"  >
+            <div >
+               <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_status">#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * :</label>
+                  <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="margin-top:6px">
+                     <label>
+                     <input type="checkbox"  name="demand_status" /> #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         $(document).ready(function(){ 
+         $('button[name=save]').attr("name","apply");
+         }); 
+      </script>
+      <#else>
+      <#if list_onglet?exists>
+      <div class="control-group" id="entry_id_demand" style="float:right;">
+         <label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
+         <div class="controls">
+            <@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
+            <button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddOnglet">
+            <i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
+            </button>                        
+         </div>
+      </div>
       </#if>
-      <#if config?exists && config.activeOngletBroadcast == true>
-        <li <#if pane="pane-mailing-list">class="active"</#if> id='4'>
-            <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
-        </li>
-	  </#if>
-    </ul>
-
-
-    <div class="tab-content">	
-    <#if config?exists && config.activeOngletGuichet == true>	
-        <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
-           <#include "config_guichet.html" />
-        </div>
-    </#if>
-    <#if config?exists && config.activeOngletAgent == true>
-        <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
-             <#include "config_agent.html" />
-        </div>
-    </#if>
-    <#if config?exists && config.activeOngletEmail == true>
-        <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
+      <ul id="tabs" class="nav nav-tabs">
+         <#if config?exists && config.activeOngletGuichet == true>
+         <li <#if pane="pane-desk">class="active"</#if> id='0'>
+         <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_guichet.title}</a>
+         </li>
+         </#if>
+         <#if config?exists && config.activeOngletAgent == true>
+         <li <#if pane="pane-agent">class="active"</#if> id='1'>
+         <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_agent_view.title}</a>
+         </li>
+         </#if>
+         <#if config?exists && config.activeOngletEmail == true>
+         <li <#if pane="pane-email">class="active"</#if> id='2'>
+         <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_email.title}</a>
+         </li>
+         </#if>
+         <#if config?exists && config.activeOngletSMS == true>
+         <li <#if pane="pane-sms">class="active"</#if> id='3'>
+         <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_sms.title}</a>
+         </li>
+         </#if>
+         <#if config?exists && config.activeOngletBroadcast == true>
+         <li <#if pane="pane-mailing-list">class="active"</#if> id='4'>
+         <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.manage_mailing_list.title}</a>
+         </li>
+         </#if>
+      </ul>
+      <div class="tab-content">
+         <#if config?exists && config.activeOngletGuichet == true>	
+         <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
+            <#include "config_guichet.html" />
+         </div>
+         </#if>
+         <#if config?exists && config.activeOngletAgent == true>
+         <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
+            <#include "config_agent.html" />
+         </div>
+         </#if>
+         <#if config?exists && config.activeOngletEmail == true>
+         <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
             <#include "config_email.html" />
-        </div>
-    </#if>
-    <#if config?exists && config.activeOngletSMS == true>
-        <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
-             <#include "config_sms.html" />
-        </div>
-    </#if>
-     <#if config?exists && config.activeOngletBroadcast == true>
-        <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
-             <#include "config_liste_broadcast.html" />
-        </div>
-     </#if>
-    </div>
-    
+         </div>
+         </#if>
+         <#if config?exists && config.activeOngletSMS == true>
+         <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
+            <#include "config_sms.html" />
+         </div>
+         </#if>
+         <#if config?exists && config.activeOngletBroadcast == true>
+         <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
+            <#include "config_liste_broadcast.html" />
+         </div>
+         </#if>
+      </div>
    </fieldset>
- </div> 
- <#if config?exists>
- <input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
+</div>
+<#if config?exists>
+<input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
 </#if>
 <script>
-$(document).ready(function(){ 
-    var ong=$("#activeOngletHere").val();
- 
-    if($("#"+ong).attr('class')==undefined){
-        $("#tabs li:eq(0) a").tab('show');
-    }
-
-$("#"+ong+" a").tab('show');
-}); 
-
-
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-$("#activeOngletHere").val($(e.target).parent().attr("id"));
-})
-
-
+   $(document).ready(function(){ 
+       var ong=$("#activeOngletHere").val();
+    
+       if($("#"+ong).attr('class')==undefined){
+           $("#tabs li:eq(0) a").tab('show');
+       }
+   
+   $("#"+ong+" a").tab('show');
+   }); 
+   
+   
+   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+   $("#activeOngletHere").val($(e.target).parent().attr("id"));
+   })
+   
+   
 </script>
- </#if>
+</#if>
 <@initEditor />
-	
