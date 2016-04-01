@@ -91,8 +91,7 @@ public class TaskNotifyGru extends SimpleTask
     /** The Constant HTTP_CODE_RESPONSE_CREATED. */
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
 
-    /** The Constant CRM_STATUS_ID. */
-    private static final int CRM_STATUS_ID = 1;
+  
 
     /** The Constant _DEFAULT_VALUE_ID_DEMAND. */
     private static final int _DEFAULT_VALUE_ID_DEMAND = -1;
@@ -199,6 +198,8 @@ public class TaskNotifyGru extends SimpleTask
                 strMessageAgent = backOfficeLogginJson.getString( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING );
             }
 
+            //crm status id
+            notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
             //populate email data for history
             notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strSubjectEmail, strMessageEmail ) );
 
@@ -222,7 +223,7 @@ public class TaskNotifyGru extends SimpleTask
             String strJson = fluxJson.toString( 2 );
             String strToken = AppPropertiesService.getProperty( Constants.TOKEN );
 
-            AppLogService.info( " FLUX BEFORE SENDING TO ESB \n\n\n\n" + strJson + "\n\n\n\n" );
+            AppLogService.info( "\n\n\n\n Workflow NOTIFYGRU to ESB ESB \n\n\n\n" + strJson + "\n\n\n\n" );
 
             try
             {
@@ -235,15 +236,13 @@ public class TaskNotifyGru extends SimpleTask
                 {
                     sendNotificationsAsJson( strJson, wf );
                 }
-
-              
             }
             catch ( Exception e )
             {
                 AppLogService.error( "Error sending JSON to Notification EndPoint : " + e.getMessage(  ), e );
                 throw new AppException( e.getMessage(  ), e );
             }
-            
+
             _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
         }
     }
@@ -261,7 +260,7 @@ public class TaskNotifyGru extends SimpleTask
         JSONObject notificationJson = new JSONObject(  );
         notificationJson.accumulate( Constants.MARK_USER_GUID, _notifyGruService.getUserGuid( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_EMAIL, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, CRM_STATUS_ID );
+        notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, config.getCrmStatusId( ) );
         notificationJson.accumulate( Constants.MARK_NOTIFICATION_TYPE, _DEFAULT_VALUE_JSON );
         /*Le champs permettra de valorisé le champs demand_status du flux notification V1.
         La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
@@ -307,14 +306,15 @@ public class TaskNotifyGru extends SimpleTask
 
         String strMessageUserDashboard = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-      
+
         String strSubjectUserDashboard = giveMeTexteWithValueOfMarker( config.getSubjectGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        
+
         String strStatustextDashboard = giveMeTexteWithValueOfMarker( config.getStatustextGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD,  this.getHTMLEntities( strStatustextDashboard ) );       
+        userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD,
+            this.getHTMLEntities( strStatustextDashboard ) );
         userDashBoardJson.accumulate( Constants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet(  ) );
         userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD,
             this.getHTMLEntities( strSubjectUserDashboard ) );

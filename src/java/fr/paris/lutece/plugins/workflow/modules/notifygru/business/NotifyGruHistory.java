@@ -42,11 +42,34 @@ public class NotifyGruHistory
     // Variables declarations 
     private int _nIdTask;
     private int _nIdResourceHistory;
+
+    /** The _ncrm status id. */
+    private int _ncrmStatusId;
     private BroadcastHistory _oBroadCast;
     private EmailHistory _oEmail;
     private GuichetHistory _oGuichet;
     private SMSHistory _oSMS;
     private AgentHistory _oAgent;
+
+    /**
+     * Gets the crm status id.
+     *
+     * @return the _ncrmStatusId
+     */
+    public int getCrmStatusId(  )
+    {
+        return _ncrmStatusId;
+    }
+
+    /**
+       * Sets the crm status id.
+       *
+       * @param crmStatusId the new crm status id
+       */
+    public void setCrmStatusId( int crmStatusId )
+    {
+        this._ncrmStatusId = crmStatusId;
+    }
 
     /**
      * Returns the IdTask

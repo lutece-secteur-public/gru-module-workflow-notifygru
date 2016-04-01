@@ -36,56 +36,129 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
 
+// TODO: Auto-generated Javadoc
 /**
- *
- * TaskNotifyDirectoryConfig
- *
+ * TaskNotifyDirectoryConfig.
  */
 public class TaskNotifyGruConfig extends TaskConfig
 {
     // Variables declarations 
+    /** The _str id spring provider. */
     /*global config*/
     private String _strIdSpringProvider;
+
+    /** The _n demand status. */
     private int _nDemandStatus;
+
+    /** The _ncrm status id. */
+    private int _ncrmStatusId;
+
+    /** The _n set onglet. */
     private int _nSetOnglet;
 
+    /** The _str message guichet. */
     /*desk config*/
     private String _strMessageGuichet;
+
+    /** The _str statustext guichet. */
     private String _strStatustextGuichet;
+
+    /** The _str sender name guichet. */
     private String _strSenderNameGuichet;
+
+    /** The _str subject guichet. */
     private String _strSubjectGuichet;
+
+    /** The _n demand max step guichet. */
     private int _nDemandMaxStepGuichet;
+
+    /** The _n demand user current step guichet. */
     private int _nDemandUserCurrentStepGuichet;
+
+    /** The _active onglet guichet. */
     private boolean _activeOngletGuichet;
 
+    /** The _str statustext agent. */
     /*agent config*/
     private String _strStatustextAgent;
+
+    /** The _str message agent. */
     private String _strMessageAgent;
+
+    /** The _active onglet agent. */
     private boolean _activeOngletAgent;
 
+    /** The _str subject email. */
     /*email config*/
     private String _strSubjectEmail;
+
+    /** The _str message email. */
     private String _strMessageEmail;
+
+    /** The _str sender name email. */
     private String _strSenderNameEmail;
+
+    /** The _str recipients cc email. */
     private String _strRecipientsCcEmail;
+
+    /** The _str recipients cci email. */
     private String _strRecipientsCciEmail;
+
+    /** The _active onglet email. */
     private boolean _activeOngletEmail;
 
+    /** The _str message sms. */
     /*sms config*/
     private String _strMessageSMS;
+
+    /** The _active onglet sms. */
     private boolean _activeOngletSMS;
 
+    /** The _n id mailing list broadcast. */
     /*broadcast config*/
     private int _nIdMailingListBroadcast;
+
+    /** The _str sender name broadcast. */
     private String _strSenderNameBroadcast;
+
+    /** The _str subject broadcast. */
     private String _strSubjectBroadcast;
+
+    /** The _str message broadcast. */
     private String _strMessageBroadcast;
+
+    /** The _str recipients cc broadcast. */
     private String _strRecipientsCcBroadcast;
+
+    /** The _str recipients cci broadcast. */
     private String _strRecipientsCciBroadcast;
+
+    /** The _active onglet broadcast. */
     private boolean _activeOngletBroadcast;
 
     /**
-     * Returns the IdSpringProvider
+     * Gets the crm status id.
+     *
+     * @return the _ncrmStatusId
+     */
+    public int getCrmStatusId(  )
+    {
+        return _ncrmStatusId;
+    }
+
+    /**
+       * Sets the crm status id.
+       *
+       * @param crmStatusId the new crm status id
+       */
+    public void setCrmStatusId( int crmStatusId )
+    {
+        this._ncrmStatusId = crmStatusId;
+    }
+
+    /**
+     * Returns the IdSpringProvider.
+     *
      * @return The IdSpringProvider
      */
     public String getIdSpringProvider(  )
@@ -94,7 +167,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the IdSpringProvider
+     * Sets the IdSpringProvider.
+     *
      * @param strIdSpringProvider The IdSpringProvider
      */
     public void setIdSpringProvider( String strIdSpringProvider )
@@ -103,7 +177,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the DemandStatus
+     * Returns the DemandStatus.
+     *
      * @return The DemandStatus
      */
     public int getDemandStatus(  )
@@ -112,7 +187,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the DemandStatus
+     * Sets the DemandStatus.
+     *
      * @param nDemandStatus The DemandStatus
      */
     public void setDemandStatus( int nDemandStatus )
@@ -121,7 +197,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SetOnglet
+     * Returns the SetOnglet.
+     *
      * @return The SetOnglet
      */
     public int getSetOnglet(  )
@@ -130,7 +207,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SetOnglet
+     * Sets the SetOnglet.
+     *
      * @param nSetOnglet The SetOnglet
      */
     public void setSetOnglet( int nSetOnglet )
@@ -139,7 +217,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the MessageGuichet
+     * Returns the MessageGuichet.
+     *
      * @return The MessageGuichet
      */
     public String getMessageGuichet(  )
@@ -148,7 +227,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the MessageGuichet
+     * Sets the MessageGuichet.
+     *
      * @param strMessageGuichet The MessageGuichet
      */
     public void setMessageGuichet( String strMessageGuichet )
@@ -157,7 +237,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the StatustextGuichet
+     * Returns the StatustextGuichet.
+     *
      * @return The StatustextGuichet
      */
     public String getStatustextGuichet(  )
@@ -166,7 +247,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the StatustextGuichet
+     * Sets the StatustextGuichet.
+     *
      * @param strStatustextGuichet The StatustextGuichet
      */
     public void setStatustextGuichet( String strStatustextGuichet )
@@ -175,7 +257,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SenderNameGuichet
+     * Returns the SenderNameGuichet.
+     *
      * @return The SenderNameGuichet
      */
     public String getSenderNameGuichet(  )
@@ -184,7 +267,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SenderNameGuichet
+     * Sets the SenderNameGuichet.
+     *
      * @param strSenderNameGuichet The SenderNameGuichet
      */
     public void setSenderNameGuichet( String strSenderNameGuichet )
@@ -193,7 +277,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SubjectGuichet
+     * Returns the SubjectGuichet.
+     *
      * @return The SubjectGuichet
      */
     public String getSubjectGuichet(  )
@@ -202,7 +287,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SubjectGuichet
+     * Sets the SubjectGuichet.
+     *
      * @param strSubjectGuichet The SubjectGuichet
      */
     public void setSubjectGuichet( String strSubjectGuichet )
@@ -211,7 +297,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the DemandMaxStepGuichet
+     * Returns the DemandMaxStepGuichet.
+     *
      * @return The DemandMaxStepGuichet
      */
     public int getDemandMaxStepGuichet(  )
@@ -220,7 +307,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the DemandMaxStepGuichet
+     * Sets the DemandMaxStepGuichet.
+     *
      * @param nDemandMaxStepGuichet The DemandMaxStepGuichet
      */
     public void setDemandMaxStepGuichet( int nDemandMaxStepGuichet )
@@ -229,7 +317,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the DemandUserCurrentStepGuichet
+     * Returns the DemandUserCurrentStepGuichet.
+     *
      * @return The DemandUserCurrentStepGuichet
      */
     public int getDemandUserCurrentStepGuichet(  )
@@ -238,7 +327,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the DemandUserCurrentStepGuichet
+     * Sets the DemandUserCurrentStepGuichet.
+     *
      * @param nDemandUserCurrentStepGuichet The DemandUserCurrentStepGuichet
      */
     public void setDemandUserCurrentStepGuichet( int nDemandUserCurrentStepGuichet )
@@ -247,7 +337,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the ActiveOngletGuichet
+     * Returns the ActiveOngletGuichet.
+     *
      * @return The ActiveOngletGuichet
      */
     public boolean isActiveOngletGuichet(  )
@@ -256,7 +347,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the ActiveOngletGuichet
+     * Sets the ActiveOngletGuichet.
+     *
      * @param activeOngletGuichet The ActiveOngletGuichet
      */
     public void setActiveOngletGuichet( boolean activeOngletGuichet )
@@ -265,7 +357,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the StatustextAgent
+     * Returns the StatustextAgent.
+     *
      * @return The StatustextAgent
      */
     public String getStatustextAgent(  )
@@ -274,7 +367,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the StatustextAgent
+     * Sets the StatustextAgent.
+     *
      * @param strStatustextAgent The StatustextAgent
      */
     public void setStatustextAgent( String strStatustextAgent )
@@ -283,7 +377,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the MessageAgent
+     * Returns the MessageAgent.
+     *
      * @return The MessageAgent
      */
     public String getMessageAgent(  )
@@ -292,7 +387,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the MessageAgent
+     * Sets the MessageAgent.
+     *
      * @param strMessageAgent The MessageAgent
      */
     public void setMessageAgent( String strMessageAgent )
@@ -301,7 +397,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the ActiveOngletAgent
+     * Returns the ActiveOngletAgent.
+     *
      * @return The ActiveOngletAgent
      */
     public boolean isActiveOngletAgent(  )
@@ -310,7 +407,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the ActiveOngletAgent
+     * Sets the ActiveOngletAgent.
+     *
      * @param activeOngletAgent The ActiveOngletAgent
      */
     public void setActiveOngletAgent( boolean activeOngletAgent )
@@ -319,7 +417,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SubjectEmail
+     * Returns the SubjectEmail.
+     *
      * @return The SubjectEmail
      */
     public String getSubjectEmail(  )
@@ -328,7 +427,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SubjectEmail
+     * Sets the SubjectEmail.
+     *
      * @param strSubjectEmail The SubjectEmail
      */
     public void setSubjectEmail( String strSubjectEmail )
@@ -337,7 +437,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the MessageEmail
+     * Returns the MessageEmail.
+     *
      * @return The MessageEmail
      */
     public String getMessageEmail(  )
@@ -346,7 +447,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the MessageEmail
+     * Sets the MessageEmail.
+     *
      * @param strMessageEmail The MessageEmail
      */
     public void setMessageEmail( String strMessageEmail )
@@ -355,7 +457,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SenderNameEmail
+     * Returns the SenderNameEmail.
+     *
      * @return The SenderNameEmail
      */
     public String getSenderNameEmail(  )
@@ -364,7 +467,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SenderNameEmail
+     * Sets the SenderNameEmail.
+     *
      * @param strSenderNameEmail The SenderNameEmail
      */
     public void setSenderNameEmail( String strSenderNameEmail )
@@ -373,7 +477,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the RecipientsCcEmail
+     * Returns the RecipientsCcEmail.
+     *
      * @return The RecipientsCcEmail
      */
     public String getRecipientsCcEmail(  )
@@ -382,7 +487,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the RecipientsCcEmail
+     * Sets the RecipientsCcEmail.
+     *
      * @param strRecipientsCcEmail The RecipientsCcEmail
      */
     public void setRecipientsCcEmail( String strRecipientsCcEmail )
@@ -391,7 +497,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the RecipientsCciEmail
+     * Returns the RecipientsCciEmail.
+     *
      * @return The RecipientsCciEmail
      */
     public String getRecipientsCciEmail(  )
@@ -400,7 +507,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the RecipientsCciEmail
+     * Sets the RecipientsCciEmail.
+     *
      * @param strRecipientsCciEmail The RecipientsCciEmail
      */
     public void setRecipientsCciEmail( String strRecipientsCciEmail )
@@ -409,7 +517,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the ActiveOngletEmail
+     * Returns the ActiveOngletEmail.
+     *
      * @return The ActiveOngletEmail
      */
     public boolean isActiveOngletEmail(  )
@@ -418,7 +527,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the ActiveOngletEmail
+     * Sets the ActiveOngletEmail.
+     *
      * @param activeOngletEmail The ActiveOngletEmail
      */
     public void setActiveOngletEmail( boolean activeOngletEmail )
@@ -427,7 +537,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the MessageSMS
+     * Returns the MessageSMS.
+     *
      * @return The MessageSMS
      */
     public String getMessageSMS(  )
@@ -436,7 +547,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the MessageSMS
+     * Sets the MessageSMS.
+     *
      * @param strMessageSMS The MessageSMS
      */
     public void setMessageSMS( String strMessageSMS )
@@ -445,7 +557,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the ActiveOngletSMS
+     * Returns the ActiveOngletSMS.
+     *
      * @return The ActiveOngletSMS
      */
     public boolean isActiveOngletSMS(  )
@@ -454,7 +567,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the ActiveOngletSMS
+     * Sets the ActiveOngletSMS.
+     *
      * @param activeOngletSMS The ActiveOngletSMS
      */
     public void setActiveOngletSMS( boolean activeOngletSMS )
@@ -463,7 +577,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the IdMailingListBroadcast
+     * Returns the IdMailingListBroadcast.
+     *
      * @return The IdMailingListBroadcast
      */
     public int getIdMailingListBroadcast(  )
@@ -472,7 +587,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the IdMailingListBroadcast
+     * Sets the IdMailingListBroadcast.
+     *
      * @param nIdMailingListBroadcast The IdMailingListBroadcast
      */
     public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
@@ -481,7 +597,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SenderNameBroadcast
+     * Returns the SenderNameBroadcast.
+     *
      * @return The SenderNameBroadcast
      */
     public String getSenderNameBroadcast(  )
@@ -490,7 +607,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SenderNameBroadcast
+     * Sets the SenderNameBroadcast.
+     *
      * @param strSenderNameBroadcast The SenderNameBroadcast
      */
     public void setSenderNameBroadcast( String strSenderNameBroadcast )
@@ -499,7 +617,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the SubjectBroadcast
+     * Returns the SubjectBroadcast.
+     *
      * @return The SubjectBroadcast
      */
     public String getSubjectBroadcast(  )
@@ -508,7 +627,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the SubjectBroadcast
+     * Sets the SubjectBroadcast.
+     *
      * @param strSubjectBroadcast The SubjectBroadcast
      */
     public void setSubjectBroadcast( String strSubjectBroadcast )
@@ -517,7 +637,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the MessageBroadcast
+     * Returns the MessageBroadcast.
+     *
      * @return The MessageBroadcast
      */
     public String getMessageBroadcast(  )
@@ -526,7 +647,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the MessageBroadcast
+     * Sets the MessageBroadcast.
+     *
      * @param strMessageBroadcast The MessageBroadcast
      */
     public void setMessageBroadcast( String strMessageBroadcast )
@@ -535,7 +657,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the RecipientsCcBroadcast
+     * Returns the RecipientsCcBroadcast.
+     *
      * @return The RecipientsCcBroadcast
      */
     public String getRecipientsCcBroadcast(  )
@@ -544,7 +667,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the RecipientsCcBroadcast
+     * Sets the RecipientsCcBroadcast.
+     *
      * @param strRecipientsCcBroadcast The RecipientsCcBroadcast
      */
     public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
@@ -553,7 +677,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the RecipientsCciBroadcast
+     * Returns the RecipientsCciBroadcast.
+     *
      * @return The RecipientsCciBroadcast
      */
     public String getRecipientsCciBroadcast(  )
@@ -562,7 +687,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the RecipientsCciBroadcast
+     * Sets the RecipientsCciBroadcast.
+     *
      * @param strRecipientsCciBroadcast The RecipientsCciBroadcast
      */
     public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
@@ -571,7 +697,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Returns the ActiveOngletBroadcast
+     * Returns the ActiveOngletBroadcast.
+     *
      * @return The ActiveOngletBroadcast
      */
     public boolean isActiveOngletBroadcast(  )
@@ -580,7 +707,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
-     * Sets the ActiveOngletBroadcast
+     * Sets the ActiveOngletBroadcast.
+     *
      * @param activeOngletBroadcast The ActiveOngletBroadcast
      */
     public void setActiveOngletBroadcast( boolean activeOngletBroadcast )

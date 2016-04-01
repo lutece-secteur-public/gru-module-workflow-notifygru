@@ -158,7 +158,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         /*set demand statut params*/
         int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) )
             ? 1 : 0;
+        String strCrmStatusId = request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
+        int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) ||
+            ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer.parseInt( strCrmStatusId ) :  1 ;
+
         config.setDemandStatus( nDemandStatus );
+        config.setCrmStatusId( nCrmStatusId );
 
         /*validate and build guichet*/
         if ( !bRedirector &&

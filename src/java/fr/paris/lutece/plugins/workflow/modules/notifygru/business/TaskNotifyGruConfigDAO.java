@@ -45,7 +45,7 @@ import fr.paris.lutece.util.sql.DAOUtil;
  */
 public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfig>
 {
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,demand_status, set_onglet," +
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,demand_status,crm_status_id, set_onglet," +
         "message_guichet,status_text_guichet,sender_name_guichet," +
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
         "status_text_agent,message_agent,is_active_onglet_agent," +
@@ -55,16 +55,16 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast " +
         " FROM workflow_task_notify_gru_cf  WHERE id_task = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_cf( " +
-        "id_task,id_spring_provider,demand_status,set_onglet,message_guichet,status_text_guichet,sender_name_guichet," +
+        "id_task,id_spring_provider,demand_status,crm_status_id,set_onglet,message_guichet,status_text_guichet,sender_name_guichet," +
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
         "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email," +
         "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," +
         "message_sms,is_active_onglet_sms," +
         "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
         "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) " +
-        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_notify_gru_cf " +
-        " SET id_task = ?, id_spring_provider = ?, demand_status = ?, set_onglet = ?," +
+        " SET id_task = ?, id_spring_provider = ?, demand_status = ?,crm_status_id = ?, set_onglet = ?," +
         " message_guichet = ?, status_text_guichet = ?, sender_name_guichet = ?, " +
         "subject_guichet = ? ,demand_max_step_guichet = ? ,demand_user_current_step_guichet = ? ," +
         " is_active_onglet_guichet = ? ," + "status_text_agent =? , message_agent = ? ,is_active_onglet_agent = ? , " +
@@ -90,6 +90,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setInt( ++nPos, config.getIdTask(  ) );
         daoUtil.setString( ++nPos, config.getIdSpringProvider(  ) );
         daoUtil.setInt( ++nPos, config.getDemandStatus(  ) );
+        daoUtil.setInt( ++nPos, config.getCrmStatusId(  ) );
         daoUtil.setInt( ++nPos, config.getSetOnglet(  ) );
 
         daoUtil.setString( ++nPos, config.getMessageGuichet(  ) );
@@ -140,6 +141,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setInt( ++nPos, config.getIdTask(  ) );
         daoUtil.setString( ++nPos, config.getIdSpringProvider(  ) );
         daoUtil.setInt( ++nPos, config.getDemandStatus(  ) );
+        daoUtil.setInt( ++nPos, config.getCrmStatusId(  ) );
         daoUtil.setInt( ++nPos, config.getSetOnglet(  ) );
 
         daoUtil.setString( ++nPos, config.getMessageGuichet(  ) );
@@ -200,6 +202,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
             config.setIdSpringProvider( daoUtil.getString( ++nPos ) );
             config.setDemandStatus( daoUtil.getInt( ++nPos ) );
+            config.setCrmStatusId( daoUtil.getInt( ++nPos ) );
             config.setSetOnglet( daoUtil.getInt( ++nPos ) );
 
             config.setMessageGuichet( daoUtil.getString( ++nPos ) );

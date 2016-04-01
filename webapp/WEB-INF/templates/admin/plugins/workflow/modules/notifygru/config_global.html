@@ -7,9 +7,10 @@
          </div>
          <div class="modal-body text-center">
             <div class="row">
-               <div class="col-md-10">
+            
+               <div class="col-md-11">
                   <div class="form-group">
-                     <label>
+                     <label >
                      <#if config.demandStatus = 1> 
                      <input type="checkbox" name="demand_status" checked/> 
                      <#else>
@@ -19,7 +20,30 @@
                      </label>
                   </div>
                </div>
+               
+               
+                
+               
+               
+                <div class="col-md-9">
+                 <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="crm_status_id">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm} * :</label>
+                  <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12" style="margin-top:6px">                 
+                     <#if config?exists && config.crmStatusId?has_content && config.crmStatusId!=-1>
+                     <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="${config.crmStatusId}" maxlength="255">
+                     <#else>
+                     <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="1" maxlength="255">
+                     </#if>
+                     <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
+                  </div>
+                  </div>
+               </div>
+               
+               
             </div>
+            
+           
+            
          </div>
       </div>
    </div>

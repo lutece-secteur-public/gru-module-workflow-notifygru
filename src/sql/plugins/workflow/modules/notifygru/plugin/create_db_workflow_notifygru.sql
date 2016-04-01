@@ -14,6 +14,7 @@ CREATE TABLE workflow_task_notify_gru_cf(
   id_task INT DEFAULT NULL, 
  id_spring_provider VARCHAR(255) DEFAULT NULL,
  demand_status INT DEFAULT  NULL, 
+ crm_status_id INT DEFAULT  1, 
  set_onglet SMALLINT  NULL DEFAULT NULL,
 
   message_guichet TEXT COLLATE utf8_unicode_ci DEFAULT NULL,  
@@ -52,6 +53,7 @@ subject_broadcast VARCHAR(255) DEFAULT   NULL,
 CREATE TABLE workflow_task_notify_gru_history(
   id_history INT DEFAULT NULL,
   id_task INT DEFAULT NULL,
+   crm_status_id INT DEFAULT  1, 
 
   message_guichet TEXT COLLATE utf8_unicode_ci DEFAULT NULL,  
   status_text_guichet VARCHAR(255) DEFAULT  NULL,  

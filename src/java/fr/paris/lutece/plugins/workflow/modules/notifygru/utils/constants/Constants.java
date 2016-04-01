@@ -307,7 +307,7 @@ public final class Constants
     public static final String PARAMETER_SENDER_NAME_GUICHET = "sender_name_guichet";
     public static final String PARAMETER_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String PARAMETER_ACTIVE_ONGLET_GUICHET = "active_onglet_guichet";
-    public static final String PARAMETER_CRM_STATUS_ID_COMMUNE = "crm_status_id_commune";
+    public static final String PARAMETER_CRM_STATUS_ID = "crm_status_id";
 
     // PARAMETERS AGENT
     public static final String PARAMETER_STATUS_TEXT_AGENT = "status_text_agent";

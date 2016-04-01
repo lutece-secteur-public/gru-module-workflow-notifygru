@@ -45,7 +45,7 @@ import fr.paris.lutece.util.sql.DAOUtil;
 public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 {
     public static final String BEAN = "NotifyGruHistoryDAO";
-    private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task," +
+    private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task, crm_status_id," +
         "message_guichet,status_text_guichet,sender_name_guichet," +
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
         "status_text_agent,message_agent,is_active_onglet_agent," +
@@ -55,14 +55,14 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast " +
         " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( " +
-        "id_history,id_task,message_guichet,status_text_guichet,sender_name_guichet," +
+        "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet," +
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
         "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email," +
         "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," +
         "message_sms,is_active_onglet_sms," +
         "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
         "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) " +
-        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
 
@@ -78,6 +78,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 
         daoUtil.setInt( ++nPos, history.getIdResourceHistory(  ) );
         daoUtil.setInt( ++nPos, history.getIdTask(  ) );
+        daoUtil.setInt( ++nPos, history.getCrmStatusId(  ) );
 
         daoUtil.setString( ++nPos, history.getGuichet(  ).getMessageGuichet(  ) );
         daoUtil.setString( ++nPos, history.getGuichet(  ).getStatustextGuichet(  ) );
@@ -139,6 +140,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         {
             oNotifyGru.setIdResourceHistory( daoUtil.getInt( ++nPos ) );
             oNotifyGru.setIdTask( daoUtil.getInt( ++nPos ) );
+            oNotifyGru.setCrmStatusId( daoUtil.getInt( ++nPos ) );
 
             oGuichet.setMessageGuichet( daoUtil.getString( ++nPos ) );
             oGuichet.setStatustextGuichet( daoUtil.getString( ++nPos ) );
