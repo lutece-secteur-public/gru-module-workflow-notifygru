@@ -34,13 +34,12 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfigDAO;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfig;
 import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
+
 
 
 /**
@@ -51,8 +50,7 @@ import javax.inject.Inject;
 public class TaskNotifyGruConfigService extends TaskConfigService
 {
     public static final String BEAN_SERVICE = "workflow-notifygru.taskNotifyGruConfigService";
-    @Inject
-    private TaskNotifyGruConfigDAO _taskNotifyGruConfigDAO;
+   
 
     /**
      * {@inheritDoc}
@@ -93,7 +91,8 @@ public class TaskNotifyGruConfigService extends TaskConfigService
      * @param nIdTask
      * @return
      */
-    @Override
+    @SuppressWarnings( "unchecked" )
+	@Override
     public <T> T findByPrimaryKey( int nIdTask )
     {
         TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );

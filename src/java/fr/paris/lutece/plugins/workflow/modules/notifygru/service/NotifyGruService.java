@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
-import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
 import fr.paris.lutece.plugins.workflow.service.taskinfo.ITaskInfoProvider;
 import fr.paris.lutece.plugins.workflow.service.taskinfo.TaskInfoManager;
 import fr.paris.lutece.plugins.workflowcore.business.action.Action;
@@ -80,8 +79,7 @@ public final class NotifyGruService implements INotifyGruService
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruService;
-    @Inject
-    private IWorkflowUserAttributesManager _userAttributesManager;
+   
     @Inject
     private ITaskService _taskService;
 

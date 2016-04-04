@@ -44,7 +44,6 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruC
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
-import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
@@ -91,8 +90,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     private ITaskConfigService _taskNotifyGruConfigService;
     @Inject
     private INotifyGruService _notifyGRUService;
-    @Inject
-    private IWorkflowUserAttributesManager _userAttributesManager;
     private AbstractServiceProvider _providerService;
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )

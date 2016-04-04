@@ -35,8 +35,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.service.taskinfo.AbstractTaskInfoProvider;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -51,12 +50,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 {
-    @Inject
-    private IResourceHistoryService _resourceHistoryService;
-    @Inject
-    private INotifyGruService _notifyDirectoryService;
-    @Inject
-    private ITaskService _taskService;
+   
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruConfigService;
