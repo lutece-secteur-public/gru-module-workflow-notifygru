@@ -43,6 +43,8 @@
         	<bean id="workflow-notifygru.notifyGruHistoryService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHistoryService" />
    	<bean id="workflow-notifygru.taskNotifyGruConfigService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService"
    		p:taskConfigDAO-ref="taskNotifyGruConfigDAO" />
+   		
+   			<bean id="workflow-notifygru.notifyGruCacheService" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService" />
         
     
    	

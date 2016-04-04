@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruPlugin;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.util.sql.DAOUtil;
 
@@ -83,6 +84,9 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public synchronized void insert( TaskNotifyGruConfig config )
     {
+        //remove cache
+        NotifyGruCacheService.getInstance(  ).removeGruConfigFromCache( config.getIdTask(  ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin(  ) );
 
         int nPos = 0;
@@ -134,6 +138,9 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public void store( TaskNotifyGruConfig config )
     {
+        //remove cache
+        NotifyGruCacheService.getInstance(  ).removeGruConfigFromCache( config.getIdTask(  ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, NotifyGruPlugin.getPlugin(  ) );
 
         int nPos = 0;
@@ -248,6 +255,9 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public void delete( int nIdState )
     {
+        //remove cache
+        NotifyGruCacheService.getInstance(  ).removeGruConfigFromCache( nIdState );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, NotifyGruPlugin.getPlugin(  ) );
 
         daoUtil.setInt( 1, nIdState );

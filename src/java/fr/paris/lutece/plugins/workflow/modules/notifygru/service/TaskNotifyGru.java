@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
 import fr.paris.lutece.plugins.workflow.business.workflow.WorkflowDAO;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflowcore.business.action.Action;
@@ -91,11 +92,6 @@ public class TaskNotifyGru extends SimpleTask
     /** The Constant HTTP_CODE_RESPONSE_CREATED. */
     private static final int HTTP_CODE_RESPONSE_CREATED = 201;
 
-  
-
-    /** The Constant _DEFAULT_VALUE_ID_DEMAND. */
-    private static final int _DEFAULT_VALUE_ID_DEMAND = -1;
-
     /** The _task notify gru config service. */
     // SERVICES 
     @Inject
@@ -132,8 +128,12 @@ public class TaskNotifyGru extends SimpleTask
     @Override
     public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
     {
-        /*Task Config*/
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
+        /*Task Config form cache*/
+        TaskNotifyGruConfig config = NotifyGruCacheService.getInstance(  )
+                                                          .getNotifyGruConfigFromCache( _taskNotifyGruConfigService,
+                this.getId(  ) );
+
+        //    TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
         NotifyGruHistory notifyGruHistory = new NotifyGruHistory(  );
         notifyGruHistory.setIdTask( this.getId(  ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
@@ -199,7 +199,7 @@ public class TaskNotifyGru extends SimpleTask
             }
 
             //crm status id
-            notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
+            notifyGruHistory.setCrmStatusId( config.getCrmStatusId(  ) );
             //populate email data for history
             notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strSubjectEmail, strMessageEmail ) );
 
@@ -260,7 +260,7 @@ public class TaskNotifyGru extends SimpleTask
         JSONObject notificationJson = new JSONObject(  );
         notificationJson.accumulate( Constants.MARK_USER_GUID, _notifyGruService.getUserGuid( nIdResourceHistory ) );
         notificationJson.accumulate( Constants.MARK_EMAIL, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, config.getCrmStatusId( ) );
+        notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, config.getCrmStatusId(  ) );
         notificationJson.accumulate( Constants.MARK_NOTIFICATION_TYPE, _DEFAULT_VALUE_JSON );
         /*Le champs permettra de valorisé le champs demand_status du flux notification V1.
         La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).

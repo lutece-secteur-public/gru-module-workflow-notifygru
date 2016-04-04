@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHisto
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.service.security.IWorkflowUserAttributesManager;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
@@ -112,7 +113,9 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
 
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
+        TaskNotifyGruConfig config = NotifyGruCacheService.getInstance(  )
+                                                          .getNotifyGruConfigFromCache( _taskNotifyGruConfigService,
+                task.getId(  ) );
 
         Boolean bActiveOngletGuichet = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_GUICHET,
                 strOngletActive, config.isActiveOngletGuichet(  ), Constants.PARAMETER_BUTTON_REMOVE_GUICHET );
@@ -160,7 +163,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             ? 1 : 0;
         String strCrmStatusId = request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
         int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) ||
-            ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer.parseInt( strCrmStatusId ) :  1 ;
+            ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer.parseInt( strCrmStatusId ) : 1;
 
         config.setDemandStatus( nDemandStatus );
         config.setCrmStatusId( nCrmStatusId );
