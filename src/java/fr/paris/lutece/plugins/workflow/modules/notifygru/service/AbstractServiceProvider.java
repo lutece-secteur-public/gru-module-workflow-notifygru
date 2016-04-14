@@ -70,11 +70,24 @@ public abstract class AbstractServiceProvider implements IProvider
     public abstract void updateListProvider( ITask task );
 
     /**
+     * Update list provider.
+     */
+    public abstract void updateListProvider( );
+
+    /**
      * Builds the referente list provider.
      *
      * @return the reference list
      */
     public abstract ReferenceList buildReferenteListProvider(  );
+    
+    
+    /**
+     * Gets the referente list entity provider.
+     *
+     * @return the referente list entity provider
+     */
+    public abstract ReferenceList getReferenteListEntityProvider(  );
 
     /**
      * Checks if is key provider.

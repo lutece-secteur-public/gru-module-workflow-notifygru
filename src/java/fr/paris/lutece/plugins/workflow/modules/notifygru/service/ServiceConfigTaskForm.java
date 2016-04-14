@@ -102,6 +102,39 @@ public final class ServiceConfigTaskForm
 
         return bexist;
     }
+    
+    /**
+     * Checks if is bean existe.
+     *
+     * @param strIdBean the str id bean
+     * @return the boolean
+     */
+    public static Boolean isBeanExiste( String strIdBean )
+    {
+        Boolean bexist = false;
+
+        if ( strIdBean != null )
+        {
+            if ( isKeyManagerProvider( strIdBean ) )
+            {
+                String[] keys = getKeyManagerProvider( strIdBean );
+
+                if ( isSpringBeanExiste( keys[0] ) )
+                {
+                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
+                    providerService.updateListProvider(  );
+
+                    bexist = providerService.isKeyProvider( strIdBean );
+                }
+            }
+            else
+            {
+                bexist = isSpringBeanExiste( strIdBean );
+            }
+        }
+
+        return bexist;
+    }
 
     /**
      * Gets the costumize bean.
@@ -137,6 +170,39 @@ public final class ServiceConfigTaskForm
         return provider;
     }
 
+    
+    /**
+     * Gets the costumize bean.
+     *
+     * @param strIdBean the str id bean
+     * @return the costumize bean
+     */
+    public static AbstractServiceProvider getCostumizeBean( String strIdBean )
+    {
+        AbstractServiceProvider provider = null;
+
+        if ( strIdBean != null )
+        {
+            if ( isKeyManagerProvider( strIdBean ) )
+            {
+                String[] keys = getKeyManagerProvider( strIdBean );
+
+                if ( isSpringBeanExiste( keys[0] ) )
+                {
+                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
+                    providerService.updateListProvider(  );
+
+                    provider = providerService.getInstanceProvider( strIdBean );
+                }
+            }
+            else
+            {
+                provider = SpringContextService.getBean( strIdBean );
+            }
+        }
+
+        return provider;
+    }
     /**
      * Checks if is spring bean existe.
      *
