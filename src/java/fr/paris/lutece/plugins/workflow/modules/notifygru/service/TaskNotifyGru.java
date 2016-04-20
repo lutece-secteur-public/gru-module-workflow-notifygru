@@ -57,9 +57,9 @@ import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import net.sf.json.util.JSONUtils;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -70,9 +70,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
@@ -221,16 +219,24 @@ public class TaskNotifyGru extends SimpleTask
             fluxJson.accumulate( Constants.MARK_NOTIFICATION, notificationJson );
 
             String strJson = fluxJson.toString( 2 );
-            String strToken = AppPropertiesService.getProperty( Constants.TOKEN );
+         
 
             AppLogService.info( "\n\n\n\n Workflow NOTIFYGRU to ESB ESB \n\n\n\n" + strJson + "\n\n\n\n" );
-
+            String strresponseApiManager = getToken(  );
+            JSONObject strResponseApiManagerJsonObject = null ;
+            
+            if ( JSONUtils.mayBeJSON( strresponseApiManager ) )
+            {
+            	strResponseApiManagerJsonObject = (JSONObject) JSONSerializer.toJSON( strresponseApiManager );        	  
+            	
+            }
+           
             try
             {
-                if ( StringUtils.isNotBlank( strToken ) )
+                if ( strResponseApiManagerJsonObject != null && strResponseApiManagerJsonObject.has( Constants.PARAMS_ACCES_TOKEN ) )
                 {
-                    JSONObject tokenAuth = getToken(  );
-                    sendNotificationsAsJson( strJson, tokenAuth, wf );
+                	
+                    sendNotificationsAsJson( strJson, strResponseApiManagerJsonObject, wf );
                 }
                 else
                 {
@@ -247,6 +253,9 @@ public class TaskNotifyGru extends SimpleTask
         }
     }
 
+    
+
+    
     /**
      * Builds the json global.
      *
@@ -512,7 +521,7 @@ public class TaskNotifyGru extends SimpleTask
      *
      * @return the token
      */
-    private JSONObject getToken(  )
+    private String getToken(  )
     {
         Client client = Client.create(  );
 
@@ -526,11 +535,10 @@ public class TaskNotifyGru extends SimpleTask
                 Constants.TYPE_AUTHENTIFICATION + " " + AppPropertiesService.getProperty( Constants.TOKEN ) )
                                              .accept( MediaType.APPLICATION_JSON ).post( ClientResponse.class, params );
 
-        String output = response.getEntity( String.class );
+        String output = response.getEntity( String.class );    
+      
 
-        JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON( output );
-
-        return jsonObject;
+        return output;
     }
 
     /* (non-Javadoc)
