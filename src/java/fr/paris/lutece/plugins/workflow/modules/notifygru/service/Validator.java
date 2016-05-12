@@ -156,7 +156,7 @@ public final class Validator
      * @return true if the strFreemarkerTemplateData is correct
      */
     @SuppressWarnings( "deprecation" )
-	public static boolean isFreemarkerValid( String strFreemarkerTemplateData, Locale locale, Object model )
+    public static boolean isFreemarkerValid( String strFreemarkerTemplateData, Locale locale, Object model )
     {
         try
         {

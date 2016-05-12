@@ -102,7 +102,7 @@ public final class ServiceConfigTaskForm
 
         return bexist;
     }
-    
+
     /**
      * Checks if is bean existe.
      *
@@ -170,7 +170,6 @@ public final class ServiceConfigTaskForm
         return provider;
     }
 
-    
     /**
      * Gets the costumize bean.
      *
@@ -203,6 +202,7 @@ public final class ServiceConfigTaskForm
 
         return provider;
     }
+
     /**
      * Checks if is spring bean existe.
      *

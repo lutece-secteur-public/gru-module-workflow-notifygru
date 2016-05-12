@@ -45,13 +45,12 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
  */
 public final class NotifyGruCacheService extends AbstractCacheableService
 {
-    
     /** The Constant CACHE_NAME. */
     private static final String CACHE_NAME = "workflow.notifyGruConfigCacheService";
-    
+
     /** The Constant BEAN_SERVICE. */
     private static final String BEAN_SERVICE = "workflow-notifygru.notifyGruCacheService";
-    
+
     /** The _singleton. */
     private static NotifyGruCacheService _singleton;
 

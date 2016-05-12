@@ -105,15 +105,13 @@ public final class Constants
     public static final String MESSAGE_DISPLAY_SMS = "SMS envoyé au numéro : ";
     public static final String MESSAGE_DISPLAY_MESSAGE_SMS = " _ Message : ";
 
-    //URL
-    public static final String URL_NOTIFICATION_ENDPOINT = "workflow-notifygru.urlNotificationEndpoint";
-    public static final String PARAMS_NOTIFICATION_SENDER = "workflow-notifygru.NotificationSender.instance";
-    public static final String URL_TOKEN = "workflow-notifygru.urlApiManager";
-    public static final String TOKEN = "workflow-notifygru.urlApiManagerToken";
+    //URL   
+    public static final String CREDENTIAL_CLIENT_API_MANAGER = "workflow-notifygru.client.ApiManager.Credential";
 
     //CONSTANT FOR SENDING JSON FLUX
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
     public static final String NOTIFICATION_SENDER = "NotificationSender";
+    public static final String PARAMS_NOTIFICATION_SENDER = "workflow-notifygru.NotificationSender.instance";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";
     public static final String PARAMS_GRANT_TYPE_VALUE = "client_credentials";
@@ -121,9 +119,6 @@ public final class Constants
     //CONTENT FORMAT
     public static final String CONTENT_FORMAT = "application/json; charset=utf-8";
     public static final String CONTENT_FORMAT_TOKEN = "application/x-www-form-urlencoded";
-
-    //HTTP ERROR MESSAGE
-    public static final String ERROR_MESSAGE = "Failed : HTTP error code : ";
 
     //NUMBER
     public static final int OPTIONAL_INT_VALUE = -1000;
@@ -140,21 +135,6 @@ public final class Constants
     public static final String NAME = "name";
     public static final String USER_AUTO = "auto";
     public static final String TASK_NOTIFY_GRU_KEY = "taskNotifyGru";
-
-    // FIELDS
-    public static final String FIELD_NOTIFY = "module.workflow.notifygru.task_notify_gru_config.label_notify_by";
-    public static final String FIELD_SUBJECT = "module.workflow.notifygru.task_notify_gru_config.label_subject";
-    public static final String FIELD_MESSAGE = "module.workflow.notifygru.task_notify_gru_config.label_message";
-    public static final String FIELD_SENDER_NAME = "module.workflow.notifygru.task_notify_gru_config.label_sender_name";
-    public static final String FIELD_TASK_RESSOURCE_GRU = "module.workflow.notifygru.task_notify_gru_config.label_task_ressource";
-    public static final String FIELD_TASK_ENTRY_GRU_SMS = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_sms";
-    public static final String FIELD_TASK_ENTRY_GRU_EMAIL = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_email";
-    public static final String FIELD_TASK_ENTRY_GRU_USER_GUID = "module.workflow.notifygru.task_notify_gru_config.label_task_entry_gru_user_guid";
-    public static final String FIELD_STATE = "module.workflow.notifygru.task_notify_gru_config.label_state";
-    public static final String FIELD_MESSAGE_VALIDATION = "module.workflow.notifygru.task_notify_gru_config.label_message_validation";
-    public static final String FIELD_LABEL_LINK = "module.workflow.notifygru.task_notify_gru_config.label_label_link";
-    public static final String FIELD_LABEL_LINK_VIEW_RECORD = "module.workflow.notifygru.task_notify_gru_config.label_label_link_view_record";
-    public static final String FIELD_LABEL_PERIOD_VALIDITY = "module.workflow.notifygru.task_notify_gru_config.label_period_validity";
 
     //TITLE
     public static final String TITLE_NOTIFY = "module.workflow.notifygru.task_notify_title";
@@ -392,9 +372,6 @@ public final class Constants
 
     // ATTRIBUTES
     public static final String ATTRIBUTE_HREF = "href";
-
-    // JSP
-    public static final String JSP_DO_VISUALISATION_RECORD = "jsp/admin/plugins/directory/DoVisualisationRecord.jsp";
 
     /**
          * @exception Exception not instance

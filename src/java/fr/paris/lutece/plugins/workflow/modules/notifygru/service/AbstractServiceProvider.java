@@ -72,7 +72,7 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Update list provider.
      */
-    public abstract void updateListProvider( );
+    public abstract void updateListProvider(  );
 
     /**
      * Builds the referente list provider.
@@ -80,8 +80,7 @@ public abstract class AbstractServiceProvider implements IProvider
      * @return the reference list
      */
     public abstract ReferenceList buildReferenteListProvider(  );
-    
-    
+
     /**
      * Gets the referente list entity provider.
      *

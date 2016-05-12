@@ -33,10 +33,13 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-
+import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruAgentNotification;
+import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruEmailNotification;
+import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruGlobalNotification;
+import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruGuichetNotification;
+import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruSMSNotification;
+import fr.paris.lutece.plugins.librarynotifygru.services.IsendNotificationAsJson;
+import fr.paris.lutece.plugins.librarynotifygru.services.SendNotificationAsJson;
 import fr.paris.lutece.plugins.workflow.business.action.ActionDAO;
 import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
 import fr.paris.lutece.plugins.workflow.business.workflow.WorkflowDAO;
@@ -53,16 +56,15 @@ import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import net.sf.json.util.JSONUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+
+
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -70,12 +72,10 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * TaskNotifyGru.
  */
@@ -87,8 +87,8 @@ public class TaskNotifyGru extends SimpleTask
     /** The Constant _DEFAULT_VALUE_JSON. */
     private static final String _DEFAULT_VALUE_JSON = "";
 
-    /** The Constant HTTP_CODE_RESPONSE_CREATED. */
-    private static final int HTTP_CODE_RESPONSE_CREATED = 201;
+    /** The Constant BEAN_CLIENT_NOTIFICATION. */
+    private static final String BEAN_CLIENT_NOTIFICATION = "library-notifygru.clientNotification";
 
     /** The _task notify gru config service. */
     // SERVICES 
@@ -104,6 +104,11 @@ public class TaskNotifyGru extends SimpleTask
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
 
+    /** The _task notify gru history service. */
+    @Inject
+    @Named( BEAN_CLIENT_NOTIFICATION )
+    private IsendNotificationAsJson _clientNotification;
+
     /** The _task doa. */
     @Inject
     private TaskDAO _taskDOA;
@@ -115,6 +120,7 @@ public class TaskNotifyGru extends SimpleTask
     /** The _action dao. */
     @Inject
     private ActionDAO _actionDAO;
+    private IsendNotificationAsJson _senderEndPoint;
 
     /**
      * {@inheritDoc}
@@ -147,8 +153,7 @@ public class TaskNotifyGru extends SimpleTask
             //get provider
             _notifyGruService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ), task );
 
-            JSONObject fluxJson = new JSONObject(  );
-            JSONObject notificationJson = this.buildJsonGlobal( config, nIdResourceHistory, locale );
+            NotifyGruGlobalNotification notificationObject = buildGlobalNotification( config, nIdResourceHistory, locale );
 
             //if active config for Mail : user_email
             String strMessageEmail = _DEFAULT_VALUE_JSON;
@@ -156,10 +161,10 @@ public class TaskNotifyGru extends SimpleTask
 
             if ( config.isActiveOngletEmail(  ) )
             {
-                JSONObject userEmailJson = this.buildJsonMessageEmail( config, nIdResourceHistory, locale );
-                notificationJson.accumulate( Constants.MARK_USER_MAIL, userEmailJson );
-                strMessageEmail = userEmailJson.getString( Constants.MARK_MESSAGE_EMAIL );
-                strSubjectEmail = userEmailJson.getString( Constants.MARK_SUBJECT );
+                NotifyGruEmailNotification userEmail = buildEmailNotification( config, nIdResourceHistory, locale );
+                notificationObject.setUserEmail( userEmail );
+                strMessageEmail = userEmail.getMessage(  );
+                strSubjectEmail = userEmail.getSubject(  );
             }
 
             //if active config for Desk : user_dashboard
@@ -168,10 +173,11 @@ public class TaskNotifyGru extends SimpleTask
 
             if ( config.isActiveOngletGuichet(  ) )
             {
-                JSONObject userDashBoardJson = this.buildJsonMessageGuichet( config, nIdResourceHistory, locale );
-                notificationJson.accumulate( Constants.MARK_USER_DASHBOARD, userDashBoardJson );
-                strMessageGuichet = userDashBoardJson.getString( Constants.MARK_MESSAGE_USERDASHBOARD );
-                strSubjectGuichet = userDashBoardJson.getString( Constants.MARK_SUBJECT_USERDASHBOARD );
+                NotifyGruGuichetNotification userDashBoard = buildGuichetNotification( config, nIdResourceHistory,
+                        locale );
+                notificationObject.setUserGuichet( userDashBoard );
+                strMessageGuichet = userDashBoard.getMessage(  );
+                strSubjectGuichet = userDashBoard.getSubject(  );
             }
 
             //if active config for SMS : user_sms
@@ -180,9 +186,9 @@ public class TaskNotifyGru extends SimpleTask
             if ( config.isActiveOngletSMS(  ) &&
                     StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
             {
-                JSONObject smsJson = this.buildJsonMessageSMS( config, nIdResourceHistory, locale );
-                notificationJson.accumulate( Constants.MARK_USER_SMS, smsJson );
-                strMessageSMS = smsJson.getString( Constants.MARK_MESSAGE_SMS );
+                NotifyGruSMSNotification userSMS = buildSMSNotification( config, nIdResourceHistory, locale );
+                notificationObject.setUserSMS( userSMS );
+                strMessageSMS = userSMS.getMessage(  );
             }
 
             //if active config for Agent : backoffice_logging
@@ -190,10 +196,10 @@ public class TaskNotifyGru extends SimpleTask
 
             if ( config.isActiveOngletAgent(  ) )
             {
-                JSONObject backOfficeLogginJson = this.buildJsonMessageBackOfficeLoggin( strMessageSMS,
-                        strMessageGuichet, strMessageEmail, config, nIdResourceHistory, locale );
-                notificationJson.accumulate( Constants.MARK_BACK_OFFICE_LOGGING, backOfficeLogginJson );
-                strMessageAgent = backOfficeLogginJson.getString( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING );
+                NotifyGruAgentNotification userAgent = buildAgenttNotification( config, nIdResourceHistory, locale );
+                notificationObject.setUserAgent( userAgent );
+
+                strMessageAgent = userAgent.getMessage(  );
             }
 
             //crm status id
@@ -215,103 +221,86 @@ public class TaskNotifyGru extends SimpleTask
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );
 
-            //build JSON notification
-            fluxJson.accumulate( Constants.MARK_NOTIFICATION, notificationJson );
+            _senderEndPoint = SendNotificationAsJson.instance(  );
 
-            String strJson = fluxJson.toString( 2 );
-         
+            String strNotifyGruCredential = AppPropertiesService.getProperty( Constants.CREDENTIAL_CLIENT_API_MANAGER,
+                    "" );
+            String strToken = _senderEndPoint.getToken( strNotifyGruCredential );
+            String strSender = ( wf != null ) ? wf.getName(  ) : "";
+            Map<String, String> headers = new HashMap<String, String>(  );
 
-            AppLogService.info( "\n\n\n\n Workflow NOTIFYGRU to ESB ESB \n\n\n\n" + strJson + "\n\n\n\n" );
-            String strresponseApiManager = getToken(  );
-            JSONObject strResponseApiManagerJsonObject = null ;
-            
-            if ( JSONUtils.mayBeJSON( strresponseApiManager ) )
-            {
-            	strResponseApiManagerJsonObject = (JSONObject) JSONSerializer.toJSON( strresponseApiManager );        	  
-            	
-            }
-           
-            try
-            {
-                if ( strResponseApiManagerJsonObject != null && strResponseApiManagerJsonObject.has( Constants.PARAMS_ACCES_TOKEN ) )
-                {
-                	
-                    sendNotificationsAsJson( strJson, strResponseApiManagerJsonObject, wf );
-                }
-                else
-                {
-                    sendNotificationsAsJson( strJson, wf );
-                }
-            }
-            catch ( Exception e )
-            {
-                AppLogService.error( "Error sending JSON to Notification EndPoint : " + e.getMessage(  ), e );
-                throw new AppException( e.getMessage(  ), e );
-            }
+            headers.put( Constants.NOTIFICATION_SENDER,
+                AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) + ":" + strSender );
 
+            AppLogService.info( 
+                "\n************************************************ CLIENT NOTIFY GRU SENDER ********************************************************************\n" );
+            _senderEndPoint.send( notificationObject, strToken, headers );
+
+            //    _clientNotification.sendJsonFlux( strJson, strSender, AppPropertiesService.getProperty( Constants.TOKEN, "" ) );
             _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
         }
     }
 
-    
-
-    
     /**
-     * Builds the json global.
+     * Builds the global notification.
      *
      * @param config the config
      * @param nIdResourceHistory the n id resource history
      * @param locale the locale
-     * @return the JSON object
+     * @return the notify gru global notification
      */
-    private JSONObject buildJsonGlobal( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private NotifyGruGlobalNotification buildGlobalNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-        JSONObject notificationJson = new JSONObject(  );
-        notificationJson.accumulate( Constants.MARK_USER_GUID, _notifyGruService.getUserGuid( nIdResourceHistory ) );
-        notificationJson.accumulate( Constants.MARK_EMAIL, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        notificationJson.accumulate( Constants.MARK_CRM_STATUS_ID, config.getCrmStatusId(  ) );
-        notificationJson.accumulate( Constants.MARK_NOTIFICATION_TYPE, _DEFAULT_VALUE_JSON );
+        NotifyGruGlobalNotification notification = new NotifyGruGlobalNotification(  );
+        notification.setGuid( _notifyGruService.getUserGuid( nIdResourceHistory ) );
+        notification.setEmail( _notifyGruService.getUserEmail( nIdResourceHistory ) );
+        notification.setCrmStatusId( config.getCrmStatusId(  ) );
+        notification.setNotificationType( _DEFAULT_VALUE_JSON );
+
         /*Le champs permettra de valorisé le champs demand_status du flux notification V1.
         La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire « clôturée ». On est dans le cas où le checkbox est coché).
-                Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).*/
-        notificationJson.accumulate( Constants.MARK_DEMAND_STATUS, config.getDemandStatus(  ) );
-        notificationJson.accumulate( Constants.MARK_REFERENCE_DEMAND,
-            _notifyGruService.getDemandReference( nIdResourceHistory ) );
-        notificationJson.accumulate( Constants.MARK_COSTUMER_ID, _notifyGruService.getCustomerId( nIdResourceHistory ) );
+            Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).*/
+        notification.setDemandStatus( config.getDemandStatus(  ) );
+        notification.setDemandReference( _notifyGruService.getDemandReference( nIdResourceHistory ) );
+
+        String strCid = _notifyGruService.getCustomerId( nIdResourceHistory );
+        int ncid = -1;
+
+        try
+        {
+            ncid = Integer.parseInt( strCid );
+        }
+        catch ( NumberFormatException e )
+        {
+            AppLogService.error( "Invalide Customer ID" );
+        }
+
+        notification.setCustomerId( ncid );
 
         java.util.Date dateSendNotificationJson = new java.util.Date(  );
-        notificationJson.accumulate( Constants.MARK_DEMAND_DATE_TIMESTAMP, dateSendNotificationJson.getTime(  ) );
+        notification.setNotificationDate( dateSendNotificationJson.getTime(  ) );
+        notification.setDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
+        notification.setRemoteDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
+        notification.setDemandTypeId( _notifyGruService.getOptionalDemandIdType( nIdResourceHistory ) );
+        notification.setDemandMaxStep( config.getDemandMaxStepGuichet(  ) );
+        notification.setDemandUserCurrentStep( config.getDemandUserCurrentStepGuichet(  ) );
 
-        int nIdDemand = _notifyGruService.getOptionalDemandId( nIdResourceHistory );
-
-        notificationJson.accumulate( Constants.MARK_ID_DEMAND,
-            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE ) ? nIdDemand : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_REMOTE_ID_DEMAND,
-            ( ( nIdDemand != Constants.OPTIONAL_INT_VALUE ) ? nIdDemand : _DEFAULT_VALUE_JSON ) );
-
-        int nIdDemandType = _notifyGruService.getOptionalDemandIdType( nIdResourceHistory );
-        notificationJson.accumulate( Constants.MARK_ID_DEMAND_TYPE,
-            ( ( nIdDemandType != Constants.OPTIONAL_INT_VALUE ) ? nIdDemandType : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_DEMAND_MAX_STEP,
-            ( ( config.getDemandMaxStepGuichet(  ) >= 0 ) ? config.getDemandMaxStepGuichet(  ) : _DEFAULT_VALUE_JSON ) );
-        notificationJson.accumulate( Constants.MARK_DEMAND_USER_CURRENT_STEP, config.getDemandUserCurrentStepGuichet(  ) );
-
-        //        notificationJson.accumulate( Constants.MARK_DEMAND_STATE,
-        //            ( ( config.getDemandStateGuichet(  ) >= 0 ) ? config.getDemandStateGuichet(  ) : _DEFAULT_VALUE_JSON ) );
-        return notificationJson;
+        return notification;
     }
 
     /**
-     * Builds the json message guichet.
+     * Builds the guichet notification.
      *
      * @param config the config
      * @param nIdResourceHistory the n id resource history
      * @param locale the locale
-     * @return the JSON object
+     * @return the notify gru guichet notification
      */
-    private JSONObject buildJsonMessageGuichet( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private NotifyGruGuichetNotification buildGuichetNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-        JSONObject userDashBoardJson = new JSONObject(  );
+        NotifyGruGuichetNotification userDashBoard = new NotifyGruGuichetNotification(  );
 
         String strMessageUserDashboard = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
@@ -322,43 +311,38 @@ public class TaskNotifyGru extends SimpleTask
         String strStatustextDashboard = giveMeTexteWithValueOfMarker( config.getStatustextGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        userDashBoardJson.accumulate( Constants.MARK_STATUS_TEXT_USERDASHBOARD,
-            this.getHTMLEntities( strStatustextDashboard ) );
-        userDashBoardJson.accumulate( Constants.MARK_SENDER_NAME_USERDASHBOARD, config.getSenderNameGuichet(  ) );
-        userDashBoardJson.accumulate( Constants.MARK_SUBJECT_USERDASHBOARD,
-            this.getHTMLEntities( strSubjectUserDashboard ) );
-        userDashBoardJson.accumulate( Constants.MARK_MESSAGE_USERDASHBOARD,
-            this.getHTMLEntities( strMessageUserDashboard ) );
-        userDashBoardJson.accumulate( Constants.MARK_DATA_USERDASHBOARD, _DEFAULT_VALUE_JSON );
+        userDashBoard.setStatusText( getHTMLEntities( strStatustextDashboard ) );
+        userDashBoard.setSenderName( config.getSenderNameGuichet(  ) );
+        userDashBoard.setSubject( getHTMLEntities( strSubjectUserDashboard ) );
+        userDashBoard.setMessage( getHTMLEntities( strMessageUserDashboard ) );
+        userDashBoard.setData( _DEFAULT_VALUE_JSON );
 
-        return userDashBoardJson;
+        return userDashBoard;
     }
 
     /**
-     * Builds the json message back office loggin.
+     * Builds the agentt notification.
      *
-     * @param strMessageSMS the str message sms
-     * @param strMessageGuichet the str message guichet
-     * @param strMessageEmail the str message email
      * @param config the config
      * @param nIdResourceHistory the n id resource history
      * @param locale the locale
-     * @return the JSON object
+     * @return the notify gru agent notification
      */
-    private JSONObject buildJsonMessageBackOfficeLoggin( String strMessageSMS, String strMessageGuichet,
-        String strMessageEmail, TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private NotifyGruAgentNotification buildAgenttNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-        JSONObject backOfficeLogginJson = new JSONObject(  );
+        NotifyGruAgentNotification userAgent = new NotifyGruAgentNotification(  );
 
         String strStatustextAgent = giveMeTexteWithValueOfMarker( config.getStatustextAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        backOfficeLogginJson.accumulate( Constants.MARK_STATUS_TEXT_BACK_OFFICE_LOGGING, strStatustextAgent );
 
         String strMessageAgent = giveMeTexteWithValueOfMarker( config.getMessageAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        backOfficeLogginJson.accumulate( Constants.MARK_MESSAGE_BACK_OFFICE_LOGGING, strMessageAgent );
 
-        return backOfficeLogginJson;
+        userAgent.setStatusText( strStatustextAgent );
+        userAgent.setMessage( strMessageAgent );
+
+        return userAgent;
     }
 
     /**
@@ -378,56 +362,57 @@ public class TaskNotifyGru extends SimpleTask
         return strmessageFinal;
     }
 
+   
     /**
-     * Builds the json message sms.
+     * Builds the sms notification.
      *
      * @param config the config
      * @param nIdResourceHistory the n id resource history
      * @param locale the locale
-     * @return the JSON object
+     * @return the notify gru sms notification
      */
-    private JSONObject buildJsonMessageSMS( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private NotifyGruSMSNotification buildSMSNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-        JSONObject smsJson = new JSONObject(  );
+        NotifyGruSMSNotification userSMS = new NotifyGruSMSNotification(  );
 
         String strMessageSMS = giveMeTexteWithValueOfMarker( config.getMessageSMS(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
-        smsJson.accumulate( Constants.MARK_MESSAGE_SMS, strMessageSMS );
 
-        smsJson.accumulate( Constants.MARK_PHONE_NUMBER,
-            _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) );
+        userSMS.setMessage( strMessageSMS );
+        userSMS.setPhoneNumber( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) );
 
-        return smsJson;
+        return userSMS;
     }
 
+   
     /**
-     * Builds the json message email.
+     * Builds the email notification.
      *
      * @param config the config
      * @param nIdResourceHistory the n id resource history
      * @param locale the locale
-     * @return the JSON object
+     * @return the notify gru email notification
      */
-    private JSONObject buildJsonMessageEmail( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private NotifyGruEmailNotification buildEmailNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-        JSONObject userEmailJson = new JSONObject(  );
+        NotifyGruEmailNotification userEmailNotification = new NotifyGruEmailNotification(  );
 
         String strMessageEmail = giveMeTexteWithValueOfMarker( config.getMessageEmail(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
         String strSubjectEmail = giveMeTexteWithValueOfMarker( config.getSubjectEmail(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        userEmailJson.accumulate( Constants.MARK_SENDER_NAME, config.getSenderNameEmail(  ) );
-        userEmailJson.accumulate( Constants.MARK_SENDER_EMAIL, MailService.getNoReplyEmail(  ) );
-        userEmailJson.accumulate( Constants.MARK_RECIPIENT, _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailJson.accumulate( Constants.MARK_SUBJECT, this.getHTMLEntities( strSubjectEmail ) );
-        userEmailJson.accumulate( Constants.MARK_MESSAGE_EMAIL, this.getHTMLEntities( strMessageEmail ) );
-        userEmailJson.accumulate( Constants.MARK_CC,
-            ( StringUtils.isNotBlank( config.getRecipientsCcEmail(  ) ) ? config.getRecipientsCcEmail(  ) : "" ) );
-        userEmailJson.accumulate( Constants.MARK_CCI,
-            ( StringUtils.isNotBlank( config.getRecipientsCciEmail(  ) ) ? config.getRecipientsCcEmail(  ) : "" ) );
+        userEmailNotification.setSenderName( config.getSenderNameEmail(  ) );
+        userEmailNotification.setSenderEmail( MailService.getNoReplyEmail(  ) );
+        userEmailNotification.setRecipient( _notifyGruService.getUserEmail( nIdResourceHistory ) );
+        userEmailNotification.setSenderName( getHTMLEntities( strSubjectEmail ) );
+        userEmailNotification.setMessage( getHTMLEntities( strMessageEmail ) );
+        userEmailNotification.setCc( config.getRecipientsCcEmail(  ) );
+        userEmailNotification.setCci( config.getRecipientsCcEmail(  ) );
 
-        return userEmailJson;
+        return userEmailNotification;
     }
 
     /**
@@ -460,85 +445,6 @@ public class TaskNotifyGru extends SimpleTask
         Matcher m = REMOVE_TAGS.matcher( string );
 
         return m.replaceAll( "" );
-    }
-
-    /**
-     * Send notifications as json.
-     *
-     * @param strJson the str json
-     * @param tokenAuth the token auth
-     * @param wf the wf
-     */
-    private void sendNotificationsAsJson( String strJson, JSONObject tokenAuth, Workflow wf )
-    {
-        Client client = Client.create(  );
-
-        WebResource webResource = client.resource( AppPropertiesService.getProperty( 
-                    Constants.URL_NOTIFICATION_ENDPOINT ) );
-
-        ClientResponse response = webResource.type( Constants.CONTENT_FORMAT )
-                                             .header( HttpHeaders.AUTHORIZATION,
-                Constants.TYPE_AUTHENTIFICATION + " " + (String) tokenAuth.get( Constants.PARAMS_ACCES_TOKEN ) )
-                                             .header( Constants.NOTIFICATION_SENDER,
-                AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) + ":" +
-                ( ( wf != null ) ? wf.getName(  ) : "" ) ).accept( MediaType.APPLICATION_JSON )
-                                             .post( ClientResponse.class, strJson );
-
-        if ( response.getStatus(  ) != HTTP_CODE_RESPONSE_CREATED )
-        {
-            throw new AppException( Constants.ERROR_MESSAGE + response.getStatus(  ) );
-        }
-    }
-
-    /**
-     * Send notifications as json.
-     *
-     * @param strJson the str json
-     * @param wf the wf
-     */
-    private void sendNotificationsAsJson( String strJson, Workflow wf )
-    {
-        AppLogService.debug( "Sending notification as JSON : " + strJson );
-
-        Client client = Client.create(  );
-
-        WebResource webResource = client.resource( AppPropertiesService.getProperty( 
-                    Constants.URL_NOTIFICATION_ENDPOINT ) );
-
-        ClientResponse response = webResource.type( Constants.CONTENT_FORMAT ).accept( MediaType.APPLICATION_JSON )
-                                             .header( Constants.NOTIFICATION_SENDER,
-                AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) + " : " +
-                ( ( wf != null ) ? wf.getName(  ) : "" ) ).post( ClientResponse.class, strJson );
-
-        if ( response.getStatus(  ) != HTTP_CODE_RESPONSE_CREATED )
-        {
-            throw new AppException( Constants.ERROR_MESSAGE + response.getStatus(  ) );
-        }
-    }
-
-    /**
-     * Gets the token.
-     *
-     * @return the token
-     */
-    private String getToken(  )
-    {
-        Client client = Client.create(  );
-
-        WebResource webResource = client.resource( AppPropertiesService.getProperty( Constants.URL_TOKEN ) );
-
-        javax.ws.rs.core.MultivaluedMap<String, String> params = new com.sun.jersey.core.util.MultivaluedMapImpl(  );
-        params.add( Constants.PARAMS_GRANT_TYPE, Constants.PARAMS_GRANT_TYPE_VALUE );
-
-        ClientResponse response = webResource.type( Constants.CONTENT_FORMAT_TOKEN )
-                                             .header( HttpHeaders.AUTHORIZATION,
-                Constants.TYPE_AUTHENTIFICATION + " " + AppPropertiesService.getProperty( Constants.TOKEN ) )
-                                             .accept( MediaType.APPLICATION_JSON ).post( ClientResponse.class, params );
-
-        String output = response.getEntity( String.class );    
-      
-
-        return output;
     }
 
     /* (non-Javadoc)

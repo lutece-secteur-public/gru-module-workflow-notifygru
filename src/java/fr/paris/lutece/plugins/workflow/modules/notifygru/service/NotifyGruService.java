@@ -79,7 +79,6 @@ public final class NotifyGruService implements INotifyGruService
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruService;
-   
     @Inject
     private ITaskService _taskService;
 

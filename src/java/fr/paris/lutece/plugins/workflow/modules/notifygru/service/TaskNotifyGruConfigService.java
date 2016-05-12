@@ -40,8 +40,6 @@ import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
 import org.springframework.transaction.annotation.Transactional;
 
 
-
-
 /**
  *
  * TaskNotifyGruConfigService
@@ -50,7 +48,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaskNotifyGruConfigService extends TaskConfigService
 {
     public static final String BEAN_SERVICE = "workflow-notifygru.taskNotifyGruConfigService";
-   
 
     /**
      * {@inheritDoc}
@@ -92,7 +89,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
      * @return
      */
     @SuppressWarnings( "unchecked" )
-	@Override
+    @Override
     public <T> T findByPrimaryKey( int nIdTask )
     {
         TaskNotifyGruConfig config = super.findByPrimaryKey( nIdTask );
