@@ -100,6 +100,11 @@ public final class NotifyGruCacheService extends AbstractCacheableService
         if ( config == null )
         {
             config = taskNotifyGruConfigService.findByPrimaryKey( nidTask );
+            if (config == null )
+            {
+                //no config stored yet for this task => adding an empty one in cache
+                config = new TaskNotifyGruConfig( );
+            }
             putInCache( getCacheKey( nidTask ), config );
         }
 

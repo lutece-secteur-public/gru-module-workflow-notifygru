@@ -282,7 +282,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     public String getDisplayConfigForm( HttpServletRequest request, Locale locale, ITask task )
     {
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId(  ) );
-
+        if ( config == null )
+        {
+            //no config stored yet for this task, setting a empty one
+            config = new TaskNotifyGruConfig( );
+        }
+        
         String strDefaultSenderName = AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
