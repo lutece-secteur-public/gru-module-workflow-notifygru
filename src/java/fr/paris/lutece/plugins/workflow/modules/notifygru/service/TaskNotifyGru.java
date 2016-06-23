@@ -407,7 +407,7 @@ public class TaskNotifyGru extends SimpleTask
         userEmailNotification.setSenderName( config.getSenderNameEmail(  ) );
         userEmailNotification.setSenderEmail( MailService.getNoReplyEmail(  ) );
         userEmailNotification.setRecipient( _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailNotification.setSenderName( getHTMLEntities( strSubjectEmail ) );
+        userEmailNotification.setSubject( getHTMLEntities( strSubjectEmail ) );
         userEmailNotification.setMessage( getHTMLEntities( strMessageEmail ) );
         userEmailNotification.setCc( config.getRecipientsCcEmail(  ) );
         userEmailNotification.setCci( config.getRecipientsCcEmail(  ) );
