@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants;
 
 
 /**
- *
- * @author
  *
  */
 public final class Constants
@@ -109,8 +107,8 @@ public final class Constants
     public static final String CREDENTIAL_CLIENT_API_MANAGER = "workflow-notifygru.client.ApiManager.Credential";
 
     //CONSTANT FOR SENDING JSON FLUX
+    public static final String BEAN_NOTIFICATION_SENDER = "workflow-notifygru.lib-notifygru.notificationService";
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
-    public static final String NOTIFICATION_SENDER = "NotificationSender";
     public static final String PARAMS_NOTIFICATION_SENDER = "workflow-notifygru.NotificationSender.instance";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";

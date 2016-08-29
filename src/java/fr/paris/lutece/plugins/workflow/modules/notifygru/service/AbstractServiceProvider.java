@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,11 +42,8 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Locale;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractServiceProvider.
- *
- * @author fallphenix
  */
 public abstract class AbstractServiceProvider implements IProvider
 {
