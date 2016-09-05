@@ -51,7 +51,7 @@ public interface INotifyGruHistoryService
     * @param notifyGru The instance of comment value which contains the informations to store
     * @param plugin the plugin
     */
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void create( NotifyGruHistory notifyGru, Plugin plugin );
 
     /**
@@ -60,7 +60,7 @@ public interface INotifyGruHistoryService
      * @param nIdTask The task key
      * @param plugin the Plugin
      */
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
@@ -68,7 +68,7 @@ public interface INotifyGruHistoryService
      * @param nIdTask The task key
      * @param plugin the Plugin
      */
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByTask( int nIdTask, Plugin plugin );
 
     /**

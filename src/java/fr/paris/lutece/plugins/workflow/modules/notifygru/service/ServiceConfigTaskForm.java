@@ -44,7 +44,6 @@ import fr.paris.lutece.util.ReferenceList;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,33 +66,29 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Checks if is bean existe.
+     * Checks if bean exists.
      *
      * @param strIdBean the str id bean
      * @param task the task
      * @return true if the bean exist
      */
-    public static Boolean isBeanExiste( String strIdBean, ITask task )
+    public static Boolean isBeanExists( String strIdBean, ITask task )
     {
         Boolean bexist = false;
 
         if ( strIdBean != null )
         {
-            if ( isKeyManagerProvider( strIdBean ) )
+            AbstractServiceProvider providerService = getServiceProviderFromKey( strIdBean );
+
+            if ( providerService != null )
             {
-                String[] keys = getKeyManagerProvider( strIdBean );
+                providerService.updateListProvider( task );
 
-                if ( isSpringBeanExiste( keys[0] ) )
-                {
-                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
-                    providerService.updateListProvider( task );
-
-                    bexist = providerService.isKeyProvider( strIdBean );
-                }
+                bexist = providerService.isKeyProvider( strIdBean );
             }
             else
             {
-                bexist = isSpringBeanExiste( strIdBean );
+                bexist = isSpringBeanExists( strIdBean );
             }
         }
 
@@ -101,32 +96,28 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Checks if is bean existe.
+     * Checks if bean exists.
      *
      * @param strIdBean the str id bean
      * @return the boolean
      */
-    public static Boolean isBeanExiste( String strIdBean )
+    public static Boolean isBeanExists( String strIdBean )
     {
         Boolean bexist = false;
 
         if ( strIdBean != null )
         {
-            if ( isKeyManagerProvider( strIdBean ) )
+            AbstractServiceProvider providerService = getServiceProviderFromKey( strIdBean );
+
+            if ( providerService != null )
             {
-                String[] keys = getKeyManagerProvider( strIdBean );
+                providerService.updateListProvider(  );
 
-                if ( isSpringBeanExiste( keys[0] ) )
-                {
-                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
-                    providerService.updateListProvider(  );
-
-                    bexist = providerService.isKeyProvider( strIdBean );
-                }
+                bexist = providerService.isKeyProvider( strIdBean );
             }
             else
             {
-                bexist = isSpringBeanExiste( strIdBean );
+                bexist = isSpringBeanExists( strIdBean );
             }
         }
 
@@ -134,29 +125,25 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Gets the costumize bean.
+     * Gets the customized bean for a given task.
      *
      * @param strIdBean the str id bean
      * @param task the task
-     * @return the costumize bean
+     * @return the customized bean
      */
-    public static AbstractServiceProvider getCostumizeBean( String strIdBean, ITask task )
+    public static AbstractServiceProvider getCustomizedBean( String strIdBean, ITask task )
     {
         AbstractServiceProvider provider = null;
 
         if ( strIdBean != null )
         {
-            if ( isKeyManagerProvider( strIdBean ) )
+            AbstractServiceProvider providerService = getServiceProviderFromKey( strIdBean );
+
+            if ( providerService != null )
             {
-                String[] keys = getKeyManagerProvider( strIdBean );
+                providerService.updateListProvider( task );
 
-                if ( isSpringBeanExiste( keys[0] ) )
-                {
-                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
-                    providerService.updateListProvider( task );
-
-                    provider = providerService.getInstanceProvider( strIdBean );
-                }
+                provider = providerService.getInstanceProvider( strIdBean );
             }
             else
             {
@@ -168,28 +155,24 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Gets the costumize bean.
+     * Gets the customized bean.
      *
      * @param strIdBean the str id bean
-     * @return the costumize bean
+     * @return the customized bean
      */
-    public static AbstractServiceProvider getCostumizeBean( String strIdBean )
+    public static AbstractServiceProvider getCustomizedBean( String strIdBean )
     {
         AbstractServiceProvider provider = null;
 
         if ( strIdBean != null )
         {
-            if ( isKeyManagerProvider( strIdBean ) )
+            AbstractServiceProvider providerService = getServiceProviderFromKey( strIdBean );
+
+            if ( providerService != null )
             {
-                String[] keys = getKeyManagerProvider( strIdBean );
+                providerService.updateListProvider(  );
 
-                if ( isSpringBeanExiste( keys[0] ) )
-                {
-                    AbstractServiceProvider providerService = SpringContextService.getBean( keys[0] );
-                    providerService.updateListProvider(  );
-
-                    provider = providerService.getInstanceProvider( strIdBean );
-                }
+                provider = providerService.getInstanceProvider( strIdBean );
             }
             else
             {
@@ -201,12 +184,12 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Checks if is spring bean existe.
+     * Checks if spring bean exists.
      *
      * @param strIdBean the str id bean
      * @return the boolean
      */
-    public static Boolean isSpringBeanExiste( String strIdBean )
+    public static Boolean isSpringBeanExists( String strIdBean )
     {
         Boolean bexist = false;
 
@@ -235,44 +218,20 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Checks if is key manager provider.
-     *
-     * @param strfullKeyProvider the strfull key provider
-     * @return the boolean
+     * retrieve AbstractServiceProvider bean if exists
+     * @param strFullKeyProvider the key at format beanManagerProvider.@.specificPart
+     * @return true if a ManagerProvider exists in Spring context
      */
-    public static Boolean isKeyManagerProvider( String strfullKeyProvider )
+    public static AbstractServiceProvider getServiceProviderFromKey( String strFullKeyProvider )
     {
-        Boolean bIsIt = false;
+        String[] providerGabarit = strFullKeyProvider.split( ".@." );
 
-        if ( strfullKeyProvider != null )
+        if ( ( providerGabarit.length == 2 ) && isSpringBeanExists( providerGabarit[0] ) )
         {
-            String[] providerGabarit = strfullKeyProvider.split( ".@." );
-
-            if ( providerGabarit.length == 2 )
-            {
-                bIsIt = true;
-            }
+            return SpringContextService.getBean( providerGabarit[0] );
         }
 
-        return bIsIt;
-    }
-
-    /**
-     * Gets the key manager provider.
-     *
-     * @param strfullKeyProvider the strfull key provider
-     * @return the key manager provider
-     */
-    public static String[] getKeyManagerProvider( String strfullKeyProvider )
-    {
-        String[] key = null;
-
-        if ( strfullKeyProvider != null )
-        {
-            key = strfullKeyProvider.split( ".@." );
-        }
-
-        return key;
+        return null;
     }
 
     /**
@@ -320,16 +279,16 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Gets the numberto string.
+     * Gets the number of string.
      *
-     * @param srtNumner to convert
-     * @return nimber or if exception
+     * @param srtNumber to convert
+     * @return positive int value or -1 if exception or negative value
      */
-    public static int getNumbertoString( String srtNumner )
+    public static int parseStringToPositiveNumber( String srtNumber )
     {
         try
         {
-            return Integer.parseInt( srtNumner );
+            return Math.max( -1, Integer.parseInt( srtNumber ) );
         }
         catch ( NumberFormatException e )
         {
@@ -356,17 +315,17 @@ public final class ServiceConfigTaskForm
     /**
      * display the error message.
      *
-     * @param errors the list of errors
+     * @param lstErrors the list of errors
      * @param request the http request
      * @return the error message
      */
-    public static String displayErrorMessage( ArrayList<String> errors, HttpServletRequest request )
+    public static String displayErrorMessage( List<String> lstErrors, HttpServletRequest request )
     {
-        Object[] tabRequiredFields = new Object[errors.size(  )];
+        Object[] tabRequiredFields = new Object[lstErrors.size(  )];
 
-        for ( int i = 0; i < errors.size(  ); i++ )
+        for ( int i = 0; i < lstErrors.size(  ); i++ )
         {
-            tabRequiredFields[i] = errors.get( i );
+            tabRequiredFields[i] = lstErrors.get( i );
         }
 
         if ( tabRequiredFields.length > 2 )
@@ -402,23 +361,23 @@ public final class ServiceConfigTaskForm
      */
     public static ReferenceList getListProvider( ITask task )
     {
-        ReferenceList refenreceList = new ReferenceList(  );
+        ReferenceList referenceList = new ReferenceList(  );
 
         for ( AbstractServiceProvider provider : getImplementationServices(  ) )
         {
             if ( !provider.isManagerProvider(  ) )
             {
-                refenreceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
+                referenceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
             }
             else
             {
                 provider.updateListProvider( task );
 
-                refenreceList.addAll( provider.buildReferenteListProvider(  ) );
+                referenceList.addAll( provider.buildReferenteListProvider(  ) );
             }
         }
 
-        return refenreceList;
+        return referenceList;
     }
 
     /**

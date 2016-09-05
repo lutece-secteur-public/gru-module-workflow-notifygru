@@ -34,7 +34,6 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.mail.FileAttachment;
 
@@ -57,8 +56,6 @@ public interface INotifyGruService
      */
     ReferenceList getListStates( int nIdAction );
 
-    // List<IEntry> getListEntries( int nIdTask );
-
     /**
      * The files Attachments to insert in the mail
      * @param config the configuration
@@ -67,31 +64,6 @@ public interface INotifyGruService
      * @return the files Attachments to insert in the mail
      */
     List<FileAttachment> getFilesAttachment( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory );
-
-    /**
-     * Get the user guid
-     * @param task to exec
-     * @param locale of client
-     * @return the user guid, an empty string if the position is not set
-     */
-    List<ITask> getListBelowTasks( ITask task, Locale locale );
-
-    // OTHERS
-
-    /**
-     * Fill the model
-     * @param config the config
-     * @param resourceHistory the resource history
-     * @param record the record
-     * @param directory the directory
-     * @param request the HTTP request
-     * @param nIdAction the id action
-     * @param nIdHistory the id history
-     * @return the model
-     */
-
-    //    Map<String, Object> fillModel( TaskNotifyGruConfig config, ResourceHistory resourceHistory, Record record,
-    //        Directory directory, HttpServletRequest request, int nIdAction, int nIdHistory );
 
     /**
      * Gets the locale.

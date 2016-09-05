@@ -194,7 +194,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public TaskNotifyGruConfig load( int nIdTask )
     {
-        TaskNotifyGruConfig config = null ;
+        TaskNotifyGruConfig config = null;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, NotifyGruPlugin.getPlugin(  ) );
 
         daoUtil.setInt( 1, nIdTask );

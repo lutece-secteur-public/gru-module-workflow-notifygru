@@ -87,12 +87,15 @@ public interface IProvider
     String getOptionalMobilePhoneNumber( int nIdResourceHistory );
 
     /**
+     * Return html body for help infos
      * @param local of request
      * @return html template for maker resources attributs
      */
     String getInfosHelp( Locale local );
 
     /**
+     * Give map of infos for the object with given id
+     * Careful, should return a 'blank' model (new valid object) for id -1
      * @param nIdResourceHistory of ressource
      * @return model marker from resources attributs
      */

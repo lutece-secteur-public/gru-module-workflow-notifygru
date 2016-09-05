@@ -33,17 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.AgentNotification;
 import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.EmailNotification;
 import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruGlobalNotification;
@@ -66,9 +55,20 @@ import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -76,9 +76,6 @@ import fr.paris.lutece.util.html.HtmlTemplate;
  */
 public class TaskNotifyGru extends SimpleTask
 {
-    /** The Constant REMOVE_TAGS. */
-    private static final Pattern REMOVE_TAGS = Pattern.compile( "<.+?>" );
-
     /** The Constant _DEFAULT_VALUE_JSON. */
     private static final String _DEFAULT_VALUE_JSON = "";
 
@@ -95,12 +92,11 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
-    
+
     /** Lib-NotifyGru sender service */
     @Inject
     @Named( Constants.BEAN_NOTIFICATION_SENDER )
     private NotificationService _notifyGruSenderService;
-    
 
     /** The _task doa. */
     @Inject
@@ -136,13 +132,13 @@ public class TaskNotifyGru extends SimpleTask
         ITask task = _taskDOA.load( config.getIdTask(  ), locale );
 
         /*process if Task not null and valid provider*/
-        if ( ( task != null ) && ServiceConfigTaskForm.isBeanExiste( config.getIdSpringProvider(  ), task ) )
+        if ( ( task != null ) && ServiceConfigTaskForm.isBeanExists( config.getIdSpringProvider(  ), task ) )
         {
             Action action = _actionDAO.load( task.getAction(  ).getId(  ) );
             Workflow wf = ( action != null ) ? _workflowDOA.load( action.getWorkflow(  ).getId(  ) ) : null;
 
             //get provider
-            _notifyGruService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ), task );
+            _notifyGruService = ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider(  ), task );
 
             NotifyGruGlobalNotification notificationObject = buildGlobalNotification( config, nIdResourceHistory, locale );
 
@@ -212,7 +208,8 @@ public class TaskNotifyGru extends SimpleTask
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );
 
-            String strNotifyGruCredential = AppPropertiesService.getProperty( Constants.CREDENTIAL_CLIENT_API_MANAGER, "" );
+            String strNotifyGruCredential = AppPropertiesService.getProperty( Constants.CREDENTIAL_CLIENT_API_MANAGER,
+                    "" );
             String strSender = ( wf != null ) ? wf.getName(  ) : "";
             strSender = AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) + ":" + strSender;
 
@@ -254,13 +251,14 @@ public class TaskNotifyGru extends SimpleTask
         }
         catch ( NumberFormatException e )
         {
-            AppLogService.error( "Invalid Customer ID" );
+            String strError = "Invalid Customer ID [" + strCid + "]";
+            AppLogService.error( strError );
+            throw new AppException( strError, e );
         }
 
         notification.setCustomerId( ncid );
 
-        java.util.Date dateSendNotificationJson = new java.util.Date(  );
-        notification.setNotificationDate( dateSendNotificationJson.getTime(  ) );
+        notification.setNotificationDate( System.currentTimeMillis(  ) );
         notification.setDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
         notification.setRemoteDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
         notification.setDemandTypeId( _notifyGruService.getOptionalDemandIdType( nIdResourceHistory ) );
@@ -278,10 +276,10 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru userDashboard notification
      */
-    private UserDashboardNotification buildUserDashboardNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
-        Locale locale )
+    private UserDashboardNotification buildUserDashboardNotification( TaskNotifyGruConfig config,
+        int nIdResourceHistory, Locale locale )
     {
-    	UserDashboardNotification userDashBoard = new UserDashboardNotification(  );
+        UserDashboardNotification userDashBoard = new UserDashboardNotification(  );
 
         String strMessageUserDashboard = giveMeTexteWithValueOfMarker( config.getMessageGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
@@ -292,10 +290,10 @@ public class TaskNotifyGru extends SimpleTask
         String strStatustextDashboard = giveMeTexteWithValueOfMarker( config.getStatustextGuichet(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
 
-        userDashBoard.setStatusText( getHTMLEntities( strStatustextDashboard ) );
+        userDashBoard.setStatusText( strStatustextDashboard );
         userDashBoard.setSenderName( config.getSenderNameGuichet(  ) );
-        userDashBoard.setSubject( getHTMLEntities( strSubjectUserDashboard ) );
-        userDashBoard.setMessage( getHTMLEntities( strMessageUserDashboard ) );
+        userDashBoard.setSubject( strSubjectUserDashboard );
+        userDashBoard.setMessage( strMessageUserDashboard );
         userDashBoard.setData( _DEFAULT_VALUE_JSON );
 
         return userDashBoard;
@@ -309,8 +307,7 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru agent notification
      */
-    private AgentNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
-        Locale locale )
+    private AgentNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
         AgentNotification userAgent = new AgentNotification(  );
 
@@ -338,12 +335,10 @@ public class TaskNotifyGru extends SimpleTask
     {
         @SuppressWarnings( "deprecation" )
         HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, locale, model );
-        String strmessageFinal = this.getHTMLEntities( template.getHtml(  ) );
 
-        return strmessageFinal;
+        return template.getHtml(  );
     }
 
-   
     /**
      * Builds the sms notification.
      *
@@ -352,10 +347,9 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru sms notification
      */
-    private SMSNotification buildSMSNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
-        Locale locale )
+    private SMSNotification buildSMSNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
-    	SMSNotification userSMS = new SMSNotification(  );
+        SMSNotification userSMS = new SMSNotification(  );
 
         String strMessageSMS = giveMeTexteWithValueOfMarker( config.getMessageSMS(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
@@ -366,7 +360,6 @@ public class TaskNotifyGru extends SimpleTask
         return userSMS;
     }
 
-   
     /**
      * Builds the email notification.
      *
@@ -377,7 +370,7 @@ public class TaskNotifyGru extends SimpleTask
      */
     private EmailNotification buildEmailNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
-    	EmailNotification userEmailNotification = new EmailNotification(  );
+        EmailNotification userEmailNotification = new EmailNotification(  );
 
         String strMessageEmail = giveMeTexteWithValueOfMarker( config.getMessageEmail(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
@@ -387,44 +380,12 @@ public class TaskNotifyGru extends SimpleTask
         userEmailNotification.setSenderName( config.getSenderNameEmail(  ) );
         userEmailNotification.setSenderEmail( MailService.getNoReplyEmail(  ) );
         userEmailNotification.setRecipient( _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailNotification.setSubject( getHTMLEntities( strSubjectEmail ) );
-        userEmailNotification.setMessage( getHTMLEntities( strMessageEmail ) );
+        userEmailNotification.setSubject( strSubjectEmail );
+        userEmailNotification.setMessage( strMessageEmail );
         userEmailNotification.setCc( config.getRecipientsCcEmail(  ) );
         userEmailNotification.setCci( config.getRecipientsCcEmail(  ) );
 
         return userEmailNotification;
-    }
-
-    /**
-     * Gets the HTML entities.
-     *
-     * @param htmlData the html data
-     * @return the HTML entities
-     */
-    private String getHTMLEntities( String htmlData )
-    {
-        //        htmlData = StringEscapeUtils.unescapeHtml4(htmlData);
-        //        AppLogService.info("Apres unescapeHtml4 \n" + htmlData);
-        //        htmlData = removeTags(htmlData);
-        return htmlData;
-    }
-
-    /**
-     * Removes the tags.
-     *
-     * @param string the string
-     * @return the string
-     */
-    public static String removeTags( String string )
-    {
-        if ( ( string == null ) || ( string.length(  ) == 0 ) )
-        {
-            return string;
-        }
-
-        Matcher m = REMOVE_TAGS.matcher( string );
-
-        return m.replaceAll( "" );
     }
 
     /* (non-Javadoc)
@@ -455,13 +416,6 @@ public class TaskNotifyGru extends SimpleTask
     @Override
     public String getTitle( Locale locale )
     {
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( this.getId(  ) );
-
-        if ( config != null )
-        {
-            return I18nService.getLocalizedString( Constants.TITLE_NOTIFY, locale );
-        }
-
         return I18nService.getLocalizedString( Constants.TITLE_NOTIFY, locale );
     }
 }

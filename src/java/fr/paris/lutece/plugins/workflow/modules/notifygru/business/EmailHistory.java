@@ -45,7 +45,7 @@ public class EmailHistory
     private String _strSenderNameEmail;
     private String _strRecipientsCcEmail;
     private String _strRecipientsCciEmail;
-    private boolean _activeOngletEmail;
+    private boolean _bActiveOngletEmail;
 
     /**
         * Returns the SubjectEmail
@@ -143,7 +143,7 @@ public class EmailHistory
      */
     public boolean isActiveOngletEmail(  )
     {
-        return _activeOngletEmail;
+        return _bActiveOngletEmail;
     }
 
     /**
@@ -152,6 +152,6 @@ public class EmailHistory
      */
     public void setActiveOngletEmail( boolean activeOngletEmail )
     {
-        _activeOngletEmail = activeOngletEmail;
+        _bActiveOngletEmail = activeOngletEmail;
     }
 }

@@ -46,7 +46,7 @@ public class BroadcastHistory
     private String _strMessageBroadcast;
     private String _strRecipientsCcBroadcast;
     private String _strRecipientsCciBroadcast;
-    private boolean _activeOngletBroadcast;
+    private boolean _bActiveOngletBroadcast;
 
     /**
      * Returns the IdMailingListBroadcast
@@ -162,7 +162,7 @@ public class BroadcastHistory
      */
     public boolean isActiveOngletBroadcast(  )
     {
-        return _activeOngletBroadcast;
+        return _bActiveOngletBroadcast;
     }
 
     /**
@@ -171,6 +171,6 @@ public class BroadcastHistory
      */
     public void setActiveOngletBroadcast( boolean activeOngletBroadcast )
     {
-        _activeOngletBroadcast = activeOngletBroadcast;
+        _bActiveOngletBroadcast = activeOngletBroadcast;
     }
 }

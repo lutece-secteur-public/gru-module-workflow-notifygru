@@ -75,7 +75,7 @@ public class TaskNotifyGruConfig extends TaskConfig
     private int _nDemandUserCurrentStepGuichet;
 
     /** The _active onglet guichet. */
-    private boolean _activeOngletGuichet;
+    private boolean _bActiveOngletGuichet;
 
     /** The _str statustext agent. */
     /*agent config*/
@@ -104,14 +104,14 @@ public class TaskNotifyGruConfig extends TaskConfig
     private String _strRecipientsCciEmail;
 
     /** The _active onglet email. */
-    private boolean _activeOngletEmail;
+    private boolean _bActiveOngletEmail;
 
     /** The _str message sms. */
     /*sms config*/
     private String _strMessageSMS;
 
     /** The _active onglet sms. */
-    private boolean _activeOngletSMS;
+    private boolean _bActiveOngletSMS;
 
     /** The _n id mailing list broadcast. */
     /*broadcast config*/
@@ -133,7 +133,7 @@ public class TaskNotifyGruConfig extends TaskConfig
     private String _strRecipientsCciBroadcast;
 
     /** The _active onglet broadcast. */
-    private boolean _activeOngletBroadcast;
+    private boolean _bActiveOngletBroadcast;
 
     /**
      * Gets the crm status id.
@@ -342,17 +342,17 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public boolean isActiveOngletGuichet(  )
     {
-        return _activeOngletGuichet;
+        return _bActiveOngletGuichet;
     }
 
     /**
      * Sets the ActiveOngletGuichet.
      *
-     * @param activeOngletGuichet The ActiveOngletGuichet
+     * @param bActiveOngletGuichet The ActiveOngletGuichet
      */
-    public void setActiveOngletGuichet( boolean activeOngletGuichet )
+    public void setActiveOngletGuichet( boolean bActiveOngletGuichet )
     {
-        _activeOngletGuichet = activeOngletGuichet;
+        _bActiveOngletGuichet = bActiveOngletGuichet;
     }
 
     /**
@@ -522,17 +522,17 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public boolean isActiveOngletEmail(  )
     {
-        return _activeOngletEmail;
+        return _bActiveOngletEmail;
     }
 
     /**
      * Sets the ActiveOngletEmail.
      *
-     * @param activeOngletEmail The ActiveOngletEmail
+     * @param bActiveOngletEmail The ActiveOngletEmail
      */
-    public void setActiveOngletEmail( boolean activeOngletEmail )
+    public void setActiveOngletEmail( boolean bActiveOngletEmail )
     {
-        _activeOngletEmail = activeOngletEmail;
+        _bActiveOngletEmail = bActiveOngletEmail;
     }
 
     /**
@@ -562,17 +562,17 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public boolean isActiveOngletSMS(  )
     {
-        return _activeOngletSMS;
+        return _bActiveOngletSMS;
     }
 
     /**
      * Sets the ActiveOngletSMS.
      *
-     * @param activeOngletSMS The ActiveOngletSMS
+     * @param bActiveOngletSMS The ActiveOngletSMS
      */
-    public void setActiveOngletSMS( boolean activeOngletSMS )
+    public void setActiveOngletSMS( boolean bActiveOngletSMS )
     {
-        _activeOngletSMS = activeOngletSMS;
+        _bActiveOngletSMS = bActiveOngletSMS;
     }
 
     /**
@@ -702,16 +702,16 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public boolean isActiveOngletBroadcast(  )
     {
-        return _activeOngletBroadcast;
+        return _bActiveOngletBroadcast;
     }
 
     /**
      * Sets the ActiveOngletBroadcast.
      *
-     * @param activeOngletBroadcast The ActiveOngletBroadcast
+     * @param bActiveOngletBroadcast The ActiveOngletBroadcast
      */
-    public void setActiveOngletBroadcast( boolean activeOngletBroadcast )
+    public void setActiveOngletBroadcast( boolean bActiveOngletBroadcast )
     {
-        _activeOngletBroadcast = activeOngletBroadcast;
+        _bActiveOngletBroadcast = bActiveOngletBroadcast;
     }
 }

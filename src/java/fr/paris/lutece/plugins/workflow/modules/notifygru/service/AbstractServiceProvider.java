@@ -51,23 +51,23 @@ public abstract class AbstractServiceProvider implements IProvider
     private String _strKey;
 
     /** The _strtitle i18n key. */
-    private String _strtitleI18nKey;
+    private String _strTitleI18nKey;
 
     /** The _strbean name. */
-    private String _strbeanName;
+    private String _strBeanName;
 
     /** The _b is manager provider. */
     private Boolean _bIsManagerProvider;
 
     /**
-     * Update list provider.
+     * Update list providers limited to the given task
      *
      * @param task the task
      */
     public abstract void updateListProvider( ITask task );
 
     /**
-     * Update list provider.
+     * Update list of all providers
      */
     public abstract void updateListProvider(  );
 
@@ -138,7 +138,7 @@ public abstract class AbstractServiceProvider implements IProvider
      */
     public String getBeanName(  )
     {
-        return _strbeanName;
+        return _strBeanName;
     }
 
     /**
@@ -154,11 +154,11 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Sets the bean name.
      *
-     * @param strbeanName to set _strbeanName
+     * @param strBeanName to set _strBeanName
      */
-    public void setBeanName( String strbeanName )
+    public void setBeanName( String strBeanName )
     {
-        _strbeanName = strbeanName;
+        _strBeanName = strBeanName;
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class AbstractServiceProvider implements IProvider
      */
     public String getTitle( Locale locale )
     {
-        return I18nService.getLocalizedString( _strtitleI18nKey, locale );
+        return I18nService.getLocalizedString( _strTitleI18nKey, locale );
     }
 
     /**
@@ -177,25 +177,25 @@ public abstract class AbstractServiceProvider implements IProvider
      *
      * @return _strtitleI18nKey
      */
-    public String gettitleI18nKey(  )
+    public String getTitleI18nKey(  )
     {
-        return _strtitleI18nKey;
+        return _strTitleI18nKey;
     }
 
     /**
      * Sets the title i18n key.
      *
-     * @param strtitleI18nKey to set _strtitleI18nKey
+     * @param strTitleI18nKey to set _strTitleI18nKey
      */
-    public void settitleI18nKey( String strtitleI18nKey )
+    public void setTitleI18nKey( String strTitleI18nKey )
     {
-        _strtitleI18nKey = strtitleI18nKey;
+        _strTitleI18nKey = strTitleI18nKey;
     }
 
     /**
      * Checks if is invoked.
      *
-     * @param strExtenderType of povider
+     * @param strExtenderType of provider
      * @return Boolean if the provider is invoked
      */
     public boolean isInvoked( String strExtenderType )

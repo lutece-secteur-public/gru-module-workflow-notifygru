@@ -40,7 +40,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 
 /**
  *
- * BourseRecherchePlugin
+ * NotifyGruPlugin
  *
  */
 public class NotifyGruPlugin extends PluginDefaultImplementation

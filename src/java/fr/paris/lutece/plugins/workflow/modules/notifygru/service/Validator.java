@@ -71,23 +71,23 @@ public final class Validator
     /**
      * verify if an email address is correct.
      *
-     * @param email to validate
+     * @param strEmail to validate
      * @return true if the email address is correct false otherwise
      */
-    public static boolean isEmailValid( String email )
+    public static boolean isEmailValid( String strEmail )
     {
-        return email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" );
+        return strEmail.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" );
     }
 
     /**
      * verify if the length of a SMS don't exceed 160 characters.
      *
-     * @param sms to validate
+     * @param strSms to validate
      * @return true if the length of a SMS don't exceed 160 characters otherwise false
      */
-    public static boolean isSMSvalid( String sms )
+    public static boolean isSMSvalid( String strSms )
     {
-        return sms.length(  ) <= 160;
+        return strSms.length(  ) <= 160;
     }
 
     /**
@@ -116,14 +116,14 @@ public final class Validator
     }
 
     /**
-     * Mandotory params.
+     * Mandatory params.
      *
-     * @param strParams the str params
-     * @param strI18nMessage the str i18n message
+     * @param strParams str value
+     * @param strI18nMessage I18N key error message
      * @param locale the locale
      * @return the string
      */
-    public static String mandotoryParams( String strParams, String strI18nMessage, Locale locale )
+    public static String mandatoryParams( String strParams, String strI18nMessage, Locale locale )
     {
         if ( StringUtils.isBlank( strParams ) )
         {
@@ -171,29 +171,28 @@ public final class Validator
     }
 
     /**
-     * Checks if is valide build provider service.
+     * Checks if the request has a valid provider service and set it in the configuration in this case
      *
      * @param request the request
      * @param config the config
-     * @param providerService the _provider service
      * @param locale the locale
      * @param task the task
      * @return the string
      */
-    public static String isValideBuildProviderService( HttpServletRequest request, TaskNotifyGruConfig config,
-        AbstractServiceProvider providerService, Locale locale, ITask task )
+    public static String isValidAndSetProviderService( HttpServletRequest request, TaskNotifyGruConfig config,
+        Locale locale, ITask task )
     {
         String strUrlRedirector = "";
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
         int nDemandStatus = ( VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
 
-        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExiste( strProvider, task ) )
+        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExists( strProvider, task ) )
         {
             config.setIdSpringProvider( strProvider );
             config.setDemandStatus( nDemandStatus );
         }
 
-        /*if the provider is already register*/
+        /*if the provider is not already register*/
         else if ( config.getIdSpringProvider(  ) == null )
         {
             Object[] tabRequiredFields = 
@@ -209,31 +208,28 @@ public final class Validator
     }
 
     /**
-     * Gets the valide build provider service.
+     * Gets the valid provider service.
      *
      * @param config the config
      * @param task the task
      * @return the valide build provider service
      */
-    public static AbstractServiceProvider getValideBuildProviderService( TaskNotifyGruConfig config, ITask task )
+    public static AbstractServiceProvider getValidProviderService( TaskNotifyGruConfig config, ITask task )
     {
-        AbstractServiceProvider providerService = ServiceConfigTaskForm.getCostumizeBean( config.getIdSpringProvider(  ),
-                task );
-
-        return providerService;
+        return ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider(  ), task );
     }
 
     /**
-     * Checks if is valide build guichet.
+     * Checks if is valid build guichet.
      *
      * @param request the request
      * @param config the config
      * @param providerService the _provider service
      * @param locale the locale
      * @param strApply the str apply
-     * @return the string
+     * @return an empty string or url redirection if the validation has error
      */
-    public static String isValideBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config,
+    public static String isValidBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config,
         AbstractServiceProvider providerService, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
@@ -246,37 +242,37 @@ public final class Validator
 
         //optional
         String strDemandMaxStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_MAX_STEP_GUICHET );
-        int nDemandMaxStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandMaxStepGuichet );
+        int nDemandMaxStepGuichet = ServiceConfigTaskForm.parseStringToPositiveNumber( strDemandMaxStepGuichet );
         String strDemandUserCurrentStepGuichet = request.getParameter( Constants.PARAMETER_DEMAND_USER_CURRENT_STEP_GUICHET );
-        int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.getNumbertoString( strDemandUserCurrentStepGuichet );
+        int nDemandUserCurrentStepGuichet = ServiceConfigTaskForm.parseStringToPositiveNumber( strDemandUserCurrentStepGuichet );
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageGuichet,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strMessageGuichet,
                             Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strMessageGuichet,
+                errors.add( Validator.mandatoryParams( strMessageGuichet,
                         Constants.MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatusTextGuichet,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strStatusTextGuichet,
                             Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strStatusTextGuichet,
+                errors.add( Validator.mandatoryParams( strStatusTextGuichet,
                         Constants.MESSAGE_MANDATORY_GUICHET_STATUS_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameGuichet,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strSenderNameGuichet,
                             Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strSenderNameGuichet,
+                errors.add( Validator.mandatoryParams( strSenderNameGuichet,
                         Constants.MESSAGE_MANDATORY_GUICHET_SENDER_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectGuichet,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strSubjectGuichet,
                             Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strSubjectGuichet,
+                errors.add( Validator.mandatoryParams( strSubjectGuichet,
                         Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
             }
 
@@ -313,16 +309,16 @@ public final class Validator
     }
 
     /**
-     * Checks if is valide build agent.
+     * Checks if is valid build agent.
      *
      * @param request the request
      * @param config the config
      * @param providerService the _provider service
      * @param locale the locale
      * @param strApply the str apply
-     * @return the string
+     * @return an empty string or url redirection if the validation has error
      */
-    public static String isValideBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config,
+    public static String isValidBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config,
         AbstractServiceProvider providerService, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
@@ -334,16 +330,16 @@ public final class Validator
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageAgent,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strMessageAgent,
                             Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) );
+                errors.add( Validator.mandatoryParams( strMessageAgent, Constants.MESSAGE_AGENT_FIELD_MESSAGE, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strStatutTextAgent,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strStatutTextAgent,
                             Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) );
+                errors.add( Validator.mandatoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) );
             }
 
             if ( !Validator.isFreemarkerValid( strMessageAgent, locale, providerService.getInfos( -1 ) ) )
@@ -373,16 +369,16 @@ public final class Validator
     }
 
     /**
-     * Checks if is valide build email.
+     * Checks if is valid build email.
      *
      * @param request the request
      * @param config the config
      * @param providerService the _provider service
      * @param locale the locale
      * @param strApply the str apply
-     * @return the string
+     * @return an empty string or url redirection if the validation has error
      */
-    public static String isValideBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config,
+    public static String isValidBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config,
         AbstractServiceProvider providerService, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
@@ -398,23 +394,23 @@ public final class Validator
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSubjectEmail,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strSubjectEmail,
                             Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strSubjectEmail, Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) );
+                errors.add( Validator.mandatoryParams( strSubjectEmail, Constants.MESSAGE_EMAIL_SUBJECT_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strSenderNameEmail,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strSenderNameEmail,
                             Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strSenderNameEmail, Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD,
+                errors.add( Validator.mandatoryParams( strSenderNameEmail, Constants.MESSAGE_EMAIL_SENDER_NAME_FIELD,
                         locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageEmail,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strMessageEmail,
                             Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
+                errors.add( Validator.mandatoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
             }
 
             if ( !Validator.isFreemarkerValid( strMessageEmail + ' ' + strSubjectEmail, locale,
@@ -448,16 +444,16 @@ public final class Validator
     }
 
     /**
-     * Checks if is valide build sms.
+     * Checks if is valid build sms.
      *
      * @param request the request
      * @param config the config
      * @param providerService the _provider service
      * @param locale the locale
      * @param strApply the str apply
-     * @return the string
+     * @return an empty string or url redirection if the validation has error
      */
-    public static String isValideBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config,
+    public static String isValidBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config,
         AbstractServiceProvider providerService, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
@@ -468,9 +464,9 @@ public final class Validator
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) ) )
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
+                errors.add( Validator.mandatoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
             }
 
             if ( !Validator.isFreemarkerValid( strMessageSMS, locale, providerService.getInfos( -1 ) ) )
@@ -499,16 +495,16 @@ public final class Validator
     }
 
     /**
-     * Checks if is valide build broadcast.
+     * Checks if is valid build broadcast.
      *
      * @param request the request
      * @param config the config
      * @param providerService the _provider service
      * @param locale the locale
      * @param strApply the str apply
-     * @return the string
+     * @return an empty string or url redirection if the validation has error
      */
-    public static String isValideBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config,
+    public static String isValidBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config,
         AbstractServiceProvider providerService, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
@@ -526,30 +522,30 @@ public final class Validator
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strIdMailingListBroadcast,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strIdMailingListBroadcast,
                             Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
+                errors.add( Validator.mandatoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
                         locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsenderNameBroadcast,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strsenderNameBroadcast,
                             Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strsenderNameBroadcast,
+                errors.add( Validator.mandatoryParams( strsenderNameBroadcast,
                         Constants.MESSAGE_LIST_SENDER_NAME_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strsubjectBroadcast,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strsubjectBroadcast,
                             Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strsubjectBroadcast, Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) );
+                errors.add( Validator.mandatoryParams( strsubjectBroadcast, Constants.MESSAGE_LIST_SUBJECT_FIELD, locale ) );
             }
 
-            if ( StringUtils.isNotBlank( Validator.mandotoryParams( strmessageBroadcast,
+            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strmessageBroadcast,
                             Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) ) )
             {
-                errors.add( Validator.mandotoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
+                errors.add( Validator.mandatoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
             }
 
             if ( !Validator.isFreemarkerValid( strmessageBroadcast + ' ' + strsubjectBroadcast, locale,

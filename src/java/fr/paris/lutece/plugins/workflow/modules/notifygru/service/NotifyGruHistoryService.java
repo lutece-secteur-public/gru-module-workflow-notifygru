@@ -63,7 +63,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     public void create( NotifyGruHistory notifyGru, Plugin plugin )
     {
         _dao.insert( notifyGru, plugin );
@@ -73,7 +73,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     public void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin )
     {
         _dao.deleteByHistory( nIdHistory, nIdTask, plugin );
@@ -83,7 +83,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( "workflow-notifygru.transactionManager" )
+    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     public void removeByTask( int nIdTask, Plugin plugin )
     {
         _dao.deleteByTask( nIdTask, plugin );

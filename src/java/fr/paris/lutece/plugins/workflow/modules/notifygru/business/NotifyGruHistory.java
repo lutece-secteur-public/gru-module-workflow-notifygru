@@ -44,7 +44,7 @@ public class NotifyGruHistory
     private int _nIdResourceHistory;
 
     /** The _ncrm status id. */
-    private int _ncrmStatusId;
+    private int _nCrmStatusId;
     private BroadcastHistory _oBroadCast;
     private EmailHistory _oEmail;
     private GuichetHistory _oGuichet;
@@ -58,7 +58,7 @@ public class NotifyGruHistory
      */
     public int getCrmStatusId(  )
     {
-        return _ncrmStatusId;
+        return _nCrmStatusId;
     }
 
     /**
@@ -68,7 +68,7 @@ public class NotifyGruHistory
        */
     public void setCrmStatusId( int crmStatusId )
     {
-        this._ncrmStatusId = crmStatusId;
+        this._nCrmStatusId = crmStatusId;
     }
 
     /**

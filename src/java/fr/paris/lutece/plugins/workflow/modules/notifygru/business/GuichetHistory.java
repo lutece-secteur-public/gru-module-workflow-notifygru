@@ -46,7 +46,7 @@ public class GuichetHistory
     private String _strSubjectGuichet;
     private int _nDemandMaxStepGuichet;
     private int _nDemandUserCurrentStepGuichet;
-    private boolean _activeOngletGuichet;
+    private boolean _bActiveOngletGuichet;
 
     /**
         * Returns the MessageGuichet
@@ -162,16 +162,7 @@ public class GuichetHistory
      */
     public boolean isActiveOngletGuichet(  )
     {
-        return _activeOngletGuichet;
-    }
-
-    /**
-        * Returns the ActiveOngletGuichet
-        * @return The ActiveOngletGuichet
-        */
-    public boolean getActiveOngletGuichet(  )
-    {
-        return _activeOngletGuichet;
+        return _bActiveOngletGuichet;
     }
 
     /**
@@ -180,6 +171,6 @@ public class GuichetHistory
      */
     public void setActiveOngletGuichet( boolean activeOngletGuichet )
     {
-        _activeOngletGuichet = activeOngletGuichet;
+        _bActiveOngletGuichet = activeOngletGuichet;
     }
 }

@@ -35,23 +35,18 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
-import fr.paris.lutece.plugins.workflow.service.taskinfo.ITaskInfoProvider;
-import fr.paris.lutece.plugins.workflow.service.taskinfo.TaskInfoManager;
 import fr.paris.lutece.plugins.workflowcore.business.action.Action;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.plugins.workflowcore.business.state.StateFilter;
 import fr.paris.lutece.plugins.workflowcore.service.action.IActionService;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.mail.FileAttachment;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -79,8 +74,6 @@ public final class NotifyGruService implements INotifyGruService
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruService;
-    @Inject
-    private ITaskService _taskService;
 
     /**
      * Private constructor
@@ -96,7 +89,6 @@ public final class NotifyGruService implements INotifyGruService
     public ReferenceList getMailingList( HttpServletRequest request )
     {
         ReferenceList refMailingList = new ReferenceList(  );
-        //   refMailingList.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
         refMailingList.addAll( AdminMailingListService.getMailingLists( AdminUserService.getAdminUser( request ) ) );
 
         return refMailingList;
@@ -120,7 +112,6 @@ public final class NotifyGruService implements INotifyGruService
 
             List<State> listStates = _stateService.getListStateByFilter( stateFilter );
 
-            //     referenceListStates.addItem( DirectoryUtils.CONSTANT_ID_NULL, StringUtils.EMPTY );
             referenceListStates.addAll( ReferenceList.convert( listStates, Constants.ID, Constants.NAME, true ) );
         }
 
@@ -136,41 +127,6 @@ public final class NotifyGruService implements INotifyGruService
         List<FileAttachment> listFileAttachment = null;
 
         return listFileAttachment;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<ITask> getListBelowTasks( ITask task, Locale locale )
-    {
-        List<ITask> listTasks = new ArrayList<ITask>(  );
-
-        if ( task != null )
-        {
-            for ( ITask otherTask : _taskService.getListTaskByIdAction( task.getAction(  ).getId(  ), locale ) )
-            {
-                // FIXME : When upgrading to workflow v3.0.2, change this condition to :
-                // if ( task.getOrder(  ) <= otherTasK.getOrder(  ) )
-                // Indeed, in workflow v3.0.1 and inferior, the task are ordered by id task
-                if ( task.getId(  ) == otherTask.getId(  ) )
-                {
-                    break;
-                }
-
-                for ( ITaskInfoProvider provider : TaskInfoManager.getProvidersList(  ) )
-                {
-                    if ( otherTask.getTaskType(  ).getKey(  ).equals( provider.getTaskType(  ).getKey(  ) ) )
-                    {
-                        listTasks.add( otherTask );
-
-                        break;
-                    }
-                }
-            }
-        }
-
-        return listTasks;
     }
 
     // OTHERS
