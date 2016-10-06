@@ -54,6 +54,9 @@
         <property name="apiManagerEndPoint">
             <value>http://127.0.0.1:9092/lutece/rest/api/token</value>
         </property>
+        <property name="apiManagerCredentials">
+            <value>tobecompleted</value>
+        </property>
     </bean>
     <bean id="workflow-notifygru.lib-notifygru.restTransport" class="fr.paris.lutece.plugins.librarynotifygru.rs.service.NotificationTransportRest">
         <property name="notificationEndPoint">

@@ -39,16 +39,12 @@ import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruGlob
 import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.SMSNotification;
 import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.UserDashboardNotification;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
-import fr.paris.lutece.plugins.workflow.business.action.ActionDAO;
 import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
-import fr.paris.lutece.plugins.workflow.business.workflow.WorkflowDAO;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
-import fr.paris.lutece.plugins.workflowcore.business.action.Action;
-import fr.paris.lutece.plugins.workflowcore.business.workflow.Workflow;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
@@ -57,7 +53,6 @@ import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
@@ -102,14 +97,6 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     private TaskDAO _taskDOA;
 
-    /** The _workflow doa. */
-    @Inject
-    private WorkflowDAO _workflowDOA;
-
-    /** The _action dao. */
-    @Inject
-    private ActionDAO _actionDAO;
-
     /**
      * {@inheritDoc}
      *
@@ -134,9 +121,6 @@ public class TaskNotifyGru extends SimpleTask
         /*process if Task not null and valid provider*/
         if ( ( task != null ) && ServiceConfigTaskForm.isBeanExists( config.getIdSpringProvider(  ), task ) )
         {
-            Action action = _actionDAO.load( task.getAction(  ).getId(  ) );
-            Workflow wf = ( action != null ) ? _workflowDOA.load( action.getWorkflow(  ).getId(  ) ) : null;
-
             //get provider
             _notifyGruService = ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider(  ), task );
 
@@ -208,12 +192,7 @@ public class TaskNotifyGru extends SimpleTask
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );
 
-            String strNotifyGruCredential = AppPropertiesService.getProperty( Constants.CREDENTIAL_CLIENT_API_MANAGER,
-                    "" );
-            String strSender = ( wf != null ) ? wf.getName(  ) : "";
-            strSender = AppPropertiesService.getProperty( Constants.PARAMS_NOTIFICATION_SENDER ) + ":" + strSender;
-
-            _notifyGruSenderService.send( notificationObject, strNotifyGruCredential, strSender );
+            _notifyGruSenderService.send( notificationObject );
 
             _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin(  ) );
         }
