@@ -72,15 +72,19 @@
       </script>
       <#else>
       <#if list_onglet?exists>
-      <div class="control-group" id="entry_id_demand" style="float:right;">
-         <label class="control-label" for="IdDemandGuichet">#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}*:</label>
-         <div class="controls">
-            <@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
-            <button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddOnglet">
-            <i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
-            </button>                        
-         </div>
-      </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <div class="col-xs-12" >
+                <@combo name="active_onglet" items=list_onglet default_value=0/>&nbsp;
+                <button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddOnglet">
+                  <i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
+                  <span>#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}</span>
+                </button>                        
+              </div>
+            </div>
+          </div>
+        </div>
       </#if>
       <ul id="tabs" class="nav nav-tabs">
          <#if config?exists && config.activeOngletGuichet == true>
@@ -132,7 +136,7 @@
          </#if>
          <#if config?exists && config.activeOngletBroadcast == true>
          <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
-            <#include "config_liste_broadcast.html" />
+            <#include "config_mailing_list.html" />
          </div>
          </#if>
       </div>
