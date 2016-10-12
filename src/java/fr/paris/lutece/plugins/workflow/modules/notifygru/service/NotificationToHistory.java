@@ -96,16 +96,17 @@ public final class NotificationToHistory
      * Populate broadcast.
      *
      * @param config the config
-     * @param strSubjectBroadcast the broadcast subject
-     * @param strMessageBroadcast the str message broadcast
+     * @param strRecipientBroadcast destination email(s) for the broadcast
+     * @param strSubjectBroadcast email subject for the broadcast
+     * @param strMessageBroadcast email message for the broadcast
      * @return the broadcast history
      */
-    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strSubjectBroadcast,
-        String strMessageBroadcast )
+    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strRecipientBroadcast, String strSubjectBroadcast, String strMessageBroadcast )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory(  );
 
         oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast(  ) );
+        oBroadcastHistory.setEmailBroadcast( strRecipientBroadcast );
         oBroadcastHistory.setMessageBroadcast( strMessageBroadcast );
         oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast(  ) );
         oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast(  ) );

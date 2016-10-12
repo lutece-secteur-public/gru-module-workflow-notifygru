@@ -40,6 +40,7 @@ CREATE TABLE workflow_task_notify_gru_cf(
   is_active_onglet_sms SMALLINT NOT NULL DEFAULT 0,
 
  id_mailing_list_broadcast INT DEFAULT NULL,
+ email_broadcast VARCHAR(255) DEFAULT NULL,
    sender_name_broadcast VARCHAR(255) DEFAULT   NULL,
 subject_broadcast VARCHAR(255) DEFAULT   NULL,
  message_broadcast text COLLATE utf8_unicode_ci,  
@@ -78,6 +79,7 @@ CREATE TABLE workflow_task_notify_gru_history(
   is_active_onglet_sms SMALLINT NOT NULL DEFAULT 0,
 
  id_mailing_list_broadcast INT DEFAULT NULL,
+ email_broadcast VARCHAR(255) DEFAULT NULL,
    sender_name_broadcast VARCHAR(255) DEFAULT   NULL,
 subject_broadcast VARCHAR(255) DEFAULT   NULL,
  message_broadcast text COLLATE utf8_unicode_ci,  

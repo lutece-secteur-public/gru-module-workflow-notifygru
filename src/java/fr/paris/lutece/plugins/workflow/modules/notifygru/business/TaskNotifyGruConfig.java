@@ -41,7 +41,7 @@ import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
  */
 public class TaskNotifyGruConfig extends TaskConfig
 {
-    // Variables declarations 
+	// Variables declarations 
     /** The _str id spring provider. */
     /*global config*/
     private String _strIdSpringProvider;
@@ -113,9 +113,12 @@ public class TaskNotifyGruConfig extends TaskConfig
     /** The _active onglet sms. */
     private boolean _bActiveOngletSMS;
 
-    /** The _n id mailing list broadcast. */
     /*broadcast config*/
+    /** The _n id mailing list broadcast. */
     private int _nIdMailingListBroadcast;
+
+    /** The _str email broadcast. */
+    private String _strEmailBroadcast;
 
     /** The _str sender name broadcast. */
     private String _strSenderNameBroadcast;
@@ -575,7 +578,7 @@ public class TaskNotifyGruConfig extends TaskConfig
         _bActiveOngletSMS = bActiveOngletSMS;
     }
 
-    /**
+	/**
      * Returns the IdMailingListBroadcast.
      *
      * @return The IdMailingListBroadcast
@@ -596,6 +599,23 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
+	 * @return the EmailBroadcast
+	 */
+	public String getEmailBroadcast(  )
+	{
+		return _strEmailBroadcast;
+	}
+
+	/**
+	 * Sets the EmailBroadcast
+	 * @param strEmailBroadcast the _strEmailBroadcast to set
+	 */
+	public void setEmailBroadcast( String strEmailBroadcast )
+	{
+		this._strEmailBroadcast = strEmailBroadcast;
+	}
+
+	/**
      * Returns the SenderNameBroadcast.
      *
      * @return The SenderNameBroadcast

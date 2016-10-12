@@ -98,7 +98,7 @@ public final class Validator
      */
     public static boolean isRecipientCcValid( String strRecipient )
     {
-        String[] emails = strRecipient.split( ";" );
+        String[] emails = strRecipient.split( Constants.SEMICOLON );
 
         for ( String email : emails )
         {
@@ -510,10 +510,18 @@ public final class Validator
         String strUrlRedirector = "";
 
         ArrayList<String> errors = new ArrayList<String>(  );
+        String strMailingType = request.getParameter( Constants.PARAMETER_MAILING_TYPE );
         String strIdMailingListBroadcast = request.getParameter( Constants.PARAMETER_ID_MAILING_LIST );
-        int nIdMailingListBroadcast = ( strIdMailingListBroadcast == null ) ? WorkflowUtils.CONSTANT_ID_NULL
-                                                                            : Integer.parseInt( strIdMailingListBroadcast );
-
+        int nIdMailingListBroadcast = WorkflowUtils.CONSTANT_ID_NULL;
+        if ( Constants.TYPE_MAILING_TYPE_LIST.equals( strMailingType ) && StringUtils.isNumeric( strIdMailingListBroadcast ) )
+        {
+        	nIdMailingListBroadcast = Integer.parseInt( strIdMailingListBroadcast );
+        }
+        String strEmailBroadcast = StringUtils.EMPTY;
+        if ( Constants.TYPE_MAILING_TYPE_SPEC.equals( strMailingType ) )
+        {
+        	strEmailBroadcast = request.getParameter( Constants.PARAMETER_MAIL_SPECIFIC );
+        }
         String strsenderNameBroadcast = request.getParameter( Constants.PARAMETER_SENDER_NAME_BROADCAST );
         String strsubjectBroadcast = request.getParameter( Constants.PARAMETER_SUBJECT_BROADCAST );
         String strmessageBroadcast = request.getParameter( Constants.PARAMETER_MESSAGE_BROADCAST );
@@ -522,11 +530,24 @@ public final class Validator
 
         if ( StringUtils.isBlank( strApply ) )
         {
-            if ( StringUtils.isNotBlank( Validator.mandatoryParams( strIdMailingListBroadcast,
+            if ( Constants.TYPE_MAILING_TYPE_LIST.equals( strMailingType )  && StringUtils.isNotBlank( Validator.mandatoryParams( strIdMailingListBroadcast,
                             Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
             {
                 errors.add( Validator.mandatoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
                         locale ) );
+		        nIdMailingListBroadcast = WorkflowUtils.CONSTANT_ID_NULL;
+            }
+            if ( Constants.TYPE_MAILING_TYPE_SPEC.equals( strMailingType )  && StringUtils.isNotBlank( Validator.mandatoryParams( strEmailBroadcast,
+                    Constants.MESSAGE_LIST_ID_LISTE, locale ) ) )
+		    {
+		        errors.add( Validator.mandatoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
+		                locale ) );
+                strEmailBroadcast = StringUtils.EMPTY;
+		    }
+            if( StringUtils.isEmpty( strEmailBroadcast ) && nIdMailingListBroadcast == WorkflowUtils.CONSTANT_ID_NULL )
+            {
+            	errors.add( Validator.mandatoryParams( strIdMailingListBroadcast, Constants.MESSAGE_LIST_ID_LISTE,
+		                locale ) );
             }
 
             if ( StringUtils.isNotBlank( Validator.mandatoryParams( strsenderNameBroadcast,
@@ -570,6 +591,7 @@ public final class Validator
         if ( StringUtils.isBlank( strUrlRedirector ) )
         {
             config.setIdMailingListBroadcast( nIdMailingListBroadcast );
+            config.setEmailBroadcast( strEmailBroadcast );
             config.setSenderNameBroadcast( strsenderNameBroadcast );
             config.setSubjectBroadcast( strsubjectBroadcast );
             config.setMessageBroadcast( strmessageBroadcast );

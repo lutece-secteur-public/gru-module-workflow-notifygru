@@ -120,6 +120,7 @@ public final class Constants
 
     // CONSTANTS
     public static final String COMMA = ",";
+    public static final String SEMICOLON = ";";
     public static final String SPACE = " ";
     public static final String OPEN_BRACKET = "(";
     public static final String CLOSED_BRACKET = ")";
@@ -312,6 +313,10 @@ public final class Constants
     public static final String PARAMETER_ACTIVE_ONGLET_SMS = "active_onglet_sms";
 
     // PARAMETERS Liste Diffusion
+    public static final String PARAMETER_MAILING_TYPE = "mailing_type";
+    public static final String TYPE_MAILING_TYPE_LIST = "list";
+    public static final String TYPE_MAILING_TYPE_SPEC = "spec";
+    public static final String PARAMETER_MAIL_SPECIFIC = "mailing_spec";
     public static final String PARAMETER_ID_MAILING_LIST = "id_mailing_list_broadcast";
     public static final String PARAMETER_SUBJECT_BROADCAST = "subject_broadcast";
     public static final String PARAMETER_MESSAGE_BROADCAST = "message_broadcast";

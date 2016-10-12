@@ -7,19 +7,51 @@
     </legend>
   </fieldset>
   <div class="col-xs-12 col-sm-8">
-    <!------------------------------------- -->
-    <div class="row">
-      <#if mailing_list?exists>
-        <div id="mailing_list">
-          <div class="form-group">
-            <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast} *</label>
-            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-              <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
-              <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}</span>
-            </div>
-          </div>
+	<!------------------------------------- -->	
+	<#assign mailingSpecStyle="display:block;" />	
+	<#assign mailingSpecChecked="checked" />
+	<#assign mailingListStyle="display:none;" />
+	<#assign mailingListChecked="" />
+	
+    <#if mailing_list?exists>
+    	<#if (config.idMailingListBroadcast > 0) >	
+			<#assign mailingSpecStyle="display:none;" />	
+			<#assign mailingSpecChecked="" />
+			<#assign mailingListStyle="display:block;" /> 
+			<#assign mailingListChecked="checked" />   		
+    	</#if>
+	<div class="row">
+		<div class="form-group">
+	        <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="mailing_type">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}</label>
+	        <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+				<label class="radio-inline">
+					<input id="mailing_type" name="mailing_type" type="radio" value="list" ${mailingListChecked} onchange="mailingType('list');">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}
+				</label>
+				<label class="radio-inline">
+					<input id="mailing_type" name="mailing_type" type="radio" value="spec" ${mailingSpecChecked} onchange="mailingType('spec');">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}
+				</label>
+			</div>
         </div>
-      </#if>
+	</div>
+    <div class="row" id="mailing_list_block" style="${mailingListStyle}">
+	    <div class="form-group">
+			<label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast} *</label>
+			<div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+			  <@combo name="id_mailing_list_broadcast"  items=mailing_list default_value=1 />
+			  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}</span>
+			</div>
+	    </div>
+    </div>
+    </#if>
+    
+	<div class="row" id="mailing_spec_block" style="${mailingSpecStyle}">
+		<div class="form-group">
+		  <#if config?exists && config.emailBroadcast?has_content>
+			<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="${config.emailBroadcast}" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
+          <#else>
+			<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
+          </#if>
+		</div>
     </div>
     <!------------------------------------- -->
     <!------------------------------------- -->
@@ -119,36 +151,45 @@
   </div>
 </div>
 <script>
-   var Atloading=true;
-       function showhide()
+    var Atloading=true;
+    function showhide()
+    {
+        var div = document.getElementById("copyccBroadcast");
+        if (div.style.display !== "none")
         {
-   
-   
-   
-     var div = document.getElementById("copyccBroadcast");
-   
-       
-       if (div.style.display !== "none") {
-           div.style.display = "none";
-    document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-left");
-       }
-       else {
-           div.style.display = "block";
-    document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-right");
-       }
-   
-          if(document.getElementById("recipients_cc_broadcast").value.length>0 || document.getElementById("recipients_cci_broadcast").value.length>0 )
-   {
-   if(Atloading) {
-        div.style.display = "block";
-    document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-right");
-   }
-   }
-      
-   
-   Atloading=false;
+            div.style.display = "none";
+            document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-left");
         }
+        else
+        {
+            div.style.display = "block";
+            document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-right");
+        }
+   
+        if(document.getElementById("recipients_cc_broadcast").value.length>0 || document.getElementById("recipients_cci_broadcast").value.length>0 )
+        {
+            if(Atloading)
+            {
+                div.style.display = "block";
+                document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-right");
+            }
+        }
+        Atloading=false;
+    }
+    function mailingType(newType)
+    {
+        if(newType == "list")
+		{
+		    document.getElementById("mailing_spec_block").setAttribute("style", "display:none;");
+			document.getElementById("mailing_list_block").setAttribute("style", "display:block;");
+		}
+		else if(newType == "spec")
+		{
+		    document.getElementById("mailing_spec_block").setAttribute("style", "display:block;");
+			document.getElementById("mailing_list_block").setAttribute("style", "display:none;");
+		}
+    }
         
-        showhide();
+    showhide();
      
 </script>

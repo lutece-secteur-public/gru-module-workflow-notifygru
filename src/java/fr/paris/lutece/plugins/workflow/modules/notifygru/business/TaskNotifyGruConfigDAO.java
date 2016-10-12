@@ -51,19 +51,19 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
         "status_text_agent,message_agent,is_active_onglet_agent," +
         "subject_email,message_email,sender_name_email,recipients_cc_email," +
-        "recipients_cci_email,is_active_onglet_email," + "message_sms,is_active_onglet_sms," +
-        "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
-        "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast " +
+        "recipients_cci_email,is_active_onglet_email,message_sms,is_active_onglet_sms," +
+        "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
+        "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast " +
         " FROM workflow_task_notify_gru_cf  WHERE id_task = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_cf( " +
         "id_task,id_spring_provider,demand_status,crm_status_id,set_onglet,message_guichet,status_text_guichet,sender_name_guichet," +
         "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
-        "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email," +
-        "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," +
+        "status_text_agent,message_agent,is_active_onglet_agent,subject_email, message_email," +
+        "sender_name_email,recipients_cc_email,recipients_cci_email,is_active_onglet_email," +
         "message_sms,is_active_onglet_sms," +
-        "id_mailing_list_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
+        "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
         "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) " +
-        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_notify_gru_cf " +
         " SET id_task = ?, id_spring_provider = ?, demand_status = ?,crm_status_id = ?, set_onglet = ?," +
         " message_guichet = ?, status_text_guichet = ?, sender_name_guichet = ?, " +
@@ -72,7 +72,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         " subject_email = ?, message_email = ?, sender_name_email = ?," +
         "recipients_cc_email = ?, recipients_cci_email = ?, " + " is_active_onglet_email= ?," + "message_sms = ?, " +
         "is_active_onglet_sms = ?,  " +
-        "id_mailing_list_broadcast = ?, sender_name_broadcast = ?, subject_broadcast = ?, message_broadcast = ?," +
+        "id_mailing_list_broadcast = ?, email_broadcast = ?, sender_name_broadcast = ?, subject_broadcast = ?, message_broadcast = ?," +
         " recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, " + " is_active_onglet_broadcast = ? " +
         " WHERE id_task = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_notify_gru_cf WHERE id_task = ? ";
@@ -120,6 +120,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setBoolean( ++nPos, config.isActiveOngletSMS(  ) );
 
         daoUtil.setInt( ++nPos, config.getIdMailingListBroadcast(  ) );
+        daoUtil.setString( ++nPos, config.getEmailBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getSenderNameBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getSubjectBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getMessageBroadcast(  ) );
@@ -174,6 +175,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setBoolean( ++nPos, config.isActiveOngletSMS(  ) );
 
         daoUtil.setInt( ++nPos, config.getIdMailingListBroadcast(  ) );
+        daoUtil.setString( ++nPos, config.getEmailBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getSenderNameBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getSubjectBroadcast(  ) );
         daoUtil.setString( ++nPos, config.getMessageBroadcast(  ) );
@@ -236,6 +238,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
             config.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
 
             config.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
+            config.setEmailBroadcast( daoUtil.getString( ++nPos ) );
             config.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
             config.setSubjectBroadcast( daoUtil.getString( ++nPos ) );
             config.setMessageBroadcast( daoUtil.getString( ++nPos ) );
