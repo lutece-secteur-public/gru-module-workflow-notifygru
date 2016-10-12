@@ -101,7 +101,8 @@ public final class NotificationToHistory
      * @param strMessageBroadcast email message for the broadcast
      * @return the broadcast history
      */
-    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strRecipientBroadcast, String strSubjectBroadcast, String strMessageBroadcast )
+    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strRecipientBroadcast,
+        String strSubjectBroadcast, String strMessageBroadcast )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory(  );
 

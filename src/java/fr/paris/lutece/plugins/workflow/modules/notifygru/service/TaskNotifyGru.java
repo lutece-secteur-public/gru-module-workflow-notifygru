@@ -66,6 +66,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -175,18 +176,19 @@ public class TaskNotifyGru extends SimpleTask
 
                 strMessageAgent = userAgent.getMessage(  );
             }
-            
+
             //if active config for Broadcast : broadcast
             String strMessageBroadcast = _DEFAULT_VALUE_JSON;
             String strSubjectBroadcast = _DEFAULT_VALUE_JSON;
             String strRecipientBroadcast = _DEFAULT_VALUE_JSON;
-            if( config.isActiveOngletBroadcast(  ) )
+
+            if ( config.isActiveOngletBroadcast(  ) )
             {
-            	BroadcastNotification broadcast = buildBroadcastNotification( config, nIdResourceHistory, locale );
-            	notificationObject.setBroadcast( broadcast );
-            	strMessageBroadcast = broadcast.getMessage(  );
-            	strSubjectBroadcast = broadcast.getSubject(  );
-            	strRecipientBroadcast = broadcast.getRecipient(  );
+                BroadcastNotification broadcast = buildBroadcastNotification( config, nIdResourceHistory, locale );
+                notificationObject.setBroadcast( broadcast );
+                strMessageBroadcast = broadcast.getMessage(  );
+                strSubjectBroadcast = broadcast.getSubject(  );
+                strRecipientBroadcast = broadcast.getRecipient(  );
             }
 
             //crm status id
@@ -202,7 +204,8 @@ public class TaskNotifyGru extends SimpleTask
             notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, strMessageSMS ) );
 
             //populate Broadcast data for history
-            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strRecipientBroadcast, strSubjectBroadcast, strMessageBroadcast ) );
+            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strRecipientBroadcast,
+                    strSubjectBroadcast, strMessageBroadcast ) );
 
             //populate Broadcast data for history
             notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );
@@ -381,7 +384,7 @@ public class TaskNotifyGru extends SimpleTask
 
         return userEmailNotification;
     }
-    
+
     /**
      * Builds the broadcast notification.
      *
@@ -390,30 +393,35 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru broadcast notification
      */
-    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
-    	BroadcastNotification broadcastNotification = new BroadcastNotification(  );
-    	Map<String, Object> mapInfosNotif = _notifyGruService.getInfos( nIdResourceHistory );
-    	String strMessageBroadcast = giveMeTexteWithValueOfMarker( config.getMessageBroadcast(  ), locale, mapInfosNotif );
+        BroadcastNotification broadcastNotification = new BroadcastNotification(  );
+        Map<String, Object> mapInfosNotif = _notifyGruService.getInfos( nIdResourceHistory );
+        String strMessageBroadcast = giveMeTexteWithValueOfMarker( config.getMessageBroadcast(  ), locale, mapInfosNotif );
         String strSubjectBroadcast = giveMeTexteWithValueOfMarker( config.getSubjectBroadcast(  ), locale, mapInfosNotif );
-        StringBuilder strRecipientBroadcast = new StringBuilder(  ); 
-        if( StringUtils.isNotEmpty( config.getEmailBroadcast(  ) ) )
+        StringBuilder strRecipientBroadcast = new StringBuilder(  );
+
+        if ( StringUtils.isNotEmpty( config.getEmailBroadcast(  ) ) )
         {
-        	strRecipientBroadcast.append( giveMeTexteWithValueOfMarker( config.getEmailBroadcast(  ), locale, mapInfosNotif ) );
+            strRecipientBroadcast.append( giveMeTexteWithValueOfMarker( config.getEmailBroadcast(  ), locale,
+                    mapInfosNotif ) );
         }
-        if( config.getIdMailingListBroadcast(  ) > 0 )
+
+        if ( config.getIdMailingListBroadcast(  ) > 0 )
         {
-        	Collection<Recipient> listRecipients = AdminMailingListService.getRecipients( config.getIdMailingListBroadcast(  ) );
-        	for ( Recipient recipient : listRecipients )
+            Collection<Recipient> listRecipients = AdminMailingListService.getRecipients( config.getIdMailingListBroadcast(  ) );
+
+            for ( Recipient recipient : listRecipients )
             {
-	            if( strRecipientBroadcast.length(  ) > 0 )
-	            {
-	            	strRecipientBroadcast.append( Constants.SEMICOLON );
-	            }
-	            strRecipientBroadcast.append( recipient.getEmail(  ) );
+                if ( strRecipientBroadcast.length(  ) > 0 )
+                {
+                    strRecipientBroadcast.append( Constants.SEMICOLON );
+                }
+
+                strRecipientBroadcast.append( recipient.getEmail(  ) );
             }
         }
-        
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast(  ) );
         broadcastNotification.setSenderEmail( MailService.getNoReplyEmail(  ) );
@@ -422,8 +430,8 @@ public class TaskNotifyGru extends SimpleTask
         broadcastNotification.setMessage( strMessageBroadcast );
         broadcastNotification.setCc( config.getRecipientsCcBroadcast(  ) );
         broadcastNotification.setCci( config.getRecipientsCciBroadcast(  ) );
-    	
-    	return broadcastNotification;
+
+        return broadcastNotification;
     }
 
     /* (non-Javadoc)

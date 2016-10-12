@@ -68,25 +68,25 @@ public class BroadcastHistory
     }
 
     /**
-	 * @return the EmailBroadcast
-	 */
-	public String getEmailBroadcast()
-	{
-		return _strEmailBroadcast;
-	}
+         * @return the EmailBroadcast
+         */
+    public String getEmailBroadcast(  )
+    {
+        return _strEmailBroadcast;
+    }
 
-	/**
-	 * @param strEmailBroadcast the EmailBroadcast to set
-	 */
-	public void setEmailBroadcast( String strEmailBroadcast )
-	{
-		this._strEmailBroadcast = strEmailBroadcast;
-	}
-
-	/**
-     * Returns the SenderNameBroadcast
-     * @return The SenderNameBroadcast
+    /**
+     * @param strEmailBroadcast the EmailBroadcast to set
      */
+    public void setEmailBroadcast( String strEmailBroadcast )
+    {
+        this._strEmailBroadcast = strEmailBroadcast;
+    }
+
+    /**
+    * Returns the SenderNameBroadcast
+    * @return The SenderNameBroadcast
+    */
     public String getSenderNameBroadcast(  )
     {
         return _strSenderNameBroadcast;
