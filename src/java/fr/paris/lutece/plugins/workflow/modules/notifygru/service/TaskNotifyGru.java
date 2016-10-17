@@ -33,12 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.AgentNotification;
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.BroadcastNotification;
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.EmailNotification;
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.NotifyGruGlobalNotification;
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.SMSNotification;
-import fr.paris.lutece.plugins.librarynotifygru.business.notifygru.UserDashboardNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.EmailNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.NotifyGruGlobalNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.UserDashboardNotification;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
@@ -150,7 +150,7 @@ public class TaskNotifyGru extends SimpleTask
             {
                 UserDashboardNotification userDashBoard = buildUserDashboardNotification( config, nIdResourceHistory,
                         locale );
-                notificationObject.setUserGuichet( userDashBoard );
+                notificationObject.setUserDashboard( userDashBoard );
                 strMessageGuichet = userDashBoard.getMessage(  );
                 strSubjectGuichet = userDashBoard.getSubject(  );
             }
@@ -171,10 +171,10 @@ public class TaskNotifyGru extends SimpleTask
 
             if ( config.isActiveOngletAgent(  ) )
             {
-                AgentNotification userAgent = buildAgentNotification( config, nIdResourceHistory, locale );
-                notificationObject.setUserAgent( userAgent );
+                BackofficeNotification backoffice = buildAgentNotification( config, nIdResourceHistory, locale );
+                notificationObject.setBackofficeLogging( backoffice );
 
-                strMessageAgent = userAgent.getMessage(  );
+                strMessageAgent = backoffice.getMessage(  );
             }
 
             //if active config for Broadcast : broadcast
@@ -304,9 +304,9 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru agent notification
      */
-    private AgentNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private BackofficeNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
     {
-        AgentNotification userAgent = new AgentNotification(  );
+        BackofficeNotification userAgent = new BackofficeNotification(  );
 
         String strStatustextAgent = giveMeTexteWithValueOfMarker( config.getStatustextAgent(  ), locale,
                 _notifyGruService.getInfos( nIdResourceHistory ) );
