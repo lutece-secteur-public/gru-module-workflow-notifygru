@@ -304,7 +304,8 @@ public class TaskNotifyGru extends SimpleTask
      * @param locale the locale
      * @return the notify gru agent notification
      */
-    private BackofficeNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private BackofficeNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory,
+        Locale locale )
     {
         BackofficeNotification userAgent = new BackofficeNotification(  );
 
