@@ -45,13 +45,11 @@
     </#if>
     
 	<div class="row" id="mailing_spec_block" style="${mailingSpecStyle}">
-		<div class="form-group">
-		  <#if config?exists && config.emailBroadcast?has_content>
-			<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="${config.emailBroadcast}" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
-          <#else>
-			<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
-          </#if>
-		</div>
+    <#if config?exists && config.emailBroadcast?has_content>
+	  <@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="${config.emailBroadcast}" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
+    <#else>
+	  <@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast" cssClass="form-control input-sm" />
+    </#if>
     </div>
     <!------------------------------------- -->
     <!------------------------------------- -->
