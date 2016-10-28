@@ -33,19 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailAddress;
@@ -71,6 +58,20 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -191,19 +192,23 @@ public class TaskNotifyGru extends SimpleTask
                 notificationObject.addBroadcastEmail( broadcast );
                 strMessageBroadcast = broadcast.getMessage(  );
                 strSubjectBroadcast = broadcast.getSubject(  );
+
                 StringBuilder strEmailAdresses = new StringBuilder(  );
-        		if( broadcast.getRecipient(  ) != null && !broadcast.getRecipient(  ).isEmpty(  ) )
-            	{
-            		for ( EmailAddress emailAddress : broadcast.getRecipient(  ) )
+
+                if ( ( broadcast.getRecipient(  ) != null ) && !broadcast.getRecipient(  ).isEmpty(  ) )
+                {
+                    for ( EmailAddress emailAddress : broadcast.getRecipient(  ) )
                     {
-        	            if( strEmailAdresses.length(  ) > 0 )
-        	            {
-        	            	strEmailAdresses.append( Constants.SEMICOLON );
-        	            }
-        	            strEmailAdresses.append( emailAddress.getAddress(  ) );
+                        if ( strEmailAdresses.length(  ) > 0 )
+                        {
+                            strEmailAdresses.append( Constants.SEMICOLON );
+                        }
+
+                        strEmailAdresses.append( emailAddress.getAddress(  ) );
                     }
-            	}        		
-        		strRecipientBroadcast = strEmailAdresses.toString(  );
+                }
+
+                strRecipientBroadcast = strEmailAdresses.toString(  );
             }
 
             //crm status id
@@ -420,7 +425,8 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast(  ) ) )
         {
-            String strRecipientBroadcast = giveMeTexteWithValueOfMarker( config.getEmailBroadcast(  ), locale, mapInfosNotif );
+            String strRecipientBroadcast = giveMeTexteWithValueOfMarker( config.getEmailBroadcast(  ), locale,
+                    mapInfosNotif );
             lstRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
         }
 
@@ -430,18 +436,21 @@ public class TaskNotifyGru extends SimpleTask
 
             for ( Recipient recipient : listRecipients )
             {
-            	lstRecipientBroadcast.add( recipient.getEmail(  ) );
+                lstRecipientBroadcast.add( recipient.getEmail(  ) );
             }
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast(  ) );
         broadcastNotification.setSenderEmail( MailService.getNoReplyEmail(  ) );
         //we split a StringBuilder we can
-        broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( lstRecipientBroadcast.toArray( new String[] {} ) ) );
+        broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( lstRecipientBroadcast.toArray( 
+                    new String[] {  } ) ) );
         broadcastNotification.setSubject( strSubjectBroadcast );
         broadcastNotification.setMessage( strMessageBroadcast );
-        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( config.getRecipientsCcBroadcast(  ).split( Constants.SEMICOLON ) ) );
-        broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast(  ).split( Constants.SEMICOLON ) ) );
+        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( config.getRecipientsCcBroadcast(  )
+                                                                             .split( Constants.SEMICOLON ) ) );
+        broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast(  )
+                                                                              .split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
     }
