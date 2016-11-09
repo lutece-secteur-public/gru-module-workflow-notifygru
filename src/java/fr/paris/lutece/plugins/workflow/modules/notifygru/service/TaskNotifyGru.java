@@ -55,8 +55,6 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppException;
-import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
@@ -258,23 +256,7 @@ public class TaskNotifyGru extends SimpleTask
             Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).*/
         notification.setDemandStatus( config.getDemandStatus(  ) );
         notification.setDemandReference( _notifyGruService.getDemandReference( nIdResourceHistory ) );
-
-        String strCid = _notifyGruService.getCustomerId( nIdResourceHistory );
-        int ncid = -1;
-
-        try
-        {
-            ncid = Integer.parseInt( strCid );
-        }
-        catch ( NumberFormatException e )
-        {
-            String strError = "Invalid Customer ID [" + strCid + "]";
-            AppLogService.error( strError );
-            throw new AppException( strError, e );
-        }
-
-        notification.setCustomerId( ncid );
-
+        notification.setCustomerId( _notifyGruService.getCustomerId( nIdResourceHistory ) );
         notification.setNotificationDate( System.currentTimeMillis(  ) );
         notification.setDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
         notification.setRemoteDemandId( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) );
