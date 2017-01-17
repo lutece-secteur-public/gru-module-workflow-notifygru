@@ -267,11 +267,6 @@ public class TaskNotifyGru extends SimpleTask
         demand.setCustomer( customer );
         notification.setDemand( demand );
 
-        MyDashboardNotification dashboardNotification = new MyDashboardNotification(  );
-        dashboardNotification.setStatusId( config.getCrmStatusId(  ) );
-
-        notification.setUserDashboard( dashboardNotification );
-
         return notification;
     }
 
