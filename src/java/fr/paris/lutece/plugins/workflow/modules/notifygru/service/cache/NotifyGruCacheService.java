@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.portal.service.cache.AbstractCacheableService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
  * The Class NotifyGruCacheService.
  */
@@ -56,9 +55,9 @@ public final class NotifyGruCacheService extends AbstractCacheableService
     /**
      * Instantiates a new notify gru cache service.
      */
-    private NotifyGruCacheService(  )
+    private NotifyGruCacheService( )
     {
-        initCache(  );
+        initCache( );
     }
 
     /**
@@ -66,7 +65,7 @@ public final class NotifyGruCacheService extends AbstractCacheableService
      *
      * @return single instance of NotifyGruCacheService
      */
-    public static NotifyGruCacheService getInstance(  )
+    public static NotifyGruCacheService getInstance( )
     {
         if ( _singleton == null )
         {
@@ -76,11 +75,13 @@ public final class NotifyGruCacheService extends AbstractCacheableService
         return _singleton;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see fr.paris.lutece.portal.service.util.LuteceService#getName()
      */
     @Override
-    public String getName(  )
+    public String getName( )
     {
         return CACHE_NAME;
     }
@@ -88,8 +89,10 @@ public final class NotifyGruCacheService extends AbstractCacheableService
     /**
      * Gets the notify gru config from cache.
      *
-     * @param taskNotifyGruConfigService the task notify gru config service
-     * @param nidTask the nid task
+     * @param taskNotifyGruConfigService
+     *            the task notify gru config service
+     * @param nidTask
+     *            the nid task
      * @return the notify gru config from cache
      */
     public TaskNotifyGruConfig getNotifyGruConfigFromCache( ITaskConfigService taskNotifyGruConfigService, int nidTask )
@@ -102,8 +105,8 @@ public final class NotifyGruCacheService extends AbstractCacheableService
 
             if ( config == null )
             {
-                //no config stored yet for this task => adding an empty one in cache
-                config = new TaskNotifyGruConfig(  );
+                // no config stored yet for this task => adding an empty one in cache
+                config = new TaskNotifyGruConfig( );
             }
 
             putInCache( getCacheKey( nidTask ), config );
@@ -115,7 +118,8 @@ public final class NotifyGruCacheService extends AbstractCacheableService
     /**
      * Removes the gru config from cache.
      *
-     * @param nidTask the nid task
+     * @param nidTask
+     *            the nid task
      */
     public void removeGruConfigFromCache( int nidTask )
     {
@@ -125,14 +129,15 @@ public final class NotifyGruCacheService extends AbstractCacheableService
     /**
      * Gets the cache key.
      *
-     * @param nidTask the nid task
+     * @param nidTask
+     *            the nid task
      * @return the cache key
      */
     private String getCacheKey( int nidTask )
     {
-        StringBuilder sbKey = new StringBuilder(  );
+        StringBuilder sbKey = new StringBuilder( );
         sbKey.append( "[WORKFLOWNOTIFYGRU-" ).append( nidTask ).append( "-CACHE]" );
 
-        return sbKey.toString(  );
+        return sbKey.toString( );
     }
 }

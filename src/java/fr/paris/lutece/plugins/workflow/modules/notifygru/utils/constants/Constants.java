@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants;
 
-
 /**
  *
  */
 public final class Constants
 {
-    //MARKERS NOTIFICATION
+    // MARKERS NOTIFICATION
     public static final String MARK_NOTIFICATION = "notification";
     public static final String MARK_RESOURCE = "resource";
     public static final String MARK_USER_GUID = "user_guid";
@@ -55,7 +54,7 @@ public final class Constants
     public static final String MARK_DEMAND_USER_CURRENT_STEP = "demand_user_current_step";
     public static final String MARK_DEMAND_STATUS = "demand_status";
 
-    //MARKERS USERDASHBOARD
+    // MARKERS USERDASHBOARD
     public static final String MARK_STATUS_TEXT_USERDASHBOARD = "status_text";
     public static final String MARK_SENDER_NAME_USERDASHBOARD = "sender_name";
     public static final String MARK_SUBJECT_USERDASHBOARD = "subject";
@@ -63,7 +62,7 @@ public final class Constants
     public static final String MARK_DATA_USERDASHBOARD = "data";
     public static final String MARK_USER_DASHBOARD = "user_dashboard";
 
-    //MARKERS USER_EMAIL
+    // MARKERS USER_EMAIL
     public static final String MARK_SENDER_NAME = "sender_name";
     public static final String MARK_SENDER_EMAIL = "sender_email";
     public static final String MARK_RECIPIENT = "recipient";
@@ -76,11 +75,11 @@ public final class Constants
     public static final String MARK_DEMAND_DATE_TIMESTAMP = "notification_date";
     public static final String MARK_COSTUMER_ID = "customer_id";
 
-    //MARKERS SMS   
+    // MARKERS SMS
     public static final String MARK_MESSAGE_SMS = "message";
     public static final String MARK_USER_SMS = "user_sms";
 
-    //MARKERS BACK OFFICE LOGGING
+    // MARKERS BACK OFFICE LOGGING
     public static final String MARK_MESSAGE_BACK_OFFICE_LOGGING = "message";
     public static final String MARK_STATUS_TEXT_BACK_OFFICE_LOGGING = "status_text";
     public static final String MARK_ID_STATUS_CRM_BACK_OFFICE_LOGGING = "crm_status_id";
@@ -96,25 +95,25 @@ public final class Constants
     public static final String MARK_VIEW_SMS_NOTIFICATION = "view_sms_notification";
     public static final String MARK_BACK_OFFICE_LOGGING = "backoffice_logging";
 
-    //MESSAGES
+    // MESSAGES
     public static final String MESSAGE_DISPLAY_EMAIL = "Email envoyé à l'adresse : ";
     public static final String MESSAGE_DISPLAY_OBJECT = "_Objet :";
     public static final String MESSAGE_DISPLAY_MESSAGE_EMAIL = " _ Message : ";
     public static final String MESSAGE_DISPLAY_SMS = "SMS envoyé au numéro : ";
     public static final String MESSAGE_DISPLAY_MESSAGE_SMS = " _ Message : ";
 
-    //CONSTANT FOR SENDING JSON FLUX
+    // CONSTANT FOR SENDING JSON FLUX
     public static final String BEAN_NOTIFICATION_SENDER = "workflow-notifygru.lib-notifygru.notificationService";
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";
     public static final String PARAMS_GRANT_TYPE_VALUE = "client_credentials";
 
-    //CONTENT FORMAT
+    // CONTENT FORMAT
     public static final String CONTENT_FORMAT = "application/json; charset=utf-8";
     public static final String CONTENT_FORMAT_TOKEN = "application/x-www-form-urlencoded";
 
-    //NUMBER
+    // NUMBER
     public static final int OPTIONAL_INT_VALUE = -1000;
     public static final String OPTIONAL_STRING_VALUE = "";
 
@@ -131,17 +130,17 @@ public final class Constants
     public static final String USER_AUTO = "auto";
     public static final String TASK_NOTIFY_GRU_KEY = "taskNotifyGru";
 
-    //TITLE
+    // TITLE
     public static final String TITLE_NOTIFY = "module.workflow.notifygru.task_notify_title";
 
-    //VIEW
+    // VIEW
     public static final String VIEW_GUICHET = "module.workflow.notifygru.manage_guichet.title";
     public static final String VIEW_AGENT = "module.workflow.notifygru.manage_agent_view.title";
     public static final String VIEW_EMAIL = "module.workflow.notifygru.manage_email.title";
     public static final String VIEW_SMS = "module.workflow.notifygru.manage_sms.title";
     public static final String VIEW_BROADCAST_LIST = "module.workflow.notifygru.manage_mailing_list.title";
 
-    //VISIBILITY
+    // VISIBILITY
     public static final String VISIBILITY_ALL = "module.workflow.notifygru.task_notify_gru_config.visibility_all";
     public static final String VISIBILITY_DOMAIN = "module.workflow.notifygru.task_notify_gru_config.visibility_domain";
     public static final String VISIBILITY_ADMIN = "module.workflow.notifygru.task_notify_gru_config.visibility_admin";
@@ -153,30 +152,30 @@ public final class Constants
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
     public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.notifygru.message.error_freemarker";
 
-    //MESSAGES AGENT
+    // MESSAGES AGENT
     public static final String MESSAGE_AGENT_FIELD_MESSAGE = "module.workflow.notifygru.message.field.agent.message";
     public static final String MESSAGE_AGENT_FIELD_STATUS = "module.workflow.notifygru.message.field.agent.status";
 
-    //MESSAGES SMS 
+    // MESSAGES SMS
     public static final String MESSAGE_SMS_FIELD = "module.workflow.notifygru.message.field.sms";
 
-    //MESSAGES GUICHET
+    // MESSAGES GUICHET
     public static final String MESSAGE_MANDATORY_GUICHET_MESSAGE_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_message_guichet_mandatory";
     public static final String MESSAGE_MANDATORY_GUICHET_SENDER_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_sender_name_guichet_mandatory";
     public static final String MESSAGE_MANDATORY_GUICHET_STATUS_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_status_text_guichet_mandatory";
     public static final String MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD = "module.workflow.notifygru.task_notify_gru_config.label_subject_guichet_mandatory";
 
-    //MANDATORY MESSAGE
+    // MANDATORY MESSAGE
     public static final String MESSAGE_MANDATORY_ONE_FIELD = "module.workflow.notifygru.message.mandatory.one.field";
     public static final String MESSAGE_MANDATORY_TWO_FIELD = "module.workflow.notifygru.message.mandatory.two.field";
     public static final String MESSAGE_MANDATORY_THREE_FIELD = "module.workflow.notifygru.message.mandatory.three.field";
 
-    //MESSAGES EMAIL
+    // MESSAGES EMAIL
     public static final String MESSAGE_EMAIL_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.email";
     public static final String MESSAGE_EMAIL_MESSAGE_FIELD = "module.workflow.notifygru.message.field.email";
     public static final String MESSAGE_EMAIL_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.email";
 
-    //MESSAGES LISTE DE DIFFUSION
+    // MESSAGES LISTE DE DIFFUSION
     public static final String MESSAGE_LIST_SUBJECT_FIELD = "module.workflow.notifygru.message.subject.field.broadcast";
     public static final String MESSAGE_LIST_MESSAGE_FIELD = "module.workflow.notifygru.message.field.broadcast";
     public static final String MESSAGE_LIST_SENDER_NAME_FIELD = "module.workflow.notifygru.message.sender.name.field.broadcast";
@@ -214,7 +213,7 @@ public final class Constants
     public static final String MARK_LEVEL_NOTIFICATION_GUICHET = "level_notification_guichet";
     public static final String MARK_IS_ACTIVE_ONGLET_GUICHET = "is_active_onglet_guichet";
 
-    //MARKS AGENT
+    // MARKS AGENT
     public static final String MARK_ONGLET_AGENT = "agent";
 
     // MARKS EMAIL
@@ -252,13 +251,13 @@ public final class Constants
     public static final String MARK_LEVEL_NOTIFICATION_SMS = "level_notification_sms";
     public static final String MARK_IS_ACTIVE_ONGLET_SMS = "is_active_onglet_sms";
 
-    //MARKS MAILING LIST
+    // MARKS MAILING LIST
     public static final String MARK_ONGLET_LIST = "liste";
     public static final String MARK_LEVEL_NOTIFICATION_AGENT = "level_notification_agent";
     public static final String MARK_IS_ACTIVE_ONGLET_AGENT = "is_active_onglet_agent";
     public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
 
-    //BUTTON ADD & REMOVE
+    // BUTTON ADD & REMOVE
     public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
     public static final String PARAMETER_BUTTON_REMOVE_GUICHET = "RemoveOngletGuichet";
     public static final String PARAMETER_BUTTON_REMOVE_EMAIL = "RemoveOngletEmail";
@@ -373,10 +372,11 @@ public final class Constants
     public static final String ATTRIBUTE_HREF = "href";
 
     /**
-         * @exception Exception not instance
-         * */
-    private Constants(  ) throws Exception
+     * @exception Exception
+     *                not instance
+     * */
+    private Constants( ) throws Exception
     {
-        throw new Exception(  );
+        throw new Exception( );
     }
 }

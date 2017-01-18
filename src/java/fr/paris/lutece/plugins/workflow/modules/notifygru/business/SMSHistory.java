@@ -33,28 +33,30 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 /**
  * This is the business class for the object SMSHistory
  */
 public class SMSHistory
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strMessageSMS;
     private boolean _activeOngletSMS;
 
     /**
-      * Returns the MessageSMS
-      * @return The MessageSMS
-      */
-    public String getMessageSMS(  )
+     * Returns the MessageSMS
+     * 
+     * @return The MessageSMS
+     */
+    public String getMessageSMS( )
     {
         return _strMessageSMS;
     }
 
     /**
      * Sets the MessageSMS
-     * @param strMessageSMS The MessageSMS
+     * 
+     * @param strMessageSMS
+     *            The MessageSMS
      */
     public void setMessageSMS( String strMessageSMS )
     {
@@ -63,16 +65,19 @@ public class SMSHistory
 
     /**
      * Returns the ActiveOngletSMS
+     * 
      * @return The ActiveOngletSMS
      */
-    public boolean isActiveOngletSMS(  )
+    public boolean isActiveOngletSMS( )
     {
         return _activeOngletSMS;
     }
 
     /**
      * Sets the ActiveOngletSMS
-     * @param activeOngletSMS The ActiveOngletSMS
+     * 
+     * @param activeOngletSMS
+     *            The ActiveOngletSMS
      */
     public void setActiveOngletSMS( boolean activeOngletSMS )
     {

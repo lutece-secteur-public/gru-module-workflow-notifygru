@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 /**
  * This is the business class for the object GuichetHistory
  */
 public class GuichetHistory
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strMessageGuichet;
     private String _strStatustextGuichet;
     private String _strSenderNameGuichet;
@@ -49,17 +48,20 @@ public class GuichetHistory
     private boolean _bActiveOngletGuichet;
 
     /**
-        * Returns the MessageGuichet
-        * @return The MessageGuichet
-        */
-    public String getMessageGuichet(  )
+     * Returns the MessageGuichet
+     * 
+     * @return The MessageGuichet
+     */
+    public String getMessageGuichet( )
     {
         return _strMessageGuichet;
     }
 
     /**
      * Sets the MessageGuichet
-     * @param strMessageGuichet The MessageGuichet
+     * 
+     * @param strMessageGuichet
+     *            The MessageGuichet
      */
     public void setMessageGuichet( String strMessageGuichet )
     {
@@ -68,16 +70,19 @@ public class GuichetHistory
 
     /**
      * Returns the StatustextGuichet
+     * 
      * @return The StatustextGuichet
      */
-    public String getStatustextGuichet(  )
+    public String getStatustextGuichet( )
     {
         return _strStatustextGuichet;
     }
 
     /**
      * Sets the StatustextGuichet
-     * @param strStatustextGuichet The StatustextGuichet
+     * 
+     * @param strStatustextGuichet
+     *            The StatustextGuichet
      */
     public void setStatustextGuichet( String strStatustextGuichet )
     {
@@ -86,16 +91,19 @@ public class GuichetHistory
 
     /**
      * Returns the SenderNameGuichet
+     * 
      * @return The SenderNameGuichet
      */
-    public String getSenderNameGuichet(  )
+    public String getSenderNameGuichet( )
     {
         return _strSenderNameGuichet;
     }
 
     /**
      * Sets the SenderNameGuichet
-     * @param strSenderNameGuichet The SenderNameGuichet
+     * 
+     * @param strSenderNameGuichet
+     *            The SenderNameGuichet
      */
     public void setSenderNameGuichet( String strSenderNameGuichet )
     {
@@ -104,16 +112,19 @@ public class GuichetHistory
 
     /**
      * Returns the SubjectGuichet
+     * 
      * @return The SubjectGuichet
      */
-    public String getSubjectGuichet(  )
+    public String getSubjectGuichet( )
     {
         return _strSubjectGuichet;
     }
 
     /**
      * Sets the SubjectGuichet
-     * @param strSubjectGuichet The SubjectGuichet
+     * 
+     * @param strSubjectGuichet
+     *            The SubjectGuichet
      */
     public void setSubjectGuichet( String strSubjectGuichet )
     {
@@ -122,16 +133,19 @@ public class GuichetHistory
 
     /**
      * Returns the DemandMaxStepGuichet
+     * 
      * @return The DemandMaxStepGuichet
      */
-    public int getDemandMaxStepGuichet(  )
+    public int getDemandMaxStepGuichet( )
     {
         return _nDemandMaxStepGuichet;
     }
 
     /**
      * Sets the DemandMaxStepGuichet
-     * @param nDemandMaxStepGuichet The DemandMaxStepGuichet
+     * 
+     * @param nDemandMaxStepGuichet
+     *            The DemandMaxStepGuichet
      */
     public void setDemandMaxStepGuichet( int nDemandMaxStepGuichet )
     {
@@ -140,16 +154,19 @@ public class GuichetHistory
 
     /**
      * Returns the DemandUserCurrentStepGuichet
+     * 
      * @return The DemandUserCurrentStepGuichet
      */
-    public int getDemandUserCurrentStepGuichet(  )
+    public int getDemandUserCurrentStepGuichet( )
     {
         return _nDemandUserCurrentStepGuichet;
     }
 
     /**
      * Sets the DemandUserCurrentStepGuichet
-     * @param nDemandUserCurrentStepGuichet The DemandUserCurrentStepGuichet
+     * 
+     * @param nDemandUserCurrentStepGuichet
+     *            The DemandUserCurrentStepGuichet
      */
     public void setDemandUserCurrentStepGuichet( int nDemandUserCurrentStepGuichet )
     {
@@ -158,16 +175,19 @@ public class GuichetHistory
 
     /**
      * Returns the ActiveOngletGuichet
+     * 
      * @return The ActiveOngletGuichet
      */
-    public boolean isActiveOngletGuichet(  )
+    public boolean isActiveOngletGuichet( )
     {
         return _bActiveOngletGuichet;
     }
 
     /**
      * Sets the ActiveOngletGuichet
-     * @param activeOngletGuichet The ActiveOngletGuichet
+     * 
+     * @param activeOngletGuichet
+     *            The ActiveOngletGuichet
      */
     public void setActiveOngletGuichet( boolean activeOngletGuichet )
     {

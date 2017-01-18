@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  *
  * INotifyGruHistoryService
@@ -47,35 +46,49 @@ import org.springframework.transaction.annotation.Transactional;
 public interface INotifyGruHistoryService
 {
     /**
-    * Creation of an instance of Notify GRU
-    * @param notifyGru The instance of comment value which contains the informations to store
-    * @param plugin the plugin
-    */
+     * Creation of an instance of Notify GRU
+     * 
+     * @param notifyGru
+     *            The instance of comment value which contains the informations to store
+     * @param plugin
+     *            the plugin
+     */
     @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void create( NotifyGruHistory notifyGru, Plugin plugin );
 
     /**
      * Remove Notify GRU value by history
-     * @param nIdHistory the history key
-     * @param nIdTask The task key
-     * @param plugin the Plugin
+     * 
+     * @param nIdHistory
+     *            the history key
+     * @param nIdTask
+     *            The task key
+     * @param plugin
+     *            the Plugin
      */
     @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
      * Remove Notify GRU value by task
-     * @param nIdTask The task key
-     * @param plugin the Plugin
+     * 
+     * @param nIdTask
+     *            The task key
+     * @param plugin
+     *            the Plugin
      */
     @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByTask( int nIdTask, Plugin plugin );
 
     /**
      * Load the Notify GRU Object
-     * @param nIdHistory the history id
-     * @param nIdTask the task id
-     * @param plugin the plugin
+     * 
+     * @param nIdHistory
+     *            the history id
+     * @param nIdTask
+     *            the task id
+     * @param plugin
+     *            the plugin
      * @return the Config Object
      */
     NotifyGruHistory findByPrimaryKey( int nIdHistory, int nIdTask, Plugin plugin );

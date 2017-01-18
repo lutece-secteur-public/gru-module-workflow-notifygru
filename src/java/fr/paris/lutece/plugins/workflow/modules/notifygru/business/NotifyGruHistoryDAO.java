@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  *
  * class NotifyGruHistoryDAO
@@ -45,24 +44,21 @@ import fr.paris.lutece.util.sql.DAOUtil;
 public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 {
     public static final String BEAN = "NotifyGruHistoryDAO";
-    private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task, crm_status_id," +
-        "message_guichet,status_text_guichet,sender_name_guichet," +
-        "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
-        "status_text_agent,message_agent,is_active_onglet_agent," +
-        "subject_email,message_email,sender_name_email,recipients_cc_email," +
-        "recipients_cci_email,is_active_onglet_email,message_sms,is_active_onglet_sms," +
-        "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
-        "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast " +
-        " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( " +
-        "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet," +
-        "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet," +
-        "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email," +
-        "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," +
-        "message_sms,is_active_onglet_sms," +
-        "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast," +
-        "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) " +
-        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task, crm_status_id," + "message_guichet,status_text_guichet,sender_name_guichet,"
+            + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
+            + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email,message_email,sender_name_email,recipients_cc_email,"
+            + "recipients_cci_email,is_active_onglet_email,message_sms,is_active_onglet_sms,"
+            + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
+            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast "
+            + " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( "
+            + "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet,"
+            + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
+            + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email,"
+            + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," + "message_sms,is_active_onglet_sms,"
+            + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
+            + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) "
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
 
@@ -76,43 +72,43 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 
         int nPos = 0;
 
-        daoUtil.setInt( ++nPos, history.getIdResourceHistory(  ) );
-        daoUtil.setInt( ++nPos, history.getIdTask(  ) );
-        daoUtil.setInt( ++nPos, history.getCrmStatusId(  ) );
+        daoUtil.setInt( ++nPos, history.getIdResourceHistory( ) );
+        daoUtil.setInt( ++nPos, history.getIdTask( ) );
+        daoUtil.setInt( ++nPos, history.getCrmStatusId( ) );
 
-        daoUtil.setString( ++nPos, history.getGuichet(  ).getMessageGuichet(  ) );
-        daoUtil.setString( ++nPos, history.getGuichet(  ).getStatustextGuichet(  ) );
-        daoUtil.setString( ++nPos, history.getGuichet(  ).getSenderNameGuichet(  ) );
-        daoUtil.setString( ++nPos, history.getGuichet(  ).getSubjectGuichet(  ) );
-        daoUtil.setInt( ++nPos, history.getGuichet(  ).getDemandMaxStepGuichet(  ) );
-        daoUtil.setInt( ++nPos, history.getGuichet(  ).getDemandUserCurrentStepGuichet(  ) );
-        daoUtil.setBoolean( ++nPos, history.getGuichet(  ).isActiveOngletGuichet(  ) );
+        daoUtil.setString( ++nPos, history.getGuichet( ).getMessageGuichet( ) );
+        daoUtil.setString( ++nPos, history.getGuichet( ).getStatustextGuichet( ) );
+        daoUtil.setString( ++nPos, history.getGuichet( ).getSenderNameGuichet( ) );
+        daoUtil.setString( ++nPos, history.getGuichet( ).getSubjectGuichet( ) );
+        daoUtil.setInt( ++nPos, history.getGuichet( ).getDemandMaxStepGuichet( ) );
+        daoUtil.setInt( ++nPos, history.getGuichet( ).getDemandUserCurrentStepGuichet( ) );
+        daoUtil.setBoolean( ++nPos, history.getGuichet( ).isActiveOngletGuichet( ) );
 
-        daoUtil.setString( ++nPos, history.getAgent(  ).getStatustextAgent(  ) );
-        daoUtil.setString( ++nPos, history.getAgent(  ).getMessageAgent(  ) );
-        daoUtil.setBoolean( ++nPos, history.getAgent(  ).isActiveOngletAgent(  ) );
+        daoUtil.setString( ++nPos, history.getAgent( ).getStatustextAgent( ) );
+        daoUtil.setString( ++nPos, history.getAgent( ).getMessageAgent( ) );
+        daoUtil.setBoolean( ++nPos, history.getAgent( ).isActiveOngletAgent( ) );
 
-        daoUtil.setString( ++nPos, history.getEmail(  ).getSubjectEmail(  ) );
-        daoUtil.setString( ++nPos, history.getEmail(  ).getMessageEmail(  ) );
-        daoUtil.setString( ++nPos, history.getEmail(  ).getSenderNameEmail(  ) );
-        daoUtil.setString( ++nPos, history.getEmail(  ).getRecipientsCcEmail(  ) );
-        daoUtil.setString( ++nPos, history.getEmail(  ).getRecipientsCciEmail(  ) );
-        daoUtil.setBoolean( ++nPos, history.getEmail(  ).isActiveOngletEmail(  ) );
+        daoUtil.setString( ++nPos, history.getEmail( ).getSubjectEmail( ) );
+        daoUtil.setString( ++nPos, history.getEmail( ).getMessageEmail( ) );
+        daoUtil.setString( ++nPos, history.getEmail( ).getSenderNameEmail( ) );
+        daoUtil.setString( ++nPos, history.getEmail( ).getRecipientsCcEmail( ) );
+        daoUtil.setString( ++nPos, history.getEmail( ).getRecipientsCciEmail( ) );
+        daoUtil.setBoolean( ++nPos, history.getEmail( ).isActiveOngletEmail( ) );
 
-        daoUtil.setString( ++nPos, history.getSMS(  ).getMessageSMS(  ) );
-        daoUtil.setBoolean( ++nPos, history.getSMS(  ).isActiveOngletSMS(  ) );
+        daoUtil.setString( ++nPos, history.getSMS( ).getMessageSMS( ) );
+        daoUtil.setBoolean( ++nPos, history.getSMS( ).isActiveOngletSMS( ) );
 
-        daoUtil.setInt( ++nPos, history.getBroadCast(  ).getIdMailingListBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getEmailBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getSenderNameBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getSubjectBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getMessageBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getRecipientsCcBroadcast(  ) );
-        daoUtil.setString( ++nPos, history.getBroadCast(  ).getRecipientsCciBroadcast(  ) );
-        daoUtil.setBoolean( ++nPos, history.getBroadCast(  ).isActiveOngletBroadcast(  ) );
+        daoUtil.setInt( ++nPos, history.getBroadCast( ).getIdMailingListBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getEmailBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getSenderNameBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getSubjectBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getMessageBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getRecipientsCcBroadcast( ) );
+        daoUtil.setString( ++nPos, history.getBroadCast( ).getRecipientsCciBroadcast( ) );
+        daoUtil.setBoolean( ++nPos, history.getBroadCast( ).isActiveOngletBroadcast( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -121,12 +117,12 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
     @Override
     public NotifyGruHistory load( int nIdHistory, int nIdTask, Plugin plugin )
     {
-        NotifyGruHistory oNotifyGru = new NotifyGruHistory(  );
-        GuichetHistory oGuichet = new GuichetHistory(  );
-        AgentHistory oAgent = new AgentHistory(  );
-        EmailHistory oEmail = new EmailHistory(  );
-        SMSHistory oSMS = new SMSHistory(  );
-        BroadcastHistory oBroadcast = new BroadcastHistory(  );
+        NotifyGruHistory oNotifyGru = new NotifyGruHistory( );
+        GuichetHistory oGuichet = new GuichetHistory( );
+        AgentHistory oAgent = new AgentHistory( );
+        EmailHistory oEmail = new EmailHistory( );
+        SMSHistory oSMS = new SMSHistory( );
+        BroadcastHistory oBroadcast = new BroadcastHistory( );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         int nPos = 0;
@@ -135,9 +131,9 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 
         nPos = 0;
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             oNotifyGru.setIdResourceHistory( daoUtil.getInt( ++nPos ) );
             oNotifyGru.setIdTask( daoUtil.getInt( ++nPos ) );
@@ -181,7 +177,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         oNotifyGru.setSMS( oSMS );
         oNotifyGru.setBroadCast( oBroadcast );
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return oNotifyGru;
     }
@@ -197,8 +193,8 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         daoUtil.setInt( ++nPos, nIdHistory );
         daoUtil.setInt( ++nPos, nIdTask );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -211,7 +207,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         int nPos = 0;
         daoUtil.setInt( ++nPos, nIdTask );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

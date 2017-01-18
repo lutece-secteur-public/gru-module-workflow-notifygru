@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
 
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  *
  * TaskNotifyGruConfigService
@@ -51,6 +50,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
 
     /**
      * {@inheritDoc}
+     * 
      * @param config
      */
     @Override
@@ -62,6 +62,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
 
     /**
      * {@inheritDoc}
+     * 
      * @param config
      */
     @Override
@@ -73,6 +74,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
 
     /**
      * {@inheritDoc}
+     * 
      * @param nIdTask
      */
     @Override
@@ -84,6 +86,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
 
     /**
      * {@inheritDoc}
+     * 
      * @param <T>
      * @param nIdTask
      * @return

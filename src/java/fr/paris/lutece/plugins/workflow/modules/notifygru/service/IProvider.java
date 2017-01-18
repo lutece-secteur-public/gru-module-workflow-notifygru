@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import java.util.Locale;
 import java.util.Map;
 
-
 /**
  *
  */
@@ -44,7 +43,8 @@ public interface IProvider
 {
     /**
      * @return the userGuid
-     * @param nIdResourceHistory the _nIdResourceHistory to set
+     * @param nIdResourceHistory
+     *            the _nIdResourceHistory to set
      */
     String getUserGuid( int nIdResourceHistory );
 
@@ -52,51 +52,60 @@ public interface IProvider
      * give the email of user
      *
      * @return the userEmail
-     * @param nIdResourceHistory the _nIdResourceHistory to set
+     * @param nIdResourceHistory
+     *            the _nIdResourceHistory to set
      */
     String getUserEmail( int nIdResourceHistory );
 
     /**
-     * @param nIdResourceHistory of ressource
+     * @param nIdResourceHistory
+     *            of ressource
      * @return DemandId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
     int getOptionalDemandId( int nIdResourceHistory );
 
     /**
-    * @param nIdResourceHistory of ressource
-    * @return strReference if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
-    */
+     * @param nIdResourceHistory
+     *            of ressource
+     * @return strReference if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
+     */
     String getDemandReference( int nIdResourceHistory );
 
     /**
-     * @param nIdResourceHistory of ressource
+     * @param nIdResourceHistory
+     *            of ressource
      * @return CustomerId if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
     String getCustomerId( int nIdResourceHistory );
 
     /**
-     * @param nIdResourceHistory of ressource
+     * @param nIdResourceHistory
+     *            of ressource
      * @return DemandIdType if available else return TaskNotifyGruConstants.OPTIONAL_INT_VALUE
      */
     int getOptionalDemandIdType( int nIdResourceHistory );
 
     /**
      * @return the phone number
-     * @param nIdResourceHistory the _nIdResourceHistory to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
+     * @param nIdResourceHistory
+     *            the _nIdResourceHistory to set else return TaskNotifyGruConstants.OPTIONAL_STRING_VALUE
      */
     String getOptionalMobilePhoneNumber( int nIdResourceHistory );
 
     /**
      * Return html body for help infos
-     * @param local of request
+     * 
+     * @param local
+     *            of request
      * @return html template for maker resources attributs
      */
     String getInfosHelp( Locale local );
 
     /**
-     * Give map of infos for the object with given id
-     * Careful, should return a 'blank' model (new valid object) for id -1
-     * @param nIdResourceHistory of ressource
+     * Give map of infos for the object with given id Careful, should return a 'blank' model (new valid object) for id -1
+     * 
+     * @param nIdResourceHistory
+     *            of ressource
      * @return model marker from resources attributs
      */
     Map<String, Object> getInfos( int nIdResourceHistory );

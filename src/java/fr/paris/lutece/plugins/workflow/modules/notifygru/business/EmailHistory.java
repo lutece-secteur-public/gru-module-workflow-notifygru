@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 /**
  * This is the business class for the object EmailHistory
  */
 public class EmailHistory
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strSubjectEmail;
     private String _strMessageEmail;
     private String _strSenderNameEmail;
@@ -48,17 +47,20 @@ public class EmailHistory
     private boolean _bActiveOngletEmail;
 
     /**
-        * Returns the SubjectEmail
-        * @return The SubjectEmail
-        */
-    public String getSubjectEmail(  )
+     * Returns the SubjectEmail
+     * 
+     * @return The SubjectEmail
+     */
+    public String getSubjectEmail( )
     {
         return _strSubjectEmail;
     }
 
     /**
      * Sets the SubjectEmail
-     * @param strSubjectEmail The SubjectEmail
+     * 
+     * @param strSubjectEmail
+     *            The SubjectEmail
      */
     public void setSubjectEmail( String strSubjectEmail )
     {
@@ -67,16 +69,19 @@ public class EmailHistory
 
     /**
      * Returns the MessageEmail
+     * 
      * @return The MessageEmail
      */
-    public String getMessageEmail(  )
+    public String getMessageEmail( )
     {
         return _strMessageEmail;
     }
 
     /**
      * Sets the MessageEmail
-     * @param strMessageEmail The MessageEmail
+     * 
+     * @param strMessageEmail
+     *            The MessageEmail
      */
     public void setMessageEmail( String strMessageEmail )
     {
@@ -85,16 +90,19 @@ public class EmailHistory
 
     /**
      * Returns the SenderNameEmail
+     * 
      * @return The SenderNameEmail
      */
-    public String getSenderNameEmail(  )
+    public String getSenderNameEmail( )
     {
         return _strSenderNameEmail;
     }
 
     /**
      * Sets the SenderNameEmail
-     * @param strSenderNameEmail The SenderNameEmail
+     * 
+     * @param strSenderNameEmail
+     *            The SenderNameEmail
      */
     public void setSenderNameEmail( String strSenderNameEmail )
     {
@@ -103,16 +111,19 @@ public class EmailHistory
 
     /**
      * Returns the RecipientsCcEmail
+     * 
      * @return The RecipientsCcEmail
      */
-    public String getRecipientsCcEmail(  )
+    public String getRecipientsCcEmail( )
     {
         return _strRecipientsCcEmail;
     }
 
     /**
      * Sets the RecipientsCcEmail
-     * @param strRecipientsCcEmail The RecipientsCcEmail
+     * 
+     * @param strRecipientsCcEmail
+     *            The RecipientsCcEmail
      */
     public void setRecipientsCcEmail( String strRecipientsCcEmail )
     {
@@ -121,16 +132,19 @@ public class EmailHistory
 
     /**
      * Returns the RecipientsCciEmail
+     * 
      * @return The RecipientsCciEmail
      */
-    public String getRecipientsCciEmail(  )
+    public String getRecipientsCciEmail( )
     {
         return _strRecipientsCciEmail;
     }
 
     /**
      * Sets the RecipientsCciEmail
-     * @param strRecipientsCciEmail The RecipientsCciEmail
+     * 
+     * @param strRecipientsCciEmail
+     *            The RecipientsCciEmail
      */
     public void setRecipientsCciEmail( String strRecipientsCciEmail )
     {
@@ -139,16 +153,19 @@ public class EmailHistory
 
     /**
      * Returns the ActiveOngletEmail
+     * 
      * @return The ActiveOngletEmail
      */
-    public boolean isActiveOngletEmail(  )
+    public boolean isActiveOngletEmail( )
     {
         return _bActiveOngletEmail;
     }
 
     /**
      * Sets the ActiveOngletEmail
-     * @param activeOngletEmail The ActiveOngletEmail
+     * 
+     * @param activeOngletEmail
+     *            The ActiveOngletEmail
      */
     public void setActiveOngletEmail( boolean activeOngletEmail )
     {

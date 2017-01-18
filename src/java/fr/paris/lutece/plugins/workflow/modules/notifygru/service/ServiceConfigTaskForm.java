@@ -49,7 +49,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * The Class ServiceConfigTaskForm.
  */
@@ -58,18 +57,21 @@ public final class ServiceConfigTaskForm
     /**
      * Instantiates a new service config task form.
      *
-     * @exception Exception not instance
+     * @exception Exception
+     *                not instance
      */
-    private ServiceConfigTaskForm(  ) throws Exception
+    private ServiceConfigTaskForm( ) throws Exception
     {
-        throw new Exception(  );
+        throw new Exception( );
     }
 
     /**
      * Checks if bean exists.
      *
-     * @param strIdBean the str id bean
-     * @param task the task
+     * @param strIdBean
+     *            the str id bean
+     * @param task
+     *            the task
      * @return true if the bean exist
      */
     public static Boolean isBeanExists( String strIdBean, ITask task )
@@ -98,7 +100,8 @@ public final class ServiceConfigTaskForm
     /**
      * Checks if bean exists.
      *
-     * @param strIdBean the str id bean
+     * @param strIdBean
+     *            the str id bean
      * @return the boolean
      */
     public static Boolean isBeanExists( String strIdBean )
@@ -111,7 +114,7 @@ public final class ServiceConfigTaskForm
 
             if ( providerService != null )
             {
-                providerService.updateListProvider(  );
+                providerService.updateListProvider( );
 
                 bexist = providerService.isKeyProvider( strIdBean );
             }
@@ -127,8 +130,10 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the customized bean for a given task.
      *
-     * @param strIdBean the str id bean
-     * @param task the task
+     * @param strIdBean
+     *            the str id bean
+     * @param task
+     *            the task
      * @return the customized bean
      */
     public static AbstractServiceProvider getCustomizedBean( String strIdBean, ITask task )
@@ -157,7 +162,8 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the customized bean.
      *
-     * @param strIdBean the str id bean
+     * @param strIdBean
+     *            the str id bean
      * @return the customized bean
      */
     public static AbstractServiceProvider getCustomizedBean( String strIdBean )
@@ -170,7 +176,7 @@ public final class ServiceConfigTaskForm
 
             if ( providerService != null )
             {
-                providerService.updateListProvider(  );
+                providerService.updateListProvider( );
 
                 provider = providerService.getInstanceProvider( strIdBean );
             }
@@ -186,7 +192,8 @@ public final class ServiceConfigTaskForm
     /**
      * Checks if spring bean exists.
      *
-     * @param strIdBean the str id bean
+     * @param strIdBean
+     *            the str id bean
      * @return the boolean
      */
     public static Boolean isSpringBeanExists( String strIdBean )
@@ -203,12 +210,12 @@ public final class ServiceConfigTaskForm
             {
                 AbstractServiceProvider providerService = SpringContextService.getBean( strIdBean );
 
-                if ( providerService.getKey(  ).equals( strIdBean ) )
+                if ( providerService.getKey( ).equals( strIdBean ) )
                 {
                     bexist = true;
                 }
             }
-            catch ( NoSuchBeanDefinitionException e )
+            catch( NoSuchBeanDefinitionException e )
             {
                 bexist = false;
             }
@@ -219,16 +226,18 @@ public final class ServiceConfigTaskForm
 
     /**
      * retrieve AbstractServiceProvider bean if exists
-     * @param strFullKeyProvider the key at format beanManagerProvider.@.specificPart
+     * 
+     * @param strFullKeyProvider
+     *            the key at format beanManagerProvider.@.specificPart
      * @return true if a ManagerProvider exists in Spring context
      */
     public static AbstractServiceProvider getServiceProviderFromKey( String strFullKeyProvider )
     {
-        String[] providerGabarit = strFullKeyProvider.split( ".@." );
+        String [ ] providerGabarit = strFullKeyProvider.split( ".@." );
 
-        if ( ( providerGabarit.length == 2 ) && isSpringBeanExists( providerGabarit[0] ) )
+        if ( ( providerGabarit.length == 2 ) && isSpringBeanExists( providerGabarit [0] ) )
         {
-            return SpringContextService.getBean( providerGabarit[0] );
+            return SpringContextService.getBean( providerGabarit [0] );
         }
 
         return null;
@@ -237,42 +246,39 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the list onglet.
      *
-     * @param config of the task
-     * @param locale of request
+     * @param config
+     *            of the task
+     * @param locale
+     *            of request
      * @return the list of onglet
      */
     public static ReferenceList getListOnglet( TaskNotifyGruConfig config, Locale locale )
     {
-        ReferenceList refenreceList = new ReferenceList(  );
+        ReferenceList refenreceList = new ReferenceList( );
 
-        if ( !config.isActiveOngletGuichet(  ) )
+        if ( !config.isActiveOngletGuichet( ) )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_GUICHET,
-                I18nService.getLocalizedString( Constants.VIEW_GUICHET, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_GUICHET, I18nService.getLocalizedString( Constants.VIEW_GUICHET, locale ) );
         }
 
-        if ( !config.isActiveOngletAgent(  ) )
+        if ( !config.isActiveOngletAgent( ) )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_AGENT,
-                I18nService.getLocalizedString( Constants.VIEW_AGENT, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_AGENT, I18nService.getLocalizedString( Constants.VIEW_AGENT, locale ) );
         }
 
-        if ( !config.isActiveOngletEmail(  ) )
+        if ( !config.isActiveOngletEmail( ) )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_EMAIL,
-                I18nService.getLocalizedString( Constants.VIEW_EMAIL, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_EMAIL, I18nService.getLocalizedString( Constants.VIEW_EMAIL, locale ) );
         }
 
-        if ( !config.isActiveOngletSMS(  ) )
+        if ( !config.isActiveOngletSMS( ) )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_SMS,
-                I18nService.getLocalizedString( Constants.VIEW_SMS, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_SMS, I18nService.getLocalizedString( Constants.VIEW_SMS, locale ) );
         }
 
-        if ( !config.isActiveOngletBroadcast(  ) )
+        if ( !config.isActiveOngletBroadcast( ) )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_LIST,
-                I18nService.getLocalizedString( Constants.VIEW_BROADCAST_LIST, locale ) );
+            refenreceList.addItem( Constants.MARK_ONGLET_LIST, I18nService.getLocalizedString( Constants.VIEW_BROADCAST_LIST, locale ) );
         }
 
         return refenreceList;
@@ -281,7 +287,8 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the number of string.
      *
-     * @param srtNumber to convert
+     * @param srtNumber
+     *            to convert
      * @return positive int value or -1 if exception or negative value
      */
     public static int parseStringToPositiveNumber( String srtNumber )
@@ -290,7 +297,7 @@ public final class ServiceConfigTaskForm
         {
             return Math.max( -1, Integer.parseInt( srtNumber ) );
         }
-        catch ( NumberFormatException e )
+        catch( NumberFormatException e )
         {
             return -1;
         }
@@ -299,12 +306,13 @@ public final class ServiceConfigTaskForm
     /**
      * display the level of notification.
      *
-     * @param locale to localize resources
+     * @param locale
+     *            to localize resources
      * @return the list of notification
      */
     public static ReferenceList getListNotification( Locale locale )
     {
-        ReferenceList refenreceList = new ReferenceList(  );
+        ReferenceList refenreceList = new ReferenceList( );
         refenreceList.addItem( 0, I18nService.getLocalizedString( Constants.VISIBILITY_ALL, locale ) );
         refenreceList.addItem( 1, I18nService.getLocalizedString( Constants.VISIBILITY_DOMAIN, locale ) );
         refenreceList.addItem( 2, I18nService.getLocalizedString( Constants.VISIBILITY_ADMIN, locale ) );
@@ -315,32 +323,32 @@ public final class ServiceConfigTaskForm
     /**
      * display the error message.
      *
-     * @param lstErrors the list of errors
-     * @param request the http request
+     * @param lstErrors
+     *            the list of errors
+     * @param request
+     *            the http request
      * @return the error message
      */
     public static String displayErrorMessage( List<String> lstErrors, HttpServletRequest request )
     {
-        Object[] tabRequiredFields = new Object[lstErrors.size(  )];
+        Object [ ] tabRequiredFields = new Object [ lstErrors.size( )];
 
-        for ( int i = 0; i < lstErrors.size(  ); i++ )
+        for ( int i = 0; i < lstErrors.size( ); i++ )
         {
-            tabRequiredFields[i] = lstErrors.get( i );
+            tabRequiredFields [i] = lstErrors.get( i );
         }
 
         if ( tabRequiredFields.length > 2 )
         {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD,
-                tabRequiredFields, AdminMessage.TYPE_WARNING );
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
         }
-        else if ( tabRequiredFields.length == 2 )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD,
-                tabRequiredFields, AdminMessage.TYPE_WARNING );
-        }
+        else
+            if ( tabRequiredFields.length == 2 )
+            {
+                return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+            }
 
-        return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields,
-            AdminMessage.TYPE_WARNING );
+        return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
     }
 
     /**
@@ -348,7 +356,7 @@ public final class ServiceConfigTaskForm
      *
      * @return the different implementation
      */
-    public static List<AbstractServiceProvider> getImplementationServices(  )
+    public static List<AbstractServiceProvider> getImplementationServices( )
     {
         return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
     }
@@ -356,24 +364,25 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the list provider.
      *
-     * @param task the task
+     * @param task
+     *            the task
      * @return the list of providers
      */
     public static ReferenceList getListProvider( ITask task )
     {
-        ReferenceList referenceList = new ReferenceList(  );
+        ReferenceList referenceList = new ReferenceList( );
 
-        for ( AbstractServiceProvider provider : getImplementationServices(  ) )
+        for ( AbstractServiceProvider provider : getImplementationServices( ) )
         {
-            if ( !provider.isManagerProvider(  ) )
+            if ( !provider.isManagerProvider( ) )
             {
-                referenceList.addItem( provider.getBeanName(  ), provider.getTitle( Locale.getDefault(  ) ) );
+                referenceList.addItem( provider.getBeanName( ), provider.getTitle( Locale.getDefault( ) ) );
             }
             else
             {
                 provider.updateListProvider( task );
 
-                referenceList.addAll( provider.buildReferenteListProvider(  ) );
+                referenceList.addAll( provider.buildReferenteListProvider( ) );
             }
         }
 
@@ -383,21 +392,25 @@ public final class ServiceConfigTaskForm
     /**
      * Sets the config onglet.
      *
-     * @param strApply of form
-     * @param strOnglet of config
-     * @param strOngletActive the active onglet
-     * @param bdefault default onglet
-     * @param strRemove if removing
+     * @param strApply
+     *            of form
+     * @param strOnglet
+     *            of config
+     * @param strOngletActive
+     *            the active onglet
+     * @param bdefault
+     *            default onglet
+     * @param strRemove
+     *            if removing
      * @return true if the Onglet is active
      */
-    public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault,
-        String strRemove )
+    public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault, String strRemove )
     {
         boolean bStateOnglet = bdefault;
 
         if ( strApply != null )
         {
-            switch ( strApply )
+            switch( strApply )
             {
                 case Constants.PARAMETER_BUTTON_ADD:
 
@@ -466,7 +479,8 @@ public final class ServiceConfigTaskForm
     /**
      * Gets the number oblet.
      *
-     * @param strOnglet of config
+     * @param strOnglet
+     *            of config
      * @return the number of onglet
      */
     public static int getNumberOblet( String strOnglet )
@@ -478,7 +492,7 @@ public final class ServiceConfigTaskForm
             return nNumber;
         }
 
-        switch ( strOnglet )
+        switch( strOnglet )
         {
             case Constants.MARK_ONGLET_GUICHET:
                 nNumber = 0;

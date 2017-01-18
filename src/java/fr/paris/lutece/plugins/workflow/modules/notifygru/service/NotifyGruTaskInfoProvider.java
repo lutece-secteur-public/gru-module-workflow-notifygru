@@ -41,7 +41,6 @@ import javax.inject.Named;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * NotifyGruTaskInfoProvider
@@ -55,19 +54,24 @@ public class NotifyGruTaskInfoProvider extends AbstractTaskInfoProvider
 
     /**
      * {@inheritDoc}
+     * 
      * @return string plugin name
      */
     @Override
-    public String getPluginName(  )
+    public String getPluginName( )
     {
         return NotifyGruPlugin.PLUGIN_NAME;
     }
 
     /**
      * {@inheritDoc}
-     * @param nIdHistory id histoty
-     * @param nIdTask id task
-     * @param request request
+     * 
+     * @param nIdHistory
+     *            id histoty
+     * @param nIdTask
+     *            id task
+     * @param request
+     *            request
      * @return string
      */
     @Override

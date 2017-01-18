@@ -41,7 +41,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.Locale;
 
-
 /**
  * The Class AbstractServiceProvider.
  */
@@ -62,33 +61,35 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Update list providers limited to the given task
      *
-     * @param task the task
+     * @param task
+     *            the task
      */
     public abstract void updateListProvider( ITask task );
 
     /**
      * Update list of all providers
      */
-    public abstract void updateListProvider(  );
+    public abstract void updateListProvider( );
 
     /**
      * Builds the referente list provider.
      *
      * @return the reference list
      */
-    public abstract ReferenceList buildReferenteListProvider(  );
+    public abstract ReferenceList buildReferenteListProvider( );
 
     /**
      * Gets the referente list entity provider.
      *
      * @return the referente list entity provider
      */
-    public abstract ReferenceList getReferenteListEntityProvider(  );
+    public abstract ReferenceList getReferenteListEntityProvider( );
 
     /**
      * Checks if is key provider.
      *
-     * @param strKey the str key
+     * @param strKey
+     *            the str key
      * @return the boolean
      */
     public abstract Boolean isKeyProvider( String strKey );
@@ -96,7 +97,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Gets the instance provider.
      *
-     * @param strKey the str key
+     * @param strKey
+     *            the str key
      * @return the instance provider
      */
     public abstract AbstractServiceProvider getInstanceProvider( String strKey );
@@ -106,7 +108,7 @@ public abstract class AbstractServiceProvider implements IProvider
      *
      * @return the boolean
      */
-    public Boolean isManagerProvider(  )
+    public Boolean isManagerProvider( )
     {
         return _bIsManagerProvider;
     }
@@ -114,7 +116,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Sets the manager provider.
      *
-     * @param bIsManager the new manager provider
+     * @param bIsManager
+     *            the new manager provider
      */
     public void setManagerProvider( Boolean bIsManager )
     {
@@ -126,7 +129,7 @@ public abstract class AbstractServiceProvider implements IProvider
      *
      * @return _strKey
      */
-    public String getKey(  )
+    public String getKey( )
     {
         return _strKey;
     }
@@ -136,7 +139,7 @@ public abstract class AbstractServiceProvider implements IProvider
      *
      * @return _strbeanName
      */
-    public String getBeanName(  )
+    public String getBeanName( )
     {
         return _strBeanName;
     }
@@ -144,7 +147,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Sets the key.
      *
-     * @param strKey to set _strKey
+     * @param strKey
+     *            to set _strKey
      */
     public void setKey( String strKey )
     {
@@ -154,7 +158,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Sets the bean name.
      *
-     * @param strBeanName to set _strBeanName
+     * @param strBeanName
+     *            to set _strBeanName
      */
     public void setBeanName( String strBeanName )
     {
@@ -164,7 +169,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Gets the title.
      *
-     * @param locale to localize the title
+     * @param locale
+     *            to localize the title
      * @return the title
      */
     public String getTitle( Locale locale )
@@ -177,7 +183,7 @@ public abstract class AbstractServiceProvider implements IProvider
      *
      * @return _strtitleI18nKey
      */
-    public String getTitleI18nKey(  )
+    public String getTitleI18nKey( )
     {
         return _strTitleI18nKey;
     }
@@ -185,7 +191,8 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Sets the title i18n key.
      *
-     * @param strTitleI18nKey to set _strTitleI18nKey
+     * @param strTitleI18nKey
+     *            to set _strTitleI18nKey
      */
     public void setTitleI18nKey( String strTitleI18nKey )
     {
@@ -195,14 +202,15 @@ public abstract class AbstractServiceProvider implements IProvider
     /**
      * Checks if is invoked.
      *
-     * @param strExtenderType of provider
+     * @param strExtenderType
+     *            of provider
      * @return Boolean if the provider is invoked
      */
     public boolean isInvoked( String strExtenderType )
     {
         if ( StringUtils.isNotBlank( strExtenderType ) )
         {
-            return getKey(  ).equals( strExtenderType );
+            return getKey( ).equals( strExtenderType );
         }
 
         return false;

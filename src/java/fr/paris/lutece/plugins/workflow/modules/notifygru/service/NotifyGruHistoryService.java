@@ -43,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
 /**
  *
  * NotifyGruHistoryService

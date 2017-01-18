@@ -55,7 +55,6 @@ import javax.inject.Named;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * NotifyGruService
@@ -78,7 +77,7 @@ public final class NotifyGruService implements INotifyGruService
     /**
      * Private constructor
      */
-    private NotifyGruService(  )
+    private NotifyGruService( )
     {
     }
 
@@ -88,7 +87,7 @@ public final class NotifyGruService implements INotifyGruService
     @Override
     public ReferenceList getMailingList( HttpServletRequest request )
     {
-        ReferenceList refMailingList = new ReferenceList(  );
+        ReferenceList refMailingList = new ReferenceList( );
         refMailingList.addAll( AdminMailingListService.getMailingLists( AdminUserService.getAdminUser( request ) ) );
 
         return refMailingList;
@@ -102,13 +101,13 @@ public final class NotifyGruService implements INotifyGruService
     @Override
     public ReferenceList getListStates( int nIdAction )
     {
-        ReferenceList referenceListStates = new ReferenceList(  );
+        ReferenceList referenceListStates = new ReferenceList( );
         Action action = _actionService.findByPrimaryKey( nIdAction );
 
-        if ( ( action != null ) && ( action.getWorkflow(  ) != null ) )
+        if ( ( action != null ) && ( action.getWorkflow( ) != null ) )
         {
-            StateFilter stateFilter = new StateFilter(  );
-            stateFilter.setIdWorkflow( action.getWorkflow(  ).getId(  ) );
+            StateFilter stateFilter = new StateFilter( );
+            stateFilter.setIdWorkflow( action.getWorkflow( ).getId( ) );
 
             List<State> listStates = _stateService.getListStateByFilter( stateFilter );
 
@@ -141,11 +140,11 @@ public final class NotifyGruService implements INotifyGruService
 
         if ( request != null )
         {
-            locale = request.getLocale(  );
+            locale = request.getLocale( );
         }
         else
         {
-            locale = I18nService.getDefaultLocale(  );
+            locale = I18nService.getDefaultLocale( );
         }
 
         return locale;

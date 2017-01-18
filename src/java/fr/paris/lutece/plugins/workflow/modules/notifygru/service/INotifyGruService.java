@@ -42,7 +42,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  *
@@ -51,16 +50,22 @@ public interface INotifyGruService
 {
     /**
      * Get the list of states
-     * @param nIdAction  the id action
+     * 
+     * @param nIdAction
+     *            the id action
      * @return a ReferenceList
      */
     ReferenceList getListStates( int nIdAction );
 
     /**
      * The files Attachments to insert in the mail
-     * @param config the configuration
-     * @param nIdRecord the record id
-     * @param nIdDirectory the  directory id
+     * 
+     * @param config
+     *            the configuration
+     * @param nIdRecord
+     *            the record id
+     * @param nIdDirectory
+     *            the directory id
      * @return the files Attachments to insert in the mail
      */
     List<FileAttachment> getFilesAttachment( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory );
@@ -68,15 +73,18 @@ public interface INotifyGruService
     /**
      * Gets the locale.
      *
-     * @param request the request
+     * @param request
+     *            the request
      * @return the locale
      */
     Locale getLocale( HttpServletRequest request );
 
     /**
-    * Get the mailing list
-    * @param request the HTTP request
-    * @return a ReferenceList
-    */
+     * Get the mailing list
+     * 
+     * @param request
+     *            the HTTP request
+     * @return a ReferenceList
+     */
     ReferenceList getMailingList( HttpServletRequest request );
 }

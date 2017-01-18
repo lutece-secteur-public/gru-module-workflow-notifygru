@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 /**
  * This is the business class for the object BroadcastHistory
  */
 public class BroadcastHistory
 {
-    // Variables declarations 
+    // Variables declarations
     private int _nIdMailingListBroadcast;
     private String _strEmailBroadcast;
     private String _strSenderNameBroadcast;
@@ -51,16 +50,19 @@ public class BroadcastHistory
 
     /**
      * Returns the IdMailingListBroadcast
+     * 
      * @return The IdMailingListBroadcast
      */
-    public int getIdMailingListBroadcast(  )
+    public int getIdMailingListBroadcast( )
     {
         return _nIdMailingListBroadcast;
     }
 
     /**
      * Sets the IdMailingListBroadcast
-     * @param nIdMailingListBroadcast The IdMailingListBroadcast
+     * 
+     * @param nIdMailingListBroadcast
+     *            The IdMailingListBroadcast
      */
     public void setIdMailingListBroadcast( int nIdMailingListBroadcast )
     {
@@ -68,15 +70,16 @@ public class BroadcastHistory
     }
 
     /**
-         * @return the EmailBroadcast
-         */
-    public String getEmailBroadcast(  )
+     * @return the EmailBroadcast
+     */
+    public String getEmailBroadcast( )
     {
         return _strEmailBroadcast;
     }
 
     /**
-     * @param strEmailBroadcast the EmailBroadcast to set
+     * @param strEmailBroadcast
+     *            the EmailBroadcast to set
      */
     public void setEmailBroadcast( String strEmailBroadcast )
     {
@@ -84,17 +87,20 @@ public class BroadcastHistory
     }
 
     /**
-    * Returns the SenderNameBroadcast
-    * @return The SenderNameBroadcast
-    */
-    public String getSenderNameBroadcast(  )
+     * Returns the SenderNameBroadcast
+     * 
+     * @return The SenderNameBroadcast
+     */
+    public String getSenderNameBroadcast( )
     {
         return _strSenderNameBroadcast;
     }
 
     /**
      * Sets the SenderNameBroadcast
-     * @param strSenderNameBroadcast The SenderNameBroadcast
+     * 
+     * @param strSenderNameBroadcast
+     *            The SenderNameBroadcast
      */
     public void setSenderNameBroadcast( String strSenderNameBroadcast )
     {
@@ -103,16 +109,19 @@ public class BroadcastHistory
 
     /**
      * Returns the SubjectBroadcast
+     * 
      * @return The SubjectBroadcast
      */
-    public String getSubjectBroadcast(  )
+    public String getSubjectBroadcast( )
     {
         return _strSubjectBroadcast;
     }
 
     /**
      * Sets the SubjectBroadcast
-     * @param strSubjectBroadcast The SubjectBroadcast
+     * 
+     * @param strSubjectBroadcast
+     *            The SubjectBroadcast
      */
     public void setSubjectBroadcast( String strSubjectBroadcast )
     {
@@ -121,16 +130,19 @@ public class BroadcastHistory
 
     /**
      * Returns the MessageBroadcast
+     * 
      * @return The MessageBroadcast
      */
-    public String getMessageBroadcast(  )
+    public String getMessageBroadcast( )
     {
         return _strMessageBroadcast;
     }
 
     /**
      * Sets the MessageBroadcast
-     * @param strMessageBroadcast The MessageBroadcast
+     * 
+     * @param strMessageBroadcast
+     *            The MessageBroadcast
      */
     public void setMessageBroadcast( String strMessageBroadcast )
     {
@@ -139,16 +151,19 @@ public class BroadcastHistory
 
     /**
      * Returns the RecipientsCcBroadcast
+     * 
      * @return The RecipientsCcBroadcast
      */
-    public String getRecipientsCcBroadcast(  )
+    public String getRecipientsCcBroadcast( )
     {
         return _strRecipientsCcBroadcast;
     }
 
     /**
      * Sets the RecipientsCcBroadcast
-     * @param strRecipientsCcBroadcast The RecipientsCcBroadcast
+     * 
+     * @param strRecipientsCcBroadcast
+     *            The RecipientsCcBroadcast
      */
     public void setRecipientsCcBroadcast( String strRecipientsCcBroadcast )
     {
@@ -157,16 +172,19 @@ public class BroadcastHistory
 
     /**
      * Returns the RecipientsCciBroadcast
+     * 
      * @return The RecipientsCciBroadcast
      */
-    public String getRecipientsCciBroadcast(  )
+    public String getRecipientsCciBroadcast( )
     {
         return _strRecipientsCciBroadcast;
     }
 
     /**
      * Sets the RecipientsCciBroadcast
-     * @param strRecipientsCciBroadcast The RecipientsCciBroadcast
+     * 
+     * @param strRecipientsCciBroadcast
+     *            The RecipientsCciBroadcast
      */
     public void setRecipientsCciBroadcast( String strRecipientsCciBroadcast )
     {
@@ -175,16 +193,19 @@ public class BroadcastHistory
 
     /**
      * Returns the ActiveOngletBroadcast
+     * 
      * @return The ActiveOngletBroadcast
      */
-    public boolean isActiveOngletBroadcast(  )
+    public boolean isActiveOngletBroadcast( )
     {
         return _bActiveOngletBroadcast;
     }
 
     /**
      * Sets the ActiveOngletBroadcast
-     * @param activeOngletBroadcast The ActiveOngletBroadcast
+     * 
+     * @param activeOngletBroadcast
+     *            The ActiveOngletBroadcast
      */
     public void setActiveOngletBroadcast( boolean activeOngletBroadcast )
     {

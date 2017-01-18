@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
-
 /**
  *
  * INotifyGruHistoryDAO
@@ -45,33 +44,47 @@ public interface INotifyGruHistoryDAO
 {
     /**
      * insert new history notifygru
-     * @param history history notifygru
+     * 
+     * @param history
+     *            history notifygru
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      */
     void insert( NotifyGruHistory history, Plugin plugin );
 
     /**
-    * Load a record by primary key
-    * @param nIdHistory the action history id
-    * @param nIdTask the task id
-    * @param plugin the plugin
-    * @return NotifyGruHistory Object
-    */
+     * Load a record by primary key
+     * 
+     * @param nIdHistory
+     *            the action history id
+     * @param nIdTask
+     *            the task id
+     * @param plugin
+     *            the plugin
+     * @return NotifyGruHistory Object
+     */
     NotifyGruHistory load( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
      * delete all notifygrus associated width the task specified in parameter
-     * @param nIdTask the task id
-     * @param plugin the plugin
+     * 
+     * @param nIdTask
+     *            the task id
+     * @param plugin
+     *            the plugin
      */
     void deleteByTask( int nIdTask, Plugin plugin );
 
     /**
      * delete all notifygrus associated width the history specified in parameter
-     * @param nIdHistory the history id
-     * @param nIdTask the task id
-     * @param plugin the plugin
+     * 
+     * @param nIdHistory
+     *            the history id
+     * @param nIdTask
+     *            the task id
+     * @param plugin
+     *            the plugin
      */
     void deleteByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 }

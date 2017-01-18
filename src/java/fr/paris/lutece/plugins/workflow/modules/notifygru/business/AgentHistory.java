@@ -33,29 +33,31 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-
 /**
  * This is the business class for the object AgentHistory
  */
 public class AgentHistory
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strStatustextAgent;
     private String _strMessageAgent;
     private boolean _activeOngletAgent;
 
     /**
-        * Returns the StatustextAgent
-        * @return The StatustextAgent
-        */
-    public String getStatustextAgent(  )
+     * Returns the StatustextAgent
+     * 
+     * @return The StatustextAgent
+     */
+    public String getStatustextAgent( )
     {
         return _strStatustextAgent;
     }
 
     /**
      * Sets the StatustextAgent
-     * @param strStatustextAgent The StatustextAgent
+     * 
+     * @param strStatustextAgent
+     *            The StatustextAgent
      */
     public void setStatustextAgent( String strStatustextAgent )
     {
@@ -64,16 +66,19 @@ public class AgentHistory
 
     /**
      * Returns the MessageAgent
+     * 
      * @return The MessageAgent
      */
-    public String getMessageAgent(  )
+    public String getMessageAgent( )
     {
         return _strMessageAgent;
     }
 
     /**
      * Sets the MessageAgent
-     * @param strMessageAgent The MessageAgent
+     * 
+     * @param strMessageAgent
+     *            The MessageAgent
      */
     public void setMessageAgent( String strMessageAgent )
     {
@@ -82,16 +87,19 @@ public class AgentHistory
 
     /**
      * Returns the activeOngletAgent
+     * 
      * @return The activeOngletAgent
      */
-    public boolean isActiveOngletAgent(  )
+    public boolean isActiveOngletAgent( )
     {
         return _activeOngletAgent;
     }
 
     /**
      * Sets the ActiveOngletAgent
-     * @param activeOngletAgent The ActiveOngletAgent
+     * 
+     * @param activeOngletAgent
+     *            The ActiveOngletAgent
      */
     public void setActiveOngletAgent( boolean activeOngletAgent )
     {
