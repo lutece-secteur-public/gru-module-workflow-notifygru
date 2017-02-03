@@ -138,7 +138,7 @@ public class TaskNotifyGru extends SimpleTask
             if ( config.isActiveOngletEmail( ) )
             {
                 EmailNotification userEmail = buildEmailNotification( config, nIdResourceHistory, locale );
-                notificationObject.setUserEmail( userEmail );
+                notificationObject.setEmailNotification( userEmail );
                 strMessageEmail = userEmail.getMessage( );
                 strSubjectEmail = userEmail.getSubject( );
             }
@@ -150,7 +150,7 @@ public class TaskNotifyGru extends SimpleTask
             if ( config.isActiveOngletGuichet( ) )
             {
                 MyDashboardNotification userDashBoard = buildUserDashboardNotification( config, nIdResourceHistory, locale );
-                notificationObject.setUserDashboard( userDashBoard );
+                notificationObject.setMyDashboardNotification( userDashBoard );
                 strMessageGuichet = userDashBoard.getMessage( );
                 strSubjectGuichet = userDashBoard.getSubject( );
             }
@@ -161,7 +161,7 @@ public class TaskNotifyGru extends SimpleTask
             if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
             {
                 SMSNotification userSMS = buildSMSNotification( config, nIdResourceHistory, locale );
-                notificationObject.setUserSMS( userSMS );
+                notificationObject.setSmsNotification( userSMS );
                 strMessageSMS = userSMS.getMessage( );
             }
 
@@ -171,7 +171,7 @@ public class TaskNotifyGru extends SimpleTask
             if ( config.isActiveOngletAgent( ) )
             {
                 BackofficeNotification backoffice = buildAgentNotification( config, nIdResourceHistory, locale );
-                notificationObject.setBackofficeLogging( backoffice );
+                notificationObject.setBackofficeNotification( backoffice );
 
                 strMessageAgent = backoffice.getMessage( );
             }
@@ -251,7 +251,7 @@ public class TaskNotifyGru extends SimpleTask
          */
         demand.setStatusId( config.getDemandStatus( ) );
         demand.setReference( _notifyGruService.getDemandReference( nIdResourceHistory ) );
-        notification.setNotificationDate( System.currentTimeMillis( ) );
+        notification.setDate( System.currentTimeMillis( ) );
         demand.setId( String.valueOf( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) ) );
         demand.setTypeId( String.valueOf( _notifyGruService.getOptionalDemandIdType( nIdResourceHistory ) ) );
         demand.setMaxSteps( config.getDemandMaxStepGuichet( ) );
@@ -259,7 +259,7 @@ public class TaskNotifyGru extends SimpleTask
 
         Customer customer = new Customer( );
         customer.setId( _notifyGruService.getCustomerId( nIdResourceHistory ) );
-        customer.setAccountGuid( _notifyGruService.getUserGuid( nIdResourceHistory ) );
+        customer.setConnectionId( _notifyGruService.getUserGuid( nIdResourceHistory ) );
         customer.setEmail( _notifyGruService.getUserEmail( nIdResourceHistory ) );
         demand.setCustomer( customer );
         notification.setDemand( demand );
