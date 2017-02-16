@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>workflow-notifygru</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <documentation/>
     <installation/>
     <changes/>
@@ -10,7 +10,7 @@
     <provider>module.workflow.notifygru.module.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
    <icon-url>images/admin/skin/plugins/notifygru/notifygru.png</icon-url>
-    <copyright>Copyright (c) 2015 Mairie de Paris</copyright>
+    <copyright>Copyright (c) 2017 Mairie de Paris</copyright>
     <db-pool-required>1</db-pool-required>
     
     <core-version-dependency>
@@ -20,15 +20,7 @@
 
     <!-- Admin features parameters -->
     <admin-features>
-    </admin-features>    
-
-    <!-- XPages parameters -->
-    <!--applications>
-        <application>
-            <application-id>moduleworkflownotifygru</application-id>
-            <application-class>fr.paris.lutece.plugins.moduleworkflownotifygru.web.ModuleworkflownotifygruApp</application-class>
-        </application>
-    </applications-->
+    </admin-features>
 
     <!-- Portlet parameters -->
     <portlets>

@@ -1,3 +1,4 @@
+<#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <div>
   <fieldset>
     <legend>#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}
@@ -97,9 +98,7 @@
     <!------------------------------------- -->
   </div>
   <div class="col-xs-12 col-sm-4">
-    <#if helper_provider?exists>
-      <span class="help-block" > ${helper_provider} </span>
-    </#if>
+    <@marker_descriptions />
   </div>
 </div>
 <script>

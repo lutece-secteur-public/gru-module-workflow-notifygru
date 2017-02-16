@@ -46,6 +46,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -240,15 +241,15 @@ public final class Validator
      *            the request
      * @param config
      *            the config
-     * @param providerService
-     *            the _provider service
+     * @param model
+     *            the model
      * @param locale
      *            the locale
      * @param strApply
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider providerService, Locale locale,
+    public static String isValidBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
             String strApply )
     {
         String strUrlRedirector = "";
@@ -287,7 +288,7 @@ public final class Validator
                 errors.add( Validator.mandatoryParams( strSubjectGuichet, Constants.MESSAGE_MANDATORY_GUICHET_OBJECT_FIELD, locale ) );
             }
 
-            if ( !Validator.isFreemarkerValid( strMessageGuichet + ' ' + strSubjectGuichet, locale, providerService.getInfos( -1 ) ) )
+            if ( !Validator.isFreemarkerValid( strMessageGuichet + ' ' + strSubjectGuichet, locale, model ) )
             {
                 Object [ ] tabRequiredFields = {
                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
@@ -323,15 +324,15 @@ public final class Validator
      *            the request
      * @param config
      *            the config
-     * @param providerService
-     *            the _provider service
+     * @param model
+     *            the model
      * @param locale
      *            the locale
      * @param strApply
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider providerService, Locale locale,
+    public static String isValidBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
             String strApply )
     {
         String strUrlRedirector = "";
@@ -353,7 +354,7 @@ public final class Validator
                 errors.add( Validator.mandatoryParams( strStatutTextAgent, Constants.MESSAGE_AGENT_FIELD_STATUS, locale ) );
             }
 
-            if ( !Validator.isFreemarkerValid( strMessageAgent, locale, providerService.getInfos( -1 ) ) )
+            if ( !Validator.isFreemarkerValid( strMessageAgent, locale, model ) )
             {
                 Object [ ] tabRequiredFields = {
                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
@@ -384,15 +385,15 @@ public final class Validator
      *            the request
      * @param config
      *            the config
-     * @param providerService
-     *            the _provider service
+     * @param model
+     *            the model
      * @param locale
      *            the locale
      * @param strApply
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider providerService, Locale locale,
+    public static String isValidBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
             String strApply )
     {
         String strUrlRedirector = "";
@@ -423,7 +424,7 @@ public final class Validator
                 errors.add( Validator.mandatoryParams( strMessageEmail, Constants.MESSAGE_EMAIL_MESSAGE_FIELD, locale ) );
             }
 
-            if ( !Validator.isFreemarkerValid( strMessageEmail + ' ' + strSubjectEmail, locale, providerService.getInfos( -1 ) ) )
+            if ( !Validator.isFreemarkerValid( strMessageEmail + ' ' + strSubjectEmail, locale, model ) )
             {
                 Object [ ] tabRequiredFields = {
                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
@@ -457,15 +458,15 @@ public final class Validator
      *            the request
      * @param config
      *            the config
-     * @param providerService
-     *            the _provider service
+     * @param model
+     *            the model
      * @param locale
      *            the locale
      * @param strApply
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider providerService, Locale locale,
+    public static String isValidBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
             String strApply )
     {
         String strUrlRedirector = "";
@@ -481,7 +482,7 @@ public final class Validator
                 errors.add( Validator.mandatoryParams( strMessageSMS, Constants.MESSAGE_SMS_FIELD, locale ) );
             }
 
-            if ( !Validator.isFreemarkerValid( strMessageSMS, locale, providerService.getInfos( -1 ) ) )
+            if ( !Validator.isFreemarkerValid( strMessageSMS, locale, model ) )
             {
                 Object [ ] tabRequiredFields = {
                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),
@@ -511,15 +512,15 @@ public final class Validator
      *            the request
      * @param config
      *            the config
-     * @param providerService
-     *            the _provider service
+     * @param model
+     *            the model
      * @param locale
      *            the locale
      * @param strApply
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config, AbstractServiceProvider providerService, Locale locale,
+    public static String isValidBuildBroadcast( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
             String strApply )
     {
         String strUrlRedirector = "";
@@ -583,7 +584,7 @@ public final class Validator
                 errors.add( Validator.mandatoryParams( strmessageBroadcast, Constants.MESSAGE_LIST_MESSAGE_FIELD, locale ) );
             }
 
-            if ( !Validator.isFreemarkerValid( strmessageBroadcast + ' ' + strsubjectBroadcast, locale, providerService.getInfos( -1 ) ) )
+            if ( !Validator.isFreemarkerValid( strmessageBroadcast + ' ' + strsubjectBroadcast, locale, model ) )
             {
                 Object [ ] tabRequiredFields = {
                     I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, locale ),

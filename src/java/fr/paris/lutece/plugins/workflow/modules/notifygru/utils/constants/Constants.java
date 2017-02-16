@@ -151,6 +151,7 @@ public final class Constants
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.notifygru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.notifygru.message.error_validation";
     public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.notifygru.message.error_freemarker";
+    public static final String MESSAGE_ERROR_PROVIDER_NOT_FOUND = "module.workflow.notifygru.message.provider.notFound";
 
     // MESSAGES AGENT
     public static final String MESSAGE_AGENT_FIELD_MESSAGE = "module.workflow.notifygru.message.field.agent.message";
@@ -363,7 +364,8 @@ public final class Constants
     public static final String MARK_LINK_VIEW_RECORD = "link_view_record";
     public static final String MARK_LIST_POSITION_ENTRY_FILE_CHECKED = "list_position_entry_file_checked";
     public static final String MARK_LIST_ENTRIES_FILE = "list_entries_file";
-    public static final String MARK_HELPER_PROVIDER = "helper_provider";
+    public static final String MARK_PROVIDER_MARKERS = "provider_markers";
+    public static final String MARK_MESSAGES_ERROR = "errors";
 
     // TAGS
     public static final String TAG_A = "a";

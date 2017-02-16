@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.AbstractServiceProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruHistoryService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHistoryService;
@@ -44,6 +43,9 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigT
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
@@ -55,12 +57,17 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
+import fr.paris.lutece.util.ErrorMessage;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -91,7 +98,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Inject
     @Named( NotifyGruService.BEAN_SERVICE )
     private INotifyGruService _notifyGRUService;
-    private AbstractServiceProvider _providerService;
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
@@ -110,6 +116,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strApply = request.getParameter( Constants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
         String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
+        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
 
         TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, task.getId( ) );
 
@@ -123,39 +130,38 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 Constants.PARAMETER_BUTTON_REMOVE_SMS );
         Boolean bActiveOngletBROADCAST = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_LIST, strOngletActive,
                 config.isActiveOngletBroadcast( ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
+        
+        Boolean bRedirector = false;
+        String strUrlRedirector = null;
 
         // set the active onglet
         int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
         config.setSetOnglet( nOngletActive );
-
-        Boolean bRedirector = false;
-
-        /* validate and set provider */
-        String strUrlRedirector = Validator.isValidAndSetProviderService( request, config, locale, task );
-
-        if ( StringUtils.isBlank( strUrlRedirector ) )
+        
+        if ( config.getIdSpringProvider( ) == null )
         {
-            _providerService = Validator.getValidProviderService( config, task );
+            config.setIdSpringProvider( strProvider );
         }
-        else
+        
+        String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
+        String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
+        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+        
+        if ( providerManager == null )
         {
-            bRedirector = true;
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
         }
 
-        /* if we are in started config of task. the provider is already register */
-        if ( ( strProvider == null ) && !bRedirector && ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail
+        if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail
                 && !bActiveOngletGuichet && !bActiveOngletSMS )
         {
-            Object [ ] tabRequiredFields = {
-                I18nService.getLocalizedString( Constants.MESSAGE_MANDATORY_ONGLET, locale ),
-            };
-
-            bRedirector = true;
-            strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET, tabRequiredFields, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP );
         }
+        
+        Map<String, Object> model = markersToModel( providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
 
         /* set demand statut params */
-        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
+        
         String strCrmStatusId = request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
         int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer
                 .parseInt( strCrmStatusId ) : 1;
@@ -166,7 +172,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         /* validate and build guichet */
         if ( !bRedirector && ( bActiveOngletGuichet || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
         {
-            strUrlRedirector = Validator.isValidBuildGuichet( request, config, _providerService, locale, strApply );
+            strUrlRedirector = Validator.isValidBuildGuichet( request, config, model, locale, strApply );
             config.setActiveOngletGuichet( bActiveOngletGuichet );
 
             bRedirector = StringUtils.isNotBlank( strUrlRedirector );
@@ -175,7 +181,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         /* validate and build agent */
         if ( !bRedirector && ( bActiveOngletAgent || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
         {
-            strUrlRedirector = Validator.isValidBuildAgent( request, config, _providerService, locale, strApply );
+            strUrlRedirector = Validator.isValidBuildAgent( request, config, model, locale, strApply );
             config.setActiveOngletAgent( bActiveOngletAgent );
 
             bRedirector = StringUtils.isNotBlank( strUrlRedirector );
@@ -183,7 +189,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         if ( !bRedirector && ( bActiveOngletEmail || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
         {
-            strUrlRedirector = Validator.isValidBuildEmail( request, config, _providerService, locale, strApply );
+            strUrlRedirector = Validator.isValidBuildEmail( request, config, model, locale, strApply );
             config.setActiveOngletEmail( bActiveOngletEmail );
 
             bRedirector = StringUtils.isNotBlank( strUrlRedirector );
@@ -192,7 +198,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         if ( !bRedirector && ( bActiveOngletSMS || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
         {
             config.setActiveOngletSMS( bActiveOngletSMS );
-            strUrlRedirector = Validator.isValidBuildSMS( request, config, _providerService, locale, strApply );
+            strUrlRedirector = Validator.isValidBuildSMS( request, config, model, locale, strApply );
 
             bRedirector = StringUtils.isNotBlank( strUrlRedirector );
         }
@@ -200,7 +206,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         if ( !bRedirector && ( bActiveOngletBROADCAST || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) ) )
         {
             config.setActiveOngletBroadcast( bActiveOngletBROADCAST );
-            strUrlRedirector = Validator.isValidBuildBroadcast( request, config, _providerService, locale, strApply );
+            strUrlRedirector = Validator.isValidBuildBroadcast( request, config, model, locale, strApply );
 
             bRedirector = StringUtils.isNotBlank( strUrlRedirector );
         }
@@ -215,7 +221,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) )
                 || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
                 || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) )
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) || ( strProvider != null ) )
+                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) || ( config.getIdSpringProvider( ) != null ) )
         {
             Boolean bCreate = false;
 
@@ -266,7 +272,24 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         if ( config.getIdSpringProvider( ) == null )
         {
-            model.put( Constants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getListProvider( task ) );
+            model.put( Constants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getProviderReferenceList( task ) );
+        }
+        else
+        {
+            String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
+            String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
+            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+            
+            if ( providerManager != null ) {
+                model.put( Constants.MARK_PROVIDER_MARKERS, providerManager.
+                        getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
+            }
+            else
+            {
+                List<ErrorMessage> listErrorMessages = new ArrayList<>( );
+                listErrorMessages.add( new MVCMessage( I18nService.getLocalizedString( Constants.MESSAGE_ERROR_PROVIDER_NOT_FOUND, locale ) ) );
+                model.put( Constants.MARK_MESSAGES_ERROR, listErrorMessages );
+            }
         }
 
         ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config, locale );
@@ -280,15 +303,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         model.put( Constants.MARK_LOCALE, request.getLocale( ) );
         model.put( Constants.MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-
-        if ( ( config.getIdSpringProvider( ) != null ) )
-        {
-            _providerService = ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider( ), task );
-
-            String strTemplateProvider = ( _providerService == null ) ? "" : _providerService.getInfosHelp( locale );
-
-            model.put( Constants.MARK_HELPER_PROVIDER, strTemplateProvider );
-        }
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model );
 
@@ -332,5 +346,17 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     public String getTaskInformationXml( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
     {
         return null;
+    }
+    
+    private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
+    {
+        Map<String, Object> model = new HashMap<>( );
+        
+        for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
+        {
+            model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getDescription( ) );
+        }
+        
+        return model;
     }
 }

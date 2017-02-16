@@ -34,6 +34,9 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderDescription;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -44,6 +47,7 @@ import fr.paris.lutece.util.ReferenceList;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -352,38 +356,25 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Gets the implementation services.
-     *
-     * @return the different implementation
-     */
-    public static List<AbstractServiceProvider> getImplementationServices( )
-    {
-        return SpringContextService.getBeansOfType( AbstractServiceProvider.class );
-    }
-
-    /**
      * Gets the list provider.
      *
      * @param task
      *            the task
      * @return the list of providers
      */
-    public static ReferenceList getListProvider( ITask task )
+    public static ReferenceList getProviderReferenceList( ITask task )
     {
         ReferenceList referenceList = new ReferenceList( );
-
-        for ( AbstractServiceProvider provider : getImplementationServices( ) )
+        List<AbstractProviderManager> listProviderManagers = SpringContextService.getBeansOfType( AbstractProviderManager.class );
+        
+        for ( AbstractProviderManager providerManager : listProviderManagers )
         {
-            if ( !provider.isManagerProvider( ) )
-            {
-                referenceList.addItem( provider.getBeanName( ), provider.getTitle( Locale.getDefault( ) ) );
-            }
-            else
-            {
-                provider.updateListProvider( task );
-
-                referenceList.addAll( provider.buildReferenteListProvider( ) );
-            }
+            Collection<ProviderDescription> collectionProviderDescriptions =  providerManager.getAllProviderDescriptions( task );
+            
+            for ( ProviderDescription providerDescription : collectionProviderDescriptions ) {
+              referenceList.addItem( ProviderManagerUtil.buildCompleteProviderId( providerManager.getId( ), providerDescription.getId( ) ), 
+                  providerDescription.getLabel( ) );
+          }
         }
 
         return referenceList;

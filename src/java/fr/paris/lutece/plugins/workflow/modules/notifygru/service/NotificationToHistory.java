@@ -33,12 +33,23 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.EmailAddress;
+import fr.paris.lutece.plugins.grubusiness.business.notification.EmailNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.MyDashboardNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.AgentHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.BroadcastHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.EmailHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.GuichetHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.SMSHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 
 /**
  * The Class NotificationToHistory.
@@ -57,16 +68,24 @@ public final class NotificationToHistory
      *
      * @param config
      *            the config
-     * @param strMessageSMS
-     *            the str message sms
+     * @param smsNotification
+     *            the SMS notification
      * @return the SMS history
      */
-    public static SMSHistory populateSMS( TaskNotifyGruConfig config, String strMessageSMS )
+    public static SMSHistory populateSMS( TaskNotifyGruConfig config, SMSNotification smsNotification )
     {
         SMSHistory oSMSHistory = new SMSHistory( );
 
-        oSMSHistory.setMessageSMS( strMessageSMS );
         oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
+        
+        if ( smsNotification != null )
+        {
+            oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
+        }
+        else
+        {
+            oSMSHistory.setMessageSMS( StringUtils.EMPTY );
+        }
 
         return oSMSHistory;
     }
@@ -76,22 +95,30 @@ public final class NotificationToHistory
      *
      * @param config
      *            the config
-     * @param strSubjectEmail
-     *            the email subject
-     * @param strMessageEmail
-     *            the str message email
+     * @param emailNotification
+     *            the email notification
      * @return the email history
      */
-    public static EmailHistory populateEmail( TaskNotifyGruConfig config, String strSubjectEmail, String strMessageEmail )
+    public static EmailHistory populateEmail( TaskNotifyGruConfig config, EmailNotification emailNotification )
     {
         EmailHistory oEmailHistory = new EmailHistory( );
 
-        oEmailHistory.setMessageEmail( strMessageEmail );
+        
         oEmailHistory.setRecipientsCcEmail( config.getRecipientsCcEmail( ) );
         oEmailHistory.setRecipientsCciEmail( config.getRecipientsCciEmail( ) );
         oEmailHistory.setSenderNameEmail( config.getSenderNameEmail( ) );
-        oEmailHistory.setSubjectEmail( strSubjectEmail );
         oEmailHistory.setActiveOngletEmail( config.isActiveOngletEmail( ) );
+        
+        if ( emailNotification != null )
+        {
+            oEmailHistory.setMessageEmail( emailNotification.getMessage( ) );
+            oEmailHistory.setSubjectEmail( emailNotification.getSubject( ) );
+        }
+        else
+        {
+            oEmailHistory.setMessageEmail( StringUtils.EMPTY );
+            oEmailHistory.setSubjectEmail( StringUtils.EMPTY );
+        }
 
         return oEmailHistory;
     }
@@ -101,27 +128,49 @@ public final class NotificationToHistory
      *
      * @param config
      *            the config
-     * @param strRecipientBroadcast
-     *            destination email(s) for the broadcast
-     * @param strSubjectBroadcast
-     *            email subject for the broadcast
-     * @param strMessageBroadcast
-     *            email message for the broadcast
+     * @param broadcastNotification
+     *            the broadcast notification
      * @return the broadcast history
      */
-    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, String strRecipientBroadcast, String strSubjectBroadcast,
-            String strMessageBroadcast )
+    public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, BroadcastNotification broadcastNotification )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory( );
 
         oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );
-        oBroadcastHistory.setEmailBroadcast( strRecipientBroadcast );
-        oBroadcastHistory.setMessageBroadcast( strMessageBroadcast );
         oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast( ) );
         oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
         oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
-        oBroadcastHistory.setSubjectBroadcast( strSubjectBroadcast );
         oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
+        
+        if ( broadcastNotification != null )
+        {
+            oBroadcastHistory.setMessageBroadcast( broadcastNotification.getMessage( ) );
+            oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
+            
+            StringBuilder sbEmailAdresses = new StringBuilder( );
+            List<EmailAddress> listEmailAddresses = broadcastNotification.getRecipient( );
+            
+            if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
+            {
+                for ( EmailAddress emailAddress : listEmailAddresses )
+                {
+                    if ( sbEmailAdresses.length( ) > 0 )
+                    {
+                        sbEmailAdresses.append( Constants.SEMICOLON );
+                    }
+
+                    sbEmailAdresses.append( emailAddress.getAddress( ) );
+                }
+            }
+            
+            oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
+        }
+        else
+        {
+            oBroadcastHistory.setEmailBroadcast( StringUtils.EMPTY );
+            oBroadcastHistory.setMessageBroadcast( StringUtils.EMPTY );
+            oBroadcastHistory.setSubjectBroadcast( StringUtils.EMPTY );
+        }
 
         return oBroadcastHistory;
     }
@@ -131,17 +180,25 @@ public final class NotificationToHistory
      *
      * @param config
      *            the config
-     * @param strMessageAgent
-     *            the str message agent
+     * @param backofficeNotification
+     *            the backoffice notification
      * @return the agent history
      */
-    public static AgentHistory populateAgent( TaskNotifyGruConfig config, String strMessageAgent )
+    public static AgentHistory populateAgent( TaskNotifyGruConfig config, BackofficeNotification backofficeNotification )
     {
         AgentHistory oAgentHistory = new AgentHistory( );
 
-        oAgentHistory.setMessageAgent( strMessageAgent );
         oAgentHistory.setStatustextAgent( config.getStatustextAgent( ) );
         oAgentHistory.setActiveOngletAgent( config.isActiveOngletAgent( ) );
+        
+        if ( backofficeNotification != null )
+        {
+            oAgentHistory.setMessageAgent( backofficeNotification.getMessage( ) );
+        }
+        else
+        {
+            oAgentHistory.setMessageAgent( StringUtils.EMPTY );
+        }
 
         return oAgentHistory;
     }
@@ -151,23 +208,30 @@ public final class NotificationToHistory
      *
      * @param config
      *            the config
-     * @param strSubjectGuichet
-     *            the guichet subject
-     * @param strMessageGuichet
-     *            the str message guichet
+     * @param myDashboardNotification
+     *            the MyDashboard notification
      * @return the guichet history
      */
-    public static GuichetHistory populateGuichet( TaskNotifyGruConfig config, String strSubjectGuichet, String strMessageGuichet )
+    public static GuichetHistory populateGuichet( TaskNotifyGruConfig config, MyDashboardNotification myDashboardNotification )
     {
         GuichetHistory oGuichetHistory = new GuichetHistory( );
 
-        oGuichetHistory.setMessageGuichet( strMessageGuichet );
         oGuichetHistory.setSenderNameGuichet( config.getSenderNameGuichet( ) );
         oGuichetHistory.setStatustextGuichet( config.getStatustextGuichet( ) );
-        oGuichetHistory.setSubjectGuichet( strSubjectGuichet );
         oGuichetHistory.setDemandMaxStepGuichet( config.getDemandMaxStepGuichet( ) );
         oGuichetHistory.setDemandUserCurrentStepGuichet( config.getDemandUserCurrentStepGuichet( ) );
         oGuichetHistory.setActiveOngletGuichet( config.isActiveOngletGuichet( ) );
+        
+        if ( myDashboardNotification != null )
+        {
+            oGuichetHistory.setMessageGuichet( myDashboardNotification.getMessage( ) );
+            oGuichetHistory.setSubjectGuichet( myDashboardNotification.getSubject( ) );
+        }
+        else
+        {
+            oGuichetHistory.setMessageGuichet( StringUtils.EMPTY );
+            oGuichetHistory.setSubjectGuichet( StringUtils.EMPTY );
+        }
 
         return oGuichetHistory;
     }

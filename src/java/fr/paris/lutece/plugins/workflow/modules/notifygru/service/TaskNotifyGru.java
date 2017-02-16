@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,20 +43,25 @@ import fr.paris.lutece.plugins.grubusiness.business.notification.MyDashboardNoti
 import fr.paris.lutece.plugins.grubusiness.business.notification.Notification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
-import fr.paris.lutece.plugins.workflow.business.task.TaskDAO;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IProvider;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
+import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
+import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.lang.StringUtils;
@@ -64,6 +69,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -78,17 +84,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TaskNotifyGru extends SimpleTask
 {
-    /** The Constant _DEFAULT_VALUE_JSON. */
-    private static final String _DEFAULT_VALUE_JSON = "";
-
     /** The _task notify gru config service. */
     // SERVICES
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruConfigService;
-
-    /** The _notify gru service. */
-    private AbstractServiceProvider _notifyGruService;
 
     /** The _task notify gru history service. */
     @Inject
@@ -99,10 +99,9 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( Constants.BEAN_NOTIFICATION_SENDER )
     private NotificationService _notifyGruSenderService;
-
-    /** The _task doa. */
+    
     @Inject
-    private TaskDAO _taskDOA;
+    private IResourceHistoryService _resourceHistoryService;
 
     /**
      * {@inheritDoc}
@@ -116,151 +115,121 @@ public class TaskNotifyGru extends SimpleTask
     {
         /* Task Config form cache, it can't be null due to getNotifyGruConfigFromCache algorithm */
         TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, this.getId( ) );
+        
+        String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
+        String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
+        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
 
-        NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
-        notifyGruHistory.setIdTask( this.getId( ) );
-        notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
-
-        ITask task = _taskDOA.load( config.getIdTask( ), locale );
-
-        /* process if Task not null and valid provider */
-        if ( ( task != null ) && ServiceConfigTaskForm.isBeanExists( config.getIdSpringProvider( ), task ) )
+        if ( providerManager != null )
         {
-            // get provider
-            _notifyGruService = ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider( ), task );
-
-            Notification notificationObject = buildGlobalNotification( config, nIdResourceHistory, locale );
-
-            // if active config for Mail : user_email
-            String strMessageEmail = _DEFAULT_VALUE_JSON;
-            String strSubjectEmail = _DEFAULT_VALUE_JSON;
-
-            if ( config.isActiveOngletEmail( ) )
+            ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
+            IProvider provider = providerManager.createProvider( strProviderId, resourceHistory );
+            
+            if ( provider != null )
             {
-                EmailNotification userEmail = buildEmailNotification( config, nIdResourceHistory, locale );
-                notificationObject.setEmailNotification( userEmail );
-                strMessageEmail = userEmail.getMessage( );
-                strSubjectEmail = userEmail.getSubject( );
-            }
-
-            // if active config for Desk : user_dashboard
-            String strMessageGuichet = _DEFAULT_VALUE_JSON;
-            String strSubjectGuichet = _DEFAULT_VALUE_JSON;
-
-            if ( config.isActiveOngletGuichet( ) )
-            {
-                MyDashboardNotification userDashBoard = buildUserDashboardNotification( config, nIdResourceHistory, locale );
-                notificationObject.setMyDashboardNotification( userDashBoard );
-                strMessageGuichet = userDashBoard.getMessage( );
-                strSubjectGuichet = userDashBoard.getSubject( );
-            }
-
-            // if active config for SMS : user_sms
-            String strMessageSMS = _DEFAULT_VALUE_JSON;
-
-            if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) ) )
-            {
-                SMSNotification userSMS = buildSMSNotification( config, nIdResourceHistory, locale );
-                notificationObject.setSmsNotification( userSMS );
-                strMessageSMS = userSMS.getMessage( );
-            }
-
-            // if active config for Agent : backoffice_logging
-            String strMessageAgent = _DEFAULT_VALUE_JSON;
-
-            if ( config.isActiveOngletAgent( ) )
-            {
-                BackofficeNotification backoffice = buildAgentNotification( config, nIdResourceHistory, locale );
-                notificationObject.setBackofficeNotification( backoffice );
-
-                strMessageAgent = backoffice.getMessage( );
-            }
-
-            // if active config for Broadcast : broadcast
-            String strMessageBroadcast = _DEFAULT_VALUE_JSON;
-            String strSubjectBroadcast = _DEFAULT_VALUE_JSON;
-            String strRecipientBroadcast = _DEFAULT_VALUE_JSON;
-
-            if ( config.isActiveOngletBroadcast( ) )
-            {
-                BroadcastNotification broadcast = buildBroadcastNotification( config, nIdResourceHistory, locale );
-                notificationObject.addBroadcastEmail( broadcast );
-                strMessageBroadcast = broadcast.getMessage( );
-                strSubjectBroadcast = broadcast.getSubject( );
-
-                StringBuilder strEmailAdresses = new StringBuilder( );
-
-                if ( ( broadcast.getRecipient( ) != null ) && !broadcast.getRecipient( ).isEmpty( ) )
+                NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
+                notifyGruHistory.setIdTask( this.getId( ) );
+                notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
+                Map<String, Object> model = markersToModel( provider.provideMarkerValues( ) );
+                
+                Notification notificationObject = buildNotification( config, provider );
+    
+                EmailNotification emailNotification = null;
+                
+                if ( config.isActiveOngletEmail( ) )
                 {
-                    for ( EmailAddress emailAddress : broadcast.getRecipient( ) )
-                    {
-                        if ( strEmailAdresses.length( ) > 0 )
-                        {
-                            strEmailAdresses.append( Constants.SEMICOLON );
-                        }
-
-                        strEmailAdresses.append( emailAddress.getAddress( ) );
-                    }
+                    emailNotification = buildEmailNotification( config, provider, model );
+                    notificationObject.setEmailNotification( emailNotification );
                 }
-
-                strRecipientBroadcast = strEmailAdresses.toString( );
+                
+                notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
+    
+                MyDashboardNotification myDashBoardNotification = null;
+                
+                if ( config.isActiveOngletGuichet( ) )
+                {
+                    myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
+                    notificationObject.setMyDashboardNotification( myDashBoardNotification );
+                }
+                
+                notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
+                
+                SMSNotification smsNotification = null;
+    
+                if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( provider.provideCustomerMobilePhone( ) ) )
+                {
+                    smsNotification = buildSMSNotification( config, provider, model );
+                    notificationObject.setSmsNotification( smsNotification );
+                }
+                
+                notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
+                
+                BackofficeNotification backofficeNotification = null;
+    
+                if ( config.isActiveOngletAgent( ) )
+                {
+                    backofficeNotification = buildBackofficeNotification( config, model );
+                    notificationObject.setBackofficeNotification( backofficeNotification );
+                }
+                
+                notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
+                
+                BroadcastNotification broadcastNotification = null;
+    
+                if ( config.isActiveOngletBroadcast( ) )
+                {
+                    broadcastNotification = buildBroadcastNotification( config, provider, model );
+                    notificationObject.addBroadcastEmail( broadcastNotification );
+                }
+                
+                notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
+    
+                // crm status id
+                notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
+    
+                _notifyGruSenderService.send( notificationObject );
+    
+                _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+            
             }
-
-            // crm status id
-            notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
-            // populate email data for history
-            notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, strSubjectEmail, strMessageEmail ) );
-
-            // populate desk data for history
-            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, strSubjectGuichet, strMessageGuichet ) );
-
-            // populate sms data for history
-            notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, strMessageSMS ) );
-
-            // populate Broadcast data for history
-            notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, strRecipientBroadcast, strSubjectBroadcast, strMessageBroadcast ) );
-
-            // populate Broadcast data for history
-            notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, strMessageAgent ) );
-
-            _notifyGruSenderService.send( notificationObject );
-
-            _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+            else
+            {
+                AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
+            }
+        }
+        else
+        {
+            AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
         }
     }
 
     /**
-     * Builds the global notification.
+     * Builds an {@link Notification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru global notification
+     *            the task configuration
+     * @param provider
+     *            the provider
+     * @return the {@link Notification} object
      */
-    private Notification buildGlobalNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private static Notification buildNotification( TaskNotifyGruConfig config, IProvider provider )
     {
         Notification notification = new Notification( );
 
         Demand demand = new Demand( );
-        /*
-         * Le champs permettra de valorisé le champs demand_status du flux notification V1. La valeur est à 0 (veut dire « en cours ») ou à 1 (veut dire «
-         * clôturée ». On est dans le cas où le checkbox est coché). Ce champs est « destiné » à la vue 360° (colonne statut dans la liste des demandes).
-         */
+
         demand.setStatusId( config.getDemandStatus( ) );
-        demand.setReference( _notifyGruService.getDemandReference( nIdResourceHistory ) );
+        demand.setReference( provider.provideDemandReference( ) );
         notification.setDate( System.currentTimeMillis( ) );
-        demand.setId( String.valueOf( _notifyGruService.getOptionalDemandId( nIdResourceHistory ) ) );
-        demand.setTypeId( String.valueOf( _notifyGruService.getOptionalDemandIdType( nIdResourceHistory ) ) );
+        demand.setId( provider.provideDemandId( ) );
+        demand.setTypeId( provider.provideDemandTypeId( ) );
         demand.setMaxSteps( config.getDemandMaxStepGuichet( ) );
         demand.setCurrentStep( config.getDemandUserCurrentStepGuichet( ) );
 
         Customer customer = new Customer( );
-        customer.setId( _notifyGruService.getCustomerId( nIdResourceHistory ) );
-        customer.setConnectionId( _notifyGruService.getUserGuid( nIdResourceHistory ) );
-        customer.setEmail( _notifyGruService.getUserEmail( nIdResourceHistory ) );
+        customer.setId( provider.provideCustomerId( ) );
+        customer.setConnectionId( provider.provideCustomerConnectionId( ) );
+        customer.setEmail( provider.provideCustomerEmail( ) );
         demand.setCustomer( customer );
         notification.setDemand( demand );
 
@@ -268,126 +237,90 @@ public class TaskNotifyGru extends SimpleTask
     }
 
     /**
-     * Builds the userDashboard notification.
+     * Builds an {@link MyDashboardNotification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru userDashboard notification
+     *            the task configuration
+     * @param provider
+     *            the provider
+     * @param model
+     *            the model
+     * @return the {@link MyDashboardNotification} object
      */
-    private MyDashboardNotification buildUserDashboardNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private MyDashboardNotification buildMyDashboardNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
         MyDashboardNotification userDashBoard = new MyDashboardNotification( );
 
-        String strMessageUserDashboard = giveMeTexteWithValueOfMarker( config.getMessageGuichet( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
-        String strSubjectUserDashboard = giveMeTexteWithValueOfMarker( config.getSubjectGuichet( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
-        String strStatustextDashboard = giveMeTexteWithValueOfMarker( config.getStatustextGuichet( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
         userDashBoard.setStatusId( config.getCrmStatusId( ) );
-        userDashBoard.setStatusText( strStatustextDashboard );
+        userDashBoard.setStatusText( replaceMarkers( config.getStatustextGuichet( ), model ) );
         userDashBoard.setSenderName( config.getSenderNameGuichet( ) );
-        userDashBoard.setSubject( strSubjectUserDashboard );
-        userDashBoard.setMessage( strMessageUserDashboard );
-        userDashBoard.setData( _DEFAULT_VALUE_JSON );
+        userDashBoard.setSubject( replaceMarkers( config.getSubjectGuichet( ), model ) );
+        userDashBoard.setMessage( replaceMarkers( config.getMessageGuichet( ), model ) );
+        userDashBoard.setData( StringUtils.EMPTY );
 
         return userDashBoard;
     }
 
     /**
-     * Builds the agent notification.
+     * Builds an {@link BackofficeNotification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru agent notification
+     *            the task configuration
+     * @param model
+     *            the model
+     * @return the {@link BackofficeNotification} object
      */
-    private BackofficeNotification buildAgentNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private BackofficeNotification buildBackofficeNotification( TaskNotifyGruConfig config, Map<String, Object> model )
     {
         BackofficeNotification userAgent = new BackofficeNotification( );
 
-        String strStatustextAgent = giveMeTexteWithValueOfMarker( config.getStatustextAgent( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
-        String strMessageAgent = giveMeTexteWithValueOfMarker( config.getMessageAgent( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
-        userAgent.setStatusText( strStatustextAgent );
-        userAgent.setMessage( strMessageAgent );
+        userAgent.setStatusText( replaceMarkers( config.getStatustextAgent( ), model ) );
+        userAgent.setMessage( replaceMarkers( config.getMessageAgent( ), model ) );
 
         return userAgent;
     }
 
     /**
-     * Give me texte with value of marker.
-     *
-     * @param strMessage
-     *            the str message
-     * @param locale
-     *            the locale
-     * @param model
-     *            the model
-     * @return the string
-     */
-    private String giveMeTexteWithValueOfMarker( String strMessage, Locale locale, Map<String, Object> model )
-    {
-        @SuppressWarnings( "deprecation" )
-        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, locale, model );
-
-        return template.getHtml( );
-    }
-
-    /**
-     * Builds the sms notification.
+     * Builds an {@link SMSNotification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru sms notification
+     *            the task configuration
+     * @param provider
+     *            the provider
+     * @param model
+     *            the model
+     * @return the {@link SMSNotification} object
      */
-    private SMSNotification buildSMSNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private SMSNotification buildSMSNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
         SMSNotification userSMS = new SMSNotification( );
 
-        String strMessageSMS = giveMeTexteWithValueOfMarker( config.getMessageSMS( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
-        userSMS.setMessage( strMessageSMS );
-        userSMS.setPhoneNumber( _notifyGruService.getOptionalMobilePhoneNumber( nIdResourceHistory ) );
+        userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+        userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
 
         return userSMS;
     }
 
     /**
-     * Builds the email notification.
+     * Builds an {@link EmailNotification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru email notification
+     *            the task configuration
+     * @param provider
+     *            the provider
+     * @param model
+     *            the model
+     * @return the {@link EmailNotification} object
      */
-    private EmailNotification buildEmailNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private EmailNotification buildEmailNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
         EmailNotification userEmailNotification = new EmailNotification( );
 
-        String strMessageEmail = giveMeTexteWithValueOfMarker( config.getMessageEmail( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-        String strSubjectEmail = giveMeTexteWithValueOfMarker( config.getSubjectEmail( ), locale, _notifyGruService.getInfos( nIdResourceHistory ) );
-
         userEmailNotification.setSenderName( config.getSenderNameEmail( ) );
         userEmailNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
-        userEmailNotification.setRecipient( _notifyGruService.getUserEmail( nIdResourceHistory ) );
-        userEmailNotification.setSubject( strSubjectEmail );
-        userEmailNotification.setMessage( strMessageEmail );
+        userEmailNotification.setRecipient( provider.provideCustomerEmail( ) );
+        userEmailNotification.setSubject( replaceMarkers( config.getSubjectEmail( ), model ) );
+        userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model ) );
         userEmailNotification.setCc( config.getRecipientsCcEmail( ) );
         userEmailNotification.setBcc( config.getRecipientsCciEmail( ) );
 
@@ -395,28 +328,26 @@ public class TaskNotifyGru extends SimpleTask
     }
 
     /**
-     * Builds the broadcast notification.
+     * Builds an {@link BroadcastNotification} object
      *
      * @param config
-     *            the config
-     * @param nIdResourceHistory
-     *            the n id resource history
-     * @param locale
-     *            the locale
-     * @return the notify gru broadcast notification
+     *            the task configuration
+     * @param provider
+     *            the provider
+     * @param model
+     *            the model
+     * @return the {@link BroadcastNotification} object
      */
-    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, int nIdResourceHistory, Locale locale )
+    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
-        Map<String, Object> mapInfosNotif = _notifyGruService.getInfos( nIdResourceHistory );
-        String strMessageBroadcast = giveMeTexteWithValueOfMarker( config.getMessageBroadcast( ), locale, mapInfosNotif );
-        String strSubjectBroadcast = giveMeTexteWithValueOfMarker( config.getSubjectBroadcast( ), locale, mapInfosNotif );
-        List<String> lstRecipientBroadcast = new ArrayList<String>( );
+        
+        List<String> listRecipientBroadcast = new ArrayList<String>( );
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
-            String strRecipientBroadcast = giveMeTexteWithValueOfMarker( config.getEmailBroadcast( ), locale, mapInfosNotif );
-            lstRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
+            String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
+            listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
         }
 
         if ( config.getIdMailingListBroadcast( ) > 0 )
@@ -425,20 +356,49 @@ public class TaskNotifyGru extends SimpleTask
 
             for ( Recipient recipient : listRecipients )
             {
-                lstRecipientBroadcast.add( recipient.getEmail( ) );
+                listRecipientBroadcast.add( recipient.getEmail( ) );
             }
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
         // we split a StringBuilder we can
-        broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( lstRecipientBroadcast.toArray( new String [ ] { } ) ) );
-        broadcastNotification.setSubject( strSubjectBroadcast );
-        broadcastNotification.setMessage( strMessageBroadcast );
+        broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
+        broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
+        broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
         broadcastNotification.setCc( EmailAddress.buildEmailAddresses( config.getRecipientsCcBroadcast( ).split( Constants.SEMICOLON ) ) );
         broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
+    }
+
+    /**
+     * Replaces the markers in the specified message
+     *
+     * @param strMessage
+     *            the message
+     * @param model
+     *            the model
+     * @return the message with markers replaced
+     */
+    private static String replaceMarkers( String strMessage, Map<String, Object> model )
+    {
+        @SuppressWarnings( "deprecation" )
+        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, Locale.FRENCH, model );
+
+        return template.getHtml( );
+    }
+    
+    private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
+    {
+        Map<String, Object> model = new HashMap<>( );
+        
+        for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
+        {
+            model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getValue( ) );
+        }
+        
+        return model;
     }
 
     /*
