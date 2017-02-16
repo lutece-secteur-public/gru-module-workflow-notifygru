@@ -77,7 +77,7 @@ public final class NotificationToHistory
         SMSHistory oSMSHistory = new SMSHistory( );
 
         oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
-        
+
         if ( smsNotification != null )
         {
             oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
@@ -103,12 +103,11 @@ public final class NotificationToHistory
     {
         EmailHistory oEmailHistory = new EmailHistory( );
 
-        
         oEmailHistory.setRecipientsCcEmail( config.getRecipientsCcEmail( ) );
         oEmailHistory.setRecipientsCciEmail( config.getRecipientsCciEmail( ) );
         oEmailHistory.setSenderNameEmail( config.getSenderNameEmail( ) );
         oEmailHistory.setActiveOngletEmail( config.isActiveOngletEmail( ) );
-        
+
         if ( emailNotification != null )
         {
             oEmailHistory.setMessageEmail( emailNotification.getMessage( ) );
@@ -141,15 +140,15 @@ public final class NotificationToHistory
         oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
         oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
         oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
-        
+
         if ( broadcastNotification != null )
         {
             oBroadcastHistory.setMessageBroadcast( broadcastNotification.getMessage( ) );
             oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
-            
+
             StringBuilder sbEmailAdresses = new StringBuilder( );
             List<EmailAddress> listEmailAddresses = broadcastNotification.getRecipient( );
-            
+
             if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
             {
                 for ( EmailAddress emailAddress : listEmailAddresses )
@@ -162,7 +161,7 @@ public final class NotificationToHistory
                     sbEmailAdresses.append( emailAddress.getAddress( ) );
                 }
             }
-            
+
             oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
         }
         else
@@ -190,7 +189,7 @@ public final class NotificationToHistory
 
         oAgentHistory.setStatustextAgent( config.getStatustextAgent( ) );
         oAgentHistory.setActiveOngletAgent( config.isActiveOngletAgent( ) );
-        
+
         if ( backofficeNotification != null )
         {
             oAgentHistory.setMessageAgent( backofficeNotification.getMessage( ) );
@@ -221,7 +220,7 @@ public final class NotificationToHistory
         oGuichetHistory.setDemandMaxStepGuichet( config.getDemandMaxStepGuichet( ) );
         oGuichetHistory.setDemandUserCurrentStepGuichet( config.getDemandUserCurrentStepGuichet( ) );
         oGuichetHistory.setActiveOngletGuichet( config.isActiveOngletGuichet( ) );
-        
+
         if ( myDashboardNotification != null )
         {
             oGuichetHistory.setMessageGuichet( myDashboardNotification.getMessage( ) );

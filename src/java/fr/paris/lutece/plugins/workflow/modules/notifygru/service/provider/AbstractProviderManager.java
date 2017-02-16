@@ -45,41 +45,51 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 public abstract class AbstractProviderManager
 {
     private String _strId;
-    
+
     /**
      * Constructor
-     * @param strId the id of the manager
+     * 
+     * @param strId
+     *            the id of the manager
      */
     public AbstractProviderManager( String strId )
     {
         _strId = strId;
     }
-    
+
     /**
-     * Gives the provider description for all the providers managed by this manager.
-     * Must not be {@code null} since the manager must manage at least one provider.
-     * @param task the workflow task calling this method
+     * Gives the provider description for all the providers managed by this manager. Must not be {@code null} since the manager must manage at least one
+     * provider.
+     * 
+     * @param task
+     *            the workflow task calling this method
      * @return all the provider descriptions
      */
     public abstract Collection<ProviderDescription> getAllProviderDescriptions( ITask task );
-    
+
     /**
      * Gives the description of the specified provider
-     * @param strProviderId the provider id
+     * 
+     * @param strProviderId
+     *            the provider id
      * @return the provider description
      */
     public abstract ProviderDescription getProviderDescription( String strProviderId );
-    
+
     /**
      * Creates the specified provider for the specified resource.
-     * @param strProviderId the provider id
-     * @param resourceHistory the resource id
+     * 
+     * @param strProviderId
+     *            the provider id
+     * @param resourceHistory
+     *            the resource id
      * @return the provider
      */
     public abstract IProvider createProvider( String strProviderId, ResourceHistory resourceHistory );
-    
+
     /**
      * Gives the id of the manager
+     * 
      * @return the id
      */
     public String getId( )

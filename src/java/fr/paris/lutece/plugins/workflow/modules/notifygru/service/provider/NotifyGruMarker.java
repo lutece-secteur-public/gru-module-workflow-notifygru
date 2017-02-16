@@ -34,59 +34,66 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider;
 
 /**
- * <p>This class represents a marker for the Notfy GRU task. 
- * In the task configuration, some fields can contains markers which are replaced by the actual value of the resource when the {@link fr.paris.lutece.plugins.grubusiness.business.notification.Notification} is send.</p>
- * <p>This class has two goals:
- * <ul><li>To give the description of the marker in the task configuration page</li>
- * <li>To give the actual value of the resource at sending time</li></ul>
+ * <p>
+ * This class represents a marker for the Notfy GRU task. In the task configuration, some fields can contains markers which are replaced by the actual value of
+ * the resource when the {@link fr.paris.lutece.plugins.grubusiness.business.notification.Notification} is send.
+ * </p>
+ * <p>
+ * This class has two goals:
+ * <ul>
+ * <li>To give the description of the marker in the task configuration page</li>
+ * <li>To give the actual value of the resource at sending time</li>
+ * </ul>
  * </p>
  *
  */
 public class NotifyGruMarker
 {
     private String _strMarker;
-    
+
     private String _strDescription;
-    
+
     private String _strValue;
-    
+
     /**
      * Constructor
-     * @param strMarker the marker
+     * 
+     * @param strMarker
+     *            the marker
      */
     public NotifyGruMarker( String strMarker )
     {
         _strMarker = strMarker;
     }
-    
+
     /**
      * Gives the marker
+     * 
      * @return the marker
      */
     public String getMarker( )
     {
         return _strMarker;
     }
-    
+
     public String getDescription( )
     {
         return _strDescription;
     }
-    
+
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
-    
+
     public String getValue( )
     {
         return _strValue;
     }
-    
+
     public void setValue( String strValue )
     {
         _strValue = strValue;
     }
-    
-    
+
 }

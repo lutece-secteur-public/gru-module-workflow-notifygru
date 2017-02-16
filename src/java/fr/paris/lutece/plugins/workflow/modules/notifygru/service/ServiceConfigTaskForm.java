@@ -366,15 +366,16 @@ public final class ServiceConfigTaskForm
     {
         ReferenceList referenceList = new ReferenceList( );
         List<AbstractProviderManager> listProviderManagers = SpringContextService.getBeansOfType( AbstractProviderManager.class );
-        
+
         for ( AbstractProviderManager providerManager : listProviderManagers )
         {
-            Collection<ProviderDescription> collectionProviderDescriptions =  providerManager.getAllProviderDescriptions( task );
-            
-            for ( ProviderDescription providerDescription : collectionProviderDescriptions ) {
-              referenceList.addItem( ProviderManagerUtil.buildCompleteProviderId( providerManager.getId( ), providerDescription.getId( ) ), 
-                  providerDescription.getLabel( ) );
-          }
+            Collection<ProviderDescription> collectionProviderDescriptions = providerManager.getAllProviderDescriptions( task );
+
+            for ( ProviderDescription providerDescription : collectionProviderDescriptions )
+            {
+                referenceList.addItem( ProviderManagerUtil.buildCompleteProviderId( providerManager.getId( ), providerDescription.getId( ) ),
+                        providerDescription.getLabel( ) );
+            }
         }
 
         return referenceList;

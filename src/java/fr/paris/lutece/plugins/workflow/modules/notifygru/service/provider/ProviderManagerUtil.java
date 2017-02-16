@@ -8,51 +8,52 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 public class ProviderManagerUtil
 {
     private static final String SEPARATOR = ".@.";
-    
+
     public static AbstractProviderManager fetchProviderManager( String strProviderManagerId )
     {
         AbstractProviderManager result = null;
-        
-        try {
+
+        try
+        {
             result = SpringContextService.getBean( strProviderManagerId );
         }
         catch( Exception e )
         {
             AppLogService.error( "Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
         }
-        
+
         return result;
     }
-    
+
     public static String buildCompleteProviderId( String strProviderManagerId, String strProviderId )
     {
         return strProviderManagerId + SEPARATOR + strProviderId;
     }
-    
+
     public static String fetchProviderManagerId( String strCompleteProviderId )
     {
         if ( !StringUtil.isBlank( strCompleteProviderId ) )
         {
-            return strCompleteProviderId.split( SEPARATOR )[0];
+            return strCompleteProviderId.split( SEPARATOR ) [0];
         }
-        
+
         return null;
     }
-    
+
     public static String fetchProviderId( String strCompleteProviderId )
     {
         String strResult = null;
-        
+
         if ( !StringUtil.isBlank( strCompleteProviderId ) )
         {
-            String[] listIds =  strCompleteProviderId.split( SEPARATOR );
-            
+            String [ ] listIds = strCompleteProviderId.split( SEPARATOR );
+
             if ( listIds.length > 1 )
             {
-                strResult = listIds[1];
+                strResult = listIds [1];
             }
         }
-        
-         return strResult;
+
+        return strResult;
     }
 }

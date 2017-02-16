@@ -99,7 +99,7 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( Constants.BEAN_NOTIFICATION_SENDER )
     private NotificationService _notifyGruSenderService;
-    
+
     @Inject
     private IResourceHistoryService _resourceHistoryService;
 
@@ -115,7 +115,7 @@ public class TaskNotifyGru extends SimpleTask
     {
         /* Task Config form cache, it can't be null due to getNotifyGruConfigFromCache algorithm */
         TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, this.getId( ) );
-        
+
         String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
         AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
@@ -124,73 +124,73 @@ public class TaskNotifyGru extends SimpleTask
         {
             ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
             IProvider provider = providerManager.createProvider( strProviderId, resourceHistory );
-            
+
             if ( provider != null )
             {
                 NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
                 notifyGruHistory.setIdTask( this.getId( ) );
                 notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
                 Map<String, Object> model = markersToModel( provider.provideMarkerValues( ) );
-                
+
                 Notification notificationObject = buildNotification( config, provider );
-    
+
                 EmailNotification emailNotification = null;
-                
+
                 if ( config.isActiveOngletEmail( ) )
                 {
                     emailNotification = buildEmailNotification( config, provider, model );
                     notificationObject.setEmailNotification( emailNotification );
                 }
-                
+
                 notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
-    
+
                 MyDashboardNotification myDashBoardNotification = null;
-                
+
                 if ( config.isActiveOngletGuichet( ) )
                 {
                     myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
                     notificationObject.setMyDashboardNotification( myDashBoardNotification );
                 }
-                
+
                 notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
-                
+
                 SMSNotification smsNotification = null;
-    
+
                 if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( provider.provideCustomerMobilePhone( ) ) )
                 {
                     smsNotification = buildSMSNotification( config, provider, model );
                     notificationObject.setSmsNotification( smsNotification );
                 }
-                
+
                 notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
-                
+
                 BackofficeNotification backofficeNotification = null;
-    
+
                 if ( config.isActiveOngletAgent( ) )
                 {
                     backofficeNotification = buildBackofficeNotification( config, model );
                     notificationObject.setBackofficeNotification( backofficeNotification );
                 }
-                
+
                 notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
-                
+
                 BroadcastNotification broadcastNotification = null;
-    
+
                 if ( config.isActiveOngletBroadcast( ) )
                 {
                     broadcastNotification = buildBroadcastNotification( config, provider, model );
                     notificationObject.addBroadcastEmail( broadcastNotification );
                 }
-                
+
                 notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
-    
+
                 // crm status id
                 notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
-    
+
                 _notifyGruSenderService.send( notificationObject );
-    
+
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
-            
+
             }
             else
             {
@@ -341,7 +341,7 @@ public class TaskNotifyGru extends SimpleTask
     private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
-        
+
         List<String> listRecipientBroadcast = new ArrayList<String>( );
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
@@ -388,16 +388,16 @@ public class TaskNotifyGru extends SimpleTask
 
         return template.getHtml( );
     }
-    
+
     private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
     {
         Map<String, Object> model = new HashMap<>( );
-        
+
         for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
         {
             model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getValue( ) );
         }
-        
+
         return model;
     }
 

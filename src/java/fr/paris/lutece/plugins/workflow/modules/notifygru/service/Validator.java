@@ -249,8 +249,7 @@ public final class Validator
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
-            String strApply )
+    public static String isValidBuildGuichet( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
 
@@ -332,8 +331,7 @@ public final class Validator
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
-            String strApply )
+    public static String isValidBuildAgent( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
 
@@ -393,8 +391,7 @@ public final class Validator
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
-            String strApply )
+    public static String isValidBuildEmail( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
 
@@ -466,8 +463,7 @@ public final class Validator
      *            the str apply
      * @return an empty string or url redirection if the validation has error
      */
-    public static String isValidBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale,
-            String strApply )
+    public static String isValidBuildSMS( HttpServletRequest request, TaskNotifyGruConfig config, Map<String, Object> model, Locale locale, String strApply )
     {
         String strUrlRedirector = "";
 

@@ -130,38 +130,37 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 Constants.PARAMETER_BUTTON_REMOVE_SMS );
         Boolean bActiveOngletBROADCAST = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_LIST, strOngletActive,
                 config.isActiveOngletBroadcast( ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
-        
+
         Boolean bRedirector = false;
         String strUrlRedirector = null;
 
         // set the active onglet
         int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
         config.setSetOnglet( nOngletActive );
-        
+
         if ( config.getIdSpringProvider( ) == null )
         {
             config.setIdSpringProvider( strProvider );
         }
-        
+
         String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
         AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
-        
+
         if ( providerManager == null )
         {
             return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
         }
 
-        if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail
-                && !bActiveOngletGuichet && !bActiveOngletSMS )
+        if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail && !bActiveOngletGuichet && !bActiveOngletSMS )
         {
             return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP );
         }
-        
+
         Map<String, Object> model = markersToModel( providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
 
         /* set demand statut params */
-        
+
         String strCrmStatusId = request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
         int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer
                 .parseInt( strCrmStatusId ) : 1;
@@ -279,10 +278,10 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
             String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
             AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
-            
-            if ( providerManager != null ) {
-                model.put( Constants.MARK_PROVIDER_MARKERS, providerManager.
-                        getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
+
+            if ( providerManager != null )
+            {
+                model.put( Constants.MARK_PROVIDER_MARKERS, providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
             }
             else
             {
@@ -347,16 +346,16 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     {
         return null;
     }
-    
+
     private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
     {
         Map<String, Object> model = new HashMap<>( );
-        
+
         for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
         {
             model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getDescription( ) );
         }
-        
+
         return model;
     }
 }
