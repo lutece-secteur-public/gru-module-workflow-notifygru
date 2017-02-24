@@ -1,6 +1,6 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider;
 
-import org.jsoup.helper.StringUtil;
+import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -32,7 +32,7 @@ public class ProviderManagerUtil
 
     public static String fetchProviderManagerId( String strCompleteProviderId )
     {
-        if ( !StringUtil.isBlank( strCompleteProviderId ) )
+        if ( !StringUtils.isBlank( strCompleteProviderId ) )
         {
             return strCompleteProviderId.split( SEPARATOR ) [0];
         }
@@ -44,7 +44,7 @@ public class ProviderManagerUtil
     {
         String strResult = null;
 
-        if ( !StringUtil.isBlank( strCompleteProviderId ) )
+        if ( !StringUtils.isBlank( strCompleteProviderId ) )
         {
             String [ ] listIds = strCompleteProviderId.split( SEPARATOR );
 
