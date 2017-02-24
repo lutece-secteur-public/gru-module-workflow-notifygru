@@ -5,10 +5,18 @@ import org.apache.commons.lang.StringUtils;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
-public class ProviderManagerUtil
+public final class ProviderManagerUtil
 {
     private static final String SEPARATOR = ".@.";
 
+    /**
+     * Private constructor
+     */
+    private ProviderManagerUtil( )
+    {
+        
+    }
+    
     public static AbstractProviderManager fetchProviderManager( String strProviderManagerId )
     {
         AbstractProviderManager result = null;
