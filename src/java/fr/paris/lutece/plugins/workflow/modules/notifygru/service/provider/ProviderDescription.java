@@ -9,7 +9,7 @@ public class ProviderDescription
 
     private String _strLabel;
 
-    Collection<NotifyGruMarker> _collectionMarkerDescriptions;
+    private Collection<NotifyGruMarker> _collectionMarkerDescriptions;
 
     public ProviderDescription( String strId, String strLabel )
     {
