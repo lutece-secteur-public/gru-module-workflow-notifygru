@@ -76,21 +76,53 @@ public class NotifyGruMarker
         return _strMarker;
     }
 
+    /**
+     * <p>
+     * Gives the description of the marker.
+     * </p>
+     * <p>
+     * Used in the task configuration page
+     * </p>
+     * 
+     * @return the description
+     */
     public String getDescription( )
     {
         return _strDescription;
     }
 
+    /**
+     * Sets the description of the marker
+     * 
+     * @param strDescription
+     *            the description to set
+     */
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
 
+    /**
+     * <p>
+     * Gives the value of the marker. The value is the actual value of the resource.
+     * </p>
+     * <p>
+     * Used when the notification is sent
+     * </p>
+     * 
+     * @return the value
+     */
     public String getValue( )
     {
         return _strValue;
     }
 
+    /**
+     * Sets the value of the marker
+     * 
+     * @param strValue
+     *            the value to set
+     */
     public void setValue( String strValue )
     {
         _strValue = strValue;
