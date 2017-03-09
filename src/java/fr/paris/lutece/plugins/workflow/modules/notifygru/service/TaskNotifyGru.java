@@ -136,7 +136,7 @@ public class TaskNotifyGru extends SimpleTask
 
                 EmailNotification emailNotification = null;
 
-                if ( config.isActiveOngletEmail( ) )
+                if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
                 {
                     emailNotification = buildEmailNotification( config, provider, model );
                     notificationObject.setEmailNotification( emailNotification );
@@ -146,7 +146,7 @@ public class TaskNotifyGru extends SimpleTask
 
                 MyDashboardNotification myDashBoardNotification = null;
 
-                if ( config.isActiveOngletGuichet( ) )
+                if ( config.isActiveOngletGuichet( ) && StringUtils.isNotBlank( provider.provideCustomerConnectionId( ) ) )
                 {
                     myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
                     notificationObject.setMyDashboardNotification( myDashBoardNotification );

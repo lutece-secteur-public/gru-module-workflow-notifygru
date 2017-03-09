@@ -76,15 +76,10 @@ public final class NotificationToHistory
     {
         SMSHistory oSMSHistory = new SMSHistory( );
 
-        oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
-
         if ( smsNotification != null )
         {
+            oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
             oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
-        }
-        else
-        {
-            oSMSHistory.setMessageSMS( StringUtils.EMPTY );
         }
 
         return oSMSHistory;
@@ -103,20 +98,14 @@ public final class NotificationToHistory
     {
         EmailHistory oEmailHistory = new EmailHistory( );
 
-        oEmailHistory.setRecipientsCcEmail( config.getRecipientsCcEmail( ) );
-        oEmailHistory.setRecipientsCciEmail( config.getRecipientsCciEmail( ) );
-        oEmailHistory.setSenderNameEmail( config.getSenderNameEmail( ) );
-        oEmailHistory.setActiveOngletEmail( config.isActiveOngletEmail( ) );
-
         if ( emailNotification != null )
         {
+            oEmailHistory.setRecipientsCcEmail( config.getRecipientsCcEmail( ) );
+            oEmailHistory.setRecipientsCciEmail( config.getRecipientsCciEmail( ) );
+            oEmailHistory.setSenderNameEmail( config.getSenderNameEmail( ) );
+            oEmailHistory.setActiveOngletEmail( config.isActiveOngletEmail( ) );
             oEmailHistory.setMessageEmail( emailNotification.getMessage( ) );
             oEmailHistory.setSubjectEmail( emailNotification.getSubject( ) );
-        }
-        else
-        {
-            oEmailHistory.setMessageEmail( StringUtils.EMPTY );
-            oEmailHistory.setSubjectEmail( StringUtils.EMPTY );
         }
 
         return oEmailHistory;
@@ -135,14 +124,14 @@ public final class NotificationToHistory
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory( );
 
-        oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );
-        oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast( ) );
-        oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
-        oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
-        oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
 
         if ( broadcastNotification != null )
         {
+            oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );
+            oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast( ) );
+            oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
+            oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
+            oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
             oBroadcastHistory.setMessageBroadcast( broadcastNotification.getMessage( ) );
             oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
 
@@ -164,12 +153,6 @@ public final class NotificationToHistory
 
             oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
         }
-        else
-        {
-            oBroadcastHistory.setEmailBroadcast( StringUtils.EMPTY );
-            oBroadcastHistory.setMessageBroadcast( StringUtils.EMPTY );
-            oBroadcastHistory.setSubjectBroadcast( StringUtils.EMPTY );
-        }
 
         return oBroadcastHistory;
     }
@@ -187,16 +170,11 @@ public final class NotificationToHistory
     {
         AgentHistory oAgentHistory = new AgentHistory( );
 
-        oAgentHistory.setStatustextAgent( config.getStatustextAgent( ) );
-        oAgentHistory.setActiveOngletAgent( config.isActiveOngletAgent( ) );
-
         if ( backofficeNotification != null )
         {
+            oAgentHistory.setStatustextAgent( config.getStatustextAgent( ) );
+            oAgentHistory.setActiveOngletAgent( config.isActiveOngletAgent( ) );
             oAgentHistory.setMessageAgent( backofficeNotification.getMessage( ) );
-        }
-        else
-        {
-            oAgentHistory.setMessageAgent( StringUtils.EMPTY );
         }
 
         return oAgentHistory;
@@ -215,21 +193,15 @@ public final class NotificationToHistory
     {
         GuichetHistory oGuichetHistory = new GuichetHistory( );
 
-        oGuichetHistory.setSenderNameGuichet( config.getSenderNameGuichet( ) );
-        oGuichetHistory.setStatustextGuichet( config.getStatustextGuichet( ) );
-        oGuichetHistory.setDemandMaxStepGuichet( config.getDemandMaxStepGuichet( ) );
-        oGuichetHistory.setDemandUserCurrentStepGuichet( config.getDemandUserCurrentStepGuichet( ) );
-        oGuichetHistory.setActiveOngletGuichet( config.isActiveOngletGuichet( ) );
-
         if ( myDashboardNotification != null )
         {
+            oGuichetHistory.setSenderNameGuichet( config.getSenderNameGuichet( ) );
+            oGuichetHistory.setStatustextGuichet( config.getStatustextGuichet( ) );
+            oGuichetHistory.setDemandMaxStepGuichet( config.getDemandMaxStepGuichet( ) );
+            oGuichetHistory.setDemandUserCurrentStepGuichet( config.getDemandUserCurrentStepGuichet( ) );
+            oGuichetHistory.setActiveOngletGuichet( config.isActiveOngletGuichet( ) );
             oGuichetHistory.setMessageGuichet( myDashboardNotification.getMessage( ) );
             oGuichetHistory.setSubjectGuichet( myDashboardNotification.getSubject( ) );
-        }
-        else
-        {
-            oGuichetHistory.setMessageGuichet( StringUtils.EMPTY );
-            oGuichetHistory.setSubjectGuichet( StringUtils.EMPTY );
         }
 
         return oGuichetHistory;
