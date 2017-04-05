@@ -136,6 +136,7 @@ public final class NotificationToHistory
             oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
 
             StringBuilder sbEmailAdresses = new StringBuilder( );
+            StringBuilder sbEmailAdressesCc = new StringBuilder( );
             List<EmailAddress> listEmailAddresses = broadcastNotification.getRecipient( );
 
             if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
@@ -152,6 +153,23 @@ public final class NotificationToHistory
             }
 
             oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
+
+            listEmailAddresses = broadcastNotification.getCc( );
+
+            if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
+            {
+                for ( EmailAddress emailAddress : listEmailAddresses )
+                {
+                    if ( sbEmailAdressesCc.length( ) > 0 )
+                    {
+                        sbEmailAdressesCc.append( Constants.SEMICOLON );
+                    }
+
+                    sbEmailAdressesCc.append( emailAddress.getAddress( ) );
+                }
+            }
+
+            oBroadcastHistory.setRecipientsCcBroadcast( sbEmailAdressesCc.toString( ) );
         }
 
         return oBroadcastHistory;

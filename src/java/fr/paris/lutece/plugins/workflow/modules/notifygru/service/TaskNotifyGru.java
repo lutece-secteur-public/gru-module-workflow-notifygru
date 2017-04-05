@@ -178,7 +178,7 @@ public class TaskNotifyGru extends SimpleTask
 
                 if ( config.isActiveOngletBroadcast( ) )
                 {
-                    broadcastNotification = buildBroadcastNotification( config, provider, model );
+                    broadcastNotification = buildBroadcastNotification( config, model );
                     notificationObject.addBroadcastEmail( broadcastNotification );
                 }
 
@@ -338,7 +338,7 @@ public class TaskNotifyGru extends SimpleTask
      *            the model
      * @return the {@link BroadcastNotification} object
      */
-    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
+    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, Map<String, Object> model )
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
 
@@ -360,13 +360,21 @@ public class TaskNotifyGru extends SimpleTask
             }
         }
 
+        List<String> listRecipientCcBroadcast = new ArrayList<String>( );
+
+        if ( StringUtils.isNotEmpty( config.getRecipientsCcBroadcast( ) ) )
+        {
+            String strRecipientCcBroadcast = replaceMarkers( config.getRecipientsCcBroadcast( ), model );
+            listRecipientCcBroadcast.addAll( Arrays.asList( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
+        }
+        
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
         // we split a StringBuilder we can
         broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
         broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
         broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
-        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( config.getRecipientsCcBroadcast( ).split( Constants.SEMICOLON ) ) );
+        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( listRecipientCcBroadcast.toArray( new String [ ] { } ) ) );
         broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
