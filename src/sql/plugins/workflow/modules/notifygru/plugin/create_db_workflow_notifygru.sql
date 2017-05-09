@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS workflow_task_notify_gru_history;
   
   
 CREATE TABLE workflow_task_notify_gru_cf(
-  id_task INT DEFAULT NULL, 
+  id_task INT NOT NULL,
  id_spring_provider VARCHAR(255) DEFAULT NULL,
  demand_status INT DEFAULT  NULL, 
  crm_status_id INT DEFAULT  1, 
@@ -52,7 +52,7 @@ subject_broadcast VARCHAR(255) DEFAULT   NULL,
 
 
 CREATE TABLE workflow_task_notify_gru_history(
-  id_history INT DEFAULT NULL,
+  id_history INT NOT NULL,
   id_task INT DEFAULT NULL,
    crm_status_id INT DEFAULT  1, 
 
