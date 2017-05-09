@@ -1,11 +1,11 @@
 <#if information_history?exists>
+<div class="panel">
 <#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content)
 || (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content)
 || (information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content)
 || (information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content)
 || (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)
 >
-<div class="panel">
    <span>#i18n{module.workflow.notifygru.task_notify_gru_history.label_information}</span>
    </#if>
    <#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
