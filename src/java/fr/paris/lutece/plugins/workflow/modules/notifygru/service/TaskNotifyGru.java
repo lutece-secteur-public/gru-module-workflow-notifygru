@@ -123,7 +123,7 @@ public class TaskNotifyGru extends SimpleTask
         if ( providerManager != null )
         {
             ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
-            IProvider provider = providerManager.createProvider( strProviderId, resourceHistory );
+            IProvider provider = providerManager.createProvider( strProviderId, resourceHistory, request );
 
             if ( provider != null )
             {
@@ -179,7 +179,11 @@ public class TaskNotifyGru extends SimpleTask
                 if ( config.isActiveOngletBroadcast( ) )
                 {
                     broadcastNotification = buildBroadcastNotification( config, model );
-                    notificationObject.addBroadcastEmail( broadcastNotification );
+
+                    if ( !broadcastNotification.getRecipient( ).isEmpty( ) )
+                    {
+                        notificationObject.addBroadcastEmail( broadcastNotification );
+                    }
                 }
 
                 notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
@@ -347,7 +351,10 @@ public class TaskNotifyGru extends SimpleTask
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
             String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
-            listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
+            if ( StringUtils.isNotEmpty( strRecipientBroadcast ) )
+            {
+                listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
+            }
         }
 
         if ( config.getIdMailingListBroadcast( ) > 0 )
@@ -365,9 +372,12 @@ public class TaskNotifyGru extends SimpleTask
         if ( StringUtils.isNotEmpty( config.getRecipientsCcBroadcast( ) ) )
         {
             String strRecipientCcBroadcast = replaceMarkers( config.getRecipientsCcBroadcast( ), model );
-            listRecipientCcBroadcast.addAll( Arrays.asList( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
+            if ( StringUtils.isNotEmpty( strRecipientCcBroadcast ) )
+            {
+                listRecipientCcBroadcast.addAll( Arrays.asList( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
+            }
         }
-        
+
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
         // we split a StringBuilder we can

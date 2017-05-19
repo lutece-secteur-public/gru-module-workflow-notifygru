@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 
@@ -85,7 +87,7 @@ public abstract class AbstractProviderManager
      *            the resource id
      * @return the provider
      */
-    public abstract IProvider createProvider( String strProviderId, ResourceHistory resourceHistory );
+    public abstract IProvider createProvider( String strProviderId, ResourceHistory resourceHistory, HttpServletRequest request );
 
     /**
      * Gives the id of the manager

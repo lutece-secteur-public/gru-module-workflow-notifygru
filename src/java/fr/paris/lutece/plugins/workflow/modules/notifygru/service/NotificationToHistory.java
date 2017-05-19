@@ -124,7 +124,6 @@ public final class NotificationToHistory
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory( );
 
-
         if ( broadcastNotification != null )
         {
             oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );

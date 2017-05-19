@@ -1,0 +1,1 @@
+ALTER TABLE workflow_task_notify_gru_history DROP PRIMARY KEY, ADD PRIMARY KEY(id_history, id_task);

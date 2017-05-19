@@ -88,7 +88,7 @@ subject_broadcast VARCHAR(255) DEFAULT   NULL,
   is_active_onglet_broadcast SMALLINT  NULL DEFAULT 0,
 
 
-  PRIMARY KEY  (id_history)
+  PRIMARY KEY  (id_history, id_task)
   );
 
 
