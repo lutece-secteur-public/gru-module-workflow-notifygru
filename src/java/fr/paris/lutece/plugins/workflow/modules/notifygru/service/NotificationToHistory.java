@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,8 +34,6 @@
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;

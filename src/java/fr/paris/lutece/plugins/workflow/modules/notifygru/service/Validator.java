@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -179,59 +178,6 @@ public final class Validator
         }
 
         return false;
-    }
-
-    /**
-     * Checks if the request has a valid provider service and set it in the configuration in this case
-     *
-     * @param request
-     *            the request
-     * @param config
-     *            the config
-     * @param locale
-     *            the locale
-     * @param task
-     *            the task
-     * @return the string
-     */
-    public static String isValidAndSetProviderService( HttpServletRequest request, TaskNotifyGruConfig config, Locale locale, ITask task )
-    {
-        String strUrlRedirector = "";
-        String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
-        int nDemandStatus = ( VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
-
-        if ( ( strProvider != null ) && ServiceConfigTaskForm.isBeanExists( strProvider, task ) )
-        {
-            config.setIdSpringProvider( strProvider );
-            config.setDemandStatus( nDemandStatus );
-        }
-
-        /* if the provider is not already register */
-        else
-            if ( config.getIdSpringProvider( ) == null )
-            {
-                Object [ ] tabRequiredFields = {
-                    I18nService.getLocalizedString( Constants.MESSAGE_MANDATORY_PROVIDER, locale ),
-                };
-
-                strUrlRedirector = AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, tabRequiredFields, AdminMessage.TYPE_STOP );
-            }
-
-        return strUrlRedirector;
-    }
-
-    /**
-     * Gets the valid provider service.
-     *
-     * @param config
-     *            the config
-     * @param task
-     *            the task
-     * @return the valide build provider service
-     */
-    public static AbstractServiceProvider getValidProviderService( TaskNotifyGruConfig config, ITask task )
-    {
-        return ServiceConfigTaskForm.getCustomizedBean( config.getIdSpringProvider( ), task );
     }
 
     /**
