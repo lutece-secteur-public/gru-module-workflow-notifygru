@@ -51,6 +51,18 @@ public class NotifyGruHistory
     private AgentHistory _oAgent;
 
     /**
+     * Simple Constructor
+     */
+    public NotifyGruHistory( )
+    {
+        _oBroadCast = new BroadcastHistory( );
+        _oEmail = new EmailHistory( );
+        _oGuichet = new GuichetHistory( );
+        _oSMS = new SMSHistory( );
+        _oAgent = new AgentHistory( );
+    }
+
+    /**
      * Gets the crm status id.
      *
      * @return the _ncrmStatusId

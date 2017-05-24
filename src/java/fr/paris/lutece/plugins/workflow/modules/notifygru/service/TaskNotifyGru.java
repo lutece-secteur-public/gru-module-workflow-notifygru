@@ -140,9 +140,8 @@ public class TaskNotifyGru extends SimpleTask
                 {
                     emailNotification = buildEmailNotification( config, provider, model );
                     notificationObject.setEmailNotification( emailNotification );
+                    notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
                 }
-
-                notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
 
                 MyDashboardNotification myDashBoardNotification = null;
 
@@ -150,9 +149,8 @@ public class TaskNotifyGru extends SimpleTask
                 {
                     myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
                     notificationObject.setMyDashboardNotification( myDashBoardNotification );
+                    notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
                 }
-
-                notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
 
                 SMSNotification smsNotification = null;
 
@@ -160,9 +158,8 @@ public class TaskNotifyGru extends SimpleTask
                 {
                     smsNotification = buildSMSNotification( config, provider, model );
                     notificationObject.setSmsNotification( smsNotification );
+                    notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
                 }
-
-                notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
 
                 BackofficeNotification backofficeNotification = null;
 
@@ -170,9 +167,8 @@ public class TaskNotifyGru extends SimpleTask
                 {
                     backofficeNotification = buildBackofficeNotification( config, model );
                     notificationObject.setBackofficeNotification( backofficeNotification );
+                    notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
                 }
-
-                notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
 
                 BroadcastNotification broadcastNotification = null;
 
@@ -183,10 +179,9 @@ public class TaskNotifyGru extends SimpleTask
                     if ( !broadcastNotification.getRecipient( ).isEmpty( ) )
                     {
                         notificationObject.addBroadcastEmail( broadcastNotification );
+                        notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
                     }
                 }
-
-                notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
 
                 // crm status id
                 notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
@@ -194,7 +189,6 @@ public class TaskNotifyGru extends SimpleTask
                 _notifyGruSenderService.send( notificationObject );
 
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
-
             }
             else
             {
@@ -367,15 +361,11 @@ public class TaskNotifyGru extends SimpleTask
             }
         }
 
-        List<String> listRecipientCcBroadcast = new ArrayList<String>( );
+        String strRecipientCcBroadcast = StringUtils.EMPTY;
 
         if ( StringUtils.isNotEmpty( config.getRecipientsCcBroadcast( ) ) )
         {
-            String strRecipientCcBroadcast = replaceMarkers( config.getRecipientsCcBroadcast( ), model );
-            if ( StringUtils.isNotEmpty( strRecipientCcBroadcast ) )
-            {
-                listRecipientCcBroadcast.addAll( Arrays.asList( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
-            }
+            strRecipientCcBroadcast = replaceMarkers( config.getRecipientsCcBroadcast( ), model );
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
@@ -384,7 +374,7 @@ public class TaskNotifyGru extends SimpleTask
         broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
         broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
         broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
-        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( listRecipientCcBroadcast.toArray( new String [ ] { } ) ) );
+        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
         broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
