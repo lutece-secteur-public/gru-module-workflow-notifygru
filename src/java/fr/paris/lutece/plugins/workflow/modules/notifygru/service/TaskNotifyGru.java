@@ -136,11 +136,14 @@ public class TaskNotifyGru extends SimpleTask
 
                 EmailNotification emailNotification = null;
 
+                boolean bNotifEmpty = true;
+
                 if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
                 {
                     emailNotification = buildEmailNotification( config, provider, model );
                     notificationObject.setEmailNotification( emailNotification );
                     notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
+                    bNotifEmpty = false;
                 }
 
                 MyDashboardNotification myDashBoardNotification = null;
@@ -150,6 +153,7 @@ public class TaskNotifyGru extends SimpleTask
                     myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
                     notificationObject.setMyDashboardNotification( myDashBoardNotification );
                     notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
+                    bNotifEmpty = false;
                 }
 
                 SMSNotification smsNotification = null;
@@ -159,6 +163,7 @@ public class TaskNotifyGru extends SimpleTask
                     smsNotification = buildSMSNotification( config, provider, model );
                     notificationObject.setSmsNotification( smsNotification );
                     notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
+                    bNotifEmpty = false;
                 }
 
                 BackofficeNotification backofficeNotification = null;
@@ -168,6 +173,7 @@ public class TaskNotifyGru extends SimpleTask
                     backofficeNotification = buildBackofficeNotification( config, model );
                     notificationObject.setBackofficeNotification( backofficeNotification );
                     notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
+                    bNotifEmpty = false;
                 }
 
                 BroadcastNotification broadcastNotification = null;
@@ -180,15 +186,19 @@ public class TaskNotifyGru extends SimpleTask
                     {
                         notificationObject.addBroadcastEmail( broadcastNotification );
                         notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
+                        bNotifEmpty = false;
                     }
                 }
 
                 // crm status id
                 notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
 
-                _notifyGruSenderService.send( notificationObject );
+                if ( !bNotifEmpty )
+                {
+                    _notifyGruSenderService.send( notificationObject );
 
-                _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+                    _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+                }
             }
             else
             {
