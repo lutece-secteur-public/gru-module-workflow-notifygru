@@ -79,6 +79,21 @@ public interface IProvider
 
     /**
      * <p>
+     * Provides the subtype id of the demand containing the notification to send.
+     * </p>
+     * <p>
+     * This id can be used to distinct demand type into a teleservice
+     * </p>
+     * <p>
+     * Can be null
+     * </p>
+     * 
+     * @return the demand type id
+     */
+    String provideDemandSubtypeId( );
+
+    /**
+     * <p>
      * Provides the demand reference.
      * </p>
      * <p>

@@ -231,6 +231,7 @@ public class TaskNotifyGru extends SimpleTask
         notification.setDate( System.currentTimeMillis( ) );
         demand.setId( provider.provideDemandId( ) );
         demand.setTypeId( provider.provideDemandTypeId( ) );
+        demand.setSubtypeId( provider.provideDemandSubtypeId( ) );
         demand.setMaxSteps( config.getDemandMaxStepGuichet( ) );
         demand.setCurrentStep( config.getDemandUserCurrentStepGuichet( ) );
 
