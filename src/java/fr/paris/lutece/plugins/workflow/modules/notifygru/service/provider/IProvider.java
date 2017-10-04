@@ -163,6 +163,20 @@ public interface IProvider
 
     /**
      * <p>
+     * Provides the sender of the SMS
+     * </p>
+     * <p>
+     * This sender is used to send a notification by SMS.
+     * </p>
+     * <p>
+     * Only used if a SMS notification has been configured in the Notify GRU task.
+     * 
+     * @return the sender of the SMS
+     */
+    String provideSmsSender( );
+
+    /**
+     * <p>
      * Provides the values of the markers.
      * </p>
      * <p>

@@ -306,6 +306,7 @@ public class TaskNotifyGru extends SimpleTask
 
         userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
         userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
+        userSMS.setSenderName( provider.provideSmsSender( ) );
 
         return userSMS;
     }
