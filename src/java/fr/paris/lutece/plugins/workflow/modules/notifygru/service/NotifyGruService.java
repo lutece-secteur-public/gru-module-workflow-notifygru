@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.workflowcore.business.action.Action;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.plugins.workflowcore.business.state.StateFilter;
 import fr.paris.lutece.plugins.workflowcore.service.action.IActionService;
-import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -51,7 +50,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,9 +68,6 @@ public final class NotifyGruService implements INotifyGruService
     private IActionService _actionService;
     @Inject
     private IStateService _stateService;
-    @Inject
-    @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
-    private ITaskConfigService _taskNotifyGruService;
 
     /**
      * Private constructor

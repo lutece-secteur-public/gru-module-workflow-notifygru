@@ -49,7 +49,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider;
  */
 public class NotifyGruMarker
 {
-    private String _strMarker;
+    private final String _strMarker;
 
     private String _strDescription;
 

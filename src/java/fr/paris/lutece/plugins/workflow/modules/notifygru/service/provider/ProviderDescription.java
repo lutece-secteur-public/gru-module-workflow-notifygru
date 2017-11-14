@@ -44,9 +44,9 @@ import java.util.Collection;
  */
 public class ProviderDescription
 {
-    private String _strId;
+    private final String _strId;
 
-    private String _strLabel;
+    private final String _strLabel;
 
     private Collection<NotifyGruMarker> _collectionMarkerDescriptions;
 

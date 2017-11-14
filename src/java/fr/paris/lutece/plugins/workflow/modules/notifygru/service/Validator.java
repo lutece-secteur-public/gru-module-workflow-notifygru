@@ -59,13 +59,10 @@ public final class Validator
 
     /**
      * Instantiates a new validator.
-     *
-     * @exception Exception
-     *                not instance
      */
-    private Validator( ) throws Exception
+    private Validator( )
     {
-        throw new Exception( );
+
     }
 
     /**

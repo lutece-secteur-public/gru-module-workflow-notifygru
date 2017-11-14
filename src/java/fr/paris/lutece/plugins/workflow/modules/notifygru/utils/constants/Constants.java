@@ -374,11 +374,10 @@ public final class Constants
     public static final String ATTRIBUTE_HREF = "href";
 
     /**
-     * @exception Exception
-     *                not instance
+     * Constructor
      * */
-    private Constants( ) throws Exception
+    private Constants( )
     {
-        throw new Exception( );
+
     }
 }

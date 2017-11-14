@@ -58,13 +58,10 @@ public final class ServiceConfigTaskForm
 {
     /**
      * Instantiates a new service config task form.
-     *
-     * @exception Exception
-     *                not instance
      */
-    private ServiceConfigTaskForm( ) throws Exception
+    private ServiceConfigTaskForm( )
     {
-        throw new Exception( );
+
     }
 
     /**

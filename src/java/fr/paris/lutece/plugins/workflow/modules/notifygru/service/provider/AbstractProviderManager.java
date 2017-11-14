@@ -46,7 +46,7 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
  */
 public abstract class AbstractProviderManager
 {
-    private String _strId;
+    private final String _strId;
 
     /**
      * Constructor
@@ -85,6 +85,8 @@ public abstract class AbstractProviderManager
      *            the provider id
      * @param resourceHistory
      *            the resource id
+     * @param request
+     *            the request
      * @return the provider
      */
     public abstract IProvider createProvider( String strProviderId, ResourceHistory resourceHistory, HttpServletRequest request );

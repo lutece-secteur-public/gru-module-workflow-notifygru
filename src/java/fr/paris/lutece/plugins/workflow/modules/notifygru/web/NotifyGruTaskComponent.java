@@ -115,10 +115,25 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     {
         String strApply = request.getParameter( Constants.PARAMETER_APPY );
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
-        String strProvider = request.getParameter( Constants.PARAMETER_SELECT_PROVIDER );
-        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
 
         TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, task.getId( ) );
+
+        // set the active onglet
+        int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
+        config.setSetOnglet( nOngletActive );
+
+        if ( config.getIdSpringProvider( ) == null )
+        {
+            config.setIdSpringProvider( request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) );
+        }
+
+        String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
+        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+
+        if ( providerManager == null )
+        {
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
+        }
 
         Boolean bActiveOngletGuichet = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_GUICHET, strOngletActive,
                 config.isActiveOngletGuichet( ), Constants.PARAMETER_BUTTON_REMOVE_GUICHET );
@@ -131,31 +146,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         Boolean bActiveOngletBROADCAST = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_LIST, strOngletActive,
                 config.isActiveOngletBroadcast( ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
 
-        Boolean bRedirector = false;
-        String strUrlRedirector = null;
-
-        // set the active onglet
-        int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
-        config.setSetOnglet( nOngletActive );
-
-        if ( config.getIdSpringProvider( ) == null )
-        {
-            config.setIdSpringProvider( strProvider );
-        }
-
-        String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
-        String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
-        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
-
-        if ( providerManager == null )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
-        }
-
         if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail && !bActiveOngletGuichet && !bActiveOngletSMS )
         {
             return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP );
         }
+
+        String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
 
         Map<String, Object> model = markersToModel( providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
 
@@ -165,8 +161,12 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer
                 .parseInt( strCrmStatusId ) : 1;
 
+        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
         config.setDemandStatus( nDemandStatus );
         config.setCrmStatusId( nCrmStatusId );
+
+        Boolean bRedirector = false;
+        String strUrlRedirector = null;
 
         /* validate and build guichet */
         if ( !bRedirector && ( bActiveOngletGuichet || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
@@ -347,6 +347,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         return null;
     }
 
+    /**
+     * Converts the specified collection of NotifyGru markers into a model
+     * 
+     * @param collectionNotifyGruMarkers
+     *            the collection to convert
+     * @return the model
+     */
     private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
     {
         Map<String, Object> model = new HashMap<>( );

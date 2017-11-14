@@ -150,7 +150,7 @@ public class TaskNotifyGru extends SimpleTask
 
                 if ( config.isActiveOngletGuichet( ) && StringUtils.isNotBlank( provider.provideCustomerConnectionId( ) ) )
                 {
-                    myDashBoardNotification = buildMyDashboardNotification( config, provider, model );
+                    myDashBoardNotification = buildMyDashboardNotification( config, model );
                     notificationObject.setMyDashboardNotification( myDashBoardNotification );
                     notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
                     bNotifEmpty = false;
@@ -250,13 +250,11 @@ public class TaskNotifyGru extends SimpleTask
      *
      * @param config
      *            the task configuration
-     * @param provider
-     *            the provider
      * @param model
      *            the model
      * @return the {@link MyDashboardNotification} object
      */
-    private MyDashboardNotification buildMyDashboardNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
+    private MyDashboardNotification buildMyDashboardNotification( TaskNotifyGruConfig config, Map<String, Object> model )
     {
         MyDashboardNotification userDashBoard = new MyDashboardNotification( );
 
@@ -342,8 +340,6 @@ public class TaskNotifyGru extends SimpleTask
      *
      * @param config
      *            the task configuration
-     * @param provider
-     *            the provider
      * @param model
      *            the model
      * @return the {@link BroadcastNotification} object
@@ -409,6 +405,13 @@ public class TaskNotifyGru extends SimpleTask
         return template.getHtml( );
     }
 
+    /**
+     * Converts the specified collection of NotifyGru markers into a model
+     * 
+     * @param collectionNotifyGruMarkers
+     *            the collection to convert
+     * @return the model
+     */
     private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
     {
         Map<String, Object> model = new HashMap<>( );
