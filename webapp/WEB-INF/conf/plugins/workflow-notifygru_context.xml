@@ -14,10 +14,6 @@
 	<bean id="workflow-notifygru.transactionManager" class="fr.paris.lutece.portal.service.database.DAOUtilTransactionManager"
 		p:pluginName="workflow-notifygru" />
 		
-	<!-- TaskInfoProvider -->
-	<bean id="workflow-notifygru.notifyDirectoryTaskInfoProvider" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruTaskInfoProvider"
-		p:taskType-ref="workflow-notifygru.taskTypeNotifyGru" />
-		
 	<!-- DAO -->
         
 	<bean id="taskNotifyGruConfigDAO" class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfigDAO"/>
