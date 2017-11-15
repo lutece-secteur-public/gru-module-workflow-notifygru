@@ -63,7 +63,7 @@
         <constructor-arg ref="workflow-notifygru.lib-notifygru.apiManagerTransport"/>
     </bean> 
     
-   	
+   	<bean id="workflow-notifygru.commentMarkerProvider" class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.impl.CommentMarkerProvider" />
 
 
 </beans>
