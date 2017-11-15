@@ -92,45 +92,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin( ) );
 
-        int nPos = 0;
-
-        daoUtil.setInt( ++nPos, config.getIdTask( ) );
-        daoUtil.setString( ++nPos, config.getIdSpringProvider( ) );
-        daoUtil.setString( ++nPos, StringUtils.join( config.getMarkerProviders( ), LIST_SEPARATOR ) );
-        daoUtil.setInt( ++nPos, config.getDemandStatus( ) );
-        daoUtil.setInt( ++nPos, config.getCrmStatusId( ) );
-        daoUtil.setInt( ++nPos, config.getSetOnglet( ) );
-
-        daoUtil.setString( ++nPos, config.getMessageGuichet( ) );
-        daoUtil.setString( ++nPos, config.getStatustextGuichet( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameGuichet( ) );
-        daoUtil.setString( ++nPos, config.getSubjectGuichet( ) );
-        daoUtil.setInt( ++nPos, config.getDemandMaxStepGuichet( ) );
-        daoUtil.setInt( ++nPos, config.getDemandUserCurrentStepGuichet( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletGuichet( ) );
-
-        daoUtil.setString( ++nPos, config.getStatustextAgent( ) );
-        daoUtil.setString( ++nPos, config.getMessageAgent( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletAgent( ) );
-
-        daoUtil.setString( ++nPos, config.getSubjectEmail( ) );
-        daoUtil.setString( ++nPos, config.getMessageEmail( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameEmail( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCcEmail( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCciEmail( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletEmail( ) );
-
-        daoUtil.setString( ++nPos, config.getMessageSMS( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletSMS( ) );
-
-        daoUtil.setInt( ++nPos, config.getIdMailingListBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getEmailBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getSubjectBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getMessageBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCcBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCciBroadcast( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletBroadcast( ) );
+        configToData( config, daoUtil );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -149,45 +111,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, NotifyGruPlugin.getPlugin( ) );
 
-        int nPos = 0;
-
-        daoUtil.setInt( ++nPos, config.getIdTask( ) );
-        daoUtil.setString( ++nPos, config.getIdSpringProvider( ) );
-        daoUtil.setString( ++nPos, StringUtils.join( config.getMarkerProviders( ), LIST_SEPARATOR ) );
-        daoUtil.setInt( ++nPos, config.getDemandStatus( ) );
-        daoUtil.setInt( ++nPos, config.getCrmStatusId( ) );
-        daoUtil.setInt( ++nPos, config.getSetOnglet( ) );
-
-        daoUtil.setString( ++nPos, config.getMessageGuichet( ) );
-        daoUtil.setString( ++nPos, config.getStatustextGuichet( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameGuichet( ) );
-        daoUtil.setString( ++nPos, config.getSubjectGuichet( ) );
-        daoUtil.setInt( ++nPos, config.getDemandMaxStepGuichet( ) );
-        daoUtil.setInt( ++nPos, config.getDemandUserCurrentStepGuichet( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletGuichet( ) );
-
-        daoUtil.setString( ++nPos, config.getStatustextAgent( ) );
-        daoUtil.setString( ++nPos, config.getMessageAgent( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletAgent( ) );
-
-        daoUtil.setString( ++nPos, config.getSubjectEmail( ) );
-        daoUtil.setString( ++nPos, config.getMessageEmail( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameEmail( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCcEmail( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCciEmail( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletEmail( ) );
-
-        daoUtil.setString( ++nPos, config.getMessageSMS( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletSMS( ) );
-
-        daoUtil.setInt( ++nPos, config.getIdMailingListBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getEmailBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getSenderNameBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getSubjectBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getMessageBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCcBroadcast( ) );
-        daoUtil.setString( ++nPos, config.getRecipientsCciBroadcast( ) );
-        daoUtil.setBoolean( ++nPos, config.isActiveOngletBroadcast( ) );
+        int nPos = configToData( config, daoUtil );
 
         daoUtil.setInt( ++nPos, config.getIdTask( ) );
         daoUtil.executeUpdate( );
@@ -286,5 +210,59 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         daoUtil.setInt( 1, nIdState );
         daoUtil.executeUpdate( );
         daoUtil.free( );
+    }
+
+    /**
+     * Inserts the data of the specified configuration into the specified {@code DAOUtil} object
+     * 
+     * @param config
+     *            the configuration containing the data
+     * @param daoUtil
+     *            the {@DAOUtil} object
+     * @return the last position of the data
+     */
+    private int configToData( TaskNotifyGruConfig config, DAOUtil daoUtil )
+    {
+        int nPos = 0;
+
+        daoUtil.setInt( ++nPos, config.getIdTask( ) );
+        daoUtil.setString( ++nPos, config.getIdSpringProvider( ) );
+        daoUtil.setString( ++nPos, StringUtils.join( config.getMarkerProviders( ), LIST_SEPARATOR ) );
+        daoUtil.setInt( ++nPos, config.getDemandStatus( ) );
+        daoUtil.setInt( ++nPos, config.getCrmStatusId( ) );
+        daoUtil.setInt( ++nPos, config.getSetOnglet( ) );
+
+        daoUtil.setString( ++nPos, config.getMessageGuichet( ) );
+        daoUtil.setString( ++nPos, config.getStatustextGuichet( ) );
+        daoUtil.setString( ++nPos, config.getSenderNameGuichet( ) );
+        daoUtil.setString( ++nPos, config.getSubjectGuichet( ) );
+        daoUtil.setInt( ++nPos, config.getDemandMaxStepGuichet( ) );
+        daoUtil.setInt( ++nPos, config.getDemandUserCurrentStepGuichet( ) );
+        daoUtil.setBoolean( ++nPos, config.isActiveOngletGuichet( ) );
+
+        daoUtil.setString( ++nPos, config.getStatustextAgent( ) );
+        daoUtil.setString( ++nPos, config.getMessageAgent( ) );
+        daoUtil.setBoolean( ++nPos, config.isActiveOngletAgent( ) );
+
+        daoUtil.setString( ++nPos, config.getSubjectEmail( ) );
+        daoUtil.setString( ++nPos, config.getMessageEmail( ) );
+        daoUtil.setString( ++nPos, config.getSenderNameEmail( ) );
+        daoUtil.setString( ++nPos, config.getRecipientsCcEmail( ) );
+        daoUtil.setString( ++nPos, config.getRecipientsCciEmail( ) );
+        daoUtil.setBoolean( ++nPos, config.isActiveOngletEmail( ) );
+
+        daoUtil.setString( ++nPos, config.getMessageSMS( ) );
+        daoUtil.setBoolean( ++nPos, config.isActiveOngletSMS( ) );
+
+        daoUtil.setInt( ++nPos, config.getIdMailingListBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getEmailBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getSenderNameBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getSubjectBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getMessageBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getRecipientsCcBroadcast( ) );
+        daoUtil.setString( ++nPos, config.getRecipientsCciBroadcast( ) );
+        daoUtil.setBoolean( ++nPos, config.isActiveOngletBroadcast( ) );
+
+        return nPos;
     }
 }
