@@ -1,52 +1,71 @@
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div id="config_global" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            
             <h4 class="modal-title" id="gridSystemModalLabel">            
              #i18n{module.workflow.notifygru.task_notify_gru_config.label_global_config}
             </h4>
          </div>
-         <div class="modal-body text-center">
+         <div class="modal-body">
             <div class="row">
-            
-               <div class="col-md-11">
-                  <div class="form-group">
-                     <label >
-                     <#if config.demandStatus = 1> 
-                     <input type="checkbox" name="demand_status" checked/> 
-                     <#else>
-                     <input type="checkbox" name="demand_status" /> 
-                     </#if>
-                     #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper} ( #i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * )
-                     </label>
+               <#if list_marker_provider?? && list_marker_provider?has_content>
+                  <div class="col-sm-12"  >
+                     <@formGroup labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.label_marker_providers} :">
+                        <#list list_marker_provider as marker_provider>
+                           <#assign found = false />
+
+                           <#list config.markerProviders as selected_marker_provider>
+                              <#if marker_provider.id == selected_marker_provider>
+                                 <@checkBox name="marker_providers" labelKey="#i18n{${marker_provider.titleI18nKey}}" value="${marker_provider.id}" checked=true mandatory=false />
+                                 <#assign found = true />
+                              </#if>
+                           </#list>
+
+                           <#if !found >
+                              <@checkBox name="marker_providers" labelKey="#i18n{${marker_provider.titleI18nKey}}" value="${marker_provider.id}" mandatory=false />
+                           </#if>
+                        </#list>
+                  </@formGroup>
                   </div>
-               </div>
-               
-               
-                
-               
-               
-                <div class="col-md-9">
-                 <div class="form-group">
-                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="crm_status_id">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm} * :</label>
-                  <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12" style="margin-top:6px">                 
-                     <#if config?exists && config.crmStatusId?has_content && config.crmStatusId!=-1>
-                     <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="${config.crmStatusId}" maxlength="255">
+               </#if>
+            </div>
+
+            <div class="row">
+               <div class="col-sm-12">
+                  <@formGroup labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status} * :">
+                     <#if config.demandStatus = 1>
+                        <@checkBox name="demand_status" labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}" checked=true mandatory=false />
                      <#else>
-                     <input type="number" name="crm_status_id" id="" class="form-control input-sm" value="1" maxlength="255">
+                        <@checkBox name="demand_status" labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}" mandatory=false /> 
+                     </#if>
+                  </@formGroup>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-sm-12">
+                  <@formGroup labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm} * :">
+                     <#if config?exists && config.crmStatusId?has_content && config.crmStatusId!=-1>
+                        <@input type="number" name="crm_status_id" value="${config.crmStatusId}" maxlength=255/>
+                     <#else>
+                        <@input type="number" name="crm_status_id" value="1" maxlength=255/>
                      </#if>
                      <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
-                  </div>
-                  </div>
+                  </@formGroup>
                </div>
-               
-               
             </div>
-            
-           
-            
+
+            <div class="form-group" >
+               <div class="col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-3 col-md-9 col-lg-offset-3 col-lg-9">
+                  <button class="btn btn-primary btn-sm btn-flat" type="submit" name="apply" value="saveGlobalConfig" >
+                     <i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{workflow.modify_task.button_save}
+                  </button>
+                  <button class="btn btn-default btn-sm btn-flat" type="submit" name="apply" value="cancelGlobalConfig" >
+                     <i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{workflow.modify_task.button_cancel}
+                  </button>
+               </div>
+            </div>
          </div>
       </div>
    </div>

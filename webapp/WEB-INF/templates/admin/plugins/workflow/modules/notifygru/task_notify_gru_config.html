@@ -24,7 +24,7 @@
          <!-------------------------------------------------------------------------------------------------->
          <#if config?exists && config.idSpringProvider?has_content >
          <span>
-         <a class="btn btn-primary btn-sm pull-right" href="return false;" data-toggle="modal" data-target=".bs-example-modal-lg">
+         <a class="btn btn-primary btn-sm pull-right" href="return false;" data-toggle="modal" data-target="#config_global" data-backdrop="static" data-keyboard="false">
          <i class="glyphicon glyphicon-wrench">&nbsp;</i>&nbsp; #i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}
          </a>
          </span>
@@ -47,6 +47,19 @@
                </div>
             </div>
          </div>
+
+         <#if list_marker_provider?? && list_marker_provider?has_content>
+            <div class="col-md-10"  >
+               <div class="form-group">
+                  <label class="control-label col-md-5 col-lg-5 col-xs-12 col-sm-12" for="demand_status">#i18n{module.workflow.notifygru.task_notify_gru_config.label_marker_providers} :</label>
+                  <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12" style="margin-top:6px">
+                     <#list list_marker_provider as marker_provider>
+                        <@checkBox name="marker_providers" labelKey="#i18n{${marker_provider.titleI18nKey}}" value="${marker_provider.id}" mandatory=false />
+                     </#list>
+                  </div>
+               </div>
+            </div>
+         </#if>
          
          <div class="col-md-10"  >
             <div >
@@ -68,7 +81,8 @@
       </div>
       <script>
          $(document).ready(function(){ 
-         $('button[name=save]').attr("name","apply");
+            $('button[name=save]').attr("value","saveFirstStep");
+            $('button[name=save]').attr("name","apply");
          }); 
       </script>
       <#else>

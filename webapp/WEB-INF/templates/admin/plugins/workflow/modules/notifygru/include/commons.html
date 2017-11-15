@@ -8,11 +8,17 @@
           <th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</th>
         </tr>
         
-        <#if provider_markers?exists>
-          <#list provider_markers as marker>
+        <#if notifygru_markers?exists>
+          <#list notifygru_markers as marker>
             <tr>
               <td>
-                ${marker.description!}
+                <#assign description = i18n(marker.description) />
+
+                <#if description?has_content>
+                    ${description}
+                <#else>
+                    ${marker.description!''}
+                </#if>
               </td>
               <td>
                 &#36;&#123;${marker.marker}&#33;&#125;

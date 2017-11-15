@@ -48,7 +48,9 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGru
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
@@ -130,7 +132,8 @@ public class TaskNotifyGru extends SimpleTask
                 NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
                 notifyGruHistory.setIdTask( this.getId( ) );
                 notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
-                Map<String, Object> model = markersToModel( provider.provideMarkerValues( ) );
+
+                Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), request ) );
 
                 Notification notificationObject = buildNotification( config, provider );
 
@@ -386,6 +389,37 @@ public class TaskNotifyGru extends SimpleTask
         broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
+    }
+
+    /**
+     * Finds the NotifyGru markers
+     * 
+     * @param resourceHistory
+     *            the resource history
+     * @param provider
+     *            the provider
+     * @param listMarkerProviderIds
+     *            the list of marker provider ids
+     * @param request
+     *            the request
+     * @return the NotifyGru markers
+     */
+    private Collection<NotifyGruMarker> findMarkers( ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
+            HttpServletRequest request )
+    {
+        Collection<NotifyGruMarker> collectionMarkers = provider.provideMarkerValues( );
+
+        for ( String strMarkerProviderId : listMarkerProviderIds )
+        {
+            IMarkerProvider markerProvider = MarkerProviderService.getInstance( ).find( strMarkerProviderId );
+
+            if ( markerProvider != null )
+            {
+                collectionMarkers.addAll( markerProvider.provideMarkerValues( resourceHistory, this, request ) );
+            }
+        }
+
+        return collectionMarkers;
     }
 
     /**

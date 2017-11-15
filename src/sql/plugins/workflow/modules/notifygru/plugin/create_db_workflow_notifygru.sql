@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS workflow_task_notify_gru_history;
 CREATE TABLE workflow_task_notify_gru_cf(
   id_task INT NOT NULL,
  id_spring_provider VARCHAR(255) DEFAULT NULL,
+ marker_provider_ids VARCHAR(1000) NULL,
  demand_status INT DEFAULT  NULL, 
  crm_status_id INT DEFAULT  1, 
  set_onglet SMALLINT  NULL DEFAULT NULL,

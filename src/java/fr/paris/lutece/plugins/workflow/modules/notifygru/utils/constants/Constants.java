@@ -258,18 +258,21 @@ public final class Constants
     public static final String MARK_IS_ACTIVE_ONGLET_AGENT = "is_active_onglet_agent";
     public static final String MARK_LEVEL_NOTIFICATION_BROADCAST = "level_notification_broadcast";
 
-    // BUTTON ADD & REMOVE
+    // BUTTONS
     public static final String PARAMETER_BUTTON_ADD = "AddOnglet";
     public static final String PARAMETER_BUTTON_REMOVE_GUICHET = "RemoveOngletGuichet";
     public static final String PARAMETER_BUTTON_REMOVE_EMAIL = "RemoveOngletEmail";
     public static final String PARAMETER_BUTTON_REMOVE_SMS = "RemoveOngletSMS";
     public static final String PARAMETER_BUTTON_REMOVE_AGENT = "RemoveOngletAgent";
     public static final String PARAMETER_BUTTON_REMOVE_LISTE = "RemoveOngletListe";
+    public static final String PARAMETER_BUTTON_FIRST_STEP_SAVE = "saveFirstStep";
+    public static final String PARAMETER_BUTTON_GLOBAL_CONFIG_SAVE = "saveGlobalConfig";
+    public static final String PARAMETER_BUTTON_GLOBAL_CONFIG_CANCEL = "cancelGlobalConfig";
 
     // PARAMETERS GUICHET
     public static final String PARAMETER_ID_RESOURCE = "id_ressource";
     public static final String PARAMETER_ID_USER_GUID = "id_user_guid";
-    public static final String PARAMETER_APPY = "apply";
+    public static final String PARAMETER_APPLY = "apply";
     public static final String PARAMETER_ID_DEMAND_GUICHET = "ressource_id_demand_guichet";
     public static final String PARAMETER_CRM_WEBAPP_CODE_GUICHET = "crm_web_app_code_guichet";
     public static final String PARAMETER_SEND_NOTIFICATION_GUICHET = "send_notification_guichet";
@@ -331,11 +334,13 @@ public final class Constants
     public static final String PARAMETER_ONGLE_ADD = "add_onglet";
     public static final String PARAMETER_ONGLE_REMOVE = "remove_onglet";
     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
+    public static final String PARAMETER_MARKER_PROVIDERS = "marker_providers";
     public static final String PARAMETER_DEMAND_STATUS = "demand_status";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";
     public static final String MARK_SELECT_PROVIDER = "list_provider";
+    public static final String MARK_LIST_MARKER_PROVIDER = "list_marker_provider";
     public static final String MARK_GRU_TITLE = "directory_title";
     public static final String MARK_GRU_DESCRIPTION = "directory_description";
     public static final String MARK_LINK = "link";
@@ -364,7 +369,7 @@ public final class Constants
     public static final String MARK_LINK_VIEW_RECORD = "link_view_record";
     public static final String MARK_LIST_POSITION_ENTRY_FILE_CHECKED = "list_position_entry_file_checked";
     public static final String MARK_LIST_ENTRIES_FILE = "list_entries_file";
-    public static final String MARK_PROVIDER_MARKERS = "provider_markers";
+    public static final String MARK_NOTIFYGRU_MARKERS = "notifygru_markers";
     public static final String MARK_MESSAGES_ERROR = "errors";
 
     // TAGS

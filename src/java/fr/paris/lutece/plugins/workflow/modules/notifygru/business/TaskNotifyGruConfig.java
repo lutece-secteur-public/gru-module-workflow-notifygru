@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 
 /**
@@ -44,6 +47,8 @@ public class TaskNotifyGruConfig extends TaskConfig
     /** The _str id spring provider. */
     /* global config */
     private String _strIdSpringProvider;
+
+    private List<String> _listMarkerProviders = new ArrayList<>( );
 
     /** The _n demand status. */
     private int _nDemandStatus;
@@ -177,6 +182,27 @@ public class TaskNotifyGruConfig extends TaskConfig
     public void setIdSpringProvider( String strIdSpringProvider )
     {
         _strIdSpringProvider = strIdSpringProvider;
+    }
+
+    /**
+     * Gives the marker providers.
+     *
+     * @return The list of marker providers
+     */
+    public List<String> getMarkerProviders( )
+    {
+        return _listMarkerProviders;
+    }
+
+    /**
+     * Sets the list of marker providers.
+     *
+     * @param listMarkerProviders
+     *            The list of marker providers to set
+     */
+    public void setMarkerProviders( List<String> listMarkerProviders )
+    {
+        _listMarkerProviders = listMarkerProviders;
     }
 
     /**

@@ -44,7 +44,9 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruC
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
@@ -65,6 +67,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -113,7 +116,13 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Override
     public String doSaveConfig( HttpServletRequest request, Locale locale, ITask task )
     {
-        String strApply = request.getParameter( Constants.PARAMETER_APPY );
+        String strApply = request.getParameter( Constants.PARAMETER_APPLY );
+
+        if ( Constants.PARAMETER_BUTTON_GLOBAL_CONFIG_CANCEL.equals( strApply ) )
+        {
+            return null;
+        }
+
         String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
 
         TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, task.getId( ) );
@@ -154,6 +163,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
 
         Map<String, Object> model = markersToModel( providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
+
+        doSaveMarkerProviders( request, config, strApply );
 
         /* set demand statut params */
 
@@ -281,7 +292,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
             if ( providerManager != null )
             {
-                model.put( Constants.MARK_PROVIDER_MARKERS, providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
+                model.put( Constants.MARK_NOTIFYGRU_MARKERS, findMarkers( providerManager, strProviderId, config.getMarkerProviders( ) ) );
             }
             else
             {
@@ -290,6 +301,8 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
                 model.put( Constants.MARK_MESSAGES_ERROR, listErrorMessages );
             }
         }
+
+        model.put( Constants.MARK_LIST_MARKER_PROVIDER, MarkerProviderService.getInstance( ).getMarkerProviders( ) );
 
         ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config, locale );
 
@@ -348,6 +361,33 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     }
 
     /**
+     * Saves the marker providers in the specified config
+     * 
+     * @param request
+     *            the request containing the marker providers to save
+     * @param config
+     *            the config in which the marker providers are saved
+     * @param strApply
+     *            the triggered action
+     */
+    private void doSaveMarkerProviders( HttpServletRequest request, TaskNotifyGruConfig config, String strApply )
+    {
+        if ( Constants.PARAMETER_BUTTON_FIRST_STEP_SAVE.equals( strApply ) || Constants.PARAMETER_BUTTON_GLOBAL_CONFIG_SAVE.equals( strApply ) )
+        {
+            String [ ] listMarkerProviders = request.getParameterValues( Constants.PARAMETER_MARKER_PROVIDERS );
+
+            if ( listMarkerProviders != null )
+            {
+                config.setMarkerProviders( Arrays.asList( listMarkerProviders ) );
+            }
+            else
+            {
+                config.setMarkerProviders( null );
+            }
+        }
+    }
+
+    /**
      * Converts the specified collection of NotifyGru markers into a model
      * 
      * @param collectionNotifyGruMarkers
@@ -364,5 +404,33 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         }
 
         return model;
+    }
+
+    /**
+     * Finds the NotifyGru markers
+     * 
+     * @param providerManager
+     *            the provider manager
+     * @param strProviderId
+     *            the provider id
+     * @param listMarkerProviderIds
+     *            the list of marker provider ids
+     * @return the NotifyGru markers
+     */
+    private Collection<NotifyGruMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
+    {
+        Collection<NotifyGruMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
+
+        for ( String strMarkerProviderId : listMarkerProviderIds )
+        {
+            IMarkerProvider markerProvider = MarkerProviderService.getInstance( ).find( strMarkerProviderId );
+
+            if ( markerProvider != null )
+            {
+                collectionMarkers.addAll( markerProvider.provideMarkerDescriptions( ) );
+            }
+        }
+
+        return collectionMarkers;
     }
 }
