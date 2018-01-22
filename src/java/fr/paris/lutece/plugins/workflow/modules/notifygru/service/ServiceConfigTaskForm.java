@@ -33,11 +33,11 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderDescription;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -56,6 +56,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class ServiceConfigTaskForm
 {
+    // MESSAGES
+    private static final String MESSAGE_NOTIFICATION_CONFIG_TITLE_PREFIX = "module.workflow.notifygru.notification.config.title.";
+
     /**
      * Instantiates a new service config task form.
      */
@@ -65,63 +68,28 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Gets the list onglet.
-     *
-     * @param config
-     *            of the task
+     * Builds a {@code ReferenceList} of inactive notification configurations
+     * 
+     * @param listNotificationConfig
+     *            the list of all notification configurations
      * @param locale
-     *            of request
-     * @return the list of onglet
+     *            the locale used to build the {@code ReferenceList}
+     * @return the {@code ReferenceList}
      */
-    public static ReferenceList getListOnglet( TaskNotifyGruConfig config, Locale locale )
+    public static ReferenceList buildReferenceListOfInactiveNotificationConfigs( List<INotificationConfig> listNotificationConfig, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList( );
 
-        if ( !config.isActiveOngletGuichet( ) )
+        for ( INotificationConfig notificationConfig : listNotificationConfig )
         {
-            refenreceList.addItem( Constants.MARK_ONGLET_GUICHET, I18nService.getLocalizedString( Constants.VIEW_GUICHET, locale ) );
-        }
-
-        if ( !config.isActiveOngletAgent( ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_AGENT, I18nService.getLocalizedString( Constants.VIEW_AGENT, locale ) );
-        }
-
-        if ( !config.isActiveOngletEmail( ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_EMAIL, I18nService.getLocalizedString( Constants.VIEW_EMAIL, locale ) );
-        }
-
-        if ( !config.isActiveOngletSMS( ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_SMS, I18nService.getLocalizedString( Constants.VIEW_SMS, locale ) );
-        }
-
-        if ( !config.isActiveOngletBroadcast( ) )
-        {
-            refenreceList.addItem( Constants.MARK_ONGLET_LIST, I18nService.getLocalizedString( Constants.VIEW_BROADCAST_LIST, locale ) );
+            if ( !notificationConfig.isActive( ) )
+            {
+                refenreceList.addItem( notificationConfig.getName( ),
+                        I18nService.getLocalizedString( MESSAGE_NOTIFICATION_CONFIG_TITLE_PREFIX + notificationConfig.getName( ), locale ) );
+            }
         }
 
         return refenreceList;
-    }
-
-    /**
-     * Gets the number of string.
-     *
-     * @param srtNumber
-     *            to convert
-     * @return positive int value or -1 if exception or negative value
-     */
-    public static int parseStringToPositiveNumber( String srtNumber )
-    {
-        try
-        {
-            return Math.max( -1, Integer.parseInt( srtNumber ) );
-        }
-        catch( NumberFormatException e )
-        {
-            return -1;
-        }
     }
 
     /**
@@ -199,131 +167,44 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Sets the config onglet.
+     * Gets the index of the specified tab.
      *
-     * @param strApply
-     *            of form
-     * @param strOnglet
-     *            of config
-     * @param strOngletActive
-     *            the active onglet
-     * @param bdefault
-     *            default onglet
-     * @param strRemove
-     *            if removing
-     * @return true if the Onglet is active
+     * @param strTabName
+     *            the name of the tab
+     * @return the index of the tab
      */
-    public static Boolean setConfigOnglet( String strApply, String strOnglet, String strOngletActive, Boolean bdefault, String strRemove )
-    {
-        boolean bStateOnglet = bdefault;
-
-        if ( strApply != null )
-        {
-            switch( strApply )
-            {
-                case Constants.PARAMETER_BUTTON_ADD:
-
-                    if ( strOnglet.equals( strOngletActive ) )
-                    {
-                        bStateOnglet = true;
-                    }
-
-                    break;
-
-                case Constants.PARAMETER_BUTTON_REMOVE_GUICHET:
-
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
-                    {
-                        bStateOnglet = false;
-                    }
-
-                    break;
-
-                case Constants.PARAMETER_BUTTON_REMOVE_AGENT:
-
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) )
-                    {
-                        bStateOnglet = false;
-                    }
-
-                    break;
-
-                case Constants.PARAMETER_BUTTON_REMOVE_EMAIL:
-
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
-                    {
-                        bStateOnglet = false;
-                    }
-
-                    break;
-
-                case Constants.PARAMETER_BUTTON_REMOVE_SMS:
-
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) )
-                    {
-                        bStateOnglet = false;
-                    }
-
-                    break;
-
-                case Constants.PARAMETER_BUTTON_REMOVE_LISTE:
-
-                    if ( strRemove.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) )
-                    {
-                        bStateOnglet = false;
-                    }
-
-                    break;
-
-                default:
-                    bStateOnglet = false;
-
-                    break;
-            }
-        }
-
-        return bStateOnglet;
-    }
-
-    /**
-     * Gets the number oblet.
-     *
-     * @param strOnglet
-     *            of config
-     * @return the number of onglet
-     */
-    public static int getNumberOblet( String strOnglet )
+    public static int getTabIndex( String strTabName )
     {
         int nNumber = 0;
 
-        if ( strOnglet == null )
+        if ( strTabName == null )
         {
             return nNumber;
         }
 
-        switch( strOnglet )
+        switch( strTabName )
         {
-            case Constants.MARK_ONGLET_GUICHET:
+            case Constants.MARK_TAB_GUICHET:
                 nNumber = 0;
 
                 break;
 
-            case Constants.MARK_ONGLET_AGENT:
+            case Constants.MARK_TAB_AGENT:
                 nNumber = 1;
 
                 break;
 
-            case Constants.MARK_ONGLET_EMAIL:
+            case Constants.MARK_TAB_EMAIL:
                 nNumber = 2;
 
                 break;
 
-            case Constants.MARK_ONGLET_SMS:
+            case Constants.MARK_TAB_SMS:
                 nNumber = 3;
 
                 break;
 
-            case Constants.MARK_ONGLET_LIST:
+            case Constants.MARK_TAB_BROADCAST:
                 nNumber = 4;
 
                 break;

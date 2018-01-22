@@ -1,0 +1,147 @@
+<#include "/admin/util/editor/editor.html" />
+<#assign pane="pane-desk">
+<div>
+   <@messages errors=errors />
+   <fieldset>
+      <legend>
+         <span>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</span>
+         <!-------------------------------------------------------------------------------------------------->
+         <#if config.idSpringProvider?has_content >
+         <span>
+         <a class="btn btn-primary btn-sm pull-right" href="return false;" data-toggle="modal" data-target="#config_global" data-backdrop="static" data-keyboard="false">
+         <i class="glyphicon glyphicon-wrench">&nbsp;</i>&nbsp; #i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}
+         </a>
+         </span>
+         </#if>
+         <!-------------------------------------------------------------------------------------------------->
+      </legend>
+      
+      <#if list_notification_config?exists>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <div class="col-xs-12" >
+                <@combo name="added_notification_config" items=list_notification_config default_value=0/>&nbsp;
+                <button class="btn btn-sm btn-primary btn-xs" type="submit" name="apply" value="AddNotificationConfig">
+                  <i class="glyphicon glyphicon-plus icon-white">&nbsp;</i>
+                  <span>#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}</span>
+                </button>                        
+              </div>
+            </div>
+          </div>
+        </div>
+      </#if>
+      <ul id="tabs" class="nav nav-tabs">
+         <#if config.activeOngletGuichet>
+         <li <#if pane="pane-desk">class="active"</#if> id='0'>
+         <a href="#pane-desk" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.notification.config.title.guichet}</a>
+         </li>
+         </#if>
+         <#if config.activeOngletAgent>
+         <li <#if pane="pane-agent">class="active"</#if> id='1'>
+         <a href="#pane-agent" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.notification.config.title.agent}</a>
+         </li>
+         </#if>
+         <#if config.activeOngletEmail>
+         <li <#if pane="pane-email">class="active"</#if> id='2'>
+         <a href="#pane-email" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.notification.config.title.email}</a>
+         </li>
+         </#if>
+         <#if config.activeOngletSMS>
+         <li <#if pane="pane-sms">class="active"</#if> id='3'>
+         <a href="#pane-sms" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.notification.config.title.sms}</a>
+         </li>
+         </#if>
+         <#if config.activeOngletBroadcast>
+         <li <#if pane="pane-mailing-list">class="active"</#if> id='4'>
+         <a href="#pane-mailing-list" data-toggle="tab">&nbsp;#i18n{module.workflow.notifygru.notification.config.title.broadcast}</a>
+         </li>
+         </#if>
+      </ul>
+      <div class="tab-content">
+         <#if config.activeOngletGuichet>   
+         <div class='tab-pane <#if pane="pane-desk"> active</#if>' id="pane-desk">
+            <#include "config_guichet.html" />
+         </div>
+         </#if>
+         <#if config.activeOngletAgent>
+         <div class='tab-pane <#if pane="pane-agent">active</#if>' id="pane-agent">
+            <#include "config_agent.html" />
+         </div>
+         </#if>
+         <#if config.activeOngletEmail>
+         <div class='tab-pane <#if pane="pane-email">active</#if>' id="pane-email">
+            <#include "config_email.html" />
+         </div>
+         </#if>
+         <#if config.activeOngletSMS>
+         <div class='tab-pane <#if pane="pane-sms">active</#if>' id="pane-sms">
+            <#include "config_sms.html" />
+         </div>
+         </#if>
+         <#if config.activeOngletBroadcast>
+         <div class='tab-pane <#if pane="pane-mailing-list">active</#if>' id="pane-mailing-list">
+            <#include "config_mailing_list.html" />
+         </div>
+         </#if>
+      </div>
+   </fieldset>
+   <div id="config_global" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="gridSystemModalLabel">            
+                #i18n{module.workflow.notifygru.task_notify_gru_config.label_global_config}
+               </h4>
+            </div>
+            <div class="modal-body">
+               <#include "config_global.html" />
+               
+               <div class="row">
+                  <div class="col-sm-12">
+                     <@formGroup labelKey="#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm} * :">
+                        <#if config.crmStatusId?has_content && config.crmStatusId!=-1>
+                           <@input type="number" name="crm_status_id" value="${config.crmStatusId}" maxlength=255/>
+                        <#else>
+                           <@input type="number" name="crm_status_id" value="1" maxlength=255/>
+                        </#if>
+                        <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}</span>
+                     </@formGroup>
+                  </div>
+               </div>
+               
+               <div class="form-group" >
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-3 col-md-9 col-lg-offset-3 col-lg-9">
+                     <button class="btn btn-primary btn-sm btn-flat" type="submit" name="apply" value="saveAdvancedConfig" >
+                        <i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{workflow.modify_task.button_save}
+                     </button>
+                     <button class="btn btn-default btn-sm btn-flat" type="submit" name="apply" value="cancelAdvancedConfig" >
+                        <i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{workflow.modify_task.button_cancel}
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<input type="hidden" value="${config.setOnglet}" id="activeOngletHere"/>
+<script>
+   $(document).ready(function(){ 
+       var ong=$("#activeOngletHere").val();
+    
+       if($("#"+ong).attr('class')==undefined){
+           $("#tabs li:eq(0) a").tab('show');
+       }
+   
+   $("#"+ong+" a").tab('show');
+   }); 
+   
+   
+   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+   $("#activeOngletHere").val($(e.target).parent().attr("id"));
+   })
+   
+   
+</script>
+<@initEditor />

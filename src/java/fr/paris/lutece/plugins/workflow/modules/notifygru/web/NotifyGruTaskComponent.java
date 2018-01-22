@@ -36,41 +36,16 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruHistoryService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHistoryService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.Validator;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.MarkerProviderService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
-import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.message.AdminMessage;
-import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppPathService;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
-import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
-import fr.paris.lutece.util.ErrorMessage;
-import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -87,7 +62,6 @@ import javax.servlet.http.HttpServletRequest;
 public class NotifyGruTaskComponent extends NoFormTaskComponent
 {
     // TEMPLATES
-    private static final String TEMPLATE_TASK_NOTIFY_GRU_CONFIG = "admin/plugins/workflow/modules/notifygru/task_notify_gru_config.html";
     private static final String TEMPLATE_TASK_NOTIFY_INFORMATION = "admin/plugins/workflow/modules/notifygru/task_notify_information.html";
 
     // MARKS
@@ -98,9 +72,6 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Inject
     @Named( TaskNotifyGruConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskNotifyGruConfigService;
-    @Inject
-    @Named( NotifyGruService.BEAN_SERVICE )
-    private INotifyGruService _notifyGRUService;
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
@@ -116,142 +87,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Override
     public String doSaveConfig( HttpServletRequest request, Locale locale, ITask task )
     {
-        String strApply = request.getParameter( Constants.PARAMETER_APPLY );
-
-        if ( Constants.PARAMETER_BUTTON_GLOBAL_CONFIG_CANCEL.equals( strApply ) )
-        {
-            return null;
-        }
-
-        String strOngletActive = request.getParameter( Constants.PARAMETER_ONGLET );
-
-        TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, task.getId( ) );
-
-        // set the active onglet
-        int nOngletActive = ServiceConfigTaskForm.getNumberOblet( strOngletActive );
-        config.setSetOnglet( nOngletActive );
-
-        if ( config.getIdSpringProvider( ) == null )
-        {
-            config.setIdSpringProvider( request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) );
-        }
-
-        String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
-        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
-
-        if ( providerManager == null )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
-        }
-
-        Boolean bActiveOngletGuichet = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_GUICHET, strOngletActive,
-                config.isActiveOngletGuichet( ), Constants.PARAMETER_BUTTON_REMOVE_GUICHET );
-        Boolean bActiveOngletAgent = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_AGENT, strOngletActive,
-                config.isActiveOngletAgent( ), Constants.PARAMETER_BUTTON_REMOVE_AGENT );
-        Boolean bActiveOngletEmail = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_EMAIL, strOngletActive,
-                config.isActiveOngletEmail( ), Constants.PARAMETER_BUTTON_REMOVE_EMAIL );
-        Boolean bActiveOngletSMS = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_SMS, strOngletActive, config.isActiveOngletSMS( ),
-                Constants.PARAMETER_BUTTON_REMOVE_SMS );
-        Boolean bActiveOngletBROADCAST = ServiceConfigTaskForm.setConfigOnglet( strApply, Constants.MARK_ONGLET_LIST, strOngletActive,
-                config.isActiveOngletBroadcast( ), Constants.PARAMETER_BUTTON_REMOVE_LISTE );
-
-        if ( ( strApply == null ) && !bActiveOngletAgent && !bActiveOngletBROADCAST && !bActiveOngletEmail && !bActiveOngletGuichet && !bActiveOngletSMS )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP );
-        }
-
-        String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
-
-        Map<String, Object> model = markersToModel( providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
-
-        doSaveMarkerProviders( request, config, strApply );
-
-        /* set demand statut params */
-
-        String strCrmStatusId = request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
-        int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer
-                .parseInt( strCrmStatusId ) : 1;
-
-        int nDemandStatus = ( Validator.VALUE_CHECKBOX.equals( request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
-        config.setDemandStatus( nDemandStatus );
-        config.setCrmStatusId( nCrmStatusId );
-
-        Boolean bRedirector = false;
-        String strUrlRedirector = null;
-
-        /* validate and build guichet */
-        if ( !bRedirector && ( bActiveOngletGuichet || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) ) ) )
-        {
-            strUrlRedirector = Validator.isValidBuildGuichet( request, config, model, locale, strApply );
-            config.setActiveOngletGuichet( bActiveOngletGuichet );
-
-            bRedirector = StringUtils.isNotBlank( strUrlRedirector );
-        }
-
-        /* validate and build agent */
-        if ( !bRedirector && ( bActiveOngletAgent || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) ) ) )
-        {
-            strUrlRedirector = Validator.isValidBuildAgent( request, config, model, locale, strApply );
-            config.setActiveOngletAgent( bActiveOngletAgent );
-
-            bRedirector = StringUtils.isNotBlank( strUrlRedirector );
-        }
-
-        if ( !bRedirector && ( bActiveOngletEmail || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) ) ) )
-        {
-            strUrlRedirector = Validator.isValidBuildEmail( request, config, model, locale, strApply );
-            config.setActiveOngletEmail( bActiveOngletEmail );
-
-            bRedirector = StringUtils.isNotBlank( strUrlRedirector );
-        }
-
-        if ( !bRedirector && ( bActiveOngletSMS || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) ) ) )
-        {
-            config.setActiveOngletSMS( bActiveOngletSMS );
-            strUrlRedirector = Validator.isValidBuildSMS( request, config, model, locale, strApply );
-
-            bRedirector = StringUtils.isNotBlank( strUrlRedirector );
-        }
-
-        if ( !bRedirector && ( bActiveOngletBROADCAST || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) ) )
-        {
-            config.setActiveOngletBroadcast( bActiveOngletBROADCAST );
-            strUrlRedirector = Validator.isValidBuildBroadcast( request, config, model, locale, strApply );
-
-            bRedirector = StringUtils.isNotBlank( strUrlRedirector );
-        }
-
-        if ( bRedirector )
-        {
-            return strUrlRedirector;
-        }
-
-        if ( bActiveOngletAgent || bActiveOngletBROADCAST || bActiveOngletEmail || bActiveOngletGuichet || bActiveOngletSMS
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_GUICHET ) )
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_AGENT ) )
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_EMAIL ) )
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_SMS ) )
-                || ( ( strApply != null ) && strApply.equals( Constants.PARAMETER_BUTTON_REMOVE_LISTE ) ) || ( config.getIdSpringProvider( ) != null ) )
-        {
-            Boolean bCreate = false;
-
-            if ( config.getIdTask( ) == 0 )
-            {
-                config.setIdTask( task.getId( ) );
-                bCreate = true;
-            }
-
-            if ( bCreate )
-            {
-                _taskNotifyGruConfigService.create( config );
-            }
-            else
-            {
-                _taskNotifyGruConfigService.update( config );
-            }
-        }
-
-        return null;
+        return new NotifyGruTaskConfigController( task ).performAction( request );
     }
 
     /**
@@ -265,58 +101,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Override
     public String getDisplayConfigForm( HttpServletRequest request, Locale locale, ITask task )
     {
-        TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId( ) );
-
-        if ( config == null )
-        {
-            // no config stored yet for this task, setting a empty one
-            config = new TaskNotifyGruConfig( );
-        }
-
-        String strDefaultSenderName = AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME );
-
-        Map<String, Object> model = new HashMap<String, Object>( );
-
-        model.put( Constants.MARK_CONFIG, config );
-        model.put( Constants.MARK_DEFAULT_SENDER_NAME, strDefaultSenderName );
-
-        if ( config.getIdSpringProvider( ) == null )
-        {
-            model.put( Constants.MARK_SELECT_PROVIDER, ServiceConfigTaskForm.getProviderReferenceList( task ) );
-        }
-        else
-        {
-            String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
-            String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
-            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
-
-            if ( providerManager != null )
-            {
-                model.put( Constants.MARK_NOTIFYGRU_MARKERS, findMarkers( providerManager, strProviderId, config.getMarkerProviders( ) ) );
-            }
-            else
-            {
-                List<ErrorMessage> listErrorMessages = new ArrayList<>( );
-                listErrorMessages.add( new MVCMessage( I18nService.getLocalizedString( Constants.MESSAGE_ERROR_PROVIDER_NOT_FOUND, locale ) ) );
-                model.put( Constants.MARK_MESSAGES_ERROR, listErrorMessages );
-            }
-        }
-
-        model.put( Constants.MARK_LIST_MARKER_PROVIDER, MarkerProviderService.getInstance( ).getMarkerProviders( ) );
-
-        ReferenceList listeOnglet = ServiceConfigTaskForm.getListOnglet( config, locale );
-
-        if ( listeOnglet.size( ) > 0 )
-        {
-            model.put( Constants.MARK_LIST_ONGLET, listeOnglet );
-        }
-
-        model.put( Constants.MARK_MAILING_LIST, _notifyGRUService.getMailingList( request ) );
-
-        model.put( Constants.MARK_LOCALE, request.getLocale( ) );
-        model.put( Constants.MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_NOTIFY_GRU_CONFIG, locale, model );
+        HtmlTemplate template = new NotifyGruTaskConfigController( task ).buildView( request );
 
         return template.getHtml( );
     }
@@ -358,79 +143,5 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     public String getTaskInformationXml( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
     {
         return null;
-    }
-
-    /**
-     * Saves the marker providers in the specified config
-     * 
-     * @param request
-     *            the request containing the marker providers to save
-     * @param config
-     *            the config in which the marker providers are saved
-     * @param strApply
-     *            the triggered action
-     */
-    private void doSaveMarkerProviders( HttpServletRequest request, TaskNotifyGruConfig config, String strApply )
-    {
-        if ( Constants.PARAMETER_BUTTON_FIRST_STEP_SAVE.equals( strApply ) || Constants.PARAMETER_BUTTON_GLOBAL_CONFIG_SAVE.equals( strApply ) )
-        {
-            String [ ] listMarkerProviders = request.getParameterValues( Constants.PARAMETER_MARKER_PROVIDERS );
-
-            if ( listMarkerProviders != null )
-            {
-                config.setMarkerProviders( Arrays.asList( listMarkerProviders ) );
-            }
-            else
-            {
-                config.setMarkerProviders( null );
-            }
-        }
-    }
-
-    /**
-     * Converts the specified collection of NotifyGru markers into a model
-     * 
-     * @param collectionNotifyGruMarkers
-     *            the collection to convert
-     * @return the model
-     */
-    private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
-    {
-        Map<String, Object> model = new HashMap<>( );
-
-        for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
-        {
-            model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getDescription( ) );
-        }
-
-        return model;
-    }
-
-    /**
-     * Finds the NotifyGru markers
-     * 
-     * @param providerManager
-     *            the provider manager
-     * @param strProviderId
-     *            the provider id
-     * @param listMarkerProviderIds
-     *            the list of marker provider ids
-     * @return the NotifyGru markers
-     */
-    private Collection<NotifyGruMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
-    {
-        Collection<NotifyGruMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
-
-        for ( String strMarkerProviderId : listMarkerProviderIds )
-        {
-            IMarkerProvider markerProvider = MarkerProviderService.getInstance( ).find( strMarkerProviderId );
-
-            if ( markerProvider != null )
-            {
-                collectionMarkers.addAll( markerProvider.provideMarkerDescriptions( ) );
-            }
-        }
-
-        return collectionMarkers;
     }
 }
