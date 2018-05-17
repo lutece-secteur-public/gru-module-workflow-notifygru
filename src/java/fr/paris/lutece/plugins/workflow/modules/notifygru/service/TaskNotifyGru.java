@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.grubusiness.business.notification.EmailNotificati
 import fr.paris.lutece.plugins.grubusiness.business.notification.MyDashboardNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.Notification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
+import fr.paris.lutece.plugins.librarynotifygru.exception.NotifyGruException;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
@@ -63,6 +64,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -198,9 +200,12 @@ public class TaskNotifyGru extends SimpleTask
 
                 if ( !bNotifEmpty )
                 {
-                    _notifyGruSenderService.send( notificationObject );
-
-                    _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+                	try {
+                		_notifyGruSenderService.send( notificationObject );
+                		_taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+                	} catch (AppException | NotifyGruException e){
+                		AppLogService.error( "Unable to send the notification");
+                	}                    
                 }
             }
             else
