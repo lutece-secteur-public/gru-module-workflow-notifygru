@@ -39,6 +39,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -83,7 +84,7 @@ public abstract class AbstractNotificationConfigValidator
 
         if ( !areFieldsWithMarkersValid( model ) )
         {
-            return buildUrlForMarkerValidationError( );
+            return buildUrlForMarkerValidationError( model );
         }
 
         return null;
@@ -106,10 +107,10 @@ public abstract class AbstractNotificationConfigValidator
      * 
      * @return the URL of the error page
      */
-    private String buildUrlForMarkerValidationError( )
+    private String buildUrlForMarkerValidationError( Map<String, Object> model )
     {
         Object [ ] tabRequiredFields = {
-            I18nService.getLocalizedString( Constants.MESSAGE_ERROR_FREEMARKER, _request.getLocale( ) ),
+            model.get( Constants.MARK_MESSAGES_ERROR ),
         };
 
         return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_ERROR_FREEMARKER, tabRequiredFields, AdminMessage.TYPE_STOP );
@@ -160,6 +161,8 @@ public abstract class AbstractNotificationConfigValidator
         }
         catch( RuntimeException e )
         {
+            model.put( Constants.MARK_MESSAGES_ERROR, e.getMessage( ) );
+            AppLogService.error( "Error validating the field with markers : " + e.getMessage( ), e );
             return false;
         }
 
