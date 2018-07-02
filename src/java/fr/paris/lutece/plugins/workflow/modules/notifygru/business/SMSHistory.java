@@ -41,6 +41,8 @@ public class SMSHistory
     // Variables declarations
     private String _strMessageSMS;
     private boolean _activeOngletSMS;
+    private String _strBillingAccount;
+    private String _strBillingGroupSMS;
 
     /**
      * Returns the MessageSMS
@@ -82,5 +84,41 @@ public class SMSHistory
     public void setActiveOngletSMS( boolean activeOngletSMS )
     {
         _activeOngletSMS = activeOngletSMS;
+    }
+
+    /**
+     * Returns the billing account
+     * @return the billing account
+     */
+    public String getBillingAccount() 
+    {
+        return _strBillingAccount;
+    }
+
+    /**
+     * Sets the billing account
+     * 
+     * @param strBillingAccount
+     *          The billing account
+     */
+    public void setBillingAccount(String strBillingAccount) 
+    {
+        _strBillingAccount = strBillingAccount;
+    }
+
+    /**
+     * Returns the billing group for the sms sending
+     * @return the billing group for the sms sending
+     */
+    public String getBillingGroupSMS() {
+        return _strBillingGroupSMS;
+    }
+
+    /**
+     * Set the billing group for the sms sending
+     * @param _strBillingGroupSMS the billing group for the sms sending
+     */
+    public void setBillingGroupSMS(String _strBillingGroupSMS) {
+        _strBillingGroupSMS = _strBillingGroupSMS;
     }
 }

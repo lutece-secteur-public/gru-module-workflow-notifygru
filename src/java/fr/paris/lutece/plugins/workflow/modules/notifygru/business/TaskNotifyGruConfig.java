@@ -33,10 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 /**
  * TaskNotifyDirectoryConfig.
@@ -113,6 +115,14 @@ public class TaskNotifyGruConfig extends TaskConfig
     /** The _str message sms. */
     /* sms config */
     private String _strMessageSMS;
+    
+    /** The _strBillingAccountSMS account id for sms */
+    /* sms config */ 
+    private String _strBillingAccountSMS;
+    
+    /** The _strBillingGroupSMS account group for sms */
+    /* sms config */
+    private String _strBillingGroupSMS;
 
     /** The _active onglet sms. */
     private boolean _bActiveOngletSMS;
@@ -141,7 +151,15 @@ public class TaskNotifyGruConfig extends TaskConfig
 
     /** The _active onglet broadcast. */
     private boolean _bActiveOngletBroadcast;
+    
+    /** The _bBillingAccountBasedSmsNotification sms sending based on billing account */
+    private boolean _bBillingAccountBasedSmsNotification;
 
+    public TaskNotifyGruConfig( )
+    {
+        _bBillingAccountBasedSmsNotification = AppPropertiesService.getPropertyBoolean( Constants.PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED , false);
+    }
+    
     /**
      * Gets the crm status id.
      *
@@ -605,6 +623,45 @@ public class TaskNotifyGruConfig extends TaskConfig
     }
 
     /**
+     * Returns the accountIdSMS
+     * @return strAccountIdSMS
+     *          The account id SMS
+     */
+    public String getBillingAccountSMS( ) {
+        return _strBillingAccountSMS;
+    }
+
+    /**
+     * Sets the billing account SMS
+     * @param strBillingAccountSMS
+     *          The billing account SMS 
+     */
+    public void setBillingAccountSMS(String strBillingAccountSMS) {
+        _strBillingAccountSMS = strBillingAccountSMS;
+    }
+    
+    /**
+     * Returns the billing group for SMS
+     * 
+     * @return _strBillingAccountSMS The account group for SMS
+     */
+    public String getBillingGroupSMS( )
+    {
+        return _strBillingGroupSMS;
+    }
+
+    /**
+     * Sets the billing group SMS
+     * 
+     * @param strBillingGroupSMS
+     *            The billing group SMS
+     */
+    public void setBillingGroupSMS( String strBillingGroupSMS )
+    {
+        _strBillingGroupSMS = strBillingGroupSMS;
+    }
+
+    /**
      * Returns the ActiveOngletSMS.
      *
      * @return The ActiveOngletSMS
@@ -790,4 +847,24 @@ public class TaskNotifyGruConfig extends TaskConfig
     {
         _bActiveOngletBroadcast = bActiveOngletBroadcast;
     }
+
+    /**
+     * Get the billing account based sms notification boolean
+     * @return true if a billing account is needed to send sms, false otherwise
+     */
+    public boolean isBillingAccountBasedSmsNotification() 
+    {
+        return _bBillingAccountBasedSmsNotification;
+    }
+
+    /**
+     * Sets the billing account based sms notification boolean
+     * @param bBillingAccountBasedSmsNotification the billing account based sms notification boolean 
+     */
+    public void setBillingAccountBasedSmsNotification(boolean bBillingAccountBasedSmsNotification) 
+    {
+        _bBillingAccountBasedSmsNotification = bBillingAccountBasedSmsNotification;
+    }
+    
+    
 }

@@ -47,7 +47,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
     private static final String SQL_QUERY_SELECT = "SELECT id_history, id_task, crm_status_id," + "message_guichet,status_text_guichet,sender_name_guichet,"
             + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
             + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email,message_email,sender_name_email,recipients_cc_email,"
-            + "recipients_cci_email,is_active_onglet_email,message_sms,is_active_onglet_sms,"
+            + "recipients_cci_email,is_active_onglet_email,message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
             + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast "
             + " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
@@ -55,10 +55,10 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet,"
             + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
             + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email,"
-            + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," + "message_sms,is_active_onglet_sms,"
+            + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," + "message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
             + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) "
-            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
 
@@ -96,6 +96,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
         daoUtil.setBoolean( ++nPos, history.getEmail( ).isActiveOngletEmail( ) );
 
         daoUtil.setString( ++nPos, history.getSMS( ).getMessageSMS( ) );
+        daoUtil.setString( ++nPos, history.getSMS( ).getBillingAccount( ) );
         daoUtil.setBoolean( ++nPos, history.getSMS( ).isActiveOngletSMS( ) );
 
         daoUtil.setInt( ++nPos, history.getBroadCast( ).getIdMailingListBroadcast( ) );
@@ -159,6 +160,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             oEmail.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
 
             oSMS.setMessageSMS( daoUtil.getString( ++nPos ) );
+            oSMS.setBillingAccount( daoUtil.getString( ++nPos ) );
             oSMS.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
 
             oBroadcast.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );

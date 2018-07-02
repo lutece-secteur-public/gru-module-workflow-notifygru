@@ -55,6 +55,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.Marke
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.BillingAccountBasedSMSNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.AgentNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.BroadcastNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.EmailNotificationConfig;
@@ -151,7 +152,14 @@ public class NotifyGruTaskConfigController
         listNotificationConfig.add( new BroadcastNotificationConfig( request, _config ) );
         listNotificationConfig.add( new EmailNotificationConfig( request, _config ) );
         listNotificationConfig.add( new GuichetNotificationConfig( request, _config ) );
-        listNotificationConfig.add( new SMSNotificationConfig( request, _config ) );
+        if ( _config.isBillingAccountBasedSmsNotification( ) )
+        {
+            listNotificationConfig.add(new BillingAccountBasedSMSNotificationConfig( request, _config ) );
+        }
+        else
+        {
+            listNotificationConfig.add( new SMSNotificationConfig( request, _config ) );
+        }
 
         return listNotificationConfig;
     }

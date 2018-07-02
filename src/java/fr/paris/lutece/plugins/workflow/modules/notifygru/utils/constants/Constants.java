@@ -240,6 +240,8 @@ public final class Constants
     public static final String PARAMETER_SELECT_PROVIDER = "list_provider";
     public static final String PARAMETER_MARKER_PROVIDERS = "marker_providers";
     public static final String PARAMETER_DEMAND_STATUS = "demand_status";
+    public static final String PARAMETER_BILLING_ACCOUNT_SMS = "billing_account_sms";
+    public static final String PARAMETER_BILLING_GROUP_SMS = "billing_group_sms";
 
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";
@@ -271,6 +273,9 @@ public final class Constants
     public static final String MARK_NOTIFYGRU_MARKERS = "notifygru_markers";
     public static final String MARK_MESSAGES_ERROR = "errors";
 
+    // PROPERTIES
+    public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
+    
     // TAGS
     public static final String TAG_A = "a";
 

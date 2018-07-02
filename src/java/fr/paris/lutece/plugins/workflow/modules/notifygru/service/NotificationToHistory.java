@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import fr.paris.lutece.plugins.grubusiness.business.notification.BillingAccountBasedSMSNotification;
 import java.util.List;
 
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
@@ -48,6 +49,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.GuichetHistor
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.SMSHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * The Class NotificationToHistory.
@@ -70,7 +72,7 @@ public final class NotificationToHistory
      *            the SMS notification
      * @return the SMS history
      */
-    public static SMSHistory populateSMS( TaskNotifyGruConfig config, SMSNotification smsNotification )
+    public static <T extends SMSNotification> SMSHistory populateSMS( TaskNotifyGruConfig config, T smsNotification )
     {
         SMSHistory oSMSHistory = new SMSHistory( );
 
@@ -78,6 +80,16 @@ public final class NotificationToHistory
         {
             oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
             oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
+            if ( smsNotification instanceof BillingAccountBasedSMSNotification )
+            {
+                BillingAccountBasedSMSNotification accountBasedSmsNotification = (BillingAccountBasedSMSNotification) smsNotification;
+                oSMSHistory.setBillingAccount( accountBasedSmsNotification.getBillingAccount( ) );
+                oSMSHistory.setBillingGroupSMS( accountBasedSmsNotification.getBillingGroup( ) );
+            }
+            else
+            {
+                oSMSHistory.setBillingAccount( StringUtils.EMPTY );
+            }
         }
 
         return oSMSHistory;

@@ -55,7 +55,7 @@ public class SMSNotificationConfig implements INotificationConfig
     private static final String PARAMETER_MESSAGE = "message_sms";
 
     private final HttpServletRequest _request;
-    private final TaskNotifyGruConfig _config;
+    protected final TaskNotifyGruConfig _config;
     private final String _strMessage;
 
     /**

@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
 import fr.paris.lutece.plugins.grubusiness.business.demand.Demand;
+import fr.paris.lutece.plugins.grubusiness.business.notification.BillingAccountBasedSMSNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailAddress;
@@ -306,15 +307,26 @@ public class TaskNotifyGru extends SimpleTask
      *            the model
      * @return the {@link SMSNotification} object
      */
-    private SMSNotification buildSMSNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
+    private <T extends SMSNotification> T buildSMSNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
     {
-        SMSNotification userSMS = new SMSNotification( );
-
-        userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
-        userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
-        userSMS.setSenderName( provider.provideSmsSender( ) );
-
-        return userSMS;
+        if ( !config.isBillingAccountBasedSmsNotification( ) )
+        {
+            SMSNotification userSMS = new BillingAccountBasedSMSNotification();
+            userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
+            userSMS.setSenderName( provider.provideSmsSender( ) );
+            return (T) userSMS;
+        }
+        else
+        {
+            BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification();
+            billingAccountUserSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            billingAccountUserSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
+            billingAccountUserSMS.setSenderName( provider.provideSmsSender( ) );
+            billingAccountUserSMS.setBillingAccount( config.getBillingAccountSMS( ) );
+            billingAccountUserSMS.setBillingGroup( config.getBillingGroupSMS( ) );
+            return (T) billingAccountUserSMS;
+        }
     }
 
     /**
@@ -497,4 +509,6 @@ public class TaskNotifyGru extends SimpleTask
     {
         return I18nService.getLocalizedString( Constants.TITLE_NOTIFY, locale );
     }
+    
+    
 }

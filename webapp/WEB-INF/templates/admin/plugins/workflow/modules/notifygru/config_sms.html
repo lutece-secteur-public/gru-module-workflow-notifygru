@@ -8,23 +8,41 @@
     </legend>
   </fieldset>
   <div class="col-xs-12 col-sm-8">
-    <!------------------------------------- -->
     <div class="row">
       <div class="form-group">
         <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="message_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} *</label>
         <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-          <#if config?exists  && config.messageSMS?has_content>
-            <textarea name="message_sms" id="message_sms" rows="10" cols="45" >${config.messageSMS}</textarea>
-          <#else>
-            <textarea name="message_sms" id="message_sms" rows="10" cols="45" ></textarea>
+          <#if config?exists>
+            <textarea name="message_sms" id="message_sms" rows="10" cols="45" >${(config.messageSMS)!''}</textarea>
+            <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
           </#if>
-          <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
         </div>
       </div>
     </div>
-    <!------------------------------------- -->
+    <#if config?exists  && config.isBillingAccountBasedSmsNotification()>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="billing_account_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_account_sms} *</label>
+        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                <input type="text" class="" name="billing_account_sms" id="billing_account_sms" value="${(config.billingAccountSMS)!''}"/>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_account_sms}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="billing_group_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_group_sms} *</label>
+        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                <input type="text" class="" name="billing_group_sms" id="billing_group_sms" value="${(config.billingGroupSMS)!''}"/>
+                <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_group_sms}</span>
+        </div>
+      </div>
+    </div>
+    </#if>
   </div>
   <div class="col-xs-12 col-sm-4">
     <@marker_descriptions />
   </div>
 </div>
+
+
