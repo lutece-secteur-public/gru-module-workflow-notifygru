@@ -88,9 +88,10 @@ public class SMSHistory
 
     /**
      * Returns the billing account
+     * 
      * @return the billing account
      */
-    public String getBillingAccount() 
+    public String getBillingAccount( )
     {
         return _strBillingAccount;
     }
@@ -99,26 +100,31 @@ public class SMSHistory
      * Sets the billing account
      * 
      * @param strBillingAccount
-     *          The billing account
+     *            The billing account
      */
-    public void setBillingAccount(String strBillingAccount) 
+    public void setBillingAccount( String strBillingAccount )
     {
         _strBillingAccount = strBillingAccount;
     }
 
     /**
      * Returns the billing group for the sms sending
+     * 
      * @return the billing group for the sms sending
      */
-    public String getBillingGroupSMS() {
+    public String getBillingGroupSMS( )
+    {
         return _strBillingGroupSMS;
     }
 
     /**
      * Set the billing group for the sms sending
-     * @param _strBillingGroupSMS the billing group for the sms sending
+     * 
+     * @param _strBillingGroupSMS
+     *            the billing group for the sms sending
      */
-    public void setBillingGroupSMS(String _strBillingGroupSMS) {
+    public void setBillingGroupSMS( String _strBillingGroupSMS )
+    {
         _strBillingGroupSMS = _strBillingGroupSMS;
     }
 }

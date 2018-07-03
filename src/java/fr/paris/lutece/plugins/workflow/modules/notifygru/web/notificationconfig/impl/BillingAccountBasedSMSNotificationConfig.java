@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BillingAccountBasedSMSNotificationConfig extends SMSNotificationConfig
 {
-    
+
     /* The billing account */
     String _strBillingAccount;
 
@@ -51,8 +51,11 @@ public class BillingAccountBasedSMSNotificationConfig extends SMSNotificationCon
 
     /**
      * Constructor
-     * @param request The HttpServletRequest
-     * @param config the config of the task
+     * 
+     * @param request
+     *            The HttpServletRequest
+     * @param config
+     *            the config of the task
      */
     public BillingAccountBasedSMSNotificationConfig( HttpServletRequest request, TaskNotifyGruConfig config )
     {
@@ -63,22 +66,25 @@ public class BillingAccountBasedSMSNotificationConfig extends SMSNotificationCon
 
     /**
      * Get the billing account
+     * 
      * @return the billing account
      */
-    public String getBillingAccount() 
+    public String getBillingAccount( )
     {
         return _strBillingAccount;
     }
 
     /**
      * Sets the billing account
-     * @param strBillingAccount the billing account 
+     * 
+     * @param strBillingAccount
+     *            the billing account
      */
-    public void setBillingAccount( String strBillingAccount ) 
+    public void setBillingAccount( String strBillingAccount )
     {
         _strBillingAccount = strBillingAccount;
     }
-    
+
     /**
      * Get the billing group
      * 
@@ -110,5 +116,5 @@ public class BillingAccountBasedSMSNotificationConfig extends SMSNotificationCon
         _config.setBillingAccountSMS( _strBillingAccount );
         _config.setBillingGroupSMS( _strBillingGroup );
     }
-    
+
 }

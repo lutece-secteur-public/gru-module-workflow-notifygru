@@ -201,12 +201,15 @@ public class TaskNotifyGru extends SimpleTask
 
                 if ( !bNotifEmpty )
                 {
-                	try {
-                		_notifyGruSenderService.send( notificationObject );
-                		_taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
-                	} catch (AppException | NotifyGruException e){
-                		AppLogService.error( "Unable to send the notification");
-                	}                    
+                    try
+                    {
+                        _notifyGruSenderService.send( notificationObject );
+                        _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+                    }
+                    catch( AppException | NotifyGruException e )
+                    {
+                        AppLogService.error( "Unable to send the notification" );
+                    }
                 }
             }
             else
@@ -311,7 +314,7 @@ public class TaskNotifyGru extends SimpleTask
     {
         if ( !config.isBillingAccountBasedSmsNotification( ) )
         {
-            SMSNotification userSMS = new BillingAccountBasedSMSNotification();
+            SMSNotification userSMS = new BillingAccountBasedSMSNotification( );
             userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
             userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             userSMS.setSenderName( provider.provideSmsSender( ) );
@@ -319,7 +322,7 @@ public class TaskNotifyGru extends SimpleTask
         }
         else
         {
-            BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification();
+            BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification( );
             billingAccountUserSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
             billingAccountUserSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             billingAccountUserSMS.setSenderName( provider.provideSmsSender( ) );
@@ -509,6 +512,5 @@ public class TaskNotifyGru extends SimpleTask
     {
         return I18nService.getLocalizedString( Constants.TITLE_NOTIFY, locale );
     }
-    
-    
+
 }

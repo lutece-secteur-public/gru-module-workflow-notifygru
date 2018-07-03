@@ -154,7 +154,7 @@ public class NotifyGruTaskConfigController
         listNotificationConfig.add( new GuichetNotificationConfig( request, _config ) );
         if ( _config.isBillingAccountBasedSmsNotification( ) )
         {
-            listNotificationConfig.add(new BillingAccountBasedSMSNotificationConfig( request, _config ) );
+            listNotificationConfig.add( new BillingAccountBasedSMSNotificationConfig( request, _config ) );
         }
         else
         {

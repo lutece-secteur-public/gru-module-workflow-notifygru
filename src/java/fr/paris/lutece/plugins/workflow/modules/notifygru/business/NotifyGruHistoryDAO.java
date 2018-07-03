@@ -55,7 +55,8 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet,"
             + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
             + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email, message_email,"
-            + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email," + "message_sms,billing_account_sms,is_active_onglet_sms,"
+            + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email,"
+            + "message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
             + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ) "
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

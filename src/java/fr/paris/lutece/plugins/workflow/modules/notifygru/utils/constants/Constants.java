@@ -275,7 +275,7 @@ public final class Constants
 
     // PROPERTIES
     public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
-    
+
     // TAGS
     public static final String TAG_A = "a";
 

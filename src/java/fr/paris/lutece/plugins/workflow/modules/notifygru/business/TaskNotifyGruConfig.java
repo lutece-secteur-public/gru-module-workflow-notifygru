@@ -115,11 +115,11 @@ public class TaskNotifyGruConfig extends TaskConfig
     /** The _str message sms. */
     /* sms config */
     private String _strMessageSMS;
-    
+
     /** The _strBillingAccountSMS account id for sms */
-    /* sms config */ 
+    /* sms config */
     private String _strBillingAccountSMS;
-    
+
     /** The _strBillingGroupSMS account group for sms */
     /* sms config */
     private String _strBillingGroupSMS;
@@ -151,15 +151,15 @@ public class TaskNotifyGruConfig extends TaskConfig
 
     /** The _active onglet broadcast. */
     private boolean _bActiveOngletBroadcast;
-    
+
     /** The _bBillingAccountBasedSmsNotification sms sending based on billing account */
     private boolean _bBillingAccountBasedSmsNotification;
 
     public TaskNotifyGruConfig( )
     {
-        _bBillingAccountBasedSmsNotification = AppPropertiesService.getPropertyBoolean( Constants.PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED , false);
+        _bBillingAccountBasedSmsNotification = AppPropertiesService.getPropertyBoolean( Constants.PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED, false );
     }
-    
+
     /**
      * Gets the crm status id.
      *
@@ -624,22 +624,25 @@ public class TaskNotifyGruConfig extends TaskConfig
 
     /**
      * Returns the accountIdSMS
-     * @return strAccountIdSMS
-     *          The account id SMS
+     * 
+     * @return strAccountIdSMS The account id SMS
      */
-    public String getBillingAccountSMS( ) {
+    public String getBillingAccountSMS( )
+    {
         return _strBillingAccountSMS;
     }
 
     /**
      * Sets the billing account SMS
+     * 
      * @param strBillingAccountSMS
-     *          The billing account SMS 
+     *            The billing account SMS
      */
-    public void setBillingAccountSMS(String strBillingAccountSMS) {
+    public void setBillingAccountSMS( String strBillingAccountSMS )
+    {
         _strBillingAccountSMS = strBillingAccountSMS;
     }
-    
+
     /**
      * Returns the billing group for SMS
      * 
@@ -850,21 +853,23 @@ public class TaskNotifyGruConfig extends TaskConfig
 
     /**
      * Get the billing account based sms notification boolean
+     * 
      * @return true if a billing account is needed to send sms, false otherwise
      */
-    public boolean isBillingAccountBasedSmsNotification() 
+    public boolean isBillingAccountBasedSmsNotification( )
     {
         return _bBillingAccountBasedSmsNotification;
     }
 
     /**
      * Sets the billing account based sms notification boolean
-     * @param bBillingAccountBasedSmsNotification the billing account based sms notification boolean 
+     * 
+     * @param bBillingAccountBasedSmsNotification
+     *            the billing account based sms notification boolean
      */
-    public void setBillingAccountBasedSmsNotification(boolean bBillingAccountBasedSmsNotification) 
+    public void setBillingAccountBasedSmsNotification( boolean bBillingAccountBasedSmsNotification )
     {
         _bBillingAccountBasedSmsNotification = bBillingAccountBasedSmsNotification;
     }
-    
-    
+
 }
