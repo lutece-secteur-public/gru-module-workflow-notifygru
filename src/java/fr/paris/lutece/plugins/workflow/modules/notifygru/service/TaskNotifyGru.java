@@ -48,16 +48,16 @@ import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IProvider;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.MarkerProviderService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
+import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
+import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.business.mailinglist.Recipient;
@@ -424,10 +424,10 @@ public class TaskNotifyGru extends SimpleTask
      *            the request
      * @return the NotifyGru markers
      */
-    private Collection<NotifyGruMarker> findMarkers( ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
+    private Collection<InfoMarker> findMarkers( ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
             HttpServletRequest request )
     {
-        Collection<NotifyGruMarker> collectionMarkers = provider.provideMarkerValues( );
+        Collection<InfoMarker> collectionMarkers = provider.provideMarkerValues( );
 
         for ( String strMarkerProviderId : listMarkerProviderIds )
         {
@@ -466,11 +466,11 @@ public class TaskNotifyGru extends SimpleTask
      *            the collection to convert
      * @return the model
      */
-    private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
+    private Map<String, Object> markersToModel( Collection<InfoMarker> collectionNotifyGruMarkers )
     {
         Map<String, Object> model = new HashMap<>( );
 
-        for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
+        for ( InfoMarker notifyGruMarker : collectionNotifyGruMarkers )
         {
             model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getValue( ) );
         }

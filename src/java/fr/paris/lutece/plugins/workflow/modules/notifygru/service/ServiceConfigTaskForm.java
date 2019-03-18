@@ -33,11 +33,11 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderDescription;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
+import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
+import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.ProviderDescription;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;

@@ -49,11 +49,6 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruServ
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.AbstractProviderManager;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.MarkerProviderService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.BillingAccountBasedSMSNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.AgentNotificationConfig;
@@ -61,7 +56,12 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.EmailNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.GuichetNotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl.SMSNotificationConfig;
+import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
+import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
+import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -413,9 +413,9 @@ public class NotifyGruTaskConfigController
          *            the list of marker provider ids
          * @return the NotifyGru markers
          */
-        private Collection<NotifyGruMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
+        private Collection<InfoMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
         {
-            Collection<NotifyGruMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
+            Collection<InfoMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
 
             for ( String strMarkerProviderId : listMarkerProviderIds )
             {
@@ -789,13 +789,13 @@ public class NotifyGruTaskConfigController
          *            the collection to convert
          * @return the model
          */
-        private Map<String, Object> markersToModel( Collection<NotifyGruMarker> collectionNotifyGruMarkers )
+        private Map<String, Object> markersToModel( Collection<InfoMarker> collectionNotifyMarkers )
         {
             Map<String, Object> model = new HashMap<>( );
 
-            for ( NotifyGruMarker notifyGruMarker : collectionNotifyGruMarkers )
+            for ( InfoMarker notifyMarker : collectionNotifyMarkers )
             {
-                model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getDescription( ) );
+                model.put( notifyMarker.getMarker( ), notifyMarker.getDescription( ) );
             }
 
             return model;

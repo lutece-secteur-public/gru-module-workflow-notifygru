@@ -33,65 +33,12 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider;
 
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-
-import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
-import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
-
 /**
  * This interface represents a provider of NotifyGru markers
  *
  */
-public interface IMarkerProvider
+@Deprecated
+public interface IMarkerProvider extends fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider
 {
-    /**
-     * <p>
-     * Gives the id.
-     * </p>
-     * <p>
-     * The id is used to find which marker providers have to be used in the task. The id must be unique among the marker providers.
-     * </p>
-     * 
-     * @return the id
-     */
-    String getId( );
 
-    /**
-     * Gives the i18n key of the title
-     * 
-     * @return the i18n key of the title
-     */
-    String getTitleI18nKey( );
-
-    /**
-     * <p>
-     * Gives the marker descriptions
-     * </p>
-     * <p>
-     * Used in the task configuration page (in order to add markers in rich texts for example)
-     * </p>
-     * 
-     * @return the marker descriptions
-     */
-    Collection<NotifyGruMarker> provideMarkerDescriptions( );
-
-    /**
-     * <p>
-     * Provides the values of the markers.
-     * </p>
-     * <p>
-     * This method is used to replace the markers by the actual values of the resource when the notification id send.
-     * </p>
-     * 
-     * @param resourceHistory
-     *            the resource history for which the method is invoked
-     * @param task
-     *            the task for which the method is invoked
-     * @param request
-     *            the request
-     * @return the value of the markers
-     */
-    Collection<NotifyGruMarker> provideMarkerValues( ResourceHistory resourceHistory, ITask task, HttpServletRequest request );
 }

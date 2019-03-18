@@ -42,10 +42,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import fr.paris.lutece.plugins.workflow.modules.comment.business.CommentValue;
 import fr.paris.lutece.plugins.workflow.modules.comment.service.ICommentValueService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.IMarkerProvider;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.NotifyGruMarker;
 import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -93,13 +93,13 @@ public class CommentMarkerProvider implements IMarkerProvider
      * {@inheritDoc}
      */
     @Override
-    public Collection<NotifyGruMarker> provideMarkerDescriptions( )
+    public Collection<InfoMarker> provideMarkerDescriptions( )
     {
-        List<NotifyGruMarker> listMarkers = new ArrayList<>( );
+        List<InfoMarker> listMarkers = new ArrayList<>( );
 
-        NotifyGruMarker notifyGruMarker = new NotifyGruMarker( MARK_COMMENT );
-        notifyGruMarker.setDescription( MESSAGE_MARKER_COMMENT );
-        listMarkers.add( notifyGruMarker );
+        InfoMarker notifyMarker = new InfoMarker( MARK_COMMENT );
+        notifyMarker.setDescription( MESSAGE_MARKER_COMMENT );
+        listMarkers.add( notifyMarker );
 
         return listMarkers;
     }
@@ -108,9 +108,9 @@ public class CommentMarkerProvider implements IMarkerProvider
      * {@inheritDoc}
      */
     @Override
-    public Collection<NotifyGruMarker> provideMarkerValues( ResourceHistory resourceHistory, ITask task, HttpServletRequest request )
+    public Collection<InfoMarker> provideMarkerValues( ResourceHistory resourceHistory, ITask task, HttpServletRequest request )
     {
-        List<NotifyGruMarker> listMarkers = new ArrayList<>( );
+        List<InfoMarker> listMarkers = new ArrayList<>( );
 
         StringBuilder sbComments = new StringBuilder( );
 
@@ -127,7 +127,7 @@ public class CommentMarkerProvider implements IMarkerProvider
             }
         }
 
-        NotifyGruMarker notifyGruMarker = new NotifyGruMarker( MARK_COMMENT );
+        InfoMarker notifyGruMarker = new InfoMarker( MARK_COMMENT );
         notifyGruMarker.setValue( sbComments.toString( ) );
         listMarkers.add( notifyGruMarker );
 
