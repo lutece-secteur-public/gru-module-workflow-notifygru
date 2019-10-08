@@ -1,9 +1,9 @@
 
-#NotifyGru Module
+# NotifyGru Module
 
-##Introduction
+## Introduction
 Notify Gru The module is a workflow task which, from a resource to build a stream associated JSON and send it to a processing entity
-##Provider of resource
+## Provider of resource
 
 Notify Gru is a generic task to the extent that it can work with any resource provider (ticketing, appointment, directory ...).Thus for each service (ticketing, appointment, directory ...) a provider will be implemented to provide maximum                 information about the resource.
 
@@ -19,7 +19,7 @@ A resource provider is the link between the NotifyGru task and a single form is 
 A resource provider manager is the link between the           notifygru task and each plugin service form concerned.This is the case of the plugin Gesion of Appointment, directory where one can have more service forms
 
 
-##Configuring the task
+## Configuring the task
 
  **NotifyGru configuration is done in two steps:** 
  **A first page with two immutable fields:** 
@@ -71,7 +71,7 @@ NotifyGru configuration is done on 5 tabs. To set up a tab you must activate it 
 
 Do not forget to override the config settings that will be used to inform parameters (URL, TOKEN, ORIGIN) of the external entity that will receive the flow Json
 
-##Using the task
+## Using the task
 
 When the service receives a request, the task is launched                  (Automatic or manual start) and the Supplier during the configuration                 responsible for collecting all the information needed to build the JSON stream                  sent to the external entity
 
