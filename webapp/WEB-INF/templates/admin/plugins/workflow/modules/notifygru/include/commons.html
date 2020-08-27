@@ -12,12 +12,14 @@
           <#list notifygru_markers as marker>
             <tr>
               <td>
+                <#if marker.description ??>
                 <#assign description = i18n(marker.description) />
 
                 <#if description?has_content>
                     ${description}
                 <#else>
                     ${marker.description!''}
+                </#if>
                 </#if>
               </td>
               <td>
