@@ -1,28 +1,53 @@
 <#macro marker_descriptions >
-<h2>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h2>
-<div class="table-responsive">
-	<table class="table table-striped">
-		<tr>
-		  <th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</th>
-		  <th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</th>
+<h3>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h3>
+<@table class="table table-striped">
+	<tr>
+		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</th>
+		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</th>
+		<th></th>
+	</tr>
+	<#if notifygru_markers?exists>
+		<#list notifygru_markers as marker>
+		<tr class="marker">
+			<td>
+			<#assign description = i18n(marker.description) />
+			<#if description?has_content>${description}<#else>${marker.description!''}</#if>
+			</td>
+			<td>&#36;&#123;${marker.marker}&#33;&#125;</td>
+			<td><i class="fa fa-copy fa-fw"></i></td>
 		</tr>
-		<#if notifygru_markers?exists>
-			<#list notifygru_markers as marker>
-			<tr>
-				<td>
-				<#assign description = i18n(marker.description) />
-				<#if description?has_content>${description!}<#else>${marker.description!''}</#if>
-				</td>
-				<td>
-				&#36;&#123;${marker.marker!}&#33;&#125;
-				</td>
-			</tr>
-			</#list>
-		<#else>
-			<tr>
-				<td colspan="2"></td>
-			</tr>
-		</#if>
-	</table>
-</div>
+		</#list>
+	<#else>
+		<tr>
+			<td colspan="3"></td>
+		</tr>
+	</#if>
+</@table>
+<style>
+.marker:hover{ cursor: pointer; }
+.marker:nth-child(even) td{ background: #777; color: #fff }
+</style>
+<script>
+function copyToClipboard( element ) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val( $(element).text().replace(/\s+/g, '') ).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+$('.marker').on( 'dblclick', function(e){
+	if( $( '.tab-pane.active .richtext' ).length > 0 ){
+		var c = '<p>' + $(this).text() + '</p>';
+		tinymce.activeEditor.insertContent( '<p>' + c + '</p>' );
+	} else { 
+		var c = $(this).text().replace(/\s+/g, '');
+		$('textarea').val( c );
+	}
+});
+
+$('.marker').on( 'click', function(e){
+	copyToClipboard( this );
+});
+</script>
 </#macro>
