@@ -10,10 +10,12 @@
 		<#list notifygru_markers as marker>
 		<tr class="marker">
 			<td>
-			<#assign description = i18n(marker.description) />
-			<#if description?has_content>${description}<#else>${marker.description!''}</#if>
-			</td>
-			<td>&#36;&#123;${marker.marker}&#33;&#125;</td>
+				<#if marker.description ??>
+					<#assign description = i18n(marker.description) />
+					<#if description?has_content>${description}<#else>${marker.description!''}</#if>
+				</#if>	
+				</td>
+				<td>&#36;&#123;${marker.marker}&#33;&#125;</td>
 			<td><i class="fa fa-copy fa-fw"></i></td>
 		</tr>
 		</#list>
