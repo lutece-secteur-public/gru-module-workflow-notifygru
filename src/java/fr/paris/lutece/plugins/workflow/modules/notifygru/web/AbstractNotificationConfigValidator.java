@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -110,7 +110,7 @@ public abstract class AbstractNotificationConfigValidator
     private String buildUrlForMarkerValidationError( Map<String, Object> model )
     {
         Object [ ] tabRequiredFields = {
-            model.get( Constants.MARK_MESSAGES_ERROR ),
+                model.get( Constants.MARK_MESSAGES_ERROR ),
         };
 
         return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_ERROR_FREEMARKER, tabRequiredFields, AdminMessage.TYPE_STOP );

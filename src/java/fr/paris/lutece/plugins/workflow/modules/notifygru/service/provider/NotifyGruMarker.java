@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,9 +52,10 @@ import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 @Deprecated
 public class NotifyGruMarker extends InfoMarker
 {
-    
-    public NotifyGruMarker(String strMarker) {
-        super(strMarker);
+
+    public NotifyGruMarker( String strMarker )
+    {
+        super( strMarker );
     }
-    
+
 }
