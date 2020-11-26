@@ -49,6 +49,8 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.GuichetHistor
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.SMSHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -133,53 +135,54 @@ public final class NotificationToHistory
     public static BroadcastHistory populateBroadcast( TaskNotifyGruConfig config, BroadcastNotification broadcastNotification )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory( );
-
-        if ( broadcastNotification != null )
+        if ( broadcastNotification == null )
         {
-            oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );
-            oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast( ) );
-            oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
-            oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
-            oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
-            oBroadcastHistory.setMessageBroadcast( broadcastNotification.getMessage( ) );
-            oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
-
-            StringBuilder sbEmailAdresses = new StringBuilder( );
-            StringBuilder sbEmailAdressesCc = new StringBuilder( );
-            List<EmailAddress> listEmailAddresses = broadcastNotification.getRecipient( );
-
-            if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
-            {
-                for ( EmailAddress emailAddress : listEmailAddresses )
-                {
-                    if ( sbEmailAdresses.length( ) > 0 )
-                    {
-                        sbEmailAdresses.append( Constants.SEMICOLON );
-                    }
-
-                    sbEmailAdresses.append( emailAddress.getAddress( ) );
-                }
-            }
-
-            oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
-
-            listEmailAddresses = broadcastNotification.getCc( );
-
-            if ( ( listEmailAddresses != null ) && !listEmailAddresses.isEmpty( ) )
-            {
-                for ( EmailAddress emailAddress : listEmailAddresses )
-                {
-                    if ( sbEmailAdressesCc.length( ) > 0 )
-                    {
-                        sbEmailAdressesCc.append( Constants.SEMICOLON );
-                    }
-
-                    sbEmailAdressesCc.append( emailAddress.getAddress( ) );
-                }
-            }
-
-            oBroadcastHistory.setRecipientsCcBroadcast( sbEmailAdressesCc.toString( ) );
+            return oBroadcastHistory;
         }
+
+        oBroadcastHistory.setIdMailingListBroadcast( config.getIdMailingListBroadcast( ) );
+        oBroadcastHistory.setRecipientsCcBroadcast( config.getRecipientsCcBroadcast( ) );
+        oBroadcastHistory.setRecipientsCciBroadcast( config.getRecipientsCciBroadcast( ) );
+        oBroadcastHistory.setSenderNameBroadcast( config.getSenderNameBroadcast( ) );
+        oBroadcastHistory.setActiveOngletBroadcast( config.isActiveOngletBroadcast( ) );
+        oBroadcastHistory.setMessageBroadcast( broadcastNotification.getMessage( ) );
+        oBroadcastHistory.setSubjectBroadcast( broadcastNotification.getSubject( ) );
+
+        StringBuilder sbEmailAdresses = new StringBuilder( );
+        StringBuilder sbEmailAdressesCc = new StringBuilder( );
+        List<EmailAddress> listEmailAddresses = broadcastNotification.getRecipient( );
+
+        if ( CollectionUtils.isNotEmpty( listEmailAddresses ) )
+        {
+            for ( EmailAddress emailAddress : listEmailAddresses )
+            {
+                if ( sbEmailAdresses.length( ) > 0 )
+                {
+                    sbEmailAdresses.append( Constants.SEMICOLON );
+                }
+
+                sbEmailAdresses.append( emailAddress.getAddress( ) );
+            }
+        }
+
+        oBroadcastHistory.setEmailBroadcast( sbEmailAdresses.toString( ) );
+
+        listEmailAddresses = broadcastNotification.getCc( );
+
+        if ( CollectionUtils.isNotEmpty( listEmailAddresses ) )
+        {
+            for ( EmailAddress emailAddress : listEmailAddresses )
+            {
+                if ( sbEmailAdressesCc.length( ) > 0 )
+                {
+                    sbEmailAdressesCc.append( Constants.SEMICOLON );
+                }
+
+                sbEmailAdressesCc.append( emailAddress.getAddress( ) );
+            }
+        }
+
+        oBroadcastHistory.setRecipientsCcBroadcast( sbEmailAdressesCc.toString( ) );
 
         return oBroadcastHistory;
     }

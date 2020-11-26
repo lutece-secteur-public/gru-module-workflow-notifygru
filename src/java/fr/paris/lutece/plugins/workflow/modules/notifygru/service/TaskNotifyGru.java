@@ -125,101 +125,99 @@ public class TaskNotifyGru extends SimpleTask
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
         AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
 
-        if ( providerManager != null )
-        {
-            ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
-            IProvider provider = providerManager.createProvider( strProviderId, resourceHistory, request );
-
-            if ( provider != null )
-            {
-                NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
-                notifyGruHistory.setIdTask( this.getId( ) );
-                notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
-
-                Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), request ) );
-
-                Notification notificationObject = buildNotification( config, provider );
-
-                EmailNotification emailNotification = null;
-
-                boolean bNotifEmpty = true;
-
-                if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
-                {
-                    emailNotification = buildEmailNotification( config, provider, model );
-                    notificationObject.setEmailNotification( emailNotification );
-                    notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
-                    bNotifEmpty = false;
-                }
-
-                MyDashboardNotification myDashBoardNotification = null;
-
-                if ( config.isActiveOngletGuichet( ) && StringUtils.isNotBlank( provider.provideCustomerConnectionId( ) ) )
-                {
-                    myDashBoardNotification = buildMyDashboardNotification( config, model );
-                    notificationObject.setMyDashboardNotification( myDashBoardNotification );
-                    notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
-                    bNotifEmpty = false;
-                }
-
-                SMSNotification smsNotification = null;
-
-                if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( provider.provideCustomerMobilePhone( ) ) )
-                {
-                    smsNotification = buildSMSNotification( config, provider, model );
-                    notificationObject.setSmsNotification( smsNotification );
-                    notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
-                    bNotifEmpty = false;
-                }
-
-                BackofficeNotification backofficeNotification = null;
-
-                if ( config.isActiveOngletAgent( ) )
-                {
-                    backofficeNotification = buildBackofficeNotification( config, model );
-                    notificationObject.setBackofficeNotification( backofficeNotification );
-                    notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
-                    bNotifEmpty = false;
-                }
-
-                BroadcastNotification broadcastNotification = null;
-
-                if ( config.isActiveOngletBroadcast( ) )
-                {
-                    broadcastNotification = buildBroadcastNotification( config, model );
-
-                    if ( !broadcastNotification.getRecipient( ).isEmpty( ) )
-                    {
-                        notificationObject.addBroadcastEmail( broadcastNotification );
-                        notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
-                        bNotifEmpty = false;
-                    }
-                }
-
-                // crm status id
-                notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
-
-                if ( !bNotifEmpty )
-                {
-                    try
-                    {
-                        _notifyGruSenderService.send( notificationObject );
-                        _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
-                    }
-                    catch( AppException | NotifyGruException e )
-                    {
-                        AppLogService.error( "Unable to send the notification" );
-                    }
-                }
-            }
-            else
-            {
-                AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
-            }
-        }
-        else
+        if ( providerManager == null )
         {
             AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
+            return;
+        }
+        
+        ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
+        IProvider provider = providerManager.createProvider( strProviderId, resourceHistory, request );
+
+        if ( provider == null )
+        {
+            AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
+            return;
+        }
+        
+        NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
+        notifyGruHistory.setIdTask( this.getId( ) );
+        notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
+
+        Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), request ) );
+
+        Notification notificationObject = buildNotification( config, provider );
+
+        EmailNotification emailNotification = null;
+
+        boolean bNotifEmpty = true;
+
+        if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
+        {
+            emailNotification = buildEmailNotification( config, provider, model );
+            notificationObject.setEmailNotification( emailNotification );
+            notifyGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
+            bNotifEmpty = false;
+        }
+
+        MyDashboardNotification myDashBoardNotification = null;
+
+        if ( config.isActiveOngletGuichet( ) && StringUtils.isNotBlank( provider.provideCustomerConnectionId( ) ) )
+        {
+            myDashBoardNotification = buildMyDashboardNotification( config, model );
+            notificationObject.setMyDashboardNotification( myDashBoardNotification );
+            notifyGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
+            bNotifEmpty = false;
+        }
+
+        SMSNotification smsNotification = null;
+
+        if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( provider.provideCustomerMobilePhone( ) ) )
+        {
+            smsNotification = buildSMSNotification( config, provider, model );
+            notificationObject.setSmsNotification( smsNotification );
+            notifyGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
+            bNotifEmpty = false;
+        }
+
+        BackofficeNotification backofficeNotification = null;
+
+        if ( config.isActiveOngletAgent( ) )
+        {
+            backofficeNotification = buildBackofficeNotification( config, model );
+            notificationObject.setBackofficeNotification( backofficeNotification );
+            notifyGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
+            bNotifEmpty = false;
+        }
+
+        BroadcastNotification broadcastNotification = null;
+
+        if ( config.isActiveOngletBroadcast( ) )
+        {
+            broadcastNotification = buildBroadcastNotification( config, model );
+
+            if ( !broadcastNotification.getRecipient( ).isEmpty( ) )
+            {
+                notificationObject.addBroadcastEmail( broadcastNotification );
+                notifyGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
+                bNotifEmpty = false;
+            }
+        }
+
+        // crm status id
+        notifyGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
+
+        if ( !bNotifEmpty )
+        {
+            try
+            {
+                _notifyGruSenderService.send( notificationObject );
+                _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
+            }
+            catch( AppException | NotifyGruException e )
+            {
+                AppLogService.error( "Unable to send the notification" );
+            }
         }
     }
 
@@ -371,7 +369,7 @@ public class TaskNotifyGru extends SimpleTask
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
 
-        List<String> listRecipientBroadcast = new ArrayList<String>( );
+        List<String> listRecipientBroadcast = new ArrayList<>( );
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
@@ -453,9 +451,7 @@ public class TaskNotifyGru extends SimpleTask
      */
     private static String replaceMarkers( String strMessage, Map<String, Object> model )
     {
-        @SuppressWarnings( "deprecation" )
         HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, Locale.FRENCH, model );
-
         return template.getHtml( );
     }
 

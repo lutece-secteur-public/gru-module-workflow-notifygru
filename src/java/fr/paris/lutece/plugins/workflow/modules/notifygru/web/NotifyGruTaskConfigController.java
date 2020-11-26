@@ -272,7 +272,7 @@ public class NotifyGruTaskConfigController
         private View( HttpServletRequest request )
         {
             _request = request;
-            _model = new HashMap<String, Object>( );
+            _model = new HashMap<>( );
 
             _listNotificationConfig = initNotificationConfigs( request );
         }

@@ -120,7 +120,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     {
         NotifyGruHistory notifyGruTaskHistory = _taskNotifyGruHistoryService.findByPrimaryKey( nIdHistory, task.getId( ), WorkflowUtils.getPlugin( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<>( );
         TaskNotifyGruConfig config = _taskNotifyGruConfigService.findByPrimaryKey( task.getId( ) );
         model.put( MARK_CONFIG, config );
         model.put( MARK_NOTIFY_HISTORY, notifyGruTaskHistory );

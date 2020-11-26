@@ -118,9 +118,7 @@ public final class NotifyGruService implements INotifyGruService
     @Override
     public List<FileAttachment> getFilesAttachment( TaskNotifyGruConfig config, int nIdRecord, int nIdDirectory )
     {
-        List<FileAttachment> listFileAttachment = null;
-
-        return listFileAttachment;
+        return null;
     }
 
     // OTHERS

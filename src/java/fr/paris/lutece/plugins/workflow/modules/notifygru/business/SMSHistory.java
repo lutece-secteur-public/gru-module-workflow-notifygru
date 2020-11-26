@@ -120,11 +120,11 @@ public class SMSHistory
     /**
      * Set the billing group for the sms sending
      * 
-     * @param _strBillingGroupSMS
+     * @param strBillingGroupSMS
      *            the billing group for the sms sending
      */
-    public void setBillingGroupSMS( String _strBillingGroupSMS )
+    public void setBillingGroupSMS( String strBillingGroupSMS )
     {
-        _strBillingGroupSMS = _strBillingGroupSMS;
+        _strBillingGroupSMS = strBillingGroupSMS;
     }
 }

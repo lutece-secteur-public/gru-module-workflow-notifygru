@@ -149,7 +149,6 @@ public abstract class AbstractNotificationConfigValidator
      *            the model representing the markers
      * @return {@code true} if the field is valid, {@code false} otherwise
      */
-    @SuppressWarnings( "deprecation" )
     protected boolean areMarkersValid( String strFieldValue, Map<String, Object> model )
     {
         try
