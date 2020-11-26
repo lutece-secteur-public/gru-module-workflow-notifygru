@@ -130,7 +130,7 @@ public class TaskNotifyGru extends SimpleTask
             AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
             return;
         }
-        
+
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
         IProvider provider = providerManager.createProvider( strProviderId, resourceHistory, request );
 
@@ -139,7 +139,7 @@ public class TaskNotifyGru extends SimpleTask
             AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
             return;
         }
-        
+
         NotifyGruHistory notifyGruHistory = new NotifyGruHistory( );
         notifyGruHistory.setIdTask( this.getId( ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );

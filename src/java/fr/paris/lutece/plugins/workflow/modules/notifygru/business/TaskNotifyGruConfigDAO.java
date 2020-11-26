@@ -94,7 +94,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin( ) ) )
         {
             configToData( config, daoUtil );
-    
+
             daoUtil.executeUpdate( );
         }
     }
@@ -132,29 +132,29 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
         {
             daoUtil.setInt( 1, nIdTask );
             daoUtil.executeQuery( );
-    
+
             if ( daoUtil.next( ) )
             {
                 int nPos = 0;
                 config = new TaskNotifyGruConfig( );
                 config.setIdTask( daoUtil.getInt( ++nPos ) );
-    
+
                 config.setIdSpringProvider( daoUtil.getString( ++nPos ) );
-    
+
                 String strMarkerProviderIds = daoUtil.getString( ++nPos );
                 List<String> listMarkerProviderIds = new ArrayList<>( );
-    
+
                 if ( !StringUtils.isBlank( strMarkerProviderIds ) )
                 {
                     Collections.addAll( listMarkerProviderIds, StringUtils.split( strMarkerProviderIds, LIST_SEPARATOR ) );
                 }
-    
+
                 config.setMarkerProviders( listMarkerProviderIds );
-    
+
                 config.setDemandStatus( daoUtil.getInt( ++nPos ) );
                 config.setCrmStatusId( daoUtil.getInt( ++nPos ) );
                 config.setSetOnglet( daoUtil.getInt( ++nPos ) );
-    
+
                 config.setMessageGuichet( daoUtil.getString( ++nPos ) );
                 config.setStatustextGuichet( daoUtil.getString( ++nPos ) );
                 config.setSenderNameGuichet( daoUtil.getString( ++nPos ) );
@@ -162,23 +162,23 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
                 config.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
                 config.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
                 config.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setStatustextAgent( daoUtil.getString( ++nPos ) );
                 config.setMessageAgent( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setSubjectEmail( daoUtil.getString( ++nPos ) );
                 config.setMessageEmail( daoUtil.getString( ++nPos ) );
                 config.setSenderNameEmail( daoUtil.getString( ++nPos ) );
                 config.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
                 config.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setMessageSMS( daoUtil.getString( ++nPos ) );
                 config.setBillingAccountSMS( daoUtil.getString( ++nPos ) );
                 config.setBillingGroupSMS( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
                 config.setEmailBroadcast( daoUtil.getString( ++nPos ) );
                 config.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
