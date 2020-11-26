@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <artifactId>lutece-global-pom</artifactId>
@@ -26,31 +28,27 @@
         <dependency>
             <groupId>fr.paris.lutece</groupId>
             <artifactId>lutece-core</artifactId>
-            <version>[6.0.0,7.0.0-RC-01)</version>
+            <version>[7.0.0-RC-01,)</version>
             <type>lutece-core</type>
         </dependency>
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-workflow</artifactId>
-            <version>[4.0.0,5.0.0-SNAPSHOT)</version>
+            <version>[5.0.1-SNAPSHOT,)</version>
             <type>lutece-plugin</type>
-        </dependency>           
-       
-
+        </dependency>
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>library-notifygru</artifactId>
             <version>[1.1.1,)</version>
             <type>jar</type>
         </dependency>
-        
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>library-grubusiness</artifactId>
             <version>[1.1.7,)</version>
             <type>jar</type>
         </dependency>
-       
     </dependencies>
 
     <properties>
@@ -58,14 +56,11 @@
         <jiraProjectName>WFNOTIFGRU</jiraProjectName>
         <jiraComponentId>12910</jiraComponentId>
     </properties>
-    
-      
+
     <scm>
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru.git</url>
         <tag>HEAD</tag>
     </scm>
-  
-  
 </project>
