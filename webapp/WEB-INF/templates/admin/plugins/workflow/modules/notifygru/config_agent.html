@@ -1,32 +1,27 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
-<div class="row">
-  <div class="col-xs-12 col-sm-12">
-		<div style="display:flex;justify-content:space-between;border-bottom:1px solid #000;padding-bottom:	5px;margin-bottom:15px">
+<@row>
+  <@columns>
+		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}<h4>
-			<button class="btn btn-danger" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}" type="submit" name="apply" value="RemoveNotificationConfig_agent">
-				<i class="fa fa-fw fa-trash" aria-hidden="true"></i>
-			</button> 
+			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' value='RemoveNotificationConfig_agent' buttonIcon='trash' color='danger' size='sm' />
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 col-sm-8"> 
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" for="status_text_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent} *</label>
-			<div class="col-xs-12 col-sm-12 col-md-8" >
-				<input type="text" name="status_text_agent"  class="form-control" value="<#if config?exists && config.statustextAgent?has_content>${config.statustextAgent!}</#if>" maxlength="255">
-				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent_helper}</span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" for="message_agent">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent} *</label>
-			<div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-				<textarea name="message_agent" id="message_agent" rows="5" cols="70" class="richtext"><#if config?exists  && config.messageAgent?has_content>${config.messageAgent}</#if></textarea>
-				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}</span>
-			</div>
-		</div>
-    </div>	
-	<div class="col-xs-12 col-sm-4">
-    <@marker_descriptions />
-	</div>
-</div>
+	</@columns>
+</@row>
+<@row>
+	<@columns sm=8>
+		<@formGroup labelFor='status_text_agent' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent_helper}' mandatory=true rows=2>
+			<#if config?exists && config.statustextAgent?has_content>
+				<#assign inputValue = config.statustextAgent! />
+			<#else>
+				<#assign inputValue = '' />
+			</#if>
+			<@input type='text' name='status_text_agent' value=inputValue maxlength= 255 />
+		</@formGroup>
+		<@formGroup labelFor='message_agent' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}' mandatory=true rows=2>
+			<@input type='textarea' name='message_agent' id='message_agent' rows=5 cols=70 richtext=true><#if config?exists  && config.messageAgent?has_content>${config.messageAgent}</#if></@input>
+		</@formGroup>
+    </@columns>
+	<@columns sm=4>
+		<@marker_descriptions />
+	</@columns>
+</@row>

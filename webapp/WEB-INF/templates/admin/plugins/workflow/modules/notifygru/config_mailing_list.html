@@ -1,105 +1,92 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
-<div class="row">
-  <div class="col-xs-12 col-sm-12">
-		<div style="display:flex;justify-content:space-between;border-bottom:1px solid #000;padding-bottom:	5px;margin-bottom:15px">
+<@row>
+  <@columns>
+		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}<h4>
-			<button class="btn btn-danger" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}" type="submit" name="apply" value="RemoveNotificationConfig_broadcast">
-				<i class="fa fa-fw fa-trash" aria-hidden="true"></i>
-			</button> 
+			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' value='RemoveNotificationConfig_broadcast' buttonIcon='trash' color='danger' size='sm' />
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 col-sm-8"> 
-		<#assign mailingSpecStyle="display:block;" />	
-		<#assign mailingSpecChecked="checked" />
-		<#assign mailingListStyle="display:none;" />
-		<#assign mailingListChecked="" />
+	</@columns>
+</@row>
+<@row>
+	<@columns sm=8>
+		<#assign mailingSpecStyle = 'display:block;' />	
+		<#assign mailingSpecChecked = true />
+		<#assign mailingListStyle = 'display:none;' />
+		<#assign mailingListChecked = false />
 		<#if mailing_list?exists>
 			<#if (config.idMailingListBroadcast > 0) >	
-				<#assign mailingSpecStyle="display:none;" />	
-				<#assign mailingSpecChecked="" />
-				<#assign mailingListStyle="display:block;" /> 
-				<#assign mailingListChecked="checked" />   		
+				<#assign mailingSpecStyle = 'display:none;' />	
+				<#assign mailingSpecChecked = '' />
+				<#assign mailingListStyle = 'display:block;' /> 
+				<#assign mailingListChecked = 'checked' />   		
 			</#if>
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3" for="mailing_type">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}</label>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<label class="radio-inline">
-						<input id="mailing_type" name="mailing_type" type="radio" value="list" ${mailingListChecked} onchange="mailingType('list');">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}
-					</label>
-					<label class="radio-inline">
-						<input id="mailing_type" name="mailing_type" type="radio" value="spec" ${mailingSpecChecked} onchange="mailingType('spec');">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}
-					</label>
-				</div>
-			</div>
-			<div id="mailing_list_block" style="${mailingListStyle}">
-				<div class="form-group">
-					<label class="control-label col-xs-12 col-sm-12 col-md-3" for="id_mailing_list">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast} *</label>
-					<div class="col-xs-12 col-sm-12 col-md-8">
-					  <@select name="id_mailing_list_broadcast"  items=mailing_list default_value="${config.idMailingListBroadcast!}" />
-					  <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}</span>
-					</div>
-				</div>
-			</div>
+			<@formGroup labelFor='mailing_type' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}' rows=2>
+				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_list' value='list' checked=mailingListChecked params='onchange="mailingType(\'list\');"' labelFor='mailing_type_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' />
+				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_spec' value='spec' checked=mailingSpecChecked params='onchange="mailingType(\'spec\');"' labelFor='mailing_type_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' />
+			</@formGroup>
+			
+			<@div id='mailing_list_block' params='style="${mailingListStyle}"'>
+				<@formGroup labelFor='id_mailing_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}' mandatory=true rows=2>
+					<@select name='id_mailing_list_broadcast' items=mailing_list default_value='${config.idMailingListBroadcast!}' />
+				</@formGroup>
+			</@div>
 		</#if>
-		<div id="mailing_spec_block" style="${mailingSpecStyle}">
+		<@div id='mailing_spec_block' params='style="${mailingSpecStyle}"'>
 			<#if config?exists && config.emailBroadcast?has_content>
-				<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="${config.emailBroadcast}" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast"  />
+				<@formGroup labelFor='mailing_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast}' mandatory=true rows=2>
+					<@input type='text' name='mailing_spec' value=config.emailBroadcast maxlength=255 />
+				</@formGroup>
 			<#else>
-				<@fieldInputText i18nLabelKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast" inputName="mailing_spec" mandatory=true value="" maxlength=255 i18nHelpBlockKey="module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast"  />
+				<@formGroup labelFor='mailing_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast}' mandatory=true rows=2>
+					<@input type='text' name='mailing_spec' value='' maxlength=255 />
+				</@formGroup>
 			</#if>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" for="sender_name_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_broadcast} *</label>
-			<div class="col-xs-12 col-sm-12 col-md-8" >
-				<input type="text" name="sender_name_broadcast"  class="form-control" value="<#if config?exists && config.senderNameBroadcast?has_content>${config.senderNameBroadcast!}</#if>" maxlength="255">
-				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_broadcast}</span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" for="subject_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_broadcast} *</label>
-			<div class="col-xs-12 col-sm-12 col-md-8">
-				<input type="text" name="subject_broadcast"  class="form-control" value="<#if config?exists && config.subjectBroadcast?has_content>${config.subjectBroadcast!}</#if>" maxlength="255">
-				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_broadcast}</span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" ></label>
-			<div class="col-xs-12 col-sm-12 col-md-8">
-			  <a  class="btn btn-primary" role="button" onclick="showhide()">
-				#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email} <span class="fa fa-caret-down" aria-hidden="true" id="iconeCCListe"></span>
-			  </a>
-			</div>
-		</div>
-		<div id="copyccBroadcast">
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3" >#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_broadcast}</label>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<input type="text" name="recipients_cc_broadcast" id="recipients_cc_broadcast" class="form-control" value="<#if config?exists && config.recipientsCcBroadcast?has_content>${config.recipientsCcBroadcast}</#if>"  maxlength="255">
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_broadcast}</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3" >#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_broadcast}</label>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<input type="text" name="recipients_cci_broadcast" id="recipients_cci_broadcast" class="form-control" value="<#if config?exists && config.recipientsCciBroadcast?has_content>${config.recipientsCciBroadcast!}</#if>"  maxlength="255">
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_broadcast}</span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3" for="message_broadcast">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast} *</label>
-			<div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-				<textarea name="message_broadcast" id="message_broadcast" rows="15" cols="70" class="richtext"><#if config?exists  && config.messageBroadcast?has_content>${config.messageBroadcast!}</#if></textarea>
-				<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_broadcast}</span>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-4">
+		</@div>
+		<@formGroup labelFor='sender_name_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_sender_name_comment_broadcast}' mandatory=true rows=2>
+			<#if config?exists && config.senderNameBroadcast?has_content>
+				<#assign inputValue = config.senderNameBroadcast! />
+			<#else>
+				<#assign inputValue = '' />
+			</#if>
+			<@input type='text' name='sender_name_broadcast' value=inputValue maxlength=255 />
+		</@formGroup>
+		<@formGroup labelFor='subject_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_subject_comment_broadcast}' mandatory=true rows=2>
+			<#if config?exists && config.subjectBroadcast?has_content>
+				<#assign inputValue = config.subjectBroadcast! />
+			<#else>
+				<#assign inputValue = '' />
+			</#if>
+			<@input type='text' name='subject_broadcast' value=inputValue maxlength=255 />
+		</@formGroup>
+		<@formGroup rows=2>
+			<@button params='onclick="showhide()"' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCListe' />
+		</@formGroup>
+		<@div id='copyccBroadcast'>
+			<@formGroup labelFor='recipients_cc_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_broadcast}' rows=2>
+				<#if config?exists && config.recipientsCcBroadcast?has_content>
+					<#assign inputValue = config.recipientsCcBroadcast />
+				<#else>
+					<#assign inputValue = '' />
+				</#if>
+				<@input type='text' name='recipients_cc_broadcast' id='recipients_cc_broadcast' value=inputValue maxlength=255 />
+			</@formGroup>
+			<@formGroup labelFor='recipients_cci_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_bcc_comment_broadcast}' rows=2>
+				<#if config?exists && config.recipientsCciBroadcast?has_content>
+					<#assign inputValue = config.recipientsCciBroadcast! />
+				<#else>
+					<#assign inputValue = '' />
+				</#if>
+				<@input type='text' name='recipients_cci_broadcast' id='recipients_cci_broadcast' value=inputValue maxlength=255 />
+			</@formGroup>
+		</@div>
+		<@formGroup labelFor='message_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_broadcast}' mandatory=true rows=2>
+			<@input type='textarea' name='message_broadcast' id='message_broadcast' rows=15 cols=70 richtext=true><#if config?exists  && config.messageBroadcast?has_content>${config.messageBroadcast!}</#if></@input>
+		</@formGroup>
+	</@columns>
+	<@columns sm=4>
 		<@marker_descriptions />
-	</div>
-</div>
+	</@columns>
+</@row>
 <script>
     var Atloading=true;
     function showhide()    {
@@ -107,12 +94,16 @@
         if (div.style.display !== "none")
         {
             div.style.display = "none";
-            document.getElementById("iconeCCListe").setAttribute("class", "fa fa-caret-down");
+            var iconParent = document.getElementById('iconeCCListe');
+			var icon = iconParent.children[0]; 
+			icon.setAttribute("class", "fa fa-caret-down");
         }
         else
         {
             div.style.display = "block";
-            document.getElementById("iconeCCListe").setAttribute("class", "fa fa-caret-up");
+            var iconParent = document.getElementById('iconeCCListe');
+			var icon = iconParent.children[0]; 
+			icon.setAttribute("class", "fa fa-caret-up");
         }
    
         if(document.getElementById("recipients_cc_broadcast").value.length>0 || document.getElementById("recipients_cci_broadcast").value.length>0 )
@@ -120,7 +111,9 @@
             if(Atloading)
             {
                 div.style.display = "block";
-                document.getElementById("iconeCCListe").setAttribute("class", "fa fa-caret-up");
+				var iconParent = document.getElementById('iconeCCListe');
+				var icon = iconParent.children[0]; 
+				icon.setAttribute("class", "fa fa-caret-up");
             }
         }
         Atloading=false;

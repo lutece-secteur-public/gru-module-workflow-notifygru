@@ -5,34 +5,24 @@
 	|| (information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content)
 	|| (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)
 	>
-	<div class="panel">
+	<@div>
 		<span>#i18n{module.workflow.notifygru.task_notify_gru_history.label_information}</span>
 		<#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
-			<a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!?html}" data-content="${information_history.guichet.messageGuichet!?html}"> 
-				#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}
-			</a>
+			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.guichet.messageGuichet!?html}"' title='				#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}' />
 		</#if>
 		<#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
-			<a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.email.subjectEmail!?html}" data-content="${information_history.email.messageEmail!?html}">
-				#i18n{module.workflow.notifygru.task_notify_gru_history.label_email}
-			</a>
+			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_email}' />
 		</#if>
 		<#if information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content>
-			<a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.agent.messageAgent!?html}" >
-				#i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}
-			</a>
+			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.agent.messageAgent!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}' />
 		</#if>
 		<#if information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content>
-			<a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.SMS.messageSMS!?html}">
-				#i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}
-			</a>
+			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.SMS.messageSMS!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}' />
 		</#if>
 		<#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
-			<a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="${information_history.broadCast.subjectBroadcast!?html}" data-content="${information_history.broadCast.messageBroadcast!?html}" title="${information_history.broadCast.messageBroadcast!?html}">
-				#i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}
-			</a>
+			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}' />
 		</#if>
-	</div>
+	</@div>
 	</#if>
 </#if>
 <script>

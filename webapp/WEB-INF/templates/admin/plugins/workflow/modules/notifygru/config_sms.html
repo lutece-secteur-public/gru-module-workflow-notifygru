@@ -1,50 +1,30 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
-<div class="row">
-  <div class="col-xs-12 col-sm-12">
-		<div style="display:flex;justify-content:space-between;border-bottom:1px solid #000;padding-bottom:	5px;margin-bottom:15px">
+<@row>
+	<@columns>
+		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_sms}<h4>
-			<button class="btn btn-danger" title="#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}" type="submit" name="apply" value="RemoveNotificationConfig_sms">
-				<i class="fa fa-fw fa-trash" aria-hidden="true"></i>
-			</button> 
+			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' value='RemoveNotificationConfig_sms' buttonIcon='trash' color='danger' size='sm' />
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 col-sm-8"> 
-      <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-12 col-md-3" for="message_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms} *</label>
-        <div class="col-xs-12 col-sm-12 col-md-8">
+	</@columns>
+</@row>
+<@row>
+	<@columns sm=8>
+		<@formGroup labelFor='message_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}' mandatory=true rows=2>
           <#if config?exists>
-            <textarea class="form-control" name="message_sms" id="message_sms" rows="10" cols="45" >${(config.messageSMS)!''}</textarea>
-            <span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}</span>
+            <@input type='textarea' name='message_sms' id='message_sms' rows=10 cols=45>${(config.messageSMS)!''}</@input>
           </#if>
-        </div>
-      </div>
+		</@formGroup>
    
 		<#if config?exists  && config.isBillingAccountBasedSmsNotification()>
-		<div class="row">
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3" for="billing_account_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_account_sms} *</label>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<input type="text" class="form-control" name="billing_account_sms" id="billing_account_sms" value="${(config.billingAccountSMS)!''}"/>
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_account_sms}</span>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3" for="billing_group_sms">#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_group_sms} *</label>
-				<div class="col-xs-12 col-sm-12 col-md-8">
-					<input type="text" class="form-control" 	name="billing_group_sms" id="billing_group_sms" value="${(config.billingGroupSMS)!''}"/>
-					<span class="help-block">#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_group_sms}</span>
-				</div>
-			</div>
-		</div>
+		<@formGroup labelFor='billing_account_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_account_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_account_sms}' mandatory=true rows=2>
+			<@input type='text' name='billing_account_sms' id='billing_account_sms' value='${(config.billingAccountSMS)!\'\'}'/>
+		</@formGroup>
+		<@formGroup labelFor='billing_group_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_group_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_group_sms}' mandatory=true rows=2>
+			<@input type='text' name='billing_group_sms' id='billing_group_sms' value='${(config.billingGroupSMS)!\'\'}' />
+		</@formGroup>
 		</#if>
-	</div>
-	<div class="col-xs-12 col-sm-4">
+	</@columns>
+	<@columns sm=4>
 		<@marker_descriptions />
-	</div>
-</div>
-
-
+	</@columns>
+</@row>

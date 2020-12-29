@@ -1,6 +1,6 @@
 <#macro marker_descriptions >
 <h3>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h3>
-<@table class="table table-striped">
+<@table>
 	<tr>
 		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</th>
 		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</th>
@@ -9,19 +9,19 @@
 	<#if notifygru_markers?exists>
 		<#list notifygru_markers as marker>
 		<tr>
-			<td class="marker">
+			<@td class='marker'>
 				<#if marker.description ??>
 					<#assign description = i18n(marker.description) />
 					<#if description?has_content>${description}<#else>${marker.description!''}</#if>
 				</#if>	
-			</td>
-			<td class="marker">&#36;&#123;${marker.marker}&#33;&#125;</td>
-			<td><i class="fa fa-copy fa-fw" title="Copy line"></i></td>
+			</@td>
+			<@td class='marker'>&#36;&#123;${marker.marker}&#33;&#125;</@td>
+			<@td><@icon style='copy' title='Copy line' /></@td>
 		</tr>
 		</#list>
 	<#else>
 		<tr>
-			<td colspan="3"></td>
+			<@td colspan=3></@td>
 		</tr>
 	</#if>
 </@table>
