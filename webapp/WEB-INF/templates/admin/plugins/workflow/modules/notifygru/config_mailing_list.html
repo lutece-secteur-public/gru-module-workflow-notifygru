@@ -9,16 +9,16 @@
 </@row>
 <@row>
 	<@columns sm=8>
-		<#assign mailingSpecStyle = 'display:block;' />	
+		<#assign mailingSpecStyle = 'display:block;' />
 		<#assign mailingSpecChecked = true />
 		<#assign mailingListStyle = 'display:none;' />
 		<#assign mailingListChecked = false />
 		<#if mailing_list?exists>
 			<#if (config.idMailingListBroadcast > 0) >	
-				<#assign mailingSpecStyle = 'display:none;' />	
-				<#assign mailingSpecChecked = '' />
-				<#assign mailingListStyle = 'display:block;' /> 
-				<#assign mailingListChecked = 'checked' />   		
+				<#assign mailingSpecStyle = 'display:none;' />
+				<#assign mailingSpecChecked = false />
+				<#assign mailingListStyle = 'display:block;' />
+				<#assign mailingListChecked = true />
 			</#if>
 			<@formGroup labelFor='mailing_type' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}' rows=2>
 				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_list' value='list' checked=mailingListChecked params='onchange="mailingType(\'list\');"' labelFor='mailing_type_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' />

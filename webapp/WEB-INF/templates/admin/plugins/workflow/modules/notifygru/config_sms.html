@@ -16,12 +16,12 @@
 		</@formGroup>
    
 		<#if config?exists  && config.isBillingAccountBasedSmsNotification()>
-		<@formGroup labelFor='billing_account_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_account_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_account_sms}' mandatory=true rows=2>
-			<@input type='text' name='billing_account_sms' id='billing_account_sms' value='${(config.billingAccountSMS)!\'\'}'/>
-		</@formGroup>
-		<@formGroup labelFor='billing_group_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_group_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_group_sms}' mandatory=true rows=2>
-			<@input type='text' name='billing_group_sms' id='billing_group_sms' value='${(config.billingGroupSMS)!\'\'}' />
-		</@formGroup>
+			<@formGroup labelFor='billing_account_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_account_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_account_sms}' mandatory=true rows=2>
+				<@input type='text' name='billing_account_sms' id='billing_account_sms' value='${(config.billingAccountSMS)!\'\'}'/>
+			</@formGroup>
+			<@formGroup labelFor='billing_group_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_billing_group_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_comment_billing_group_sms}' mandatory=true rows=2>
+				<@input type='text' name='billing_group_sms' id='billing_group_sms' value='${(config.billingGroupSMS)!\'\'}' />
+			</@formGroup>
 		</#if>
 	</@columns>
 	<@columns sm=4>
