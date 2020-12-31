@@ -43,6 +43,7 @@
 				<#if pane='pane-mailing-list'><#assign active = true /><#else><#assign active = false /></#if>
 				<@tabLink id='4' active=active href='#pane-mailing-list' title='#i18n{module.workflow.notifygru.notification.config.title.broadcast}' />
 			</#if>
+			
 		</@tabList>
 		<@tabContent>
 			<#if config.activeOngletGuichet>
@@ -96,17 +97,30 @@
 	</@modal>
 </section>
 <script>
-$( function(){ 
-    var ong=$("#activeOngletHere").val();
-	if($("#"+ong).attr('class')==undefined){
-        $("#tabs li:eq(0) a").tab('show');
-    }
-   
-	$("#"+ong+" a").tab('show');
-}); 
+	$(document).ready(function(){
+		$( function(){ 
+			var ong=$("#activeOngletHere").val();
+			if($("#"+ong).attr('class')==undefined){
+				$("#tabs li:eq(0) a").tab('show');
+			}
+		   
+			$("#"+ong+" a").tab('show');
+		}); 
 
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-	$("#activeOngletHere").val($(e.target).parent().attr("id"));
-})
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			$("#activeOngletHere").val($(e.target).parent().attr("id"));
+		})
+		
+		// Prevent user from switching tabs if the required fields in the current tab are not filled
+		for (i=1; i<5; i++) {
+			$('#' + i + '> a').click(function(event) {
+				if (jQuery('input:invalid').length > 0) {
+					event.stopImmediatePropagation();
+					$("button[name='save']").click();
+					return false;
+				}
+			});
+		}
+	});
 </script>
 <@initEditor />

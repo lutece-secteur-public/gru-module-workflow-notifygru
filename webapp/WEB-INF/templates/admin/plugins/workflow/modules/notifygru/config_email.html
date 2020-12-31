@@ -1,9 +1,17 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
 	<@columns>
-		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
-			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}<h4>
-			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' value='RemoveNotificationConfig_email' buttonIcon='trash' color='danger' size='sm' />
+		<div style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
+			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}</h4>
+			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-email' value='RemoveNotificationConfig_email' buttonIcon='trash' color='danger' size='sm' />
+			<script type="text/javascript">
+				// Remove required attribute on fields to allow the form submission
+				$("#remove-config-email").click(function() {
+					if (jQuery('input:invalid').length > 0) {
+						$('[required]').removeAttr("required");
+					}
+				});
+			</script>
 		</div>
 	</@columns>
 </@row>
