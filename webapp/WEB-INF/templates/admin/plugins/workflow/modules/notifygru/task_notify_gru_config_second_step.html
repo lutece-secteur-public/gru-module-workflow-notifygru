@@ -6,7 +6,15 @@
 	<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h4>
 	<div style="display:flex; justify-content:flex-end; align-items:start;">
 	<#if list_notification_config?exists>
-		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all']>
+		<#assign cssFramework>
+			<@commonsFile />
+		</#assign>
+		<#if cssFramework = 'commons.html'>
+			<#assign formGroupParams = 'style="margin-right:0.2rem; margin-top:-0.1rem;"' />
+		<#elseif cssFramework = 'commons_bs4_adminlte.html'>
+			<#assign formGroupParams = 'style="margin-right:0.2rem;"' />
+		</#if>
+		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] params=formGroupParams!>
 			<@inputGroup>
 				<@select name='added_notification_config' items=list_notification_config default_value='0' size='sm' />
 				<@inputGroupItem>
