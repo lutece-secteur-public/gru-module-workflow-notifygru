@@ -49,6 +49,7 @@ public class NotifyGruHistory
     private GuichetHistory _oGuichet;
     private SMSHistory _oSMS;
     private AgentHistory _oAgent;
+    private EventHistory _oEvent;
 
     /**
      * Simple Constructor
@@ -60,6 +61,7 @@ public class NotifyGruHistory
         _oGuichet = new GuichetHistory( );
         _oSMS = new SMSHistory( );
         _oAgent = new AgentHistory( );
+        _oEvent = new EventHistory( );
     }
 
     /**
@@ -229,4 +231,24 @@ public class NotifyGruHistory
     {
         _oAgent = oAgent;
     }
+
+    /**
+     * get event
+     * 
+     * @return the event 
+     */
+    public EventHistory getEvent() {
+        return _oEvent;
+    }
+
+    /**
+     * set event 
+     * 
+     * @param event 
+     */
+    public void setEvent(EventHistory event) {
+        this._oEvent = event;
+    }
+
+    
 }

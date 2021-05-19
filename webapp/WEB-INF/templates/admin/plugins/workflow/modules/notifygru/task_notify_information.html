@@ -22,6 +22,11 @@
 		<#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
 			<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}' />
 		</#if>
+                
+                
+		<#if information_history.event?? && information_history.event.status?has_content>
+			<@button color='danger' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.event.message!?html}"' title='${information_history.event.status} ${information_history.event.code!} ' />
+		</#if>
 	</@div>
 	</#if>
 </#if>

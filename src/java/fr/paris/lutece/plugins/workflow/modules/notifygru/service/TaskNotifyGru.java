@@ -40,11 +40,14 @@ import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotif
 import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailAddress;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.Event;
 import fr.paris.lutece.plugins.grubusiness.business.notification.MyDashboardNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.Notification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.NotifyGruResponse;
 import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
 import fr.paris.lutece.plugins.librarynotifygru.exception.NotifyGruException;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.business.EventHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
@@ -211,12 +214,49 @@ public class TaskNotifyGru extends SimpleTask
         {
             try
             {
-                _notifyGruSenderService.send( notificationObject );
+                NotifyGruResponse response = _notifyGruSenderService.send( notificationObject );
+                
+                if ( response.getErrors( ) != null && !response.getErrors( ).isEmpty( ) )
+                {
+                    EventHistory event = new  EventHistory( );
+                    
+                    event.setStatus( NotifyGruResponse.STATUS_ERROR );
+                    event.setCode( response.getErrors( ).get(0).getStatus( ) );
+                    event.setMessage( response.getErrors( ).get(0).getMessage( ));
+                    
+                    notifyGruHistory.setEvent( event );
+                }
+                else if ( response.getWarnings( ) != null && !response.getWarnings( ).isEmpty( ) )
+                {
+                    EventHistory event = new  EventHistory( );
+                    event.setStatus( NotifyGruResponse.STATUS_WARNING );
+                    
+                    StringBuilder msg = new StringBuilder( );
+                    for ( Event notificationEvent : response.getWarnings( ) )
+                    {
+                        msg.append( notificationEvent.getType( ) ).append( " " );
+                        msg.append( notificationEvent.getStatus( ) ).append( " ");
+                        msg.append( notificationEvent.getMessage( ) ).append( " | ");
+                    }
+                    event.setMessage( msg.toString( ) );
+                    
+                    notifyGruHistory.setEvent( event );
+                }
+                
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
             catch( AppException | NotifyGruException e )
             {
                 AppLogService.error( "Unable to send the notification" );
+                
+                EventHistory event = new  EventHistory( );
+                    
+                event.setStatus( NotifyGruResponse.STATUS_ERROR );
+                event.setMessage( e.getLocalizedMessage( ) );
+
+                notifyGruHistory.setEvent( event );
+
+                _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
         }
     }
