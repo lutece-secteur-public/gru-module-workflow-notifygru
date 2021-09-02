@@ -83,12 +83,5 @@
 
     <bean id="workflow-notifygru.commentMarkerProvider"
         class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.impl.CommentMarkerProvider" />
-
-    <!-- Archivers -->
-    <bean id="workflow-notifygru.WorkflowNotiyGruResourceArchiver"
-        class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.archiver.WorkflowNotiyGruResourceArchiver" />
-    <bean
-        id="workflow-notifygru.workflowNotiyGruDeleteArchiveProcessingService"
-        class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.archiver.WorkflowNotiyGruDeleteArchiveProcessingService" />
 </beans>
  	
