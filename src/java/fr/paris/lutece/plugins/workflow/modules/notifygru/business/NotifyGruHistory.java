@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -235,20 +235,21 @@ public class NotifyGruHistory
     /**
      * get event
      * 
-     * @return the event 
+     * @return the event
      */
-    public EventHistory getEvent() {
+    public EventHistory getEvent( )
+    {
         return _oEvent;
     }
 
     /**
-     * set event 
+     * set event
      * 
-     * @param event 
+     * @param event
      */
-    public void setEvent(EventHistory event) {
+    public void setEvent( EventHistory event )
+    {
         this._oEvent = event;
     }
 
-    
 }

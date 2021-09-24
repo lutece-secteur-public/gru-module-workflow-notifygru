@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,16 +48,19 @@ public class EventHistory
      * 
      * @return the status
      */
-    public String getStatus() {
+    public String getStatus( )
+    {
         return _strStatus;
     }
 
     /**
      * set status
      * 
-     * @param strStatus the status to set
+     * @param strStatus
+     *            the status to set
      */
-    public void setStatus(String strStatus) {
+    public void setStatus( String strStatus )
+    {
         this._strStatus = strStatus;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -215,42 +215,43 @@ public class TaskNotifyGru extends SimpleTask
             try
             {
                 NotifyGruResponse response = _notifyGruSenderService.send( notificationObject );
-                
+
                 if ( response.getErrors( ) != null && !response.getErrors( ).isEmpty( ) )
                 {
-                    EventHistory event = new  EventHistory( );
-                    
+                    EventHistory event = new EventHistory( );
+
                     event.setStatus( NotifyGruResponse.STATUS_ERROR );
-                    event.setCode( response.getErrors( ).get(0).getStatus( ) );
-                    event.setMessage( response.getErrors( ).get(0).getMessage( ));
-                    
+                    event.setCode( response.getErrors( ).get( 0 ).getStatus( ) );
+                    event.setMessage( response.getErrors( ).get( 0 ).getMessage( ) );
+
                     notifyGruHistory.setEvent( event );
                 }
-                else if ( response.getWarnings( ) != null && !response.getWarnings( ).isEmpty( ) )
-                {
-                    EventHistory event = new  EventHistory( );
-                    event.setStatus( NotifyGruResponse.STATUS_WARNING );
-                    
-                    StringBuilder msg = new StringBuilder( );
-                    for ( Event notificationEvent : response.getWarnings( ) )
+                else
+                    if ( response.getWarnings( ) != null && !response.getWarnings( ).isEmpty( ) )
                     {
-                        msg.append( notificationEvent.getType( ) ).append( " " );
-                        msg.append( notificationEvent.getStatus( ) ).append( " ");
-                        msg.append( notificationEvent.getMessage( ) ).append( " | ");
+                        EventHistory event = new EventHistory( );
+                        event.setStatus( NotifyGruResponse.STATUS_WARNING );
+
+                        StringBuilder msg = new StringBuilder( );
+                        for ( Event notificationEvent : response.getWarnings( ) )
+                        {
+                            msg.append( notificationEvent.getType( ) ).append( " " );
+                            msg.append( notificationEvent.getStatus( ) ).append( " " );
+                            msg.append( notificationEvent.getMessage( ) ).append( " | " );
+                        }
+                        event.setMessage( msg.toString( ) );
+
+                        notifyGruHistory.setEvent( event );
                     }
-                    event.setMessage( msg.toString( ) );
-                    
-                    notifyGruHistory.setEvent( event );
-                }
-                
+
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
             catch( AppException | NotifyGruException e )
             {
                 AppLogService.error( "Unable to send the notification" );
-                
-                EventHistory event = new  EventHistory( );
-                    
+
+                EventHistory event = new EventHistory( );
+
                 event.setStatus( NotifyGruResponse.STATUS_ERROR );
                 event.setMessage( e.getLocalizedMessage( ) );
 

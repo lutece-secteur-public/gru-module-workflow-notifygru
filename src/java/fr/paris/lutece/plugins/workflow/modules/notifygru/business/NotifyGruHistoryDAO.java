@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,8 +49,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email,message_email,sender_name_email,recipients_cc_email,"
             + "recipients_cci_email,is_active_onglet_email,message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, "
-            + "code_event, type_event, message_event "
+            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, " + "code_event, type_event, message_event "
             + " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( "
             + "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet,"
@@ -59,8 +58,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + "sender_name_email,recipients_cc_email,recipients_cci_email," + "is_active_onglet_email,"
             + "message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, "
-            + "code_event, type_event, message_event ) "
+            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, " + "code_event, type_event, message_event ) "
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
@@ -114,7 +112,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             daoUtil.setString( ++nPos, history.getEvent( ).getCode( ) );
             daoUtil.setString( ++nPos, history.getEvent( ).getStatus( ) );
             daoUtil.setString( ++nPos, history.getEvent( ).getMessage( ) );
-            
+
             daoUtil.executeUpdate( );
         }
     }
@@ -178,7 +176,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
                 oBroadcast.setRecipientsCcBroadcast( daoUtil.getString( ++nPos ) );
                 oBroadcast.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
                 oBroadcast.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
-                
+
                 oEvent.setCode( daoUtil.getString( ++nPos ) );
                 oEvent.setStatus( daoUtil.getString( ++nPos ) );
                 oEvent.setMessage( daoUtil.getString( ++nPos ) );
@@ -190,7 +188,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             oNotifyGru.setSMS( oSMS );
             oNotifyGru.setBroadCast( oBroadcast );
             oNotifyGru.setEvent( oEvent );
-                    
+
         }
         return oNotifyGru;
     }
