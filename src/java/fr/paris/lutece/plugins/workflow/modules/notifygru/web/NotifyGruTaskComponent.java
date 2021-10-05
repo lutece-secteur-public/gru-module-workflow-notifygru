@@ -129,19 +129,4 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
 
         return template.getHtml( );
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param nIdHistory
-     * @param request
-     * @param locale
-     * @param task
-     * @return
-     */
-    @Override
-    public String getTaskInformationXml( int nIdHistory, HttpServletRequest request, Locale locale, ITask task )
-    {
-        return null;
-    }
 }
