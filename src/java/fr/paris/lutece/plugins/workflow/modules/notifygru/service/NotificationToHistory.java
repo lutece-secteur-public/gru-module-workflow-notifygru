@@ -51,7 +51,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGru
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The Class NotificationToHistory.
