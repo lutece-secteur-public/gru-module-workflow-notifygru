@@ -391,10 +391,26 @@ public class TaskNotifyGru extends SimpleTask
         userEmailNotification.setRecipient( provider.provideCustomerEmail( ) );
         userEmailNotification.setSubject( replaceMarkers( config.getSubjectEmail( ), model ) );
         userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model ) );
-        userEmailNotification.setCc( config.getRecipientsCcEmail( ) );
-        userEmailNotification.setBcc( config.getRecipientsCciEmail( ) );
+        userEmailNotification.setCc( replaceSemicolons( config.getRecipientsCcEmail( ) ) );
+        userEmailNotification.setBcc( replaceSemicolons( config.getRecipientsCciEmail( ) ) );
 
         return userEmailNotification;
+    }
+    
+    /**
+     * Replaces the semicolons in a list of recipients
+     *
+     * @param strMessage
+     *            the message
+     * @return the message with semicolons replaced
+     */
+    private static String replaceSemicolons( String strMessage )
+    {
+        if ( StringUtils.isEmpty( strMessage ) )
+        {
+            return strMessage;
+        }
+        return strMessage.replace( ';', ',' );
     }
 
     /**
