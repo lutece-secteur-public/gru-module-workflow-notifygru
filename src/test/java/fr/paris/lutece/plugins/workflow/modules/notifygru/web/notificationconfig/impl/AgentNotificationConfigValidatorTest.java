@@ -44,7 +44,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificati
 import fr.paris.lutece.test.LuteceTestCase;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AgentNotificationConfigValidatorTest extends LuteceTestCase
 {
