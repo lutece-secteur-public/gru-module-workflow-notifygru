@@ -36,9 +36,11 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.impl
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 
 import fr.paris.lutece.plugins.workflow.modules.comment.business.CommentValue;
 import fr.paris.lutece.plugins.workflow.modules.comment.service.ICommentValueService;
@@ -49,6 +51,8 @@ import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
 
 /**
  * This class represents a NotifyGru marker provider for the Comment task
@@ -57,6 +61,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 public class CommentMarkerProvider implements IMarkerProvider
 {
     private static final String ID = "workflow-notifygru.commentMarkerProvider";
+ 
 
     // Messages
     private static final String MESSAGE_TITLE = "module.workflow.notifygru.marker.provider.comment.title";
@@ -116,9 +121,12 @@ public class CommentMarkerProvider implements IMarkerProvider
 
         // Retrieves all TaskComment of the action for the 'comments'
         // Only TaskComment declared BEFORE the TaskNotifyGru are set with value !
-        for ( ITask taskOther : _taskService.getListTaskByIdAction( resourceHistory.getAction( ).getId( ), request.getLocale( ) ) )
+        Optional<ITask> taskComment = _taskService.getListTaskByIdAction( resourceHistory.getAction( ).getId( ), request !=null ? request.getLocale( ):LocaleService.getDefault( ) )
+        		.stream().filter(tsk -> tsk.getTaskType( ).getKey( ).equals( AppPropertiesService.getProperty( Constants.PROPERTY_TASK_COMMENT_KEY,"taskTypeComment" ) )).findAny();
+        		
+        if ( taskComment.isPresent()  )
         {
-            CommentValue commentValue = _commentService.findByPrimaryKey( resourceHistory.getId( ), taskOther.getId( ),
+            CommentValue commentValue = _commentService.findByPrimaryKey( resourceHistory.getId( ), taskComment.get( ).getId( ),
                     PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME ) );
 
             if ( commentValue != null )
