@@ -275,6 +275,10 @@ public final class Constants
 
     // PROPERTIES
     public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
+    public static final String PROPERTY_TASK_COMMENT_KEY = "workflow-notifygru.taskComment.key";
+    
+
+  
 
     // TAGS
     public static final String TAG_A = "a";
