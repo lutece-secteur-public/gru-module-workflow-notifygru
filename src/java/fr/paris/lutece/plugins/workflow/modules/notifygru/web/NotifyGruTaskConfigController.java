@@ -557,12 +557,15 @@ public class NotifyGruTaskConfigController
             String strNameOfAddedNotificationConfig = findNameOfAddedNotificatioConfig( );
             INotificationConfig notificationConfigAdded = findNotificationConfigByName( strNameOfAddedNotificationConfig );
 
-            notificationConfigAdded.setActive( true );
-
-            fillConfigWithCurrentNotificationConfig( notificationConfigAdded );
-
-            saveNotificationConfigs( );
-            saveConfig( );
+            if( notificationConfigAdded != null )
+            {
+                notificationConfigAdded.setActive( true );
+    
+                fillConfigWithCurrentNotificationConfig( notificationConfigAdded );
+    
+                saveNotificationConfigs( );
+                saveConfig( );
+            }
 
             return null;
         }
@@ -577,10 +580,13 @@ public class NotifyGruTaskConfigController
             String strNameOfRemovedNotificationConfig = findNameOfRemovedNotificatioConfig( );
             INotificationConfig notificationConfigRemoved = findNotificationConfigByName( strNameOfRemovedNotificationConfig );
 
-            notificationConfigRemoved.setActive( false );
-            notificationConfigRemoved.removeConfig( );
-
-            saveConfig( );
+            if( notificationConfigRemoved != null )
+            {
+                notificationConfigRemoved.setActive( false );
+                notificationConfigRemoved.removeConfig( );
+    
+                saveConfig( );
+            }
 
             return null;
         }
