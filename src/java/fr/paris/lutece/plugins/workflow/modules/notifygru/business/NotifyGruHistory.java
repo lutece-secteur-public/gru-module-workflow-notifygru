@@ -50,6 +50,7 @@ public class NotifyGruHistory
     private SMSHistory _oSMS;
     private AgentHistory _oAgent;
     private EventHistory _oEvent;
+    private boolean _bContentCleaned;
 
     /**
      * Simple Constructor
@@ -251,5 +252,21 @@ public class NotifyGruHistory
     {
         this._oEvent = event;
     }
+
+    /**
+     * 
+     * @return true if the history content have been cleaned
+     */
+	public boolean isContentCleaned() {
+		return _bContentCleaned;
+	}
+
+	/**
+	 * 
+	 * @param _bContentcleaned true if the history content have been cleaned
+	 */
+	public void setContentCleaned(boolean _bContentcleaned) {
+		this._bContentCleaned = _bContentcleaned;
+	}
 
 }

@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
+import java.sql.Timestamp;
+
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
@@ -49,7 +51,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email,message_email,sender_name_email,recipients_cc_email,"
             + "recipients_cci_email,is_active_onglet_email,message_sms,billing_account_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, " + "code_event, type_event, message_event "
+            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast, " + "code_event, type_event, message_event,content_cleaned "
             + " FROM workflow_task_notify_gru_history  WHERE id_task = ? AND  id_history=?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO workflow_task_notify_gru_history( "
             + "id_history,id_task,crm_status_id,message_guichet,status_text_guichet,sender_name_guichet,"
@@ -62,6 +64,14 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
+    private static final String SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN="select count(n.id_history) from workflow_task_notify_gru_history as n , "
+    		+ "workflow_resource_history as h  WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ?" ;
+    private static final String SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE="update workflow_task_notify_gru_history as n ,"
+    		+ "workflow_resource_history as h   set n.content_cleaned=1,n.message_email = null , n.message_guichet = null,n.message_guichet = null,n.message_sms = null, n.message_broadcast = null  "
+    		+ "WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ? ";    
+    
+    
+    
 
     /**
      * {@inheritDoc}
@@ -180,6 +190,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
                 oEvent.setCode( daoUtil.getString( ++nPos ) );
                 oEvent.setStatus( daoUtil.getString( ++nPos ) );
                 oEvent.setMessage( daoUtil.getString( ++nPos ) );
+                oNotifyGru.setContentCleaned(daoUtil.getBoolean( ++nPos ) );
             }
 
             oNotifyGru.setGuichet( oGuichet );
@@ -188,6 +199,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             oNotifyGru.setSMS( oSMS );
             oNotifyGru.setBroadCast( oBroadcast );
             oNotifyGru.setEvent( oEvent );
+            
 
         }
         return oNotifyGru;
@@ -223,4 +235,46 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             daoUtil.executeUpdate( );
         }
     }
+    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cleanHistoryContentByDate( Timestamp tMinCreationDate , Plugin plugin )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE, plugin ) )
+        {
+            daoUtil.setTimestamp( 1, tMinCreationDate );
+         
+
+            daoUtil.executeUpdate( );
+        }
+    }
+    
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNbHistoryToCleanByDate( Timestamp tMinCreationDate , Plugin plugin )
+    {
+    	int nbHistoryToDelete=0;
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN, plugin ) )
+        {
+        
+            daoUtil.setTimestamp( 1, tMinCreationDate );
+         
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+            	nbHistoryToDelete=daoUtil.getInt(1);
+            	
+            }
+        }
+        return nbHistoryToDelete;
+    }
+    
+    
 }

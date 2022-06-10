@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
 /**
@@ -87,4 +90,20 @@ public interface INotifyGruHistoryDAO
      *            the plugin
      */
     void deleteByHistory( int nIdHistory, int nIdTask, Plugin plugin );
+    
+    /**
+     * clean all histories content who have a creation date before the tMinCreationDate
+     * @param tMinCreationDate the creation date minimal
+     * @param plugin the plugin
+     */
+    
+    void cleanHistoryContentByDate( Timestamp tMinCreationDate , Plugin plugin );
+    
+    /**
+     * get nb  histories who have a creation date before the tMinCreationDate
+     * @param tMinCreationDate the history creation date
+     * @param plugin the plugin
+     * @return the nb  nb  histories who have a creation date before the tMinCreationDate
+     */
+    int getNbHistoryToCleanByDate( Timestamp tMinCreationDate , Plugin plugin );
 }

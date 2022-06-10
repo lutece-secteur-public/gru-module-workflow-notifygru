@@ -36,6 +36,8 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
+import java.sql.Timestamp;
+
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -92,4 +94,21 @@ public interface INotifyGruHistoryService
      * @return the Config Object
      */
     NotifyGruHistory findByPrimaryKey( int nIdHistory, int nIdTask, Plugin plugin );
+    
+    
+    /**
+     * clean all histories content who have a creation date before the tMinCreationDate
+     * @param tMinCreationDate the creation date minimal
+     * @param plugin the plugin
+     */
+    
+    void cleanHistoryContentByDate( Timestamp tMinCreationDate , Plugin plugin );
+    
+    /**
+     * get nb  histories who have a creation date before the tMinCreationDate
+     * @param tMinCreationDate the history creation date
+     * @param plugin the plugin
+     * @return the nb  nb  histories who have a creation date before the tMinCreationDate
+     */
+    int getNbHistoryToCleanByDate( Timestamp tMinCreationDate , Plugin plugin );
 }

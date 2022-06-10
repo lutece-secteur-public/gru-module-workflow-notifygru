@@ -30,4 +30,15 @@
         <css-stylesheets-scope>portal</css-stylesheets-scope>
         <css-stylesheet>workflow/modules/notifygru/workflow_notifygru.css</css-stylesheet>
     </css-stylesheets>
+    
+    <!-- Daemons -->
+	<daemons>
+		<daemon>
+			<daemon-id>notifyHistoryCleanerDaemon</daemon-id>
+			<daemon-name>module.workflow.notifygru.notifyHistoryCleanerDaemon.name</daemon-name>
+			<daemon-description>module.workflow.notifygru.notifyHistoryCleanerDaemon.description</daemon-description>
+			<daemon-class>fr.paris.lutece.plugins.workflow.modules.notifygru.service.daemon.NotifyHistoryCleanerDaemon</daemon-class>
+		</daemon>
+	</daemons>
+    
 </plug-in>

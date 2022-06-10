@@ -40,6 +40,8 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -96,4 +98,23 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
     {
         return _dao.load( nIdHistory, nIdTask, plugin );
     }
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public void cleanHistoryContentByDate(Timestamp tMinCreationDate, Plugin plugin) {
+		   
+			_dao.cleanHistoryContentByDate(tMinCreationDate, plugin);
+		
+	}
+
+	   /**
+     * {@inheritDoc}
+     */
+	@Override
+	public int getNbHistoryToCleanByDate(Timestamp tMinCreationDate, Plugin plugin) {
+		 return _dao.getNbHistoryToCleanByDate(tMinCreationDate, plugin);
+	}
+    
 }
