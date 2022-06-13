@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHisto
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.portal.service.daemon.Daemon;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
@@ -55,9 +56,8 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
  */
 public class NotifyHistoryCleanerDaemon extends Daemon
 {
-	@Inject
-	@Named( NotifyGruHistoryService.BEAN_SERVICE )
-	private INotifyGruHistoryService _notifyGruHistoryService;
+	
+	private INotifyGruHistoryService _notifyGruHistoryService=SpringContextService.getBean(NotifyGruHistoryService.BEAN_SERVICE);
 	private static final String MESSAGE_DAEMON_NAME = "NotifyHistoryCleanerDaemon - ";
     /**
      * Daemon's treatment method
@@ -85,10 +85,14 @@ public class NotifyHistoryCleanerDaemon extends Daemon
         	sbLogs.append( "\n" );
         	int nbNotificationToClean=_notifyGruHistoryService.getNbHistoryToCleanByDate(minDateCreation ,WorkflowUtils.getPlugin( ));
         	sbLogs.append( "the number of histories will be cleaned is " + nbNotificationToClean);
+        	sbLogs.append( "\n" );
         	if(nbNotificationToClean > 0)
         	{
-        		sbLogs.append( "start cleaning notification process " +  _notifyGruHistoryService.getNbHistoryToCleanByDate(minDateCreation ,WorkflowUtils.getPlugin( )) );
-        		sbLogs.append( "end cleaning notification process " +  _notifyGruHistoryService.getNbHistoryToCleanByDate(minDateCreation ,WorkflowUtils.getPlugin( )) );
+        		sbLogs.append( "start cleaning notification process "  );
+        		_notifyGruHistoryService.cleanHistoryContentByDate(minDateCreation ,WorkflowUtils.getPlugin( ));
+        		sbLogs.append( "\n" );
+        		sbLogs.append( "end cleaning notification process " );
+        		sbLogs.append( "\n" );
         	}
  
         }
@@ -101,6 +105,8 @@ public class NotifyHistoryCleanerDaemon extends Daemon
         }
         
         AppLogService.info( "runNotifyHistoryCleanerDaemon: {}", sbLogs );
+        
+        setLastRunLogs( sbLogs.toString( ) );
         
       
     }
