@@ -1,6 +1,11 @@
-<#assign dataPrefix='data-' />
 <#assign cssFramework><@commonsFile /></#assign>
-<#if cssFramework = 'commons_bs5_tabler.html'><#assign dataPrefix='data-bs-' /></#if>
+<#if cssFramework = 'commons.html'>
+<#assign dataPrefix='data-' />
+<#elseif cssFramework = 'commons_bs4_adminlte.html'>
+<#assign dataPrefix='data-' />
+<#elseif cssFramework = 'commons_bs5_tabler.html'>
+<#assign dataPrefix='data-bs-' />
+</#if>
 <#if information_history?exists>
 	<#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content)
 	|| (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content)
@@ -9,7 +14,7 @@
 	|| (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)>
 	#i18n{module.workflow.notifygru.task_notify_gru_history.label_information}
 	<#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.guichet.messageGuichet!?html}"' title='				#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.guichet.messageGuichet!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}' />
 	</#if>
 	<#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
 		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_email}' />
@@ -28,18 +33,13 @@
 	</#if>
 	</#if>
 </#if>
+<#if cssFramework != 'commons_bs5_tabler.html'>
 <script>
 $(function () {
-<#if cssFramework != 'commons_bs5_tabler.html'>
 	$('[data-toggle="popover"]').popover({
 		container: 'body',
 		sanitize : false
 	});
-<#else>
-	$('[data-bs-toggle="popover"]').popover({
-		container: 'body',
-		sanitize : false
-	});
-</#if>
 });
 </script>
+</#if>
