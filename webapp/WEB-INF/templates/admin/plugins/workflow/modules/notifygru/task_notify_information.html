@@ -1,11 +1,5 @@
 <#assign cssFramework><@commonsFile /></#assign>
-<#if cssFramework = 'commons.html'>
-<#assign dataPrefix='data-' />
-<#elseif cssFramework = 'commons_bs4_adminlte.html'>
-<#assign dataPrefix='data-' />
-<#elseif cssFramework = 'commons_bs5_tabler.html'>
-<#assign dataPrefix='data-bs-' />
-</#if>
+<#if cssFramework = 'commons_bs5_tabler.html' || cssFramework = 'commons_corporate.html'><#assign dataPrefix='data-bs-' /><#else><#assign dataPrefix='data-' /></#if>
 <#if information_history?exists>
 	<#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content)
 	|| (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content)
@@ -14,26 +8,26 @@
 	|| (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)>
 	#i18n{module.workflow.notifygru.task_notify_gru_history.label_information}
 	<#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.guichet.messageGuichet!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.guichet.messageGuichet!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_guichet}' />
 	</#if>
 	<#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_email}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_email}' />
 	</#if>
 	<#if information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.agent.messageAgent!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.agent.messageAgent!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_agent}' />
 	</#if>
 	<#if information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.SMS.messageSMS!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.SMS.messageSMS!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_sms}' />
 	</#if>
 	<#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
-		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}' />
+		<@button color='primary' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.notifygru.task_notify_gru_history.label_liste}' />
 	</#if>
 	<#if information_history.event?? && information_history.event.status?has_content>
-		<@button color='danger' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}trigger="focus" ${dataPrefix}content="${information_history.event.message!?html}"' title='${information_history.event.status} ${information_history.event.code!} ' />
+		<@button color='danger' size='xs' params='${dataPrefix}html="true" ${dataPrefix}toggle="popover" ${dataPrefix}content="${information_history.event.message!?html}"'  title='${information_history.event.status} ${information_history.event.code!}'  />
 	</#if>
 	</#if>
 </#if>
-<#if cssFramework != 'commons_bs5_tabler.html'>
+<#if cssFramework != 'commons_bs5_tabler.html' && cssFramework != 'commons_corporate.html'>
 <script>
 $(function () {
 	$('[data-toggle="popover"]').popover({
@@ -42,4 +36,6 @@ $(function () {
 	});
 });
 </script>
+<#else>
+
 </#if>
