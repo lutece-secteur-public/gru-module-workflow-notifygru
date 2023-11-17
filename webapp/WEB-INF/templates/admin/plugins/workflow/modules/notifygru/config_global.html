@@ -1,8 +1,8 @@
-<@formGroup labelFor='list_provider' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}' mandatory=true>
+<@formGroup labelFor='list_provider' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_provider_helper}' mandatory=true rows=2>
 	<@select name='list_provider' items=list_provider default_value='${config.idSpringProvider!}' />
 </@formGroup>
 <#if list_marker_provider?? && list_marker_provider?has_content>
-	<@formGroup labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_marker_providers}'>
+	<@formGroup labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_marker_providers}' rows=2>
 		<#list list_marker_provider as marker_provider>
 		   <#assign found = false />
 		   <#list config.markerProviders as selected_marker_provider>
@@ -17,7 +17,7 @@
 		</#list>
   </@formGroup>
 </#if>
-<@formGroup labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status}'>
+<@formGroup labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status}' rows=2>
  <#if config.demandStatus = 1>
 	<@checkBox name='demand_status' id='demand_status' labelFor='demand_status' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demand_status_helper}' checked=true mandatory=false />
  <#else>

@@ -1,14 +1,14 @@
 <#macro marker_descriptions>
 <h3>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h3>
 <@table>
-	<tr>
-		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</th>
-		<th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</th>
-		<th></th>
-	</tr>
+	<@tr>
+		<@th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</@th>
+		<@th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</@th>
+		<@th></@th>
+	</@tr>
 	<#if notifygru_markers?exists>
 		<#list notifygru_markers as marker>
-		<tr>
+		<@tr>
 			<@td class='marker'>
 				<#if marker.description ??>
 					<#assign description = i18n(marker.description) />
@@ -17,12 +17,12 @@
 			</@td>
 			<@td class='marker'>&#36;&#123;${marker.marker}&#33;&#125;</@td>
 			<@td><@icon style='copy' title='Copy line' /></@td>
-		</tr>
+		</@tr>
 		</#list>
 	<#else>
-		<tr>
+		<@tr>
 			<@td colspan=3></@td>
-		</tr>
+		</@tr>
 	</#if>
 </@table>
 

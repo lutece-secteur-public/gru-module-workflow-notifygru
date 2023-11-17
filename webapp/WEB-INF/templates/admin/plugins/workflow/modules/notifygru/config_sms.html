@@ -1,22 +1,28 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
 	<@columns>
-		<div style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
+		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_sms}</h4>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-sms' value='RemoveNotificationConfig_sms' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
-				// Remove required attribute on fields to allow the form submission
-				$("#remove-config-sms").click(function() {
-					if (jQuery('input:invalid').length > 0) {
-						$('[required]').removeAttr("required");
+				document.addEventListener("DOMContentLoaded", function() {
+					var removeConfigAgentBtn = document.getElementById("remove-config-sms");
+					if (removeConfigAgentBtn) {
+						removeConfigAgentBtn.addEventListener("click", function() {
+							if (document.querySelectorAll('input:invalid').length > 0) {
+								document.querySelectorAll('[required]').forEach(function(element) {
+									element.removeAttribute("required");
+								});
+							}
+						});
 					}
 				});
 			</script>
-		</div>
+		</@div>
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
 		<@formGroup labelFor='message_sms' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_sms}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_sms}' mandatory=true rows=2>
           <#if config?exists>
             <@input type='textarea' name='message_sms' id='message_sms' rows=10 cols=45>${(config.messageSMS)!''}</@input>
@@ -32,7 +38,7 @@
 		</@formGroup>
 		</#if>
 	</@columns>
-	<@columns sm=4>
+	<@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>

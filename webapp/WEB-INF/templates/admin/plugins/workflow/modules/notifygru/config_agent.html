@@ -1,22 +1,28 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
   <@columns>
-		<div style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
+		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_agent}</h4>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-agent' value='RemoveNotificationConfig_agent' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
-				// Remove required attribute on fields to allow the form submission
-				$("#remove-config-agent").click(function() {
-					if (jQuery('input:invalid').length > 0) {
-						$('[required]').removeAttr("required");
+				document.addEventListener("DOMContentLoaded", function() {
+					var removeConfigAgentBtn = document.getElementById("remove-config-agent");
+					if (removeConfigAgentBtn) {
+						removeConfigAgentBtn.addEventListener("click", function() {
+							if (document.querySelectorAll('input:invalid').length > 0) {
+								document.querySelectorAll('[required]').forEach(function(element) {
+									element.removeAttribute("required");
+								});
+							}
+						});
 					}
 				});
 			</script>
-		</div>
+		</@div>
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
 		<@formGroup labelFor='status_text_agent' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_status_text_agent_helper}' mandatory=true rows=2>
 			<#if config?exists && config.statustextAgent?has_content>
 				<#assign inputValue = config.statustextAgent! />
@@ -29,7 +35,7 @@
 			<@input type='textarea' name='message_agent' id='message_agent' rows=5 cols=70 richtext=true><#if config?exists  && config.messageAgent?has_content>${config.messageAgent}</#if></@input>
 		</@formGroup>
     </@columns>
-	<@columns sm=4>
+	<@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>

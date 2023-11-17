@@ -4,21 +4,13 @@
 <@messages errors=errors />
 <header style="display:flex;justify-content:space-between;padding-bottom:5px;margin-bottom:5px;">
 	<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h4>
-	<div style="display:flex; justify-content:flex-end; align-items:start;">
+	<@div params='style="display:flex; justify-content:flex-end; align-items:start;"'>
 	<#if list_notification_config?exists>
-		<#assign cssFramework>
-			<@commonsFile />
-		</#assign>
-		<#if cssFramework = 'commons.html'>
-			<#assign formGroupParams = 'style="margin-right:0.2rem; margin-top:-0.1rem;"' />
-		<#elseif cssFramework = 'commons_bs4_adminlte.html'>
-			<#assign formGroupParams = 'style="margin-right:0.2rem;"' />
-		</#if>
-		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] params=formGroupParams!>
+		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] params='style="margin-right:0.2rem;"'>
 			<@inputGroup>
-				<@select name='added_notification_config' items=list_notification_config default_value='0' size='sm' />
+				<@select name='added_notification_config' items=list_notification_config default_value='0' />
 				<@inputGroupItem type='btn'>
-					<@button type='submit' name='apply' value='AddNotificationConfig' buttonIcon='plus' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}' hideTitle=['all'] size='' />
+					<@button type='submit' name='apply' value='AddNotificationConfig' buttonIcon='plus' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}' hideTitle=['all'] />
 				</@inputGroupItem>
 			</@inputGroup>
 		</@formGroup>
@@ -26,7 +18,7 @@
 	 <#if config.idSpringProvider?has_content >
 		 <@aButton href='return false;' params='data-toggle="modal" data-target="#config_global" data-backdrop="static" data-keyboard="false"' buttonIcon='wrench' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}' size='' />
 	 </#if>
-	 </div>
+	 </@div>
 </header>
 <section>
 	<@tabs>
@@ -105,30 +97,32 @@
 	</@modal>
 </section>
 <script>
-	$(document).ready(function(){
-		$( function(){ 
-			var ong=$("#activeOngletHere").val();
-			if($("#"+ong).attr('class')==undefined){
-				$("#tabs li:eq(0) a").tab('show');
-			}
-		   
-			$("#"+ong+" a").tab('show');
-		}); 
+	document.addEventListener("DOMContentLoaded", function() {
+		var ong = document.getElementById("activeOngletHere").value;
 
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-			$("#activeOngletHere").val($(e.target).parent().attr("id"));
-		})
-		
+		if (document.getElementById(ong).classList === undefined) {
+			document.querySelector("#tabs li:eq(0) a").click();
+		}
+
+		document.getElementById(ong).querySelector("a").click();
+
+		document.querySelectorAll('a[data-toggle="tab"]').forEach(function(tab) {
+			tab.addEventListener('shown.bs.tab', function(e) {
+				document.getElementById("activeOngletHere").value = e.target.parentElement.id;
+			});
+		});
+
 		// Prevent user from switching tabs if the required fields in the current tab are not filled
-		for (i=1; i<5; i++) {
-			$('#' + i + '> a').click(function(event) {
-				if (jQuery('input:invalid').length > 0) {
+		for (var i = 0; i < 5; i++) {
+			document.getElementById(i).querySelector("a").addEventListener('click', function(event) {
+				if (document.querySelectorAll('input:invalid').length > 0) {
 					event.stopImmediatePropagation();
-					$("button[name='save']").click();
+					document.querySelector("button[name='save']").click();
 					return false;
 				}
 			});
 		}
 	});
 </script>
+
 <@initEditor />
