@@ -14,7 +14,7 @@
             </p>
             -->
              <subsection name="Introduction">
-               Le module NotifyGru est une tâche du workflow qui permet,
+              Le module NotifyGru est une tâche du workflow qui permet,
                 à partir d'une ressource, de construire un flux 
 JSON associé et de l'envoyer vers une entité de traitement
             </subsection>
@@ -23,16 +23,16 @@ JSON associé et de l'envoyer vers une entité de traitement
                 <p>NotifyGru est une tâche générique dans la mesure où elle permet de travailler 
                 avec n'importe quel fournisseur de ressource (ticket ing, rendiez-vous, annuaire...)).
               
-                Ainsi pour chaque service (ticketing, rendez-vous, annuaire...) un provider sera implémenté pour fournir le maximum
+               Ainsi pour chaque service (ticketing, rendez-vous, annuaire...) un provider sera implémenté pour fournir le maximum
                 d'informations sur la ressource. </p>
                 <p>On distingue deux types de fournisseur de ressource :  </p>
                 <p>
       <ul>
-         <li> <strong>Les fournisseurs de ressource :  </strong> <p></p>
-         Un fournisseur de ressource fait le lien entre la tâche NotifyGru et un seul et unique formulaire se service d'un plugin.
+         <li> <strong>Les fournisseurs de ressource :  </strong> <p/>
+       Un fournisseur de ressource fait le lien entre la tâche NotifyGru et un seul et unique formulaire se service d'un plugin.
 C'est le cas du plugin ticketing constitué d'un unique formulaire de ressource.
          </li>
-         <li> <strong>Les gestionnaires de fournisseurs de ressource :  </strong><p></p>
+         <li> <strong>Les gestionnaires de fournisseurs de ressource :  </strong><p/>
          Un gestionnaire de fournisseur de ressource fait le lien entre la 
          tâche notifygru et chaque formulaire de service du plugin concerné.
 C'est le cas du plugin Gesion des Rendez-vous, Annuaire où on peut avoir plusieurs formulaires de services </li>
@@ -52,16 +52,15 @@ C'est le cas du plugin Gesion des Rendez-vous, Annuaire où on peut avoir plusie
                      <li> Une liste pour choisir le fournisseur de 
                      ressource parmi les différentes implémentations des fournisseurs disponibles</li>
                      <li>Le champ checkbox permettra de valoriser le champ demand_status du flux notification V1.
-                      La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ».
-                       On est dans le cas où le checkbox est coché).
+                       La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ».
+                        On est dans le cas où le checkbox est coché).
                 </li>
                      </ul>
                     
                    
                     
                 
-                <p>La configuration de NotifyGru se fait sur 5 onglets. 
-                Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*". 
+                <p>La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*".
 Pour chaque onglet vous pouvez utiliser les signets du fournisseur de ressource afin de paramétrer 
 le message ou l'objet du message qui seront traités lors de l'exécution de la tâche </p>
                
@@ -70,13 +69,13 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
          <ul>
          <li>Statut de la demande (obligatoire) :  statut destiné au guichet</li>
          <li>Nom de l'expediteur (obligatoire) : expéditeur du message dans guichet</li>
-         <li>Objet (obligatoire) : objet du message dans guichet. <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>Subject (required) in the message subject desk. <strong>Peut contenir des signets de la ressource</strong></li>
          <li>message (obligatoire) : message vers le guichet. <strong>Peut contenir des signets de la ressource</strong></li>        
          <li>Nombre d'étapes (optionnel) : nombre total d'étapes de la demande </li>
-         <li>Etape actuelle  (optionnel) : étape de la demande lors de l'envoi du flux </li>
+         <li>Etape actuelle  (optionnel) : étape de la demande lors de l'envoi du flux</li>
          </ul>
       
-<p></p>
+<p/>
          
          
        <strong>Onglet Vue Agent 306°: </strong>
@@ -85,7 +84,7 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
          <li>Statut dans la Vue 360° (obligatoire) : statut destiné à la vue 360°</li>
          <li>Description de l’événement dans la Vue 360° (obligatoire) : message vers la vue 306°. <strong>Peut contenir des signets de la ressource</strong></li>
          </ul>
-  <p></p>       
+  <p/>       
         
          
          
@@ -98,7 +97,7 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
          <li>Message  (ogligatoire) : message de l'email. Peut contenir des signets de la ressource</li>
          </ul>
      
-     <p></p>
+     <p/>
      
       
  <strong>Onglet SMS : </strong>
@@ -106,18 +105,18 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
          <li>Message (ogligatoire) :  texte du SMS. <strong>Peut contenir des signets de la ressource</strong></li>
          </ul>
       
-<p></p>
+<p/>
       <strong>Onglet Liste de diffusion : </strong>
          
           <ul>
          <li>Liste de diffusion (obligatoire)</li>
          <li>Expéditeur (obligatoire)</li>
          <li>Objet (obligatoire) : <strong>Peut contenir des signets de la ressource</strong></li>
-          <li>Cc (optionnel) : en copie conforme </li>
+        <li>Cc (optionnel) : en copie conforme </li>
          <li>Cci (optionnel) : encopie conforme invisible.</li>
          <li>Message (obligatoire) : <strong>Peut contenir des signets de la ressource</strong></li>
          </ul>
-       <p></p>
+       <p/>
        
           
           
@@ -130,10 +129,10 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
                 <p>Lorsque le service reçoit une demande, la tâche est lancée 
                 (lancement automatique ou manuel) et le fournisseur indiqué lors de la configuration se 
                 charge de récupérer toutes les informations nécessaires pour construire le flux JSON 
-                a envoyé à l'entité externe</p>
+                a envoyé à l'entité externe
+</p>
             </subsection>
             
         </section>
     </body>
 </document>
-
