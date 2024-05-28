@@ -50,7 +50,7 @@ CREATE TABLE workflow_task_notify_gru_cf(
   recipients_cc_broadcast VARCHAR(255) DEFAULT   NULL,
   recipients_cci_broadcast VARCHAR(255) DEFAULT   NULL,
   is_active_onglet_broadcast SMALLINT  NULL DEFAULT 0,
-  content_cleaned SMALLINT  NULL DEFAULT 0 ,
+
   PRIMARY KEY  (id_task)
   );
 
@@ -96,6 +96,7 @@ CREATE TABLE workflow_task_notify_gru_history(
   code_event VARCHAR(45) NULL ,
   type_event VARCHAR(45) NULL ,
   message_event TEXT NULL ,
+  content_cleaned SMALLINT NULL DEFAULT 0,
 
   PRIMARY KEY  (id_history, id_task)
   );
