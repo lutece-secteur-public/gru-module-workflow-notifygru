@@ -28,7 +28,7 @@
 		<#assign mailingListStyle = 'display:none;' />
 		<#assign mailingListChecked = false />
 		<#if mailing_list?exists>
-			<#if (config.idMailingListBroadcast > 0) >	
+			<#if (config.idMailingListBroadcast > 0) >
 				<#assign mailingSpecStyle = 'display:none;' />
 				<#assign mailingSpecChecked = false />
 				<#assign mailingListStyle = 'display:block;' />
@@ -38,7 +38,7 @@
 				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_list' value='list' checked=mailingListChecked params='onchange="mailingType(\'list\');"' labelFor='mailing_type_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' />
 				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_spec' value='spec' checked=mailingSpecChecked params='onchange="mailingType(\'spec\');"' labelFor='mailing_type_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' />
 			</@formGroup>
-			
+
 			<@div id='mailing_list_block' params='style="${mailingListStyle}"'>
 				<@formGroup labelFor='id_mailing_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}' mandatory=true rows=2>
 					<@select name='id_mailing_list_broadcast' items=mailing_list default_value='${config.idMailingListBroadcast!}' />
@@ -109,43 +109,54 @@
         {
             div.style.display = "none";
             var iconParent = document.getElementById('iconeCCListe');
-			var icon = iconParent.children[0]; 
+			var icon = iconParent.children[0];
 			icon.setAttribute("class", "fa fa-caret-down");
         }
         else
         {
             div.style.display = "block";
             var iconParent = document.getElementById('iconeCCListe');
-			var icon = iconParent.children[0]; 
+			var icon = iconParent.children[0];
 			icon.setAttribute("class", "fa fa-caret-up");
         }
-   
+
         if(document.getElementById("recipients_cc_broadcast").value.length>0 || document.getElementById("recipients_cci_broadcast").value.length>0 )
         {
             if(Atloading)
             {
                 div.style.display = "block";
 				var iconParent = document.getElementById('iconeCCListe');
-				var icon = iconParent.children[0]; 
+				var icon = iconParent.children[0];
 				icon.setAttribute("class", "fa fa-caret-up");
             }
         }
         Atloading=false;
     }
-	
-    function mailingType(newType){
-        if(newType == "list")
-		{
-		    document.getElementById("mailing_spec_block").setAttribute("style", "display:none;");
-			document.getElementById("mailing_list_block").setAttribute("style", "display:block;");
+
+	function mailingType(newType) {
+		var mailingSpecBlock = document.getElementById("mailing_spec_block");
+		var mailingListBlock = document.getElementById("mailing_list_block");
+		var mailingSpecInput = document.querySelector('input[name="mailing_spec"]');
+		var idMailingListInput = document.querySelector('select[name="id_mailing_list_broadcast"]');
+
+		if (newType === "list") {
+			mailingSpecBlock.style.display = "none";
+			mailingListBlock.style.display = "block";
+			mailingSpecInput.removeAttribute("required");
+			idMailingListInput.setAttribute("required", "true");
+		} else if (newType === "spec") {
+			mailingSpecBlock.style.display = "block";
+			mailingListBlock.style.display = "none";
+			mailingSpecInput.setAttribute("required", "true");
+			idMailingListInput.removeAttribute("required");
 		}
-		else if(newType == "spec")
-		{
-		    document.getElementById("mailing_spec_block").setAttribute("style", "display:block;");
-			document.getElementById("mailing_list_block").setAttribute("style", "display:none;");
-		}
-    }
-        
-    showhide();
-     
+	}
+
+	document.addEventListener("DOMContentLoaded", function() {
+		showhide();
+		// check mailing type (spec or list) for page load
+		var mailingSpecChecked = document.querySelector('input[name="mailing_type"][value="spec"]').checked;
+		mailingType(mailingSpecChecked ? 'spec' : 'list');
+	});
+
 </script>
