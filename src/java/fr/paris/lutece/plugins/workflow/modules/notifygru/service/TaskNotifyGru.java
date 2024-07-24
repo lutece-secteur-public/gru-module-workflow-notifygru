@@ -280,7 +280,7 @@ public class TaskNotifyGru extends SimpleTask
         demand.setStatusId( config.getDemandStatus( ) );
         demand.setReference( provider.provideDemandReference( ) );
         notification.setDate( System.currentTimeMillis( ) );
-        demand.setId( provider.provideDemandId( ) );
+        demand.setDemandId( provider.provideDemandId( ) );
         demand.setTypeId( provider.provideDemandTypeId( ) );
         demand.setSubtypeId( provider.provideDemandSubtypeId( ) );
         demand.setMaxSteps( config.getDemandMaxStepGuichet( ) );
@@ -396,7 +396,7 @@ public class TaskNotifyGru extends SimpleTask
 
         return userEmailNotification;
     }
-    
+
     /**
      * Replaces the semicolons in a list of recipients
      *
@@ -468,7 +468,7 @@ public class TaskNotifyGru extends SimpleTask
 
     /**
      * Finds the NotifyGru markers
-     * 
+     *
      * @param resourceHistory
      *            the resource history
      * @param provider
@@ -514,7 +514,7 @@ public class TaskNotifyGru extends SimpleTask
 
     /**
      * Converts the specified collection of NotifyGru markers into a model
-     * 
+     *
      * @param collectionNotifyGruMarkers
      *            the collection to convert
      * @return the model
@@ -533,7 +533,7 @@ public class TaskNotifyGru extends SimpleTask
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask#doRemoveConfig()
      */
     @Override
@@ -545,7 +545,7 @@ public class TaskNotifyGru extends SimpleTask
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @param nIdHistory
      */
     @Override
@@ -556,7 +556,7 @@ public class TaskNotifyGru extends SimpleTask
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @param locale
      * @return
      */
