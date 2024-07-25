@@ -33,10 +33,24 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
 import fr.paris.lutece.plugins.grubusiness.business.demand.Demand;
-import fr.paris.lutece.plugins.grubusiness.business.notification.BillingAccountBasedSMSNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
+import fr.paris.lutece.plugins.grubusiness.business.notification.BillingAccountBasedSMSNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BroadcastNotification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailAddress;
 import fr.paris.lutece.plugins.grubusiness.business.notification.EmailNotification;
@@ -65,27 +79,11 @@ import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistorySer
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
 import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * TaskNotifyGru.
@@ -387,7 +385,7 @@ public class TaskNotifyGru extends SimpleTask
         EmailNotification userEmailNotification = new EmailNotification( );
 
         userEmailNotification.setSenderName( config.getSenderNameEmail( ) );
-        userEmailNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
+        userEmailNotification.setSenderEmail( config.getSenderEmail( ) );
         userEmailNotification.setRecipient( provider.provideCustomerEmail( ) );
         userEmailNotification.setSubject( replaceMarkers( config.getSubjectEmail( ), model ) );
         userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model ) );
@@ -455,7 +453,7 @@ public class TaskNotifyGru extends SimpleTask
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
-        broadcastNotification.setSenderEmail( MailService.getNoReplyEmail( ) );
+        broadcastNotification.setSenderEmail( config.getSenderEmail( ) );
         // we split a StringBuilder we can
         broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
         broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );

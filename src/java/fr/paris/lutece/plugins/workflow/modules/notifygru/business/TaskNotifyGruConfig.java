@@ -33,11 +33,14 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.business;
 
-import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
+import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 /**
@@ -524,9 +527,26 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public String getSenderNameEmail( )
     {
-        return _strSenderNameEmail;
+    	if ( !StringUtils.isBlank( _strSenderNameEmail ) )
+    	{
+    		return _strSenderNameEmail;
+    	} 
+    	else
+    	{
+    		return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME, "NotifyGru");
+    	}
     }
 
+    /**
+     * get default sender mail in properties (if set), the MailService.getNoReplyEmail() otherwise
+     * 
+     * @return the default server mail
+     */
+	public String getSenderEmail( ) 
+	{
+		return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_MAIL, MailService.getNoReplyEmail( ) );
+	}
+	
     /**
      * Sets the SenderNameEmail.
      *
