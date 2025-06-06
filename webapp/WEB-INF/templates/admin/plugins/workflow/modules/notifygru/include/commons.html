@@ -15,8 +15,8 @@
 					<#if description?has_content>${description}<#else>${marker.description!''}</#if>
 				</#if>	
 			</@td>
-			<@td class='marker'>&#36;&#123;${marker.marker}&#33;&#125;</@td>
-			<@td><@icon style='copy' title='Copy line' /></@td>
+			<@td class='marker marker-code'>&#36;&#123;${marker.marker}&#33;&#125;</@td>
+			<@td class='marker marker-copy'><@icon style='copy' title='Copy line' /></@td>
 		</@tr>
 		</#list>
 	<#else>
@@ -50,9 +50,9 @@ $('.marker').on( 'dblclick', function(e){
 	}
 });
 
-$('.fa-copy').on( 'click', function(e){
-	$(this).parent().prevAll().css( 'opacity','.5').animate( {opacity: 1}, 3000 );
-	var elTxt = $(this).parent().siblings().text(); 
+$('.marker-copy').on( 'click', function(e){
+	$(this).prevAll().css( 'opacity','.5').animate( {opacity: 1}, 3000 );
+	var elTxt = $(this).siblings('.marker-code').text();
 	copyToClipboard( elTxt );	
 });
 </script>
