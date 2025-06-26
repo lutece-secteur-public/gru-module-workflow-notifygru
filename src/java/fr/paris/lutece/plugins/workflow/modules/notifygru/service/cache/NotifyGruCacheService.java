@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,43 +36,22 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.portal.service.cache.AbstractCacheableService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * The Class NotifyGruCacheService.
  */
-public final class NotifyGruCacheService extends AbstractCacheableService
+@ApplicationScoped
+public class NotifyGruCacheService extends AbstractCacheableService<String, TaskNotifyGruConfig>
 {
     /** The Constant CACHE_NAME. */
     private static final String CACHE_NAME = "workflow.notifyGruConfigCacheService";
 
-    /** The Constant BEAN_SERVICE. */
-    private static final String BEAN_SERVICE = "workflow-notifygru.notifyGruCacheService";
-
-    /** The _singleton. */
-    private static NotifyGruCacheService _singleton;
-
-    /**
-     * Instantiates a new notify gru cache service.
-     */
-    private NotifyGruCacheService( )
+    @PostConstruct
+    public void init( )
     {
-        initCache( );
-    }
-
-    /**
-     * Gets the single instance of NotifyGruCacheService.
-     *
-     * @return single instance of NotifyGruCacheService
-     */
-    public static NotifyGruCacheService getInstance( )
-    {
-        if ( _singleton == null )
-        {
-            _singleton = SpringContextService.getBean( BEAN_SERVICE );
-        }
-
-        return _singleton;
+    	initCache( CACHE_NAME, String.class, TaskNotifyGruConfig.class );
     }
 
     /*
@@ -97,19 +76,22 @@ public final class NotifyGruCacheService extends AbstractCacheableService
      */
     public TaskNotifyGruConfig getNotifyGruConfigFromCache( ITaskConfigService taskNotifyGruConfigService, int nidTask )
     {
-        TaskNotifyGruConfig config = (TaskNotifyGruConfig) getFromCache( getCacheKey( nidTask ) );
+        TaskNotifyGruConfig config = null;
 
-        if ( config == null )
-        {
-            config = taskNotifyGruConfigService.findByPrimaryKey( nidTask );
-
-            if ( config == null )
+    	if ( isCacheEnable( ) && isCacheAvailable( ) )
+    	{
+            String strCacheKey = getCacheKey( nidTask );
+            config = get( strCacheKey );
+            
+            if (config == null) 
             {
-                // no config stored yet for this task => adding an empty one in cache
-                config = new TaskNotifyGruConfig( );
+                config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
+                put( strCacheKey, config);
             }
-
-            putInCache( getCacheKey( nidTask ), config );
+        } 
+    	else 
+    	{
+            config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
         }
 
         return config;
@@ -123,7 +105,10 @@ public final class NotifyGruCacheService extends AbstractCacheableService
      */
     public void removeGruConfigFromCache( int nidTask )
     {
-        removeKey( getCacheKey( nidTask ) );
+        if ( isCacheEnable( ) && isCacheAvailable( ) )
+        {
+            remove( getCacheKey( nidTask ) );
+        }
     }
 
     /**
@@ -139,5 +124,30 @@ public final class NotifyGruCacheService extends AbstractCacheableService
         sbKey.append( "[WORKFLOWNOTIFYGRU-" ).append( nidTask ).append( "-CACHE]" );
 
         return sbKey.toString( );
+    }
+
+    /**
+     * Checks whether the cache instance is initialized and currently open.
+     *
+     * @return true if the cache is not null and not closed, false otherwise.
+     */
+    private boolean isCacheAvailable( )
+    {
+        return _cache != null && !_cache.isClosed( );
+    }
+    
+    /**
+     * Loads configuration from service or creates an empty configuration if not found
+     * 
+     * @param taskNotifyGruConfigService
+     *            the service to load configuration from
+     * @param nidTask
+     *            the task identifier
+     * @return TaskNotifyGruConfig instance, never null
+     */
+    private TaskNotifyGruConfig loadConfigFromService( ITaskConfigService taskNotifyGruConfigService, int nidTask ) 
+    {
+        TaskNotifyGruConfig config = taskNotifyGruConfigService.findByPrimaryKey( nidTask );
+        return config != null ? config : new TaskNotifyGruConfig( );
     }
 }

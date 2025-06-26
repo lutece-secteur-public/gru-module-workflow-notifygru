@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,18 +35,29 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfig;
+import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
-
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 /**
  *
  * TaskNotifyGruConfigService
  *
  */
+@ApplicationScoped
+@Named( TaskNotifyGruConfigService.BEAN_SERVICE )
 public class TaskNotifyGruConfigService extends TaskConfigService
 {
     public static final String BEAN_SERVICE = "workflow-notifygru.taskNotifyGruConfigService";
+
+    @Inject
+    public TaskNotifyGruConfigService( @Named( "taskNotifyGruConfigDAO" ) ITaskConfigDAO<TaskNotifyGruConfig> taskNotifyGruConfigDAO ) 
+	{
+       setTaskConfigDAO( (ITaskConfigDAO) taskNotifyGruConfigDAO ); 
+    }
 
     /**
      * {@inheritDoc}
@@ -54,7 +65,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
      * @param config
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void create( ITaskConfig config )
     {
         super.create( config );
@@ -66,7 +77,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
      * @param config
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void update( ITaskConfig config )
     {
         super.update( config );
@@ -78,7 +89,7 @@ public class TaskNotifyGruConfigService extends TaskConfigService
      * @param nIdTask
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void remove( int nIdTask )
     {
         super.remove( nIdTask );

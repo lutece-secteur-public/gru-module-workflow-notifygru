@@ -33,16 +33,18 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.test.LuteceTestCase;
+import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 public class AgentNotificationConfigTest extends LuteceTestCase
 {
@@ -56,6 +58,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
     private TaskNotifyGruConfig _config;
     private INotificationConfig _notificationConfig;
 
+    @Test
     public void testName( ) throws Exception
     {
         init( );
@@ -80,6 +83,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         _notificationConfig = new AgentNotificationConfig( _request, _config );
     }
 
+    @Test
     public void testIsActiveWhenActivationIsTrue( )
     {
         initRequestAndConfig( );
@@ -89,6 +93,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _notificationConfig.isActive( ), is( true ) );
     }
 
+    @Test
     public void testIsActiveWhenActivationIsFalse( )
     {
         initRequestAndConfig( );
@@ -98,6 +103,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _notificationConfig.isActive( ), is( false ) );
     }
 
+    @Test
     public void testActivation( ) throws Exception
     {
         init( );
@@ -107,6 +113,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _config.isActiveOngletAgent( ), is( true ) );
     }
 
+    @Test
     public void testDeactivation( ) throws Exception
     {
         init( );
@@ -116,6 +123,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _config.isActiveOngletAgent( ), is( false ) );
     }
 
+    @Test
     public void testValidatorIsNotNull( ) throws Exception
     {
         init( );
@@ -123,6 +131,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _notificationConfig.getValidator( ), is( notNullValue( ) ) );
     }
 
+    @Test
     public void testAddConfig( ) throws Exception
     {
         initRequestAndConfig( );
@@ -146,6 +155,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
         assertThat( _config.getStatustextAgent( ), is( PARAMETER_STATUS_TEXT ) );
     }
 
+    @Test
     public void testRemoveConfig( ) throws Exception
     {
         initRequestAndConfig( );

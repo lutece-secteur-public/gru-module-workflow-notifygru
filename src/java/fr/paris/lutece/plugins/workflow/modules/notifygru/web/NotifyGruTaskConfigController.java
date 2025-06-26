@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.inject.literal.NamedLiteral;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -66,7 +68,6 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -104,8 +105,8 @@ public class NotifyGruTaskConfigController
     private static final String ACTION_NOTIFICATION_CONFIG_REMOVE_PREFIX = "RemoveNotificationConfig_";
 
     // Services
-    private static final ITaskConfigService _taskNotifyGruConfigService = SpringContextService.getBean( TaskNotifyGruConfigService.BEAN_SERVICE );
-    private static final INotifyGruService _notifyGRUService = SpringContextService.getBean( NotifyGruService.BEAN_SERVICE );
+    private static final ITaskConfigService _taskNotifyGruConfigService = CDI.current( ).select( ITaskConfigService.class, NamedLiteral.of( TaskNotifyGruConfigService.BEAN_SERVICE ) ).get( );
+    private static final INotifyGruService _notifyGRUService = CDI.current( ).select( INotifyGruService.class, NamedLiteral.of( NotifyGruService.BEAN_SERVICE ) ).get( );
 
     private final ITask _task;
     private TaskNotifyGruConfig _config;

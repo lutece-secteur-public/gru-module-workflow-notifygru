@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,12 +37,16 @@ import java.sql.Timestamp;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 /**
  *
  * class NotifyGruHistoryDAO
  *
  */
+@ApplicationScoped
+@Named( NotifyGruHistoryDAO.BEAN )
 public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
 {
     public static final String BEAN = "NotifyGruHistoryDAO";

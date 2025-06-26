@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,9 +41,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -88,6 +89,8 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 /**
  * TaskNotifyGru.
  */
+@Dependent
+@Named( "workflow-notifygru.taskNotifyGru" )
 public class TaskNotifyGru extends SimpleTask
 {
     /** The _task notify gru config service. */
@@ -109,6 +112,9 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     private IResourceHistoryService _resourceHistoryService;
 
+    @Inject
+    private NotifyGruCacheService _notifyGruCacheService;
+
     /**
      * {@inheritDoc}
      *
@@ -120,7 +126,7 @@ public class TaskNotifyGru extends SimpleTask
     public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
     {
         /* Task Config form cache, it can't be null due to getNotifyGruConfigFromCache algorithm */
-        TaskNotifyGruConfig config = NotifyGruCacheService.getInstance( ).getNotifyGruConfigFromCache( _taskNotifyGruConfigService, this.getId( ) );
+        TaskNotifyGruConfig config = _notifyGruCacheService.getNotifyGruConfigFromCache( _taskNotifyGruConfigService, this.getId( ) );
 
         String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
@@ -128,7 +134,7 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( providerManager == null )
         {
-            AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
+            AppLogService.error( "Task id {} : Unable to retrieve the provider manager '{}'", this.getId( ), strProviderManagerId );
             return;
         }
 
@@ -137,7 +143,7 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( provider == null )
         {
-            AppLogService.error( "Task id " + this.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
+            AppLogService.error( "Task id {} : Unable to retrieve the provider '{}'", this.getId( ), config.getIdSpringProvider( ) );
             return;
         }
 
@@ -269,7 +275,7 @@ public class TaskNotifyGru extends SimpleTask
      *            the provider
      * @return the {@link Notification} object
      */
-    private static Notification buildNotification( TaskNotifyGruConfig config, IProvider provider )
+    private Notification buildNotification( TaskNotifyGruConfig config, IProvider provider )
     {
         Notification notification = new Notification( );
 
@@ -402,7 +408,7 @@ public class TaskNotifyGru extends SimpleTask
      *            the message
      * @return the message with semicolons replaced
      */
-    private static String replaceSemicolons( String strMessage )
+    private String replaceSemicolons( String strMessage )
     {
         if ( StringUtils.isEmpty( strMessage ) )
         {
@@ -504,7 +510,7 @@ public class TaskNotifyGru extends SimpleTask
      *            the model
      * @return the message with markers replaced
      */
-    private static String replaceMarkers( String strMessage, Map<String, Object> model )
+    private String replaceMarkers( String strMessage, Map<String, Object> model )
     {
         HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, Locale.FRENCH, model );
         return template.getHtml( );

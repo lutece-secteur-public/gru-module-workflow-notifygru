@@ -38,14 +38,15 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.junit.jupiter.api.Test;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
 import fr.paris.lutece.test.LuteceTestCase;
+import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
 {
@@ -69,6 +70,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
     private MockHttpServletRequest _request;
     private AbstractNotificationConfigValidator _validator;
 
+    @Test
     public void testValidationWhenNoFieldIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -116,6 +118,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThat( StringUtils.isEmpty( strErrorUrl ), is( true ) );
     }
 
+    @Test
     public void testValidationWhenMessageIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -130,8 +133,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
 
     private void replaceRequestParameter( String strParameterName, String strParameterValue )
     {
-        _request.removeParameter( strParameterName );
-        _request.addParameter( strParameterName, strParameterValue );
+        _request.setParameter( strParameterName, strParameterValue );
     }
 
     private void assertThatValidationFails( String strErrorUrl )
@@ -139,6 +141,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThat( StringUtils.isEmpty( strErrorUrl ), is( false ) );
     }
 
+    @Test
     public void testValidationWhenMessageContainsUnknownMark( ) throws Exception
     {
         initRequest( );
@@ -151,6 +154,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenStatusIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -163,6 +167,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSenderNameIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -175,6 +180,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSubjectIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -187,6 +193,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandMaxStepIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -199,6 +206,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandMaxStepIsNegative( ) throws Exception
     {
         initRequest( );
@@ -211,6 +219,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandMaxStepIsNotANumber( ) throws Exception
     {
         initRequest( );
@@ -223,6 +232,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandUserCurrentStepIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -235,6 +245,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandUserCurrentStepIsNegative( ) throws Exception
     {
         initRequest( );
@@ -247,6 +258,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenDemandUserCurrentStepIsNotANumber( ) throws Exception
     {
         initRequest( );
