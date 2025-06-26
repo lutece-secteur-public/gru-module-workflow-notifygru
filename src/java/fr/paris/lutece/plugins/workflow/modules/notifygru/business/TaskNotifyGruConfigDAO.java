@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,12 +43,17 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruPlugi
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 /**
  *
  * TaskNotifyDirectoryConfigDAO
  *
  */
+@ApplicationScoped
+@Named( "taskNotifyGruConfigDAO" )
 public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfig>
 {
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,marker_provider_ids,demand_status,crm_status_id, set_onglet,"
@@ -80,6 +85,9 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
 
     private static final char LIST_SEPARATOR = ';';
 
+    @Inject
+    private NotifyGruCacheService _notifyGruCacheService;
+
     /**
      * {@inheritDoc}
      * 
@@ -89,7 +97,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public synchronized void insert( TaskNotifyGruConfig config )
     {
         // remove cache
-        NotifyGruCacheService.getInstance( ).removeGruConfigFromCache( config.getIdTask( ) );
+    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin( ) ) )
         {
@@ -108,7 +116,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public void store( TaskNotifyGruConfig config )
     {
         // remove cache
-        NotifyGruCacheService.getInstance( ).removeGruConfigFromCache( config.getIdTask( ) );
+    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, NotifyGruPlugin.getPlugin( ) ) )
         {
@@ -201,7 +209,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public void delete( int nIdState )
     {
         // remove cache
-        NotifyGruCacheService.getInstance( ).removeGruConfigFromCache( nIdState );
+    	_notifyGruCacheService.removeGruConfigFromCache( nIdState );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, NotifyGruPlugin.getPlugin( ) ) )
         {

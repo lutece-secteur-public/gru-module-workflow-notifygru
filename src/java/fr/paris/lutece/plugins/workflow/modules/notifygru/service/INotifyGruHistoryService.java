@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.sql.Timestamp;
 
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.transaction.Transactional;
 
 /**
  *
@@ -55,7 +55,7 @@ public interface INotifyGruHistoryService
      * @param plugin
      *            the plugin
      */
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     void create( NotifyGruHistory notifyGru, Plugin plugin );
 
     /**
@@ -68,7 +68,7 @@ public interface INotifyGruHistoryService
      * @param plugin
      *            the Plugin
      */
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
@@ -79,7 +79,7 @@ public interface INotifyGruHistoryService
      * @param plugin
      *            the Plugin
      */
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     void removeByTask( int nIdTask, Plugin plugin );
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,14 +42,14 @@ import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceList;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * The Class ServiceConfigTaskForm.
@@ -150,7 +150,7 @@ public final class ServiceConfigTaskForm
     public static ReferenceList getProviderReferenceList( ITask task )
     {
         ReferenceList referenceList = new ReferenceList( );
-        List<AbstractProviderManager> listProviderManagers = SpringContextService.getBeansOfType( AbstractProviderManager.class );
+        List<AbstractProviderManager> listProviderManagers = CDI.current( ).select( AbstractProviderManager.class ).stream( ).toList( );
 
         for ( AbstractProviderManager providerManager : listProviderManagers )
         {

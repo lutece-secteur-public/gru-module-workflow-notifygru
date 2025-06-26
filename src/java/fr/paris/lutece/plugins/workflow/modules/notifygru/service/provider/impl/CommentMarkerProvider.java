@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 
 import fr.paris.lutece.plugins.workflow.modules.comment.business.CommentValue;
@@ -58,9 +60,11 @@ import fr.paris.lutece.portal.web.l10n.LocaleService;
  * This class represents a NotifyGru marker provider for the Comment task
  *
  */
+@ApplicationScoped
+@Named( CommentMarkerProvider.ID )
 public class CommentMarkerProvider implements IMarkerProvider
 {
-    private static final String ID = "workflow-notifygru.commentMarkerProvider";
+    public static final String ID = "workflow-notifygru.commentMarkerProvider";
  
 
     // Messages

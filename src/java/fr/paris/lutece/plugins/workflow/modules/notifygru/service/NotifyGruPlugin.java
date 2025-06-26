@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,6 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 public class NotifyGruPlugin extends PluginDefaultImplementation
 {
     public static final String PLUGIN_NAME = "workflow-notifygru";
-    public static final String BEAN_TRANSACTION_MANAGER = PLUGIN_NAME + ".transactionManager";
 
     /**
      * Get the plugin

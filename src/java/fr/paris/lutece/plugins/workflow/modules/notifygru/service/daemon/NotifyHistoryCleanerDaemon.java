@@ -37,15 +37,12 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.daemon;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.inject.spi.CDI;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.INotifyGruHistoryService;
-import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHistoryService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.portal.service.daemon.Daemon;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
@@ -57,7 +54,7 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 public class NotifyHistoryCleanerDaemon extends Daemon
 {
 	
-	private INotifyGruHistoryService _notifyGruHistoryService=SpringContextService.getBean(NotifyGruHistoryService.BEAN_SERVICE);
+	private INotifyGruHistoryService _notifyGruHistoryService = CDI.current( ).select( INotifyGruHistoryService.class ).get( );
 	private static final String MESSAGE_DAEMON_NAME = "NotifyHistoryCleanerDaemon - ";
     /**
      * Daemon's treatment method

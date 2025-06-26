@@ -38,14 +38,15 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.junit.jupiter.api.Test;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
 import fr.paris.lutece.test.LuteceTestCase;
+import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
 {
@@ -72,6 +73,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
     private MockHttpServletRequest _request;
     private AbstractNotificationConfigValidator _validator;
 
+    @Test
     public void testValidationWhenNoFieldIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -121,6 +123,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThat( StringUtils.isEmpty( strErrorUrl ), is( true ) );
     }
 
+    @Test
     public void testValidationWhenMailingListIdIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -136,8 +139,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
 
     private void replaceRequestParameter( String strParameterName, String strParameterValue )
     {
-        _request.removeParameter( strParameterName );
-        _request.addParameter( strParameterName, strParameterValue );
+        _request.setParameter( strParameterName, strParameterValue );
     }
 
     private void assertThatValidationFails( String strErrorUrl )
@@ -145,6 +147,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThat( StringUtils.isEmpty( strErrorUrl ), is( false ) );
     }
 
+    @Test
     public void testValidationWhenMailingListIdIsNegative( ) throws Exception
     {
         initRequest( );
@@ -158,6 +161,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenMailingListIdIsNotANumber( ) throws Exception
     {
         initRequest( );
@@ -171,6 +175,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSpecificEmailIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -184,6 +189,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSenderNameIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -196,6 +202,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSubjectIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -208,6 +215,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenSubjectContainsUnknownMark( ) throws Exception
     {
         initRequest( );
@@ -220,6 +228,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenMessageIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -232,6 +241,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenMessageContainsUnknownMark( ) throws Exception
     {
         initRequest( );
@@ -244,6 +254,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenRecipientCcIsEmpty( ) throws Exception
     {
         initRequest( );
@@ -256,6 +267,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationSucceeds( strErrorUrl );
     }
 
+    @Test
     public void testValidationWhenRecipientCciIsEmpty( ) throws Exception
     {
         initRequest( );

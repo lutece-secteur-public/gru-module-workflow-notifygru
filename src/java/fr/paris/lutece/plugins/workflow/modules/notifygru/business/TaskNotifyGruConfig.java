@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,10 +42,14 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Consta
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Named;
 
 /**
  * TaskNotifyDirectoryConfig.
  */
+@Dependent
+@Named( "workflow-notifygru.taskNotifyGruConfig" )
 public class TaskNotifyGruConfig extends TaskConfig
 {
     // Variables declarations

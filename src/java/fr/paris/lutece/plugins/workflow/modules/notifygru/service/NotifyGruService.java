@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,16 +49,19 @@ import fr.paris.lutece.util.mail.FileAttachment;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
  * NotifyGruService
  *
  */
-public final class NotifyGruService implements INotifyGruService
+@ApplicationScoped
+@Named( NotifyGruService.BEAN_SERVICE )
+public class NotifyGruService implements INotifyGruService
 {
     /** The Constant BEAN_SERVICE. */
     public static final String BEAN_SERVICE = "workflow-notifygru.notifyGruService";
@@ -70,9 +73,9 @@ public final class NotifyGruService implements INotifyGruService
     private IStateService _stateService;
 
     /**
-     * Private constructor
+     * constructor
      */
-    private NotifyGruService( )
+    public NotifyGruService( )
     {
     }
 
@@ -87,8 +90,6 @@ public final class NotifyGruService implements INotifyGruService
 
         return refMailingList;
     }
-
-    // GETS
 
     /**
      * {@inheritDoc}

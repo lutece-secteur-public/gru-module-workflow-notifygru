@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,18 +38,21 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHist
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistoryDAO;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.transaction.Transactional;
 
 import java.sql.Timestamp;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 /**
  *
  * NotifyGruHistoryService
  *
  */
+@ApplicationScoped
+@Named( NotifyGruHistoryService.BEAN_SERVICE )
 public class NotifyGruHistoryService implements INotifyGruHistoryService
 {
     /**
@@ -64,7 +67,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void create( NotifyGruHistory notifyGru, Plugin plugin )
     {
         _dao.insert( notifyGru, plugin );
@@ -74,7 +77,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin )
     {
         _dao.deleteByHistory( nIdHistory, nIdTask, plugin );
@@ -84,7 +87,7 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( NotifyGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void removeByTask( int nIdTask, Plugin plugin )
     {
         _dao.deleteByTask( nIdTask, plugin );

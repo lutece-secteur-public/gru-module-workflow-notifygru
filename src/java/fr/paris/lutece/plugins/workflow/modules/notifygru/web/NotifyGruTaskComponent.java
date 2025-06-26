@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2025, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruHisto
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.TaskNotifyGruConfigService;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
+import fr.paris.lutece.plugins.workflowcore.business.task.ITaskType;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -49,16 +50,19 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
  * INotifyGruTaskComponent
  *
  */
+@ApplicationScoped
+@Named( "workflow-notifygru.notifyDirectoryTaskComponent" )
 public class NotifyGruTaskComponent extends NoFormTaskComponent
 {
     // TEMPLATES
@@ -75,6 +79,14 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
+
+    @Inject
+    public NotifyGruTaskComponent( @Named( "workflow-notifygru.taskTypeNotifyGru" ) ITaskType taskType,
+            @Named( "workflow-notifygru.taskNotifyGruConfigService" ) ITaskConfigService taskConfigService )
+    {
+        setTaskType( taskType );
+        setTaskConfigService( taskConfigService );
+    }
 
     /**
      * {@inheritDoc}
