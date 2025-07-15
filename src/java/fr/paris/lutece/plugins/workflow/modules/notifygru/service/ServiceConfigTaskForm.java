@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
-import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.ProviderDescription;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -150,9 +150,9 @@ public final class ServiceConfigTaskForm
     public static ReferenceList getProviderReferenceList( ITask task )
     {
         ReferenceList referenceList = new ReferenceList( );
-        List<AbstractProviderManager> listProviderManagers = CDI.current( ).select( AbstractProviderManager.class ).stream( ).toList( );
+        List<IProviderManager> listProviderManagers = CDI.current( ).select( IProviderManager.class ).stream( ).toList( );
 
-        for ( AbstractProviderManager providerManager : listProviderManagers )
+        for ( IProviderManager providerManager : listProviderManagers )
         {
             Collection<ProviderDescription> collectionProviderDescriptions = providerManager.getAllProviderDescriptions( task );
 
