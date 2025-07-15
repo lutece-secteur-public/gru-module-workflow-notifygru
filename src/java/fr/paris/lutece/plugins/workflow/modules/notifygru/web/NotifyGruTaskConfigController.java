@@ -61,8 +61,8 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig
 import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -389,7 +389,7 @@ public class NotifyGruTaskConfigController
             String strIdSpringProvider = _config.getIdSpringProvider( );
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( strIdSpringProvider );
             String strProviderId = ProviderManagerUtil.fetchProviderId( strIdSpringProvider );
-            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+            IProviderManager providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
             if ( providerManager != null )
             {
@@ -414,7 +414,7 @@ public class NotifyGruTaskConfigController
          *            the list of marker provider ids
          * @return the NotifyGru markers
          */
-        private Collection<InfoMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
+        private Collection<InfoMarker> findMarkers( IProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
         {
             Collection<InfoMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
 
@@ -446,7 +446,7 @@ public class NotifyGruTaskConfigController
 
         private final HttpServletRequest _request;
         private final List<INotificationConfig> _listNotificationConfig;
-        private final AbstractProviderManager _providerManager;
+        private final IProviderManager _providerManager;
         private final String _strAction;
 
         /**
@@ -463,7 +463,7 @@ public class NotifyGruTaskConfigController
             _strAction = strAction;
 
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( _config.getIdSpringProvider( ) );
-            _providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+            _providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
             _listNotificationConfig = initNotificationConfigs( request );
 
