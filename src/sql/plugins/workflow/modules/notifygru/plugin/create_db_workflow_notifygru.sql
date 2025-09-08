@@ -1,6 +1,6 @@
---liquibase formatted sql
---changeset workflow-notifygru:create_db_workflow_notifygru.sql
---preconditions onFail:MARK_RAN onError:WARN
+-- liquibase formatted sql
+-- changeset workflow-notifygru:create_db_workflow_notifygru.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 /*DROP TABLE IF EXISTS task_notify_gru_ef; */
 DROP TABLE IF EXISTS workflow_task_notify_gru_cf;
 DROP TABLE IF EXISTS workflow_task_notify_gru_history;
@@ -60,7 +60,7 @@ CREATE TABLE workflow_task_notify_gru_cf(
 
 CREATE TABLE workflow_task_notify_gru_history(
   id_history INT NOT NULL,
-  id_task INT DEFAULT NULL,
+  id_task INT NOT NULL,
   crm_status_id INT DEFAULT  1, 
 
   message_guichet TEXT COLLATE utf8_unicode_ci DEFAULT NULL,  
