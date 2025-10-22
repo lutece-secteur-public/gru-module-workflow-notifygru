@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 
+import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificationType;
+import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
@@ -69,6 +71,7 @@ public final class ServiceConfigTaskForm
 
     /**
      * Builds a {@code ReferenceList} of inactive notification configurations
+     * the manage the available Notification Types provided by the notifiers 
      * 
      * @param listNotificationConfig
      *            the list of all notification configurations
@@ -79,13 +82,18 @@ public final class ServiceConfigTaskForm
     public static ReferenceList buildReferenceListOfInactiveNotificationConfigs( List<INotificationConfig> listNotificationConfig, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList( );
-
+        List<EnumNotificationType> notifTypeList = NotificationService.getNotificationTypesFromNotifiers ( );
+        
         for ( INotificationConfig notificationConfig : listNotificationConfig )
         {
             if ( !notificationConfig.isActive( ) )
             {
+        	// keep only the available Notification Types provided by the notifiers
+        	if ( notifTypeList.contains ( notificationConfig.getNotificationType ( ) ) )
+        	{
                 refenreceList.addItem( notificationConfig.getName( ),
                         I18nService.getLocalizedString( MESSAGE_NOTIFICATION_CONFIG_TITLE_PREFIX + notificationConfig.getName( ), locale ) );
+        	}
             }
         }
 

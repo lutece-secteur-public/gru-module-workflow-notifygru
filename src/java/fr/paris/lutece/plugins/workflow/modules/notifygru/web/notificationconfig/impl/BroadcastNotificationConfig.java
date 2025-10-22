@@ -42,6 +42,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificationType;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
@@ -250,6 +251,13 @@ public class BroadcastNotificationConfig implements INotificationConfig
             return areMarkersValid( _strMessage, model ) && areMarkersValid( _strSubject, model );
         }
 
+    }
+    
+
+    @Override
+    public EnumNotificationType getNotificationType( )
+    {
+	return EnumNotificationType.BROADCAST_EMAIL;
     }
 
 }

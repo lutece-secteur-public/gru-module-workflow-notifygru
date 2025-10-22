@@ -60,7 +60,6 @@ import fr.paris.lutece.plugins.grubusiness.business.notification.MyDashboardNoti
 import fr.paris.lutece.plugins.grubusiness.business.notification.Notification;
 import fr.paris.lutece.plugins.grubusiness.business.notification.NotifyGruResponse;
 import fr.paris.lutece.plugins.grubusiness.business.notification.SMSNotification;
-import fr.paris.lutece.plugins.librarynotifygru.exception.NotifyGruException;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.EventHistory;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.NotifyGruHistory;
@@ -82,7 +81,6 @@ import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -103,11 +101,6 @@ public class TaskNotifyGru extends SimpleTask
     @Inject
     @Named( NotifyGruHistoryService.BEAN_SERVICE )
     private INotifyGruHistoryService _taskNotifyGruHistoryService;
-
-    /** Lib-NotifyGru sender service */
-    @Inject
-    @Named( Constants.BEAN_NOTIFICATION_SENDER )
-    private NotificationService _notifyGruSenderService;
 
     @Inject
     private IResourceHistoryService _resourceHistoryService;
@@ -218,7 +211,7 @@ public class TaskNotifyGru extends SimpleTask
         {
             try
             {
-                NotifyGruResponse response = _notifyGruSenderService.send( notificationObject );
+                NotifyGruResponse response = NotificationService.send( notificationObject );
 
                 if ( response.getErrors( ) != null && !response.getErrors( ).isEmpty( ) )
                 {
@@ -250,7 +243,8 @@ public class TaskNotifyGru extends SimpleTask
 
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
-            catch( AppException | NotifyGruException e )
+            catch
+            ( Exception e )
             {
                 AppLogService.error( "Unable to send the notification" );
 
