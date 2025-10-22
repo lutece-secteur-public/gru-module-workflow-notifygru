@@ -17,6 +17,7 @@
         class="fr.paris.lutece.portal.service.database.DAOUtilTransactionManager"
         p:pluginName="workflow-notifygru" />
 
+
     <!-- DAO -->
     <bean id="taskNotifyGruConfigDAO"
         class="fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfigDAO" />
@@ -44,7 +45,13 @@
         p:taskType-ref="workflow-notifygru.taskTypeNotifyGru"
         p:taskConfigService-ref="workflow-notifygru.taskNotifyGruConfigService" />
 
-    <!-- Service -->
+
+	<!--  marker providers -->
+    <bean id="workflow-notifygru.commentMarkerProvider"
+        class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.impl.CommentMarkerProvider" />
+        
+        
+    <!-- Services -->
     <bean id="workflow-notifygru.notifyGruService"
         class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.NotifyGruService" />
     <bean id="workflow-notifygru.notifyGruHistoryService"
@@ -56,32 +63,49 @@
     <bean id="workflow-notifygru.notifyGruCacheService"
         class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache.NotifyGruCacheService" />
 
-    <!-- library notifyGru -->
+	
+    <!-- library notifyGru / Notifiers -->
+    
+    <!--  (examples) -->
+    
+    <!--  NotificationStore Rest (with ApiManager access) : 
     <bean id="workflow-notifygru.lib-notifygru.apiManagerTransport"
         class="fr.paris.lutece.plugins.librarynotifygru.rs.service.NotificationTransportApiManagerRest">
         <property name="notificationEndPoint">
-            <value>http://127.0.0.1:9092/lutece/rest/notification/send</value>
+            <value>${library-notifygru.NotificationStoreNotifierService.notificationEndPoint}</value>
         </property>
         <property name="apiManagerEndPoint">
-            <value>http://127.0.0.1:9092/lutece/rest/api/token</value>
+            <value>${library-notifygru.NotificationStoreNotifierService.apiManagerEndPoint}</value>
         </property>
         <property name="apiManagerCredentials">
-            <value>tobecompleted</value>
+            <value>${library-notifygru.NotificationStoreNotifierService.apiManagerCredentials}</value>
         </property>
     </bean>
-    <bean id="workflow-notifygru.lib-notifygru.restTransport"
-        class="fr.paris.lutece.plugins.librarynotifygru.rs.service.NotificationTransportRest">
-        <property name="notificationEndPoint">
-            <value>http://127.0.0.1:9092/lutece/rest/notification/send</value>
-        </property>
-    </bean>
-    <bean id="workflow-notifygru.lib-notifygru.notificationService"
-        class="fr.paris.lutece.plugins.librarynotifygru.services.NotificationService">
+    <bean id="workflow-notifygru.lib-notifygru.notificationStoreNotifierRestService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.NotificationStoreNotifierRestService">
         <constructor-arg
             ref="workflow-notifygru.lib-notifygru.apiManagerTransport" />
     </bean>
+	-->
+	
+	<!-- Email :
+  	<bean id="workflow-notifygru.lib-notifygru.emailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.EmailNotifierService">
+    </bean>
+    -->
 
-    <bean id="workflow-notifygru.commentMarkerProvider"
-        class="fr.paris.lutece.plugins.workflow.modules.notifygru.service.provider.impl.CommentMarkerProvider" />
+	<!-- BroadCast Email :
+  	<bean id="workflow-notifygru.lib-notifygru.broadcastEmailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.BroadcastEmailNotifierService">
+    </bean>
+    -->
+    
+    <!-- Mock :
+  	<bean id="workflow-notifygru.lib-notifygru.MockNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.MockNotifierService">
+    </bean>
+    -->
+
+	<!--  ...  -->
 </beans>
  	

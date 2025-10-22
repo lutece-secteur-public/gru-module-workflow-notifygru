@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
+import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificationType;
+
 /**
  * This interface represents a configuration for a notification
  *
@@ -77,4 +79,11 @@ public interface INotificationConfig
      * Removes this notification configuration
      */
     void removeConfig( );
+    
+    /**
+     * get notification type
+     * 
+     * @return
+     */
+    public EnumNotificationType getNotificationType( ); 
 }

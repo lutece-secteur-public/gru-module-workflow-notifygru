@@ -39,6 +39,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificationType;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
@@ -182,6 +183,12 @@ public class AgentNotificationConfig implements INotificationConfig
         {
             return areMarkersValid( _strMessage, model );
         }
+    }
+
+    @Override
+    public EnumNotificationType getNotificationType( )
+    {
+	return EnumNotificationType.BACKOFFICE;
     }
 
 }
