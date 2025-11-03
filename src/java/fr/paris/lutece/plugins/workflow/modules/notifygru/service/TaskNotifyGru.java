@@ -423,6 +423,13 @@ public class TaskNotifyGru extends SimpleTask
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
             String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
+            
+            // Delete unnecessary characters added by Freemarker   
+            if ( strRecipientBroadcast.contains ( "\n") )
+            {
+        	strRecipientBroadcast.replaceAll ( "\n", "" );
+            }
+            
             if ( StringUtils.isNotEmpty( strRecipientBroadcast ) )
             {
                 listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
