@@ -24,8 +24,49 @@
              <subsection name="Configuration">
                 <p> NotifyGru requires the library-notifygru to send the notification.</p>
                 <p> This library provides "Notifiers" that correspond to each type of notification (mail, sms, ...)</p>
-                <p> The "notififiers" should be injected as beans in the context of the module to be used : see the 
-                library-notifygru repository for more details about this configuration.</p>
+                <p> The "notifiers" should be injected as beans in the context of the module to be used, examples : </p>
+                
+                <pre>
+      &lt;!--  NotificationStore Rest (with ApiManager access) : --&gt; 
+    &lt;bean id="workflow-notifygru.lib-notifygru.apiManagerTransport"
+        class="fr.paris.lutece.plugins.librarynotifygru.rs.service.NotificationTransportApiManagerRest"&gt;
+        &lt;property name="notificationEndPoint"&gt;
+            &lt;value&gt;${library-notifygru.NotificationStoreNotifierService.notificationEndPoint}&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="apiManagerEndPoint"&gt;
+            &lt;value&gt;${library-notifygru.NotificationStoreNotifierService.apiManagerEndPoint}&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="apiManagerCredentials"&gt;
+            &lt;value&gt;${library-notifygru.NotificationStoreNotifierService.apiManagerCredentials}&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id="workflow-notifygru.lib-notifygru.notificationStoreNotifierRestService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.NotificationStoreNotifierRestService"&gt;
+        &lt;constructor-arg
+            ref="workflow-notifygru.lib-notifygru.apiManagerTransport" /&gt;
+    &lt;/bean&gt;
+	
+	
+	&lt;!-- Email : --&gt;
+  	&lt;bean id="workflow-notifygru.lib-notifygru.emailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.EmailNotifierService"&gt;
+    &lt;/bean&gt;
+    
+
+	&lt;!-- BroadCast Email : --&gt;
+  	&lt;bean id="workflow-notifygru.lib-notifygru.broadcastEmailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.BroadcastEmailNotifierService"&gt;
+    &lt;/bean&gt;
+    
+    
+    &lt;!-- Mock : --&gt;
+  	&lt;bean id="workflow-notifygru.lib-notifygru.MockNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.MockNotifierService"&gt;
+    &lt;/bean&gt;
+                
+                </pre>
+                  
+                <p> See example in the workflow-notifygru_context.xml file, or the library-notifygru repository for more details about this configuration.</p>
                 <p> </p>
                 
                 <p>Notify Gru can use extra information providers to include in the content of the notification. </p>
