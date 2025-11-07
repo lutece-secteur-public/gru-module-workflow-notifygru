@@ -2,87 +2,86 @@
 <document>
     <properties>
         <title>       
-          Module NotifyGru : Tâche (module) du PLugin Workflow
-           
+          Module workflow NotifyGru : Task to send GRU notifications
         </title>
     </properties>
+    <head>
+        <meta name="keywords" content="notification, mail, sms, workflow"/>
+    </head>
     <body>
-        <section name="Module NotifyGru">
+        <section name="Module workflow NotifyGru ">
             <!--
             <p>
                 <img src="images/moduleworkflownotifygru.png" />
             </p>
             -->
+            
              <subsection name="Introduction">
-              Le module NotifyGru est une tâche du workflow qui permet,
-                à partir d'une ressource, de construire un flux 
-JSON associé et de l'envoyer vers une entité de traitement
+              Notify Gru The module is a workflow task that build a notification from a resource  and  send it.
+              The notification can be of the type Mail, JSON...
             </subsection>
            
-            <subsection name="Fournisseur de ressource">
-                <p>NotifyGru est une tâche générique dans la mesure où elle permet de travailler 
-                avec n'importe quel fournisseur de ressource (ticket ing, rendiez-vous, annuaire...)).
-              
-               Ainsi pour chaque service (ticketing, rendez-vous, annuaire...) un provider sera implémenté pour fournir le maximum
-                d'informations sur la ressource. </p>
-                <p>On distingue deux types de fournisseur de ressource :  </p>
+             <subsection name="Configuration">
+                <p> NotifyGru requires the library-notifygru to send the notification.</p>
+                <p> This library provides "Notifiers" that correspond to each type of notification (mail, sms, ...)</p>
+                <p> The "notififiers" should be injected as beans in the context of the module to be used : see the 
+                library-notifygru repository for more details about this configuration.</p>
+                <p> </p>
+                
+                <p>Notify Gru can use extra information providers to include in the content of the notification. </p>
+                <p>Those providers are provided by the different type of workflow resources that can use this notification task 
+                ( forms, appointment, ...)</p>
+                <p>There are two types of resource provider :  </p>
                 <p>
       <ul>
-         <li> <strong>Les fournisseurs de ressource :  </strong> <p/>
-       Un fournisseur de ressource fait le lien entre la tâche NotifyGru et un seul et unique formulaire se service d'un plugin.
-C'est le cas du plugin ticketing constitué d'un unique formulaire de ressource.
+         <li> <strong>The resource providers :  </strong> <p/>
+       A resource provider is the link between the NotifyGru task and a simple set of workflow resource infos.
          </li>
-         <li> <strong>Les gestionnaires de fournisseurs de ressource :  </strong><p/>
-         Un gestionnaire de fournisseur de ressource fait le lien entre la 
-         tâche notifygru et chaque formulaire de service du plugin concerné.
-C'est le cas du plugin Gesion des Rendez-vous, Annuaire où on peut avoir plusieurs formulaires de services </li>
+         <li> <strong>The resource providers managers:  </strong><p/>
+         A resource provider manager is the link between the
+          notifygru task and multiple sets of resources infos (for example, in the plugin forms each form corresponds to a provider. ) </li>
       </ul>
    </p>
+   <p/>
+   <p>Resources are treated as "demands", which contain information such as id, type, user reference, etc... 
+   and thus all notifications corresponding to the same resource will be attached to this "demand" entity.</p>
             </subsection>
             
             
             
-            <subsection name="Configuration de la tâche">
+           
+            <subsection name="Usage">
                     <p> <strong>La configuration de NotifyGru se fait en deux étapes : </strong></p>
-                    
-                    <strong>Une première page avec deux champs immutables:  </strong>
-                 
-                 
+                    <strong>A first page with two fields:  </strong>
                      <ul>
-                     <li> Une liste pour choisir le fournisseur de 
-                     ressource parmi les différentes implémentations des fournisseurs disponibles</li>
-                     <li>Le champ checkbox permettra de valoriser le champ demand_status du flux notification V1.
-                       La valeur est à 0 (veut dire « en cours », non coché) ou à 1 (veut dire « clôturée ».
-                        On est dans le cas où le checkbox est coché).
-                </li>
+                     <li> A list to choose the provider of
+                      resource among different implementations of the available providers</li>
+                     <li>The status checkbox field  : the demand will be considered as "closed" if checked. </li>
                      </ul>
                     
-                   
-                    
-                
-                <p>La configuration de NotifyGru se fait sur 5 onglets. Pour configurer un onglet il faut l'activer via l'option "Ajouter une notification*".
-Pour chaque onglet vous pouvez utiliser les signets du fournisseur de ressource afin de paramétrer 
-le message ou l'objet du message qui seront traités lors de l'exécution de la tâche </p>
+                 <p>Then NotifyGru configuration is done on multiple tabs. 
+                 To set up a tab you must activate it via the select input "Add a notification ...". 
+                 (Only the available  notifications types are proposed, regarding the type of injected Notifiers)
+For each tab you can use bookmarks resource provider to enrich dynamically the message or the  subject. </p>
                
                 <strong>Onglet Tableau de Bord  :  </strong>
          
          <ul>
-         <li>Statut de la demande (obligatoire) :  statut destiné au guichet</li>
-         <li>Nom de l'expediteur (obligatoire) : expéditeur du message dans guichet</li>
-         <li>Subject (required) in the message subject desk. <strong>Peut contenir des signets de la ressource</strong></li>
-         <li>message (obligatoire) : message vers le guichet. <strong>Peut contenir des signets de la ressource</strong></li>        
+         <li> Status (required) : new status of the demand </li>
+         <li>Serder Name (required): the message sender </li>
+         <li>Subject (required): subject of the notification (May use bookmarks)</li>
+         <li>Message (required): Message of the notification (May use bookmarks)</li>    
          <li>Nombre d'étapes (optionnel) : nombre total d'étapes de la demande </li>
-         <li>Etape actuelle  (optionnel) : étape de la demande lors de l'envoi du flux</li>
+         <li>Current Step (optional): current step when sending the notification</li>
          </ul>
       
 <p/>
          
          
-       <strong>Onglet Vue Agent 306°: </strong>
-         
+       <strong>View Tab Agent 360°: </strong>         
          <ul>
-         <li>Statut dans la Vue 360° (obligatoire) : statut destiné à la vue 360°</li>
-         <li>Description de l’événement dans la Vue 360° (obligatoire) : message vers la vue 306°. <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>Status in the 360° View (required) : status for the 360° view</li>
+         <li>Event Description in the 360 ° View (required): message to the view 360. (May use bookmarks)</li>    
          </ul>
   <p/>       
         
@@ -91,10 +90,10 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
          <strong>Onglet MAIL : </strong>
          <ul>
          <li>Expéditeur (obligatoire) : expéditeur de l'email</li>
-         <li>Objet (obligatoire) : objet de l'email. <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>Subject (required) email subject. (May use bookmarks)</li>    
          <li>Cc (optionnel) : en copie conforme </li>
          <li>Cci (optionnel) : encopie conforme invisible.</li>
-         <li>Message  (ogligatoire) : message de l'email. Peut contenir des signets de la ressource</li>
+         <li>Message  (ogligatoire) : message de l'email. (May use bookmarks)</li>    
          </ul>
      
      <p/>
@@ -102,35 +101,21 @@ le message ou l'objet du message qui seront traités lors de l'exécution de la 
       
  <strong>Onglet SMS : </strong>
          <ul>
-         <li>Message (ogligatoire) :  texte du SMS. <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>Message (required): the SMS. (May use bookmarks)</li>    
          </ul>
       
 <p/>
-      <strong>Onglet Liste de diffusion : </strong>
-         
+      <strong>Onglet Liste de diffusion : </strong>         
           <ul>
-         <li>Liste de diffusion (obligatoire)</li>
-         <li>Expéditeur (obligatoire)</li>
-         <li>Objet (obligatoire) : <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>mailing list (required): list of recipients, separated with ";"</li>
+         <li>Sender (required): email of the sender</li>
+         <li>Subject (required): subject (May use bookmarks)</li>    
         <li>Cc (optionnel) : en copie conforme </li>
          <li>Cci (optionnel) : encopie conforme invisible.</li>
-         <li>Message (obligatoire) : <strong>Peut contenir des signets de la ressource</strong></li>
+         <li>Message (required) : the main content (May use bookmarks)</li>    
          </ul>
        <p/>
-       
-          
-          
-          <p>Il ne faut pas oublier de surcharger les paramètres de la config qui serviront à renseigner 
-          les paramètres (URL, TOKEN, ORIGIN) de l'entité externe qui recevra le Flux Json.</p>
          
-            </subsection>
-            
-            <subsection name="Utilisation de la tâche">
-                <p>Lorsque le service reçoit une demande, la tâche est lancée 
-                (lancement automatique ou manuel) et le fournisseur indiqué lors de la configuration se 
-                charge de récupérer toutes les informations nécessaires pour construire le flux JSON 
-                a envoyé à l'entité externe
-</p>
             </subsection>
             
         </section>
