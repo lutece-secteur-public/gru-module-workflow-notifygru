@@ -1,11 +1,69 @@
+![](https://dev.lutece.paris.fr/jenkins/buildStatus/icon?job=gru-module-workflow-notifygru-deploy)
+[![Alerte](https://dev.lutece.paris.fr/sonar/api/project_badges/measure?project=fr.paris.lutece.plugins%3Amodule-workflow-notifygru&metric=alert_status)](https://dev.lutece.paris.fr/sonar/dashboard?id=fr.paris.lutece.plugins%3Amodule-workflow-notifygru)
+[![Line of code](https://dev.lutece.paris.fr/sonar/api/project_badges/measure?project=fr.paris.lutece.plugins%3Amodule-workflow-notifygru&metric=ncloc)](https://dev.lutece.paris.fr/sonar/dashboard?id=fr.paris.lutece.plugins%3Amodule-workflow-notifygru)
+[![Coverage](https://dev.lutece.paris.fr/sonar/api/project_badges/measure?project=fr.paris.lutece.plugins%3Amodule-workflow-notifygru&metric=coverage)](https://dev.lutece.paris.fr/sonar/dashboard?id=fr.paris.lutece.plugins%3Amodule-workflow-notifygru)
 
-# NotifyGru Module
+# Module workflow NotifyGru 
 
 ## Introduction
-Notify Gru The module is a workflow task which, from a resource to build a stream associated JSON and send it to a processing entity
-## Provider of resource
+Notify Gru The module is a workflow task that build a notification from a resource and send it. The notification can be of the type Mail, JSON...
+## Configuration
 
-Notify Gru is a generic task to the extent that it can work with any resource provider (ticketing, appointment, directory ...).Thus for each service (ticketing, appointment, directory ...) a provider will be implemented to provide maximum                 information about the resource.
+NotifyGru requires the library-notifygru to send the notification.
+
+This library provides "Notifiers" that correspond to each type of notification (mail, sms, ...)
+
+The "notifiers" should be injected as beans in the context of the module to be used, examples :
+
+```
+
+      <!--  NotificationStore Rest (with ApiManager access) : --> 
+    <bean id="workflow-notifygru.lib-notifygru.apiManagerTransport"
+        class="fr.paris.lutece.plugins.librarynotifygru.rs.service.NotificationTransportApiManagerRest">
+        <property name="notificationEndPoint">
+            <value>${library-notifygru.NotificationStoreNotifierService.notificationEndPoint}</value>
+        </property>
+        <property name="apiManagerEndPoint">
+            <value>${library-notifygru.NotificationStoreNotifierService.apiManagerEndPoint}</value>
+        </property>
+        <property name="apiManagerCredentials">
+            <value>${library-notifygru.NotificationStoreNotifierService.apiManagerCredentials}</value>
+        </property>
+    </bean>
+    <bean id="workflow-notifygru.lib-notifygru.notificationStoreNotifierRestService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.NotificationStoreNotifierRestService">
+        <constructor-arg
+            ref="workflow-notifygru.lib-notifygru.apiManagerTransport" />
+    </bean>
+	
+	
+	<!-- Email : -->
+  	<bean id="workflow-notifygru.lib-notifygru.emailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.EmailNotifierService">
+    </bean>
+    
+
+	<!-- BroadCast Email : -->
+  	<bean id="workflow-notifygru.lib-notifygru.broadcastEmailNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.BroadcastEmailNotifierService">
+    </bean>
+    
+    
+    <!-- Mock : -->
+  	<bean id="workflow-notifygru.lib-notifygru.MockNotifierService"
+        class="fr.paris.lutece.plugins.librarynotifygru.services.MockNotifierService">
+    </bean>
+                
+                
+```
+
+See example in the workflow-notifygru_context.xml file, or the library-notifygru repository for more details about this configuration.
+
+
+
+Notify Gru can use extra information providers to include in the content of the notification.
+
+Those providers are provided by the different type of workflow resources that can use this notification task ( forms, appointment, ...)
 
 There are two types of resource provider :
 
@@ -13,70 +71,68 @@ There are two types of resource provider :
  
 *  **The resource providers :** 
 
-A resource provider is the link between the NotifyGru task and a single form is a plugin service. This is the case of ticketing plugin consists of a single resource form.
+A resource provider is the link between the NotifyGru task and a simple set of workflow resource infos.
 *  **The resource providers managers:** 
 
-A resource provider manager is the link between the           notifygru task and each plugin service form concerned.This is the case of the plugin Gesion of Appointment, directory where one can have more service forms
+A resource provider manager is the link between the           notifygru task and multiple sets of resources infos (for example, in the plugin forms each form corresponds to a provider. )
 
 
-## Configuring the task
+
+
+Resources are treated as "demands", which contain information such as id, type, user reference, etc... and thus all notifications corresponding to the same resource will be attached to this "demand" entity.
+
+## Usage
 
  **NotifyGru configuration is done in two steps:** 
- **A first page with two immutable fields:** 
+ **A first page with two fields:** 
  
-* A list to choose the supplier of                       resource among different implementations of the available suppliers
-* The checkbox field will enhance the flow field demand_status V1 notification.                        The value is 0 (meaning "current" unchecked) or 1 (meaning "closed".                        One is if the checkbox is checked).
+* A list to choose the provider of                       resource among different implementations of the available providers
+* The status checkbox field : the demand will be considered as "closed" if checked.
 
-NotifyGru configuration is done on 5 tabs. To set up a tab you must activate it via the "Add a notification *". For each tab you can use bookmarks resource provider to configurethe message or the message subject that will be addressed during the execution of the task
+Then NotifyGru configuration is done on multiple tabs. To set up a tab you must activate it via the select input "Add a notification ...".(Only the available notifications types are proposed, regarding the type of injected Notifiers) For each tab you can use bookmarks resource provider to enrich dynamically the message or the subject.
  **Dashboard tab :** 
  
-* Request Status (required) status for the wicket
-* Serder Name (required): the message sender in window
-* Subject (required) in the message subject desk. **May have some bookmarks resource** 
-* Message (required): Message to the desk. **May have some bookmarks resource** 
+* Status (required) : new status of the demand
+* Serder Name (required): the message sender
+* Subject (required): subject of the notification (May use bookmarks)
+* Message (required): Message of the notification (May use bookmarks)
 * Number of steps (optional): total number of steps in demand
-* Current Step (optional): application stage when sending the stream
+* Current Step (optional): current step when sending the notification
 
 
- **View Tab Agent 306 °:** 
+ **View Tab Agent 360°:** 
  
-* Status in the 360 ° View (required) status for the 360 ° view
-* Event Description in the 360 ° View (required): message to the view 306 °. **May have some bookmarks resource** 
+* Status in the 360° View (required) : status for the 360° view
+* Event Description in the 360 ° View (required): message to the view 360. (May use bookmarks)
 
 
  **Tab MAIL :** 
  
 * Sender (required): sender email
-* Subject (required) email subject. **May have some bookmarks resource** 
+* Subject (required) email subject. (May use bookmarks)
 * Cc (optional): in copy
 * Bcc (optional): blind carbon copy.
-* Message (required): message of the email. May have some bookmarks resource
+* Message (required): message of the email. (May use bookmarks)
 
 
  **Tab SMS :** 
  
-* Message (required): the SMS. **May have some bookmarks resource** 
+* Message (required): the SMS. (May use bookmarks)
 
 
  **Tab Mailing List :** 
  
-* mailing list (required)
-* Sender (required)
-* Subject (required): **May have some bookmarks resource** 
+* mailing list (required): list of recipients, separated with ";"
+* Sender (required): email of the sender
+* Subject (required): subject (May use bookmarks)
 * Cc (optional): in copy
 * Bcc (optional): blind carbon copy.
-* Message (required) : **May have some bookmarks resource** 
+* Message (required) : the main content (May use bookmarks)
 
 
 
-Do not forget to override the config settings that will be used to inform parameters (URL, TOKEN, ORIGIN) of the external entity that will receive the flow Json
 
-## Using the task
-
-When the service receives a request, the task is launched                  (Automatic or manual start) and the Supplier during the configuration                 responsible for collecting all the information needed to build the JSON stream                  sent to the external entity
-
-
-[Maven documentation and reports](http://dev.lutece.paris.fr/plugins/module-workflow-notifygru/)
+[Maven documentation and reports](https://dev.lutece.paris.fr/plugins/module-workflow-notifygru/)
 
 
 
