@@ -2,6 +2,15 @@
 <#assign pane="pane-desk">
 <@input type='hidden' name='activeOnglet' value='${config.setOnglet}' id='activeOngletHere' />
 <@messages errors=errors />
+<#macro checkProvider items val="" >  
+  <#list items as item>
+    <#if item.code == val ><#assign isPresent = true ></#if>
+  </#list>
+  <#if val?has_content && isPresent?? == false>
+  <@messages warnings= [ {"message":"Provider configuration problem : "+val} ] />           
+  </#if>
+</#macro>
+<@checkProvider items=list_provider val=config.idSpringProvider! />
 <header style="display:flex;justify-content:space-between;padding-bottom:5px;margin-bottom:5px;">
 	<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h4>
 	<@div params='style="display:flex; justify-content:flex-end; align-items:start;"'>
