@@ -82,7 +82,7 @@ public final class ServiceConfigTaskForm
     public static ReferenceList buildReferenceListOfInactiveNotificationConfigs( List<INotificationConfig> listNotificationConfig, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList( );
-        List<EnumNotificationType> notifTypeList = NotificationService.getNotificationTypesFromNotifiers ( );
+        List<EnumNotificationType> notifTypeList = CDI.current( ).select( NotificationService.class ).get( ).getNotificationTypesFromNotifiers ( );
         
         for ( INotificationConfig notificationConfig : listNotificationConfig )
         {

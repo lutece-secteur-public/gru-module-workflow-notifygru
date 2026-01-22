@@ -107,6 +107,9 @@ public class TaskNotifyGru extends SimpleTask
 
     @Inject
     private NotifyGruCacheService _notifyGruCacheService;
+    
+    @Inject
+    private NotificationService _notifyGruSenderService;
 
     /**
      * {@inheritDoc}
@@ -211,7 +214,7 @@ public class TaskNotifyGru extends SimpleTask
         {
             try
             {
-                NotifyGruResponse response = NotificationService.send( notificationObject );
+                NotifyGruResponse response = _notifyGruSenderService.send( notificationObject );
 
                 if ( response.getErrors( ) != null && !response.getErrors( ).isEmpty( ) )
                 {
