@@ -255,12 +255,11 @@ public class BroadcastNotificationConfig implements INotificationConfig
         }
 
     }
-    
 
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.BROADCAST_EMAIL;
+        return EnumNotificationType.BROADCAST_EMAIL;
     }
 
 }

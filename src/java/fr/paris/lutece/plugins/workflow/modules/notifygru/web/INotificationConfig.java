@@ -79,11 +79,11 @@ public interface INotificationConfig
      * Removes this notification configuration
      */
     void removeConfig( );
-    
+
     /**
      * get notification type
      * 
      * @return
      */
-    public EnumNotificationType getNotificationType( ); 
+    public EnumNotificationType getNotificationType( );
 }

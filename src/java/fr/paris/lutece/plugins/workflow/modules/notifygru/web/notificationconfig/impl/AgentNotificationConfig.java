@@ -191,7 +191,7 @@ public class AgentNotificationConfig implements INotificationConfig
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.BACKOFFICE;
+        return EnumNotificationType.BACKOFFICE;
     }
 
 }
