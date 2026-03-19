@@ -32,7 +32,7 @@
 			<@input type='text' name='status_text_agent' value=inputValue maxlength= 255 />
 		</@formGroup>
 		<@formGroup labelFor='message_agent' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_agent}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_agent}' mandatory=true rows=2>
-			<@input type='textarea' name='message_agent' id='message_agent' rows=5 cols=70 richtext=true><#if config?exists  && config.messageAgent?has_content>${config.messageAgent}</#if></@input>
+			<@input type='textarea' name='message_agent' id='message_agent' rows=5 cols=70 richtext=true bypassXssFilter=true><#if config?exists  && config.messageAgent?has_content>${config.messageAgent}</#if></@input>
 		</@formGroup>
     </@columns>
 	<@columns xl=4>
