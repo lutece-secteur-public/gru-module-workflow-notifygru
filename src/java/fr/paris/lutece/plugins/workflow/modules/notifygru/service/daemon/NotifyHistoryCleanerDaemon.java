@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.service.daemon;
 
-
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -56,58 +55,54 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
  */
 public class NotifyHistoryCleanerDaemon extends Daemon
 {
-	
-	private INotifyGruHistoryService _notifyGruHistoryService=SpringContextService.getBean(NotifyGruHistoryService.BEAN_SERVICE);
-	private static final String MESSAGE_DAEMON_NAME = "NotifyHistoryCleanerDaemon - ";
+
+    private INotifyGruHistoryService _notifyGruHistoryService = SpringContextService.getBean( NotifyGruHistoryService.BEAN_SERVICE );
+    private static final String MESSAGE_DAEMON_NAME = "NotifyHistoryCleanerDaemon - ";
+
     /**
      * Daemon's treatment method
      */
     public void run( )
     {
-    	
-    	
-    	
-    	 StringBuilder sbLogs = new StringBuilder( );
-    	 sbLogs.append( MESSAGE_DAEMON_NAME );
-    	 
-        
-         int nExpirationHours = AppPropertiesService.getPropertyInt( Constants.PROPERTY_DAEMON_NB_HOUR_BEFORE_CLEANING_HISTORY_CONTENT, -1 );
-        if(nExpirationHours > -1)
+
+        StringBuilder sbLogs = new StringBuilder( );
+        sbLogs.append( MESSAGE_DAEMON_NAME );
+
+        int nExpirationHours = AppPropertiesService.getPropertyInt( Constants.PROPERTY_DAEMON_NB_HOUR_BEFORE_CLEANING_HISTORY_CONTENT, -1 );
+        if ( nExpirationHours > -1 )
         {
 
-        	Calendar calendar = Calendar.getInstance();
-        	calendar.add( Calendar.HOUR, -nExpirationHours );
-        	Timestamp  minDateCreation=new Timestamp(calendar.getTime().getTime());
-        	
-        	
-        	sbLogs.append( "the number of hours before cleaning the content of notification history is set to ");
-        	sbLogs.append( nExpirationHours);
-        	sbLogs.append( "\n" );
-        	int nbNotificationToClean=_notifyGruHistoryService.getNbHistoryToCleanByDate(minDateCreation ,WorkflowUtils.getPlugin( ));
-        	sbLogs.append( "the number of histories will be cleaned is " + nbNotificationToClean);
-        	sbLogs.append( "\n" );
-        	if(nbNotificationToClean > 0)
-        	{
-        		sbLogs.append( "start cleaning notification process "  );
-        		_notifyGruHistoryService.cleanHistoryContentByDate(minDateCreation ,WorkflowUtils.getPlugin( ));
-        		sbLogs.append( "\n" );
-        		sbLogs.append( "end cleaning notification process " );
-        		sbLogs.append( "\n" );
-        	}
- 
+            Calendar calendar = Calendar.getInstance( );
+            calendar.add( Calendar.HOUR, -nExpirationHours );
+            Timestamp minDateCreation = new Timestamp( calendar.getTime( ).getTime( ) );
+
+            sbLogs.append( "the number of hours before cleaning the content of notification history is set to " );
+            sbLogs.append( nExpirationHours );
+            sbLogs.append( "\n" );
+            int nbNotificationToClean = _notifyGruHistoryService.getNbHistoryToCleanByDate( minDateCreation, WorkflowUtils.getPlugin( ) );
+            sbLogs.append( "the number of histories will be cleaned is " + nbNotificationToClean );
+            sbLogs.append( "\n" );
+            if ( nbNotificationToClean > 0 )
+            {
+                sbLogs.append( "start cleaning notification process " );
+                _notifyGruHistoryService.cleanHistoryContentByDate( minDateCreation, WorkflowUtils.getPlugin( ) );
+                sbLogs.append( "\n" );
+                sbLogs.append( "end cleaning notification process " );
+                sbLogs.append( "\n" );
+            }
+
         }
         else
         {
-        	  sbLogs.append( "the number of hours before cleaning the content of notification history is not set" );
-        	  sbLogs.append( "\n" );
-        	  sbLogs.append( "no notification history will be cleaned" );
-        	  
+            sbLogs.append( "the number of hours before cleaning the content of notification history is not set" );
+            sbLogs.append( "\n" );
+            sbLogs.append( "no notification history will be cleaned" );
+
         }
-        
+
         AppLogService.info( "runNotifyHistoryCleanerDaemon: {}", sbLogs );
-        
+
         setLastRunLogs( sbLogs.toString( ) );
-        
-      
+
     }
 }

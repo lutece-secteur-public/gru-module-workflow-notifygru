@@ -154,7 +154,7 @@ public class NotifyGruTaskComponent extends NoFormTaskComponent
         {
             return;
         }
-        
+
         try
         {
             sanitizeField( history.getEmail( ), EmailHistory::getMessageEmail, EmailHistory::setMessageEmail );

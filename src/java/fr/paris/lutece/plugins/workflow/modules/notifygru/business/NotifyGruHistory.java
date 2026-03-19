@@ -257,16 +257,19 @@ public class NotifyGruHistory
      * 
      * @return true if the history content have been cleaned
      */
-	public boolean isContentCleaned() {
-		return _bContentCleaned;
-	}
+    public boolean isContentCleaned( )
+    {
+        return _bContentCleaned;
+    }
 
-	/**
-	 * 
-	 * @param _bContentcleaned true if the history content have been cleaned
-	 */
-	public void setContentCleaned(boolean _bContentcleaned) {
-		this._bContentCleaned = _bContentcleaned;
-	}
+    /**
+     * 
+     * @param _bContentcleaned
+     *            true if the history content have been cleaned
+     */
+    public void setContentCleaned( boolean _bContentcleaned )
+    {
+        this._bContentCleaned = _bContentcleaned;
+    }
 
 }
