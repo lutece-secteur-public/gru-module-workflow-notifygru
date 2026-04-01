@@ -105,8 +105,10 @@ public class NotifyGruTaskConfigController
     private static final String ACTION_NOTIFICATION_CONFIG_REMOVE_PREFIX = "RemoveNotificationConfig_";
 
     // Services
-    private static final ITaskConfigService _taskNotifyGruConfigService = CDI.current( ).select( ITaskConfigService.class, NamedLiteral.of( TaskNotifyGruConfigService.BEAN_SERVICE ) ).get( );
-    private static final INotifyGruService _notifyGRUService = CDI.current( ).select( INotifyGruService.class, NamedLiteral.of( NotifyGruService.BEAN_SERVICE ) ).get( );
+    private static final ITaskConfigService _taskNotifyGruConfigService = CDI.current( )
+            .select( ITaskConfigService.class, NamedLiteral.of( TaskNotifyGruConfigService.BEAN_SERVICE ) ).get( );
+    private static final INotifyGruService _notifyGRUService = CDI.current( )
+            .select( INotifyGruService.class, NamedLiteral.of( NotifyGruService.BEAN_SERVICE ) ).get( );
 
     private final ITask _task;
     private TaskNotifyGruConfig _config;

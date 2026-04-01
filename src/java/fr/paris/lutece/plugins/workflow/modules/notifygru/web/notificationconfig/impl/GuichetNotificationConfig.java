@@ -222,12 +222,11 @@ public class GuichetNotificationConfig implements INotificationConfig
         }
 
     }
-    
 
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.MYDASHBOARD;
+        return EnumNotificationType.MYDASHBOARD;
     }
 
 }

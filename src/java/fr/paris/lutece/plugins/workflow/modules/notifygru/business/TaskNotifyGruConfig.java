@@ -531,14 +531,14 @@ public class TaskNotifyGruConfig extends TaskConfig
      */
     public String getSenderNameEmail( )
     {
-    	if ( !StringUtils.isBlank( _strSenderNameEmail ) )
-    	{
-    		return _strSenderNameEmail;
-    	} 
-    	else
-    	{
-    		return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME, "NotifyGru");
-    	}
+        if ( !StringUtils.isBlank( _strSenderNameEmail ) )
+        {
+            return _strSenderNameEmail;
+        }
+        else
+        {
+            return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME, "NotifyGru" );
+        }
     }
 
     /**
@@ -546,11 +546,11 @@ public class TaskNotifyGruConfig extends TaskConfig
      * 
      * @return the default server mail
      */
-	public String getSenderEmail( ) 
-	{
-		return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_MAIL, MailService.getNoReplyEmail( ) );
-	}
-	
+    public String getSenderEmail( )
+    {
+        return AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_MAIL, MailService.getNoReplyEmail( ) );
+    }
+
     /**
      * Sets the SenderNameEmail.
      *

@@ -174,12 +174,11 @@ public class SMSNotificationConfig implements INotificationConfig
         }
 
     }
-    
 
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.SMS;
+        return EnumNotificationType.SMS;
     }
 
 }

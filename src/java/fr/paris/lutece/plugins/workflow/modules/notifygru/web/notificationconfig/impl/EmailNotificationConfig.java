@@ -207,12 +207,11 @@ public class EmailNotificationConfig implements INotificationConfig
         }
 
     }
-    
 
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.CUSTOMER_EMAIL;
+        return EnumNotificationType.CUSTOMER_EMAIL;
     }
 
 }

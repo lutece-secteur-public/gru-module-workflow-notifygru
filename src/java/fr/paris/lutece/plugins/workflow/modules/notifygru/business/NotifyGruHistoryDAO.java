@@ -68,14 +68,11 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE_BY_HISTORY = "DELETE FROM workflow_task_notify_gru_history  WHERE id_history=? AND id_task=?";
     private static final String SQL_QUERY_DELETE_BY_TASK = "DELETE FROM workflow_task_notify_gru_history  WHERE  id_task=?";
-    private static final String SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN="select count(n.id_history) from workflow_task_notify_gru_history as n , "
-    		+ "workflow_resource_history as h  WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ?" ;
-    private static final String SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE="update workflow_task_notify_gru_history as n ,"
-    		+ "workflow_resource_history as h   set n.content_cleaned=1,n.message_email = null , n.message_guichet = null,n.message_guichet = null,n.message_sms = null, n.message_broadcast = null  "
-    		+ "WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ? ";    
-    
-    
-    
+    private static final String SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN = "select count(n.id_history) from workflow_task_notify_gru_history as n , "
+            + "workflow_resource_history as h  WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ?";
+    private static final String SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE = "update workflow_task_notify_gru_history as n ,"
+            + "workflow_resource_history as h   set n.content_cleaned=1,n.message_email = null , n.message_guichet = null,n.message_guichet = null,n.message_sms = null, n.message_broadcast = null  "
+            + "WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ? ";
 
     /**
      * {@inheritDoc}
@@ -194,7 +191,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
                 oEvent.setCode( daoUtil.getString( ++nPos ) );
                 oEvent.setStatus( daoUtil.getString( ++nPos ) );
                 oEvent.setMessage( daoUtil.getString( ++nPos ) );
-                oNotifyGru.setContentCleaned(daoUtil.getBoolean( ++nPos ) );
+                oNotifyGru.setContentCleaned( daoUtil.getBoolean( ++nPos ) );
             }
 
             oNotifyGru.setGuichet( oGuichet );
@@ -203,7 +200,6 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             oNotifyGru.setSMS( oSMS );
             oNotifyGru.setBroadCast( oBroadcast );
             oNotifyGru.setEvent( oEvent );
-            
 
         }
         return oNotifyGru;
@@ -239,46 +235,42 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
             daoUtil.executeUpdate( );
         }
     }
-    
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void cleanHistoryContentByDate( Timestamp tMinCreationDate , Plugin plugin )
+    public void cleanHistoryContentByDate( Timestamp tMinCreationDate, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE, plugin ) )
         {
             daoUtil.setTimestamp( 1, tMinCreationDate );
-         
 
             daoUtil.executeUpdate( );
         }
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getNbHistoryToCleanByDate( Timestamp tMinCreationDate , Plugin plugin )
+    public int getNbHistoryToCleanByDate( Timestamp tMinCreationDate, Plugin plugin )
     {
-    	int nbHistoryToDelete=0;
+        int nbHistoryToDelete = 0;
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN, plugin ) )
         {
-        
+
             daoUtil.setTimestamp( 1, tMinCreationDate );
-         
+
             daoUtil.executeQuery( );
 
             if ( daoUtil.next( ) )
             {
-            	nbHistoryToDelete=daoUtil.getInt(1);
-            	
+                nbHistoryToDelete = daoUtil.getInt( 1 );
+
             }
         }
         return nbHistoryToDelete;
     }
-    
-    
+
 }

@@ -42,13 +42,12 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 
 @ApplicationScoped
-public class TaskTypeProducer 
+public class TaskTypeProducer
 {
-	@Produces
+    @Produces
     @ApplicationScoped
     @Named( "workflow-notifygru.taskTypeNotifyGru" )
-    public ITaskType produceModifyUpdateStatusTypeTask( 
-    		@ConfigProperty( name = "workflow-notifygru.taskTypeNotifyGru.key" ) String key,
+    public ITaskType produceModifyUpdateStatusTypeTask( @ConfigProperty( name = "workflow-notifygru.taskTypeNotifyGru.key" ) String key,
             @ConfigProperty( name = "workflow-notifygru.taskTypeNotifyGru.titleI18nKey" ) String titleI18nKey,
             @ConfigProperty( name = "workflow-notifygru.taskTypeNotifyGru.beanName" ) String beanName,
             @ConfigProperty( name = "workflow-notifygru.taskTypeNotifyGru.configBeanName" ) String configBeanName,

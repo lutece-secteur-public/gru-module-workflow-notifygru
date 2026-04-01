@@ -51,7 +51,7 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
     @PostConstruct
     public void init( )
     {
-    	initCache( CACHE_NAME, String.class, TaskNotifyGruConfig.class );
+        initCache( CACHE_NAME, String.class, TaskNotifyGruConfig.class );
     }
 
     /*
@@ -78,19 +78,19 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
     {
         TaskNotifyGruConfig config = null;
 
-    	if ( isCacheEnable( ) && isCacheAvailable( ) )
-    	{
+        if ( isCacheEnable( ) && isCacheAvailable( ) )
+        {
             String strCacheKey = getCacheKey( nidTask );
             config = get( strCacheKey );
-            
-            if (config == null) 
+
+            if ( config == null )
             {
                 config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
-                put( strCacheKey, config);
+                put( strCacheKey, config );
             }
-        } 
-    	else 
-    	{
+        }
+        else
+        {
             config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
         }
 
@@ -135,7 +135,7 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
     {
         return _cache != null && !_cache.isClosed( );
     }
-    
+
     /**
      * Loads configuration from service or creates an empty configuration if not found
      * 
@@ -145,7 +145,7 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
      *            the task identifier
      * @return TaskNotifyGruConfig instance, never null
      */
-    private TaskNotifyGruConfig loadConfigFromService( ITaskConfigService taskNotifyGruConfigService, int nidTask ) 
+    private TaskNotifyGruConfig loadConfigFromService( ITaskConfigService taskNotifyGruConfigService, int nidTask )
     {
         TaskNotifyGruConfig config = taskNotifyGruConfigService.findByPrimaryKey( nidTask );
         return config != null ? config : new TaskNotifyGruConfig( );

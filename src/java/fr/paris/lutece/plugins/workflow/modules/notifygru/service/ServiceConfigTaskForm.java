@@ -70,8 +70,7 @@ public final class ServiceConfigTaskForm
     }
 
     /**
-     * Builds a {@code ReferenceList} of inactive notification configurations
-     * the manage the available Notification Types provided by the notifiers 
+     * Builds a {@code ReferenceList} of inactive notification configurations the manage the available Notification Types provided by the notifiers
      * 
      * @param listNotificationConfig
      *            the list of all notification configurations
@@ -82,18 +81,18 @@ public final class ServiceConfigTaskForm
     public static ReferenceList buildReferenceListOfInactiveNotificationConfigs( List<INotificationConfig> listNotificationConfig, Locale locale )
     {
         ReferenceList refenreceList = new ReferenceList( );
-        List<EnumNotificationType> notifTypeList = CDI.current( ).select( NotificationService.class ).get( ).getNotificationTypesFromNotifiers ( );
-        
+        List<EnumNotificationType> notifTypeList = CDI.current( ).select( NotificationService.class ).get( ).getNotificationTypesFromNotifiers( );
+
         for ( INotificationConfig notificationConfig : listNotificationConfig )
         {
             if ( !notificationConfig.isActive( ) )
             {
-        	// keep only the available Notification Types provided by the notifiers
-        	if ( notifTypeList.contains ( notificationConfig.getNotificationType ( ) ) )
-        	{
-                refenreceList.addItem( notificationConfig.getName( ),
-                        I18nService.getLocalizedString( MESSAGE_NOTIFICATION_CONFIG_TITLE_PREFIX + notificationConfig.getName( ), locale ) );
-        	}
+                // keep only the available Notification Types provided by the notifiers
+                if ( notifTypeList.contains( notificationConfig.getNotificationType( ) ) )
+                {
+                    refenreceList.addItem( notificationConfig.getName( ),
+                            I18nService.getLocalizedString( MESSAGE_NOTIFICATION_CONFIG_TITLE_PREFIX + notificationConfig.getName( ), locale ) );
+                }
             }
         }
 
@@ -139,11 +138,10 @@ public final class ServiceConfigTaskForm
         {
             return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
         }
-        else
-            if ( tabRequiredFields.length == 2 )
-            {
-                return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
-            }
+        else if ( tabRequiredFields.length == 2 )
+        {
+            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+        }
 
         return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
     }

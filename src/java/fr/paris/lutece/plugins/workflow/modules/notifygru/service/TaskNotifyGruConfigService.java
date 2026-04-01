@@ -54,9 +54,9 @@ public class TaskNotifyGruConfigService extends TaskConfigService
     public static final String BEAN_SERVICE = "workflow-notifygru.taskNotifyGruConfigService";
 
     @Inject
-    public TaskNotifyGruConfigService( @Named( "taskNotifyGruConfigDAO" ) ITaskConfigDAO<TaskNotifyGruConfig> taskNotifyGruConfigDAO ) 
-	{
-       setTaskConfigDAO( (ITaskConfigDAO) taskNotifyGruConfigDAO ); 
+    public TaskNotifyGruConfigService( @Named( "taskNotifyGruConfigDAO" ) ITaskConfigDAO<TaskNotifyGruConfig> taskNotifyGruConfigDAO )
+    {
+        setTaskConfigDAO( (ITaskConfigDAO) taskNotifyGruConfigDAO );
     }
 
     /**

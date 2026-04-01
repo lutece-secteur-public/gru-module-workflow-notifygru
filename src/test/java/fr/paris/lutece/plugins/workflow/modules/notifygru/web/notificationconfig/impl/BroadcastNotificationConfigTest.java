@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfig.impl;
 
-
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
