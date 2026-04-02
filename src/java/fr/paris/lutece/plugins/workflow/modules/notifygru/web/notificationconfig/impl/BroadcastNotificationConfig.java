@@ -46,6 +46,7 @@ import fr.paris.lutece.plugins.grubusiness.business.notification.EnumNotificatio
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
+import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 
 /**
@@ -106,7 +107,9 @@ public class BroadcastNotificationConfig implements INotificationConfig
 
         _strSenderName = request.getParameter( PARAMETER_SENDER_NAME );
         _strSubject = request.getParameter( PARAMETER_SUBJECT );
-        _strMessage = request.getParameter( PARAMETER_MESSAGE );
+        // Message template content is sent base64 encoded to bypass the XSS filter (if activated),
+        // but the content should be sanitized after template processing
+        _strMessage = StringUtil.decodeXssBypass( request.getParameter( PARAMETER_MESSAGE ) );
         _strRecipientsCc = request.getParameter( PARAMETER_RECIPIENT_CC );
         _strRecipientsCci = request.getParameter( PARAMETER_RECIPIENT_CCI );
     }

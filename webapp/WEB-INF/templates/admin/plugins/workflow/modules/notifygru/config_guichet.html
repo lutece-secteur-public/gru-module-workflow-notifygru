@@ -48,7 +48,7 @@
 			<@input type='text' name='subject_guichet' value=inputValue maxlength=255 />
 		</@formGroup>
 		<@formGroup labelFor='message_guichet' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}' mandatory=true rows=2>
-			<@input type='textarea' name='message_guichet' id='message_guichet' rows=15 cols=70 richtext=true><#if config?exists  && config.messageGuichet?has_content>${config.messageGuichet!}</#if></@input>
+			<@input type='textarea' name='message_guichet' id='message_guichet' rows=15 cols=70 richtext=true bypassXssFilter=true><#if config?exists  && config.messageGuichet?has_content>${config.messageGuichet!}</#if></@input>
 		</@formGroup>
 		<@formGroup rows=2>
 			<@button type='button' id='myButton' params='data-loading-text="Loading..." autocomplete="off" onclick="showhideConfEtapes()"' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state}' buttonIcon='caret-down' id='iconeConfEtapes' />
