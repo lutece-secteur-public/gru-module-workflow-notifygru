@@ -44,6 +44,7 @@ import jakarta.enterprise.inject.literal.NamedLiteral;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.servlet.http.HttpServletRequest;
 
+import fr.paris.lutece.plugins.workflowcore.service.provider.ProviderDescription;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
@@ -416,7 +417,13 @@ public class NotifyGruTaskConfigController
          */
         private Collection<InfoMarker> findMarkers( IProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
         {
-            Collection<InfoMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
+            Collection<InfoMarker> collectionMarkers = new ArrayList<InfoMarker>();
+
+            ProviderDescription providerDescription = providerManager.getProviderDescription( strProviderId );
+            if (providerDescription != null)
+            {
+                collectionMarkers.addAll( providerDescription.getMarkerDescriptions() );
+            }
 
             for ( String strMarkerProviderId : listMarkerProviderIds )
             {
