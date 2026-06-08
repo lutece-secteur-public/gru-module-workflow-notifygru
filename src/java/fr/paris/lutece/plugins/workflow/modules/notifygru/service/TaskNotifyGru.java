@@ -36,10 +36,12 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -421,17 +423,7 @@ public class TaskNotifyGru extends SimpleTask
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
             String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
-
-            // Delete unnecessary characters added by Freemarker
-            if ( strRecipientBroadcast.contains( "\n" ) )
-            {
-                strRecipientBroadcast.replaceAll( "\n", "" );
-            }
-
-            if ( StringUtils.isNotEmpty( strRecipientBroadcast ) )
-            {
-                listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
-            }
+            listRecipientBroadcast.addAll( extractEmails( strRecipientBroadcast ) );
         }
 
         if ( config.getIdMailingListBroadcast( ) > 0 )
@@ -453,14 +445,31 @@ public class TaskNotifyGru extends SimpleTask
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( config.getSenderEmail( ) );
-        // we split a StringBuilder we can
-        broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
+        broadcastNotification.setRecipient( buildEmailAddresses( listRecipientBroadcast ) );
         broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
         broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
-        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
-        broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
+        broadcastNotification.setCc( buildEmailAddresses( extractEmails( strRecipientCcBroadcast ) ) );
+        broadcastNotification.setBcc( buildEmailAddresses( extractEmails( config.getRecipientsCciBroadcast( ) ) ) );
 
         return broadcastNotification;
+    }
+
+    private List<EmailAddress> buildEmailAddresses( List<String> emails )
+    {
+        return EmailAddress.buildEmailAddresses( emails.toArray( new String [ 0 ] ) );
+    }
+
+    private List<String> extractEmails( String rawEmails )
+    {
+        if ( StringUtils.isBlank( rawEmails ) )
+        {
+            return Collections.emptyList( );
+        }
+
+        return Arrays.stream( rawEmails.split( Constants.SEMICOLON ) )
+                .filter( StringUtils::isNotBlank )
+                .map( email -> email.replaceAll( "[\\r\\n\\t ]", "" ) )
+                .collect( Collectors.toList( ) );
     }
 
     /**

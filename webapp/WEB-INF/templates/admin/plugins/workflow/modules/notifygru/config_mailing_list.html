@@ -1,4 +1,11 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
+<#assign patternValidationMail = [
+	{
+		'name': 'mailing_spec_validation',
+		'regex': '^\\s*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*(;\\s*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*)*$',
+		'message': '#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_validation}'
+	}
+] />
 <@row>
   <@columns>
 		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
@@ -48,11 +55,11 @@
 		<@div id='mailing_spec_block' params='style="${mailingSpecStyle}"'>
 			<#if config?exists && config.emailBroadcast?has_content>
 				<@formGroup labelFor='mailing_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast}' mandatory=true rows=2>
-					<@input type='text' name='mailing_spec' value=config.emailBroadcast maxlength=255 />
+					<@input type='text' name='mailing_spec' id='mailing_spec' value=config.emailBroadcast maxlength=255 patternValidationRules=patternValidationMail />
 				</@formGroup>
 			<#else>
 				<@formGroup labelFor='mailing_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_comment_broadcast}' mandatory=true rows=2>
-					<@input type='text' name='mailing_spec' value='' maxlength=255 />
+					<@input type='text' name='mailing_spec' id='mailing_spec' value='' maxlength=255 patternValidationRules=patternValidationMail />
 				</@formGroup>
 			</#if>
 		</@div>
