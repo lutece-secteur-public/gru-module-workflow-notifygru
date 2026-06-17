@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -107,7 +107,7 @@ public class TaskNotifyGru extends SimpleTask
 
     @Inject
     private NotifyGruCacheService _notifyGruCacheService;
-    
+
     @Inject
     private NotificationService _notifyGruSenderService;
 
@@ -226,28 +226,26 @@ public class TaskNotifyGru extends SimpleTask
 
                     notifyGruHistory.setEvent( event );
                 }
-                else
-                    if ( response.getWarnings( ) != null && !response.getWarnings( ).isEmpty( ) )
+                else if ( response.getWarnings( ) != null && !response.getWarnings( ).isEmpty( ) )
+                {
+                    EventHistory event = new EventHistory( );
+                    event.setStatus( NotifyGruResponse.STATUS_WARNING );
+
+                    StringBuilder msg = new StringBuilder( );
+                    for ( Event notificationEvent : response.getWarnings( ) )
                     {
-                        EventHistory event = new EventHistory( );
-                        event.setStatus( NotifyGruResponse.STATUS_WARNING );
-
-                        StringBuilder msg = new StringBuilder( );
-                        for ( Event notificationEvent : response.getWarnings( ) )
-                        {
-                            msg.append( notificationEvent.getType( ) ).append( " " );
-                            msg.append( notificationEvent.getStatus( ) ).append( " " );
-                            msg.append( notificationEvent.getMessage( ) ).append( " | " );
-                        }
-                        event.setMessage( msg.toString( ) );
-
-                        notifyGruHistory.setEvent( event );
+                        msg.append( notificationEvent.getType( ) ).append( " " );
+                        msg.append( notificationEvent.getStatus( ) ).append( " " );
+                        msg.append( notificationEvent.getMessage( ) ).append( " | " );
                     }
+                    event.setMessage( msg.toString( ) );
+
+                    notifyGruHistory.setEvent( event );
+                }
 
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
-            catch
-            ( Exception e )
+            catch( Exception e )
             {
                 AppLogService.error( "Unable to send the notification" );
 
@@ -432,13 +430,13 @@ public class TaskNotifyGru extends SimpleTask
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
             String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
-            
-            // Delete unnecessary characters added by Freemarker   
-            if ( strRecipientBroadcast.contains ( "\n") )
+
+            // Delete unnecessary characters added by Freemarker
+            if ( strRecipientBroadcast.contains( "\n" ) )
             {
-        	strRecipientBroadcast.replaceAll ( "\n", "" );
+                strRecipientBroadcast.replaceAll( "\n", "" );
             }
-            
+
             if ( StringUtils.isNotEmpty( strRecipientBroadcast ) )
             {
                 listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );

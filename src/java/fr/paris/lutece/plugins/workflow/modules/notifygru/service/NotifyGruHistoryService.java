@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -105,19 +105,21 @@ public class NotifyGruHistoryService implements INotifyGruHistoryService
     /**
      * {@inheritDoc}
      */
-	@Override
-	public void cleanHistoryContentByDate(Timestamp tMinCreationDate, Plugin plugin) {
-		   
-			_dao.cleanHistoryContentByDate(tMinCreationDate, plugin);
-		
-	}
+    @Override
+    public void cleanHistoryContentByDate( Timestamp tMinCreationDate, Plugin plugin )
+    {
 
-	   /**
+        _dao.cleanHistoryContentByDate( tMinCreationDate, plugin );
+
+    }
+
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public int getNbHistoryToCleanByDate(Timestamp tMinCreationDate, Plugin plugin) {
-		 return _dao.getNbHistoryToCleanByDate(tMinCreationDate, plugin);
-	}
-    
+    @Override
+    public int getNbHistoryToCleanByDate( Timestamp tMinCreationDate, Plugin plugin )
+    {
+        return _dao.getNbHistoryToCleanByDate( tMinCreationDate, plugin );
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -97,7 +97,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public synchronized void insert( TaskNotifyGruConfig config )
     {
         // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
+        _notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin( ) ) )
         {
@@ -116,7 +116,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public void store( TaskNotifyGruConfig config )
     {
         // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
+        _notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, NotifyGruPlugin.getPlugin( ) ) )
         {
@@ -209,7 +209,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     public void delete( int nIdState )
     {
         // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( nIdState );
+        _notifyGruCacheService.removeGruConfigFromCache( nIdState );
 
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, NotifyGruPlugin.getPlugin( ) ) )
         {
