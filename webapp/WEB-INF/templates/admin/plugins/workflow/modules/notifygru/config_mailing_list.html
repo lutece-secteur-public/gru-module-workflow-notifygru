@@ -2,7 +2,7 @@
 <#assign patternValidationMail = [
 	{
 		'name': 'mailing_spec_validation',
-		'regex': '^\\s*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*(;\\s*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\s*)*$',
+		'regex': '${mailing_pattern}',
 		'message': '#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_validation}'
 	}
 ] />
