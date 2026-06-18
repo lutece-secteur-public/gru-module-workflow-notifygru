@@ -454,11 +454,22 @@ public class TaskNotifyGru extends SimpleTask
         return broadcastNotification;
     }
 
+    /**
+     * Transfor a list of String mail into a list of EmailAddress
+     * @param emails the list of String mail
+     * @return the list of EmailAddress
+     */
     private List<EmailAddress> buildEmailAddresses( List<String> emails )
     {
         return EmailAddress.buildEmailAddresses( emails.toArray( new String [ 0 ] ) );
     }
 
+    /**
+     * Extracts the emails from the raw emails string,
+     * removes any empty entries, and delete \r or \n or \t character.
+     * @param rawEmails the raw emails
+     * @return the list of emails
+     */
     private List<String> extractEmails( String rawEmails )
     {
         if ( StringUtils.isBlank( rawEmails ) )

@@ -92,6 +92,7 @@ public class NotifyGruTaskConfigController
     private static final String MARK_LIST_NOTIFICATION_CONFIG = "list_notification_config";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_WEBAPP_URL = "webapp_url";
+    private static final String MARK_MAILING_PATTERN = "mailing_pattern";
 
     // Parameters
     private static final String PARAMETER_APPLY = "apply";
@@ -303,6 +304,7 @@ public class NotifyGruTaskConfigController
             fillModelWithNotificationConfigs( );
             fillModelWithMailSenderName( );
             fillModelWithMailingList( );
+            fillModelWithMailPattern( );
             fillModelWithGlobalConfig( );
 
             manageNotifyGruMarkersInModel( );
@@ -369,6 +371,19 @@ public class NotifyGruTaskConfigController
         private void fillModelWithMailingList( )
         {
             _model.put( Constants.MARK_MAILING_LIST, _notifyGRUService.getMailingList( _request ) );
+        }
+
+        /**
+         * Fills the model with the mail pattern.
+         */
+        private void fillModelWithMailPattern( )
+        {
+            String strMailPattern = AppPropertiesService.getProperty( Constants.PROPERTY_LUTECE_EMAIL_PATTERN );
+            strMailPattern = StringUtils.removeEnd( StringUtils.removeStart( strMailPattern, "^" ), "$" );
+            strMailPattern = strMailPattern.replace( "'", "\\x27" );
+            // Update pattern to be compatible with multiple mails separate by semicolon.
+            String strMailingSpecPattern = String.format( "^\\s*(?:%s)\\s*(;\\s*(?:%s)\\s*)*$", strMailPattern, strMailPattern );
+            _model.put( MARK_MAILING_PATTERN, strMailingSpecPattern );
         }
 
         /**
