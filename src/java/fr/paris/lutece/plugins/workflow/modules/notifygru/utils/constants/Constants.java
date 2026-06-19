@@ -171,8 +171,9 @@ public final class Constants
     public static final String PROPERTY_LUTECE_BASE_URL = "lutece.base.url";
     public static final String PROPERTY_LUTECE_PROD_URL = "lutece.prod.url";
     public static final String PROPERTY_GRU_ONGLET_ACTIVE = "number";
-    public static final String PROPERTY_DAEMON_NB_HOUR_BEFORE_CLEANING_HISTORY_CONTENT="workflow-notifygru.deamon.cleanerHistory.nbHoursBfCleanHistoryContent";
-    
+    public static final String PROPERTY_LUTECE_EMAIL_PATTERN = "lutece.email.pattern";
+    public static final String PROPERTY_DAEMON_NB_HOUR_BEFORE_CLEANING_HISTORY_CONTENT = "workflow-notifygru.deamon.cleanerHistory.nbHoursBfCleanHistoryContent";
+
 
     // MARKS GUICHET
     public static final String MARK_TAB_GUICHET = "guichet";
