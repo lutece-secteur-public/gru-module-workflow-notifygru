@@ -249,7 +249,7 @@ public class TaskNotifyGru extends SimpleTask
             catch
             ( Exception e )
             {
-                AppLogService.error( "Unable to send the notification" );
+                AppLogService.error( "Unable to send the notification : {}",e.getMessage(),e );
 
                 EventHistory event = new EventHistory( );
 
