@@ -1,4 +1,5 @@
 <#assign cssFramework><@commonsFile /></#assign>
+<#assign cssFramework = cssFramework?markup_string>
 <#if cssFramework = 'commons_bs5_tabler.html' || cssFramework = 'commons_corporate.html'><#assign dataPrefix='data-bs-' /><#else><#assign dataPrefix='data-' /></#if>
 <#if information_history?exists>
 	<#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content)
