@@ -49,6 +49,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
 import fr.paris.lutece.plugins.grubusiness.business.demand.Demand;
 import fr.paris.lutece.plugins.grubusiness.business.notification.BackofficeNotification;
@@ -90,6 +95,9 @@ import fr.paris.lutece.util.html.HtmlTemplate;
  */
 public class TaskNotifyGru extends SimpleTask
 {
+    private static final ObjectMapper NOTIFICATION_LOG_MAPPER = new ObjectMapper( ).enable( SerializationFeature.WRAP_ROOT_VALUE )
+            .setSerializationInclusion( Include.NON_NULL );
+
     /** The _task notify gru config service. */
     // SERVICES
     @Inject
@@ -207,7 +215,13 @@ public class TaskNotifyGru extends SimpleTask
         {
             try
             {
+                AppLogService.debug( "NotifyGRU notification submission [taskId=" + this.getId( ) + ", resourceHistoryId=" + nIdResourceHistory
+                        + "] payload=" + serializeForLog( notificationObject ) );
+
                 NotifyGruResponse response = NotificationService.send( notificationObject );
+
+                AppLogService.debug( "NotifyGRU notification response [taskId=" + this.getId( ) + ", resourceHistoryId=" + nIdResourceHistory
+                        + "] response=" + serializeForLog( response ) );
 
                 if ( response.getErrors( ) != null && !response.getErrors( ).isEmpty( ) )
                 {
@@ -240,7 +254,8 @@ public class TaskNotifyGru extends SimpleTask
             }
             catch( Exception e )
             {
-                AppLogService.error( "Unable to send the notification" );
+                AppLogService.error( "Unable to send NotifyGRU notification [taskId=" + this.getId( ) + ", resourceHistoryId="
+                        + nIdResourceHistory + "]", e );
 
                 EventHistory event = new EventHistory( );
 
@@ -251,6 +266,25 @@ public class TaskNotifyGru extends SimpleTask
 
                 _taskNotifyGruHistoryService.create( notifyGruHistory, WorkflowUtils.getPlugin( ) );
             }
+        }
+    }
+
+    /**
+     * Converts an object into a JSON string for logging.
+     *
+     * @param object the object to serialize
+     * @return a string at JSON format
+     */
+    private static String serializeForLog( Object object )
+    {
+        try
+        {
+            return NOTIFICATION_LOG_MAPPER.writeValueAsString( object );
+        }
+        catch( JsonProcessingException e )
+        {
+            AppLogService.error( "Unable to serialize NotifyGRU payload for logging", e );
+            return "<unavailable: " + e.getOriginalMessage( ) + ">";
         }
     }
 
