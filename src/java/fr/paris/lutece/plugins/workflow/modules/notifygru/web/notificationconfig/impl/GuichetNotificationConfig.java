@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,7 @@ import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGru
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
+import fr.paris.lutece.util.string.StringUtil;
 
 /**
  * This class represents a configuration for the guichet notification
@@ -86,7 +87,9 @@ public class GuichetNotificationConfig implements INotificationConfig
     {
         _request = request;
         _config = config;
-        _strMessage = request.getParameter( PARAMETER_MESSAGE );
+        // Message template content is sent base64 encoded to bypass the XSS filter (if activated),
+        // but the content should be sanitized after template processing
+        _strMessage = StringUtil.decodeXssBypass( request.getParameter( PARAMETER_MESSAGE ) );
         _strStatusText = request.getParameter( PARAMETER_STATUS_TEXT );
         _strSenderName = request.getParameter( PARAMETER_SENDER_NAME );
         _strSubject = request.getParameter( PARAMETER_SUBJECT );
@@ -222,12 +225,11 @@ public class GuichetNotificationConfig implements INotificationConfig
         }
 
     }
-    
 
     @Override
     public EnumNotificationType getNotificationType( )
     {
-	return EnumNotificationType.MYDASHBOARD;
+        return EnumNotificationType.MYDASHBOARD;
     }
 
 }
