@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -94,21 +94,26 @@ public interface INotifyGruHistoryService
      * @return the Config Object
      */
     NotifyGruHistory findByPrimaryKey( int nIdHistory, int nIdTask, Plugin plugin );
-    
-    
+
     /**
      * clean all histories content who have a creation date before the tMinCreationDate
-     * @param tMinCreationDate the creation date minimal
-     * @param plugin the plugin
+     * 
+     * @param tMinCreationDate
+     *            the creation date minimal
+     * @param plugin
+     *            the plugin
      */
-    
-    void cleanHistoryContentByDate( Timestamp tMinCreationDate , Plugin plugin );
-    
+
+    void cleanHistoryContentByDate( Timestamp tMinCreationDate, Plugin plugin );
+
     /**
-     * get nb  histories who have a creation date before the tMinCreationDate
-     * @param tMinCreationDate the history creation date
-     * @param plugin the plugin
-     * @return the nb  nb  histories who have a creation date before the tMinCreationDate
+     * get nb histories who have a creation date before the tMinCreationDate
+     * 
+     * @param tMinCreationDate
+     *            the history creation date
+     * @param plugin
+     *            the plugin
+     * @return the nb nb histories who have a creation date before the tMinCreationDate
      */
-    int getNbHistoryToCleanByDate( Timestamp tMinCreationDate , Plugin plugin );
+    int getNbHistoryToCleanByDate( Timestamp tMinCreationDate, Plugin plugin );
 }

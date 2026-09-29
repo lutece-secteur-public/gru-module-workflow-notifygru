@@ -10,7 +10,7 @@
     <provider>module.workflow.notifygru.module.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
    <icon-url>images/admin/skin/plugins/notifygru/notifygru.png</icon-url>
-    <copyright>Copyright (c) 2017 Mairie de Paris</copyright>
+    <copyright>Copyright (c) 2017-2026 Mairie de Paris</copyright>
     <db-pool-required>1</db-pool-required>
     
     <core-version-dependency>

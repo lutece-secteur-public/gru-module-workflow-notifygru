@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2025, City of Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,6 @@ import fr.paris.lutece.portal.web.l10n.LocaleService;
 public class CommentMarkerProvider implements IMarkerProvider
 {
     public static final String ID = "workflow-notifygru.commentMarkerProvider";
- 
 
     // Messages
     private static final String MESSAGE_TITLE = "module.workflow.notifygru.marker.provider.comment.title";
@@ -125,10 +124,13 @@ public class CommentMarkerProvider implements IMarkerProvider
 
         // Retrieves all TaskComment of the action for the 'comments'
         // Only TaskComment declared BEFORE the TaskNotifyGru are set with value !
-        Optional<ITask> taskComment = _taskService.getListTaskByIdAction( resourceHistory.getAction( ).getId( ), request !=null ? request.getLocale( ):LocaleService.getDefault( ) )
-        		.stream().filter(tsk -> tsk.getTaskType( ).getKey( ).equals( AppPropertiesService.getProperty( Constants.PROPERTY_TASK_COMMENT_KEY,"taskTypeComment" ) )).findAny();
-        		
-        if ( taskComment.isPresent()  )
+        Optional<ITask> taskComment = _taskService
+                .getListTaskByIdAction( resourceHistory.getAction( ).getId( ), request != null ? request.getLocale( ) : LocaleService.getDefault( ) ).stream( )
+                .filter( tsk -> tsk.getTaskType( ).getKey( )
+                        .equals( AppPropertiesService.getProperty( Constants.PROPERTY_TASK_COMMENT_KEY, "taskTypeComment" ) ) )
+                .findAny( );
+
+        if ( taskComment.isPresent( ) )
         {
             CommentValue commentValue = _commentService.findByPrimaryKey( resourceHistory.getId( ), taskComment.get( ).getId( ),
                     PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME ) );
