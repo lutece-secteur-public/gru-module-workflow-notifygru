@@ -136,7 +136,7 @@ public class AgentNotificationConfigTest extends LuteceTestCase
 
     private void fillRequest( )
     {
-        _request.addParameter( PARAMETER_MESSAGE, PARAMETER_MESSAGE );
+        _request.addParameter( PARAMETER_MESSAGE, XssBypassTestUtils.encode( PARAMETER_MESSAGE ) );
         _request.addParameter( PARAMETER_STATUS_TEXT, PARAMETER_STATUS_TEXT );
     }
 

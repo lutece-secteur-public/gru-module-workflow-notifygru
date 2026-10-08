@@ -160,7 +160,7 @@ public class BroadcastNotificationConfigTest extends LuteceTestCase
         _request.addParameter( PARAMETER_MAIL_SPECIFIC, PARAMETER_MAIL_SPECIFIC );
         _request.addParameter( PARAMETER_SENDER_NAME, PARAMETER_SENDER_NAME );
         _request.addParameter( PARAMETER_SUBJECT, PARAMETER_SUBJECT );
-        _request.addParameter( PARAMETER_MESSAGE, PARAMETER_MESSAGE );
+        _request.addParameter( PARAMETER_MESSAGE, XssBypassTestUtils.encode( PARAMETER_MESSAGE ) );
         _request.addParameter( PARAMETER_RECIPIENT_CC, PARAMETER_RECIPIENT_CC );
         _request.addParameter( PARAMETER_RECIPIENT_CCI, PARAMETER_RECIPIENT_CCI );
     }

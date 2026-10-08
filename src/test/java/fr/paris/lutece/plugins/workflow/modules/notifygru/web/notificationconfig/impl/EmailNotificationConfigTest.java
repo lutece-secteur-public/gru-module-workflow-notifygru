@@ -36,7 +36,9 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web.notificationconfi
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
+import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.INotificationConfig;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.test.LuteceTestCase;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -140,7 +142,7 @@ public class EmailNotificationConfigTest extends LuteceTestCase
     private void fillRequest( )
     {
         _request.addParameter( PARAMETER_SUBJECT, PARAMETER_SUBJECT );
-        _request.addParameter( PARAMETER_MESSAGE, PARAMETER_MESSAGE );
+        _request.addParameter( PARAMETER_MESSAGE, XssBypassTestUtils.encode( PARAMETER_MESSAGE ) );
         _request.addParameter( PARAMETER_SENDER_NAME, PARAMETER_SENDER_NAME );
         _request.addParameter( PARAMETER_RECIPIENT_CC, PARAMETER_RECIPIENT_CC );
         _request.addParameter( PARAMETER_RECIPIENT_CCI, PARAMETER_RECIPIENT_CCI );
@@ -175,7 +177,8 @@ public class EmailNotificationConfigTest extends LuteceTestCase
     {
         assertThat( _config.getSubjectEmail( ), is( nullValue( ) ) );
         assertThat( _config.getMessageEmail( ), is( nullValue( ) ) );
-        assertThat( _config.getSenderNameEmail( ), is( nullValue( ) ) );
+        // An empty sender name falls back to the default sender name
+        assertThat( _config.getSenderNameEmail( ), is( AppPropertiesService.getProperty( Constants.PROPERTY_NOTIFY_MAIL_DEFAULT_SENDER_NAME, "NotifyGru" ) ) );
         assertThat( _config.getRecipientsCcEmail( ), is( nullValue( ) ) );
         assertThat( _config.getRecipientsCciEmail( ), is( nullValue( ) ) );
     }

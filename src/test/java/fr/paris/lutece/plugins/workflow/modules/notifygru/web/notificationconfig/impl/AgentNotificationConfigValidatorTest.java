@@ -79,7 +79,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
 
     private void fillRequest( )
     {
-        _request.addParameter( PARAMETER_MESSAGE, FIELD_WITH_CORRECT_MARK );
+        _request.addParameter( PARAMETER_MESSAGE, XssBypassTestUtils.encode( FIELD_WITH_CORRECT_MARK ) );
         _request.addParameter( PARAMETER_STATUS_TEXT, FIELD_WITH_CORRECT_MARK );
     }
 
@@ -131,7 +131,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
     {
         initRequest( );
         fillRequest( );
-        replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
+        replaceRequestParameter( PARAMETER_MESSAGE, XssBypassTestUtils.encode( FIELD_WITH_UNKNOW_MARK ) );
         initValidator( );
 
         String strErrorUrl = _validator.validate( initModel( ) );
