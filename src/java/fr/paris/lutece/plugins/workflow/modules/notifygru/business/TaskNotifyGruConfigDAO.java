@@ -94,7 +94,7 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
      * @param config
      */
     @Override
-    public synchronized void insert( TaskNotifyGruConfig config )
+    public void insert( TaskNotifyGruConfig config )
     {
         // remove cache
     	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );

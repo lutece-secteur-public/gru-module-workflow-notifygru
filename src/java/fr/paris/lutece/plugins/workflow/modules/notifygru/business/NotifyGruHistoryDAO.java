@@ -81,7 +81,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( NotifyGruHistory history, Plugin plugin )
+    public void insert( NotifyGruHistory history, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
         {
