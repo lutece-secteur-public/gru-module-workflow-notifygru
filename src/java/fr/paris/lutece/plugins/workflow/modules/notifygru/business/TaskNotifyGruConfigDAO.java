@@ -96,15 +96,14 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public void insert( TaskNotifyGruConfig config )
     {
-        // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
-
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, NotifyGruPlugin.getPlugin( ) ) )
         {
             configToData( config, daoUtil );
 
             daoUtil.executeUpdate( );
         }
+        // remove the cache once the row is written: a reader in between would cache the old row again
+        _notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
     }
 
     /**
@@ -115,15 +114,14 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public void store( TaskNotifyGruConfig config )
     {
-        // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
-
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, NotifyGruPlugin.getPlugin( ) ) )
         {
             int nPos = configToData( config, daoUtil );
             daoUtil.setInt( ++nPos, config.getIdTask( ) );
             daoUtil.executeUpdate( );
         }
+        // remove the cache once the row is written: a reader in between would cache the old row again
+        _notifyGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
     }
 
     /**
@@ -208,14 +206,13 @@ public class TaskNotifyGruConfigDAO implements ITaskConfigDAO<TaskNotifyGruConfi
     @Override
     public void delete( int nIdState )
     {
-        // remove cache
-    	_notifyGruCacheService.removeGruConfigFromCache( nIdState );
-
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, NotifyGruPlugin.getPlugin( ) ) )
         {
             daoUtil.setInt( 1, nIdState );
             daoUtil.executeUpdate( );
         }
+        // remove the cache once the row is written: a reader in between would cache the old row again
+        _notifyGruCacheService.removeGruConfigFromCache( nIdState );
     }
 
     /**
