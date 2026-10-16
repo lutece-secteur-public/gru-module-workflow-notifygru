@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.service.cache;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.portal.service.cache.AbstractCacheableService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -76,22 +77,29 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
      */
     public TaskNotifyGruConfig getNotifyGruConfigFromCache( ITaskConfigService taskNotifyGruConfigService, int nidTask )
     {
+        // get and put are safe on a disabled cache (a read misses, a write is ignored)
+        String strCacheKey = getCacheKey( nidTask );
         TaskNotifyGruConfig config = null;
-
-    	if ( isCacheEnable( ) && isCacheAvailable( ) )
-    	{
-            String strCacheKey = getCacheKey( nidTask );
+        try
+        {
             config = get( strCacheKey );
-            
-            if (config == null) 
-            {
-                config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
-                put( strCacheKey, config);
-            }
-        } 
-    	else 
-    	{
+        }
+        catch( RuntimeException e )
+        {
+            AppLogService.error( "Cache get error for key {}", strCacheKey, e );
+        }
+
+        if ( config == null )
+        {
             config = loadConfigFromService( taskNotifyGruConfigService, nidTask );
+            try
+            {
+                put( strCacheKey, config );
+            }
+            catch( RuntimeException e )
+            {
+                AppLogService.error( "Cache put error for key {}", strCacheKey, e );
+            }
         }
 
         return config;
@@ -105,9 +113,15 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
      */
     public void removeGruConfigFromCache( int nidTask )
     {
-        if ( isCacheEnable( ) && isCacheAvailable( ) )
+        // No test of the status: a cache disabled on this instance still forwards the removal to the cache shared
+        // with the other instances (the core keeps it open for that)
+        try
         {
             remove( getCacheKey( nidTask ) );
+        }
+        catch( RuntimeException e )
+        {
+            AppLogService.error( "Cache remove error for task {}", nidTask, e );
         }
     }
 
@@ -126,15 +140,6 @@ public class NotifyGruCacheService extends AbstractCacheableService<String, Task
         return sbKey.toString( );
     }
 
-    /**
-     * Checks whether the cache instance is initialized and currently open.
-     *
-     * @return true if the cache is not null and not closed, false otherwise.
-     */
-    private boolean isCacheAvailable( )
-    {
-        return _cache != null && !_cache.isClosed( );
-    }
     
     /**
      * Loads configuration from service or creates an empty configuration if not found
