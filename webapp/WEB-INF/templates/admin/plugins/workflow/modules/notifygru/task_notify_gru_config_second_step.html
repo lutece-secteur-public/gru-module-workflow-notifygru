@@ -25,7 +25,7 @@
 		</@formGroup>
       </#if>
 	 <#if config.idSpringProvider?has_content >
-		 <@aButton href='return false;' params='data-toggle="modal" data-target="#config_global" data-backdrop="static" data-keyboard="false"' buttonIcon='wrench' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}' size='' />
+		 <@aButton href='return false;' params='data-bs-toggle="modal" data-bs-target="#config_global" data-bs-backdrop="static" data-bs-keyboard="false"' buttonIcon='wrench' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}' size='' />
 	 </#if>
 	 </@div>
 </header>
@@ -107,30 +107,35 @@
 </section>
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
-		var ong = document.getElementById("activeOngletHere").value;
-
-		if (document.getElementById(ong).classList === undefined) {
-			document.querySelector("#tabs li:eq(0) a").click();
+		const activeOnglet = document.getElementById("activeOngletHere");
+		const tabLinks = document.querySelectorAll("#tabs > li > a");
+		if (tabLinks.length === 0) {
+			return;
 		}
 
-		document.getElementById(ong).querySelector("a").click();
+		const currentTab = activeOnglet && activeOnglet.value !== '' ? document.getElementById(activeOnglet.value) : null;
+		const currentLink = currentTab ? currentTab.querySelector("a") : null;
+		(currentLink || tabLinks[0]).click();
 
-		document.querySelectorAll('a[data-toggle="tab"]').forEach(function(tab) {
-			tab.addEventListener('shown.bs.tab', function(e) {
-				document.getElementById("activeOngletHere").value = e.target.parentElement.id;
-			});
-		});
-
-		// Prevent user from switching tabs if the required fields in the current tab are not filled
-		for (var i = 0; i < 5; i++) {
-			document.getElementById(i).querySelector("a").addEventListener('click', function(event) {
-				if (document.querySelectorAll('input:invalid').length > 0) {
-					event.stopImmediatePropagation();
-					document.querySelector("button[name='save']").click();
-					return false;
+		tabLinks.forEach(function(tabLink) {
+			tabLink.addEventListener('shown.bs.tab', function(e) {
+				if (activeOnglet) {
+					activeOnglet.value = e.target.parentElement.id;
 				}
 			});
-		}
+
+			// Prevent user from switching tabs if the required fields in the current tab are not filled
+			tabLink.addEventListener('click', function(event) {
+				if (document.querySelectorAll('input:invalid').length > 0) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					const saveButton = document.querySelector("button[name='save']");
+					if (saveButton) {
+						saveButton.click();
+					}
+				}
+			});
+		});
 	});
 </script>
 

@@ -31,29 +31,52 @@
 .marker:nth-child(even) td{ background: #777; color: #fff }
 .copied::after{ content:' Ligne copiée !' }
 </style>
+<#if !notifygruMarkerScript??>
+<#global notifygruMarkerScript = true />
 <script>
 function copyToClipboard( txt ) {
-  var $temp = $("<input>"), sTxt=txt.replace(/\s+/g, ' ');
-  $("body").append($temp);
-  $temp.val( sTxt ).select();
-  document.execCommand("copy");
-  $temp.remove();
+  const sTxt = txt.replace(/\s+/g, ' ');
+  if ( navigator.clipboard && window.isSecureContext ) {
+    navigator.clipboard.writeText( sTxt ).catch( function( e ) { console.error( e ); } );
+    return;
+  }
+  const temp = document.createElement( 'input' );
+  document.body.appendChild( temp );
+  temp.value = sTxt;
+  temp.select();
+  document.execCommand( 'copy' );
+  temp.remove();
 }
 
-$('.marker').on( 'dblclick', function(e){
-	if( $( '.tab-pane.active .richtext' ).length > 0 ){
-		var c = '<p>' + $(this).text() + '</p>';
+document.addEventListener( 'dblclick', function(e){
+	const marker = e.target.closest( '.marker' );
+	if ( !marker ) {
+		return;
+	}
+	if( document.querySelector( '.tab-pane.active .richtext' ) && typeof tinymce !== 'undefined' && tinymce.activeEditor ){
+		const c = '<p>' + marker.textContent + '</p>';
 		tinymce.activeEditor.insertContent( '<p>' + c + '</p>' );
 	} else { 
-		var c = $(this).text().replace(/\s+/g, ' ');
-		$('textarea').val( c );
+		const c = marker.textContent.replace(/\s+/g, ' ');
+		document.querySelectorAll( 'textarea' ).forEach( function( textarea ) { textarea.value = c; } );
 	}
 });
 
-$('.marker-copy').on( 'click', function(e){
-	$(this).prevAll().css( 'opacity','.5').animate( {opacity: 1}, 3000 );
-	var elTxt = $(this).siblings('.marker-code').text();
-	copyToClipboard( elTxt );	
+document.addEventListener( 'click', function(e){
+	const copyCell = e.target.closest( '.marker-copy' );
+	if ( !copyCell ) {
+		return;
+	}
+	for ( let cell = copyCell.previousElementSibling; cell; cell = cell.previousElementSibling ) {
+		cell.style.transition = 'none';
+		cell.style.opacity = '.5';
+		void cell.offsetWidth;
+		cell.style.transition = 'opacity 3s';
+		cell.style.opacity = '1';
+	}
+	const code = copyCell.parentElement.querySelector( '.marker-code' );
+	copyToClipboard( code ? code.textContent : '' );	
 });
 </script>
+</#if>
 </#macro>
