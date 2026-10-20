@@ -116,6 +116,12 @@ public class NotifyGruStoredMessageRenderTest
     private static Map<String, List<String>> upgrade( ) throws IOException
     {
         String strScript = Files.readString( Path.of( UPGRADE_SCRIPT ), StandardCharsets.UTF_8 );
+        // Only the first changeset removes the built-ins; the next one decodes the entities (DecodeStoredEntitiesUpgradeTest)
+        int nNextChangeset = strScript.indexOf( "-- changeset ", strScript.indexOf( "-- changeset " ) + 1 );
+        if ( nNextChangeset > 0 )
+        {
+            strScript = strScript.substring( 0, nNextChangeset );
+        }
         Map<String, List<String>> mapReplaced = new LinkedHashMap<>( );
         Matcher update = UPDATE.matcher( strScript );
         while ( update.find( ) )
