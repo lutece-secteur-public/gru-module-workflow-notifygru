@@ -2,7 +2,7 @@
 <@row>
   <@columns>
 		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
-			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}</h4>
+			<h3 class="h4">#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}</h3>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-guichet' value='RemoveNotificationConfig_guichet' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
 				document.addEventListener("DOMContentLoaded", function() {
@@ -50,10 +50,11 @@
 		<@formGroup labelFor='message_guichet' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_guichet}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_message_comment_guichet}' mandatory=true rows=2>
 			<@input type='textarea' name='message_guichet' id='message_guichet' rows=15 cols=70 richtext=true><#if config?exists  && config.messageGuichet?has_content>${config.messageGuichet!}</#if></@input>
 		</@formGroup>
+		<#assign showSteps = config?exists && ( ( config.demandMaxStepGuichet?has_content && config.demandMaxStepGuichet != -1 ) || ( config.demandUserCurrentStepGuichet?has_content && config.demandUserCurrentStepGuichet != -1 ) ) />
 		<@formGroup rows=2>
-			<@button type='button' id='myButton' params={"data-loading-text": "Loading...", "autocomplete": "off"} title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state}' buttonIcon='caret-down' id='iconeConfEtapes' />
+			<@button type='button' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state}' buttonIcon='caret-down' id='iconeConfEtapes' buttonTargetId='#conf_etapes' class=showSteps?then( '', 'collapsed' ) params={ 'data-bs-toggle': 'collapse', 'aria-expanded': showSteps?c, 'aria-controls': 'conf_etapes' } />
 		</@formGroup>
-		<@div id='conf_etapes'>
+		<@div id='conf_etapes' class=showSteps?then( 'collapse show', 'collapse' )>
 			<@formGroup labelFor='demand_max_step_uichet' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet_helper}' rows=2>
 				<#if config?exists && config.demandMaxStepGuichet?has_content && config.demandMaxStepGuichet!=-1>
 				  <@input type='number' name='demand_max_step_uichet' id='demand_max_step_uichet' value='${config.demandMaxStepGuichet}' maxlength=255 />
@@ -74,34 +75,3 @@
 		<@marker_descriptions />
 	</@columns>
 </@row>
-<style>
-#conf_etapes{ display:none; }
-</style>
-<script>
-var Firstime=true;
-function showhideConfEtapes() {
-	var div = document.getElementById("conf_etapes");
-	if (div.style.display !== "none") {
-        div.style.display = "none";
-		var iconParent = document.getElementById('iconeConfEtapes');
-		var icon = iconParent.children[0]; 
-		icon.setAttribute("class", "fa fa-caret-down");
-    } else {
-        div.style.display = "block";
-		var iconParent = document.getElementById('iconeConfEtapes');
-		var icon = iconParent.children[0]; 
-		icon.setAttribute("class", "fa fa-caret-up");
-    }  
-	if(document.getElementById("demand_max_step_uichet").value.length > 0 || document.getElementById("demand_state_guichet").value.length > 0 ) {
-		if(Firstime) {
-			div.style.display = "block";
-			var iconParent = document.getElementById('iconeConfEtapes');
-			var icon = iconParent.children[0]; 
-			icon.setAttribute("class", "fa fa-caret-up");
-		}
-		Firstime=false;
-	}
-}
-showhideConfEtapes();
-document.getElementById( 'iconeConfEtapes' ).addEventListener( 'click', showhideConfEtapes );
-</script>

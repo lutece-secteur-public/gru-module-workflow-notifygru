@@ -12,10 +12,10 @@
 </#macro>
 <@checkProvider items=list_provider val=config.idSpringProvider! />
 <header style="display:flex;justify-content:space-between;padding-bottom:5px;margin-bottom:5px;">
-	<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h4>
+	<h2 class="h4">#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h2>
 	<@div class="d-flex justify-content-end align-items-start">
 	<#if list_notification_config?exists>
-		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] class="me-1">
+		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_choose}' hideLabel=['all'] class="me-1">
 			<@inputGroup>
 				<@select name='added_notification_config' items=list_notification_config default_value='0' />
 				<@inputGroupItem type='btn'>
@@ -91,7 +91,7 @@
 		<@modalHeader modalTitle='#i18n{module.workflow.notifygru.task_notify_gru_config.label_global_config}' />
 		<@modalBody>
 			<#include "config_global.html" />
-			<@formGroup labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}' mandatory=true>
+			<@formGroup labelFor='crm_status_id' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.commune_id_crm_helper}' mandatory=true>
 				<#if config.crmStatusId?has_content && config.crmStatusId!=-1>
 				   <@input type='number' name='crm_status_id' value='${config.crmStatusId}' maxlength=255 />
 				<#else>
@@ -108,13 +108,15 @@
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 		const activeOnglet = document.getElementById("activeOngletHere");
+		const tabList = document.getElementById("tabs");
 		const tabLinks = document.querySelectorAll("#tabs > li > a");
 		if (tabLinks.length === 0) {
 			return;
 		}
 
+		// Show the tab saved in the configuration, else the first one
 		const currentTab = activeOnglet && activeOnglet.value !== '' ? document.getElementById(activeOnglet.value) : null;
-		const currentLink = currentTab ? currentTab.querySelector("a") : null;
+		const currentLink = currentTab && tabList.contains(currentTab) ? currentTab.querySelector("a") : null;
 		(currentLink || tabLinks[0]).click();
 
 		tabLinks.forEach(function(tabLink) {
@@ -124,15 +126,15 @@
 				}
 			});
 
-			// Prevent user from switching tabs if the required fields in the current tab are not filled
+			// Keep the user on the current tab while one of its fields is invalid: the browser reports the field, nothing is submitted
 			tabLink.addEventListener('click', function(event) {
-				if (document.querySelectorAll('input:invalid').length > 0) {
+				const current = tabList.querySelector("a.active");
+				const pane = current ? document.getElementById(current.getAttribute("aria-controls")) : null;
+				const invalid = pane ? pane.querySelector("input:invalid, select:invalid, textarea:invalid") : null;
+				if (invalid && pane.id !== tabLink.getAttribute("aria-controls")) {
 					event.preventDefault();
 					event.stopImmediatePropagation();
-					const saveButton = document.querySelector("button[name='save']");
-					if (saveButton) {
-						saveButton.click();
-					}
+					invalid.reportValidity();
 				}
 			});
 		});

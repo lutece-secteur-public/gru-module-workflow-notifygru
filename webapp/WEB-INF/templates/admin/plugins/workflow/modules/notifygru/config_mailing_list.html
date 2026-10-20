@@ -9,7 +9,7 @@
 <@row>
   <@columns>
 		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
-			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</h4>
+			<h3 class="h4">#i18n{module.workflow.notifygru.task_notify_gru_config.title_broadcast_list}</h3>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-mailinglist' value='RemoveNotificationConfig_broadcast' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
 				document.addEventListener("DOMContentLoaded", function() {
@@ -37,13 +37,13 @@
 				<#assign mailingSpecChecked = false />
 				<#assign mailingListChecked = true />
 			</#if>
-			<@formGroup labelFor='mailing_type' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}' rows=2>
+			<@fieldSet legend='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_type_broadcast}' legendClass='form-label'>
 				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_list' value='list' checked=mailingListChecked labelFor='mailing_type_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' />
 				<@radioButton orientation='inline' name='mailing_type' id='mailing_type_spec' value='spec' checked=mailingSpecChecked labelFor='mailing_type_spec' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_spec_broadcast}' />
-			</@formGroup>
+			</@fieldSet>
 
 			<@div id='mailing_list_block' params={"hidden": !mailingListChecked}>
-				<@formGroup labelFor='id_mailing_list' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}' mandatory=true rows=2>
+				<@formGroup labelFor='id_mailing_list_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_mailing_list_comment_broadcast}' mandatory=true rows=2>
 					<@select name='id_mailing_list_broadcast' items=mailing_list default_value='${config.idMailingListBroadcast!}' />
 				</@formGroup>
 			</@div>
@@ -75,10 +75,11 @@
 			</#if>
 			<@input type='text' name='subject_broadcast' value=inputValue maxlength=255 />
 		</@formGroup>
+		<#assign showCopies = config?exists && ( config.recipientsCcBroadcast?has_content || config.recipientsCciBroadcast?has_content ) />
 		<@formGroup rows=2>
-			<@button title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCListe' />
+			<@button title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCListe' buttonTargetId='#copyccBroadcast' class=showCopies?then( '', 'collapsed' ) params={ 'data-bs-toggle': 'collapse', 'aria-expanded': showCopies?c, 'aria-controls': 'copyccBroadcast' } />
 		</@formGroup>
-		<@div id='copyccBroadcast'>
+		<@div id='copyccBroadcast' class=showCopies?then( 'collapse show', 'collapse' )>
 			<@formGroup labelFor='recipients_cc_broadcast' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_broadcast}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_broadcast}' rows=2>
 				<#if config?exists && config.recipientsCcBroadcast?has_content>
 					<#assign inputValue = config.recipientsCcBroadcast />
@@ -105,37 +106,6 @@
 	</@columns>
 </@row>
 <script>
-    var Atloading=true;
-    function showhide()    {
-        var div = document.getElementById("copyccBroadcast");
-        if (div.style.display !== "none")
-        {
-            div.style.display = "none";
-            var iconParent = document.getElementById('iconeCCListe');
-			var icon = iconParent.children[0];
-			icon.setAttribute("class", "fa fa-caret-down");
-        }
-        else
-        {
-            div.style.display = "block";
-            var iconParent = document.getElementById('iconeCCListe');
-			var icon = iconParent.children[0];
-			icon.setAttribute("class", "fa fa-caret-up");
-        }
-
-        if(document.getElementById("recipients_cc_broadcast").value.length>0 || document.getElementById("recipients_cci_broadcast").value.length>0 )
-        {
-            if(Atloading)
-            {
-                div.style.display = "block";
-				var iconParent = document.getElementById('iconeCCListe');
-				var icon = iconParent.children[0];
-				icon.setAttribute("class", "fa fa-caret-up");
-            }
-        }
-        Atloading=false;
-    }
-
 	function mailingType(newType) {
 		var mailingSpecBlock = document.getElementById("mailing_spec_block");
 		var mailingListBlock = document.getElementById("mailing_list_block");
@@ -155,7 +125,6 @@
 		}
 	}
 
-	document.getElementById( 'iconeCCListe' ).addEventListener( 'click', showhide );
 	[ 'list', 'spec' ].forEach( function( type ) {
 		var radio = document.getElementById( 'mailing_type_' + type );
 		if ( radio ) {
@@ -164,7 +133,6 @@
 	} );
 
 	document.addEventListener("DOMContentLoaded", function() {
-		showhide();
 		// check mailing type (spec or list) for page load
 		var mailingSpecChecked = document.querySelector('input[name="mailing_type"][value="spec"]').checked;
 		mailingType(mailingSpecChecked ? 'spec' : 'list');
