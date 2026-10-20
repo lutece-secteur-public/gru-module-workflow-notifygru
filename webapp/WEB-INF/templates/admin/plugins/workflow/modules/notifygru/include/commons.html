@@ -1,22 +1,29 @@
 <#macro marker_descriptions>
-<h3>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h3>
+<#local insertLabel = i18n( 'module.workflow.notifygru.task_notify_gru_config.commons.markers.button_insert' ) />
+<#local copyLabel = i18n( 'module.workflow.notifygru.task_notify_gru_config.commons.markers.button_copy' ) />
+<div class="notifygru-markers" data-message-inserted="#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.message_inserted}" data-message-copied="#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.message_copied}">
+<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_table_title}</h4>
 <@table>
 	<@tr>
 		<@th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_description}</@th>
 		<@th>#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_marker}</@th>
-		<@th></@th>
+		<@th><span class="visually-hidden">#i18n{module.workflow.notifygru.task_notify_gru_config.commons.markers.label_actions}</span></@th>
 	</@tr>
 	<#if notifygru_markers?exists>
 		<#list notifygru_markers as marker>
+		<#local markerCode = '$' + '{' + marker.marker + '!}' />
 		<@tr>
-			<@td class='marker'>
+			<@td>
 				<#if marker.description ??>
 					<#assign description = i18n(marker.description) />
 					<#if description?has_content>${description}<#else>${marker.description!''}</#if>
-				</#if>	
+				</#if>
 			</@td>
-			<@td class='marker marker-code'>&#36;&#123;${marker.marker}&#33;&#125;</@td>
-			<@td class='marker marker-copy'><@icon style='copy' title='Copy line' /></@td>
+			<@td><code class="marker-code">${markerCode}</code></@td>
+			<@td class='text-nowrap'>
+				<@button size='sm' color='default' class='marker-insert' buttonIcon='arrow-bar-to-down' title='${insertLabel} ${markerCode}' hideTitle=['all'] params={ 'data-marker': markerCode } />
+				<@button size='sm' color='default' class='marker-copy' buttonIcon='copy' title='${copyLabel} ${markerCode}' hideTitle=['all'] params={ 'data-marker': markerCode } />
+			</@td>
 		</@tr>
 		</#list>
 	<#else>
@@ -25,35 +32,61 @@
 		</@tr>
 	</#if>
 </@table>
-
-<style>
-.marker:hover, .fa-copy:hover{ cursor: pointer; opacity: .8}
-.marker:nth-child(even) td{ background: #777; color: #fff }
-.copied::after{ content:' Ligne copiée !' }
-</style>
+<p class="visually-hidden marker-status" role="status"></p>
+</div>
 <script>
-function copyToClipboard( txt ) {
-  var $temp = $("<input>"), sTxt=txt.replace(/\s+/g, ' ');
-  $("body").append($temp);
-  $temp.val( sTxt ).select();
-  document.execCommand("copy");
-  $temp.remove();
+// Insert and Copy buttons of the markers tables: one delegated listener, installed once for all the notification tabs
+if ( !window.notifyGruMarkersReady ) {
+	window.notifyGruMarkersReady = true;
+	document.addEventListener( 'click', function( e ) {
+		var button = e.target.closest( '.notifygru-markers .marker-insert, .notifygru-markers .marker-copy' );
+		if ( !button ) {
+			return;
+		}
+		var box = button.closest( '.notifygru-markers' );
+		var status = box.querySelector( '.marker-status' );
+		var text = button.dataset.marker;
+		var announce = function( message ) {
+			status.textContent = '';
+			setTimeout( function( ) { status.textContent = message; }, 100 );
+		};
+		if ( button.classList.contains( 'marker-copy' ) ) {
+			if ( navigator.clipboard && window.isSecureContext ) {
+				navigator.clipboard.writeText( text ).then( function( ) {
+					announce( box.dataset.messageCopied );
+				} );
+			} else {
+				// http back office: the Clipboard API is not available
+				var temp = document.createElement( 'textarea' );
+				temp.value = text;
+				temp.setAttribute( 'readonly', '' );
+				temp.className = 'visually-hidden';
+				document.body.appendChild( temp );
+				temp.select( );
+				var copied = document.execCommand( 'copy' );
+				temp.remove( );
+				button.focus( );
+				if ( copied ) {
+					announce( box.dataset.messageCopied );
+				}
+			}
+			return;
+		}
+		// Insert: in the editor or the text area of the notification tab holding this table
+		var pane = box.closest( '.tab-pane' ) || document;
+		var field = pane.querySelector( 'textarea' );
+		if ( !field ) {
+			return;
+		}
+		var editor = ( field.classList.contains( 'richtext' ) && window.tinymce ) ? ( tinymce.get( field.id ) || tinymce.activeEditor ) : null;
+		if ( editor ) {
+			editor.insertContent( editor.dom.encode( text ) );
+		} else {
+			field.setRangeText( text, field.selectionStart, field.selectionEnd, 'end' );
+			field.focus( );
+		}
+		announce( box.dataset.messageInserted );
+	} );
 }
-
-$('.marker').on( 'dblclick', function(e){
-	if( $( '.tab-pane.active .richtext' ).length > 0 ){
-		var c = '<p>' + $(this).text() + '</p>';
-		tinymce.activeEditor.insertContent( '<p>' + c + '</p>' );
-	} else { 
-		var c = $(this).text().replace(/\s+/g, ' ');
-		$('textarea').val( c );
-	}
-});
-
-$('.marker-copy').on( 'click', function(e){
-	$(this).prevAll().css( 'opacity','.5').animate( {opacity: 1}, 3000 );
-	var elTxt = $(this).siblings('.marker-code').text();
-	copyToClipboard( elTxt );	
-});
 </script>
 </#macro>

@@ -2,7 +2,7 @@
 <@row>
 	<@columns>
 		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
-			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}</h4>
+			<h3 class="h4">#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}</h3>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-email' value='RemoveNotificationConfig_email' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
 				document.addEventListener("DOMContentLoaded", function() {
@@ -39,10 +39,11 @@
 			</#if>
 			<@input type='text' name='subject_email' value=inputValue maxlength=255 />
 		</@formGroup>
+		<#assign showCopies = config?exists && ( config.recipientsCcEmail?has_content || config.recipientsCciEmail?has_content ) />
 		<@formGroup rows=2>
-			<@button title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCemail' />
+			<@button title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCemail' buttonTargetId='#copy_mail_mail' class=showCopies?then( '', 'collapsed' ) params={ 'data-bs-toggle': 'collapse', 'aria-expanded': showCopies?c, 'aria-controls': 'copy_mail_mail' } />
 		</@formGroup>
-		<@div id='copy_mail_mail'>
+		<@div id='copy_mail_mail' class=showCopies?then( 'collapse show', 'collapse' )>
 			<@formGroup labelFor='recipients_cc_email' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_email}' rows=2>
 				<#if config?exists && config.recipientsCcEmail?has_content>
 					<#assign inputValue = config.recipientsCcEmail! />
@@ -68,32 +69,3 @@
 		<@marker_descriptions />
 	</@columns>
 </@row>
-<script>
-var AtloadingEmail=true;
-function showhide_email(){
-	var div = document.getElementById("copy_mail_mail");
-	if (div.style.display !== "none") {
-		div.style.display = "none";
-		var iconParent = document.getElementById('iconeCCemail');
-		var icon = iconParent.children[0]; 
-		icon.setAttribute("class", "fa fa-caret-down");
-	} else {
-	   div.style.display = "block";
-		var iconParent = document.getElementById('iconeCCemail'); 
-        var icon = iconParent.children[0]; 
-		icon.setAttribute("class", "fa fa-caret-up");
-	}
-   
-	if (document.getElementById("recipients_cc_email").value.length > 0 || document.getElementById("recipients_cci_email").value.length> 0 ){
-	   if( AtloadingEmail ) {
-		div.style.display = "block";
-		var iconParent = document.getElementById('iconeCCListe'); 
-        var icon = iconParent.children[0]; 
-		icon.setAttribute("class", "fa fa-caret-up");
-	   }
-   }
-   AtloadingEmail=false;
-}
-showhide_email();
-document.getElementById( 'iconeCCemail' ).addEventListener( 'click', showhide_email );
-</script>
