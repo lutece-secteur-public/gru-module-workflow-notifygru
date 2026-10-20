@@ -1,7 +1,7 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
 	<@columns>
-		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
+		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_email}</h4>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-email' value='RemoveNotificationConfig_email' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
@@ -40,7 +40,7 @@
 			<@input type='text' name='subject_email' value=inputValue maxlength=255 />
 		</@formGroup>
 		<@formGroup rows=2>
-			<@button params='onclick="showhide_email()"' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCemail' />
+			<@button title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCemail' />
 		</@formGroup>
 		<@div id='copy_mail_mail'>
 			<@formGroup labelFor='recipients_cc_email' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_email}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_recipients_cc_comment_email}' rows=2>
@@ -95,4 +95,5 @@ function showhide_email(){
    AtloadingEmail=false;
 }
 showhide_email();
+document.getElementById( 'iconeCCemail' ).addEventListener( 'click', showhide_email );
 </script>

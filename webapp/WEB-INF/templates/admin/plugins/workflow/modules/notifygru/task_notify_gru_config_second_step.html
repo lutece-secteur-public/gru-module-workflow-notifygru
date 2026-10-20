@@ -13,9 +13,9 @@
 <@checkProvider items=list_provider val=config.idSpringProvider! />
 <header style="display:flex;justify-content:space-between;padding-bottom:5px;margin-bottom:5px;">
 	<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title}</h4>
-	<@div params='style="display:flex; justify-content:flex-end; align-items:start;"'>
+	<@div class="d-flex justify-content-end align-items-start">
 	<#if list_notification_config?exists>
-		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] params='style="margin-right:0.2rem;"'>
+		<@formGroup formStyle='inline' labelFor='added_notification_config' labelKey='' hideLabel=['all'] class="me-1">
 			<@inputGroup>
 				<@select name='added_notification_config' items=list_notification_config default_value='0' />
 				<@inputGroupItem type='btn'>
@@ -25,7 +25,7 @@
 		</@formGroup>
       </#if>
 	 <#if config.idSpringProvider?has_content >
-		 <@aButton href='return false;' params='data-toggle="modal" data-target="#config_global" data-backdrop="static" data-keyboard="false"' buttonIcon='wrench' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}' size='' />
+		 <@aButton href='return false;' params={"data-toggle": "modal", "data-target": "#config_global", "data-backdrop": "static", "data-keyboard": "false"} buttonIcon='wrench' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_config_advance}' size='' />
 	 </#if>
 	 </@div>
 </header>

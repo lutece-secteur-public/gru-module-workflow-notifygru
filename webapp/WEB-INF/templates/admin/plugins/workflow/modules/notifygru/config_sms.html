@@ -1,7 +1,7 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
 	<@columns>
-		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
+		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_sms}</h4>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-sms' value='RemoveNotificationConfig_sms' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">

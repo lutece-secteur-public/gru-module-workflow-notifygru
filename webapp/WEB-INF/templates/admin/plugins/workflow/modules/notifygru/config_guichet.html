@@ -1,7 +1,7 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
 <@row>
   <@columns>
-		<@div params='style="display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px"'>
+		<@div class='d-flex justify-content-between align-items-start border-bottom pb-1 mb-3'>
 			<h4>#i18n{module.workflow.notifygru.task_notify_gru_config.title_guichet}</h4>
 			<@button type='submit' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_remove}' hideTitle=['all'] name='apply' id='remove-config-guichet' value='RemoveNotificationConfig_guichet' buttonIcon='trash' color='danger' size='sm' />
 			<script type="text/javascript">
@@ -51,7 +51,7 @@
 			<@input type='textarea' name='message_guichet' id='message_guichet' rows=15 cols=70 richtext=true><#if config?exists  && config.messageGuichet?has_content>${config.messageGuichet!}</#if></@input>
 		</@formGroup>
 		<@formGroup rows=2>
-			<@button type='button' id='myButton' params='data-loading-text="Loading..." autocomplete="off" onclick="showhideConfEtapes()"' title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state}' buttonIcon='caret-down' id='iconeConfEtapes' />
+			<@button type='button' id='myButton' params={"data-loading-text": "Loading...", "autocomplete": "off"} title='#i18n{module.workflow.notifygru.task_notify_gru_config.label_button_config_state}' buttonIcon='caret-down' id='iconeConfEtapes' />
 		</@formGroup>
 		<@div id='conf_etapes'>
 			<@formGroup labelFor='demand_max_step_uichet' labelKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet}' helpKey='#i18n{module.workflow.notifygru.task_notify_gru_config.label_demande_max_step_guichet_helper}' rows=2>
@@ -103,4 +103,5 @@ function showhideConfEtapes() {
 	}
 }
 showhideConfEtapes();
+document.getElementById( 'iconeConfEtapes' ).addEventListener( 'click', showhideConfEtapes );
 </script>
