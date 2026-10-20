@@ -49,6 +49,7 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
 import fr.paris.lutece.plugins.grubusiness.business.demand.Demand;
@@ -313,9 +314,9 @@ public class TaskNotifyGru extends SimpleTask
         MyDashboardNotification userDashBoard = new MyDashboardNotification( );
 
         userDashBoard.setStatusId( config.getCrmStatusId( ) );
-        userDashBoard.setStatusText( replaceMarkers( config.getStatustextGuichet( ), model ) );
+        userDashBoard.setStatusText( replaceMarkersInText( config.getStatustextGuichet( ), model ) );
         userDashBoard.setSenderName( config.getSenderNameGuichet( ) );
-        userDashBoard.setSubject( replaceMarkers( config.getSubjectGuichet( ), model ) );
+        userDashBoard.setSubject( replaceMarkersInText( config.getSubjectGuichet( ), model ) );
         userDashBoard.setMessage( replaceMarkers( config.getMessageGuichet( ), model ) );
         userDashBoard.setData( StringUtils.EMPTY );
 
@@ -335,7 +336,7 @@ public class TaskNotifyGru extends SimpleTask
     {
         BackofficeNotification userAgent = new BackofficeNotification( );
 
-        userAgent.setStatusText( replaceMarkers( config.getStatustextAgent( ), model ) );
+        userAgent.setStatusText( replaceMarkersInText( config.getStatustextAgent( ), model ) );
         userAgent.setMessage( replaceMarkers( config.getMessageAgent( ), model ) );
 
         return userAgent;
@@ -357,7 +358,7 @@ public class TaskNotifyGru extends SimpleTask
         if ( !config.isBillingAccountBasedSmsNotification( ) )
         {
             SMSNotification userSMS = new BillingAccountBasedSMSNotification( );
-            userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            userSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model ) );
             userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             userSMS.setSenderName( provider.provideSmsSender( ) );
             return (T) userSMS;
@@ -365,7 +366,7 @@ public class TaskNotifyGru extends SimpleTask
         else
         {
             BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification( );
-            billingAccountUserSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            billingAccountUserSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model ) );
             billingAccountUserSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             billingAccountUserSMS.setSenderName( provider.provideSmsSender( ) );
             billingAccountUserSMS.setBillingAccount( config.getBillingAccountSMS( ) );
@@ -392,7 +393,7 @@ public class TaskNotifyGru extends SimpleTask
         userEmailNotification.setSenderName( config.getSenderNameEmail( ) );
         userEmailNotification.setSenderEmail( config.getSenderEmail( ) );
         userEmailNotification.setRecipient( provider.provideCustomerEmail( ) );
-        userEmailNotification.setSubject( replaceMarkers( config.getSubjectEmail( ), model ) );
+        userEmailNotification.setSubject( replaceMarkersInText( config.getSubjectEmail( ), model ) );
         userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model ) );
         userEmailNotification.setCc( replaceSemicolons( config.getRecipientsCcEmail( ) ) );
         userEmailNotification.setBcc( replaceSemicolons( config.getRecipientsCciEmail( ) ) );
@@ -433,7 +434,7 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
-            String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
+            String strRecipientBroadcast = replaceMarkersInText( config.getEmailBroadcast( ), model );
             listRecipientBroadcast.addAll( extractEmails( strRecipientBroadcast ) );
         }
 
@@ -451,13 +452,13 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( StringUtils.isNotEmpty( config.getRecipientsCcBroadcast( ) ) )
         {
-            strRecipientCcBroadcast = replaceMarkers( config.getRecipientsCcBroadcast( ), model );
+            strRecipientCcBroadcast = replaceMarkersInText( config.getRecipientsCcBroadcast( ), model );
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( config.getSenderEmail( ) );
         broadcastNotification.setRecipient( buildEmailAddresses( listRecipientBroadcast ) );
-        broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
+        broadcastNotification.setSubject( replaceMarkersInText( config.getSubjectBroadcast( ), model ) );
         broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
         broadcastNotification.setCc( buildEmailAddresses( extractEmails( strRecipientCcBroadcast ) ) );
         broadcastNotification.setBcc( buildEmailAddresses( extractEmails( config.getRecipientsCciBroadcast( ) ) ) );
@@ -526,7 +527,9 @@ public class TaskNotifyGru extends SimpleTask
     }
 
     /**
-     * Replaces the markers in the specified message
+     * Replaces the markers in the specified HTML message (guichet, agent, email and broadcast messages). The message is a
+     * FreeMarker template rendered with HTML auto-escaping (LUT-33153): the text the administrator entered keeps its
+     * tags, the marker values (the user's data) are escaped.
      *
      * @param strMessage
      *            the message
@@ -538,6 +541,35 @@ public class TaskNotifyGru extends SimpleTask
     {
         HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, Locale.FRENCH, model );
         return template.getHtml( );
+    }
+
+    /**
+     * Replaces the markers in the specified plain text (SMS message, subjects, status texts, recipient lists): text, not
+     * HTML, so the marker values must not stay HTML-escaped.
+     *
+     * @param strText
+     *            the text
+     * @param model
+     *            the model
+     * @return the text with markers replaced
+     */
+    private String replaceMarkersInText( String strText, Map<String, Object> model )
+    {
+        return toPlainText( replaceMarkers( strText, model ) );
+    }
+
+    /**
+     * Turns the rendering of a text template back into plain text: every string template is rendered with HTML
+     * auto-escaping, which writes the &lt; &gt; &amp; &quot; ' of the marker values as entities; a SMS, a mail subject
+     * or a status text would show them. The entities are decoded once.
+     *
+     * @param strRendered
+     *            the rendered text
+     * @return the plain text
+     */
+    static String toPlainText( String strRendered )
+    {
+        return StringEscapeUtils.unescapeHtml4( strRendered );
     }
 
     /**
