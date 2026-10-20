@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -150,7 +150,10 @@ public class TaskNotifyGru extends SimpleTask
         notifyGruHistory.setIdTask( this.getId( ) );
         notifyGruHistory.setIdResourceHistory( nIdResourceHistory );
 
-        Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), request ) );
+        Map<String, Collection<InfoMarker>> markers = findMarkers( resourceHistory, strProviderManagerId, provider, config.getMarkerProviders( ),
+                request );
+        NotifyGruMarkers.RichMarkers richMarkers = NotifyGruMarkers.getRichMarkers( );
+        MarkerModels model = new MarkerModels( NotifyGruMarkers.toHtmlModel( markers, richMarkers ), NotifyGruMarkers.toTextModel( markers, richMarkers ) );
 
         Notification notificationObject = buildNotification( config, provider );
 
@@ -306,18 +309,18 @@ public class TaskNotifyGru extends SimpleTask
      * @param config
      *            the task configuration
      * @param model
-     *            the model
+     *            the models of the markers
      * @return the {@link MyDashboardNotification} object
      */
-    private MyDashboardNotification buildMyDashboardNotification( TaskNotifyGruConfig config, Map<String, Object> model )
+    private MyDashboardNotification buildMyDashboardNotification( TaskNotifyGruConfig config, MarkerModels model )
     {
         MyDashboardNotification userDashBoard = new MyDashboardNotification( );
 
         userDashBoard.setStatusId( config.getCrmStatusId( ) );
-        userDashBoard.setStatusText( replaceMarkersInText( config.getStatustextGuichet( ), model ) );
+        userDashBoard.setStatusText( replaceMarkersInText( config.getStatustextGuichet( ), model.text( ) ) );
         userDashBoard.setSenderName( config.getSenderNameGuichet( ) );
-        userDashBoard.setSubject( replaceMarkersInText( config.getSubjectGuichet( ), model ) );
-        userDashBoard.setMessage( replaceMarkers( config.getMessageGuichet( ), model ) );
+        userDashBoard.setSubject( replaceMarkersInText( config.getSubjectGuichet( ), model.text( ) ) );
+        userDashBoard.setMessage( replaceMarkers( config.getMessageGuichet( ), model.html( ) ) );
         userDashBoard.setData( StringUtils.EMPTY );
 
         return userDashBoard;
@@ -329,15 +332,15 @@ public class TaskNotifyGru extends SimpleTask
      * @param config
      *            the task configuration
      * @param model
-     *            the model
+     *            the models of the markers
      * @return the {@link BackofficeNotification} object
      */
-    private BackofficeNotification buildBackofficeNotification( TaskNotifyGruConfig config, Map<String, Object> model )
+    private BackofficeNotification buildBackofficeNotification( TaskNotifyGruConfig config, MarkerModels model )
     {
         BackofficeNotification userAgent = new BackofficeNotification( );
 
-        userAgent.setStatusText( replaceMarkersInText( config.getStatustextAgent( ), model ) );
-        userAgent.setMessage( replaceMarkers( config.getMessageAgent( ), model ) );
+        userAgent.setStatusText( replaceMarkersInText( config.getStatustextAgent( ), model.text( ) ) );
+        userAgent.setMessage( replaceMarkers( config.getMessageAgent( ), model.html( ) ) );
 
         return userAgent;
     }
@@ -350,15 +353,15 @@ public class TaskNotifyGru extends SimpleTask
      * @param provider
      *            the provider
      * @param model
-     *            the model
+     *            the models of the markers
      * @return the {@link SMSNotification} object
      */
-    private <T extends SMSNotification> T buildSMSNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
+    private <T extends SMSNotification> T buildSMSNotification( TaskNotifyGruConfig config, IProvider provider, MarkerModels model )
     {
         if ( !config.isBillingAccountBasedSmsNotification( ) )
         {
             SMSNotification userSMS = new BillingAccountBasedSMSNotification( );
-            userSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model ) );
+            userSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model.text( ) ) );
             userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             userSMS.setSenderName( provider.provideSmsSender( ) );
             return (T) userSMS;
@@ -366,7 +369,7 @@ public class TaskNotifyGru extends SimpleTask
         else
         {
             BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification( );
-            billingAccountUserSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model ) );
+            billingAccountUserSMS.setMessage( replaceMarkersInText( config.getMessageSMS( ), model.text( ) ) );
             billingAccountUserSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             billingAccountUserSMS.setSenderName( provider.provideSmsSender( ) );
             billingAccountUserSMS.setBillingAccount( config.getBillingAccountSMS( ) );
@@ -383,18 +386,18 @@ public class TaskNotifyGru extends SimpleTask
      * @param provider
      *            the provider
      * @param model
-     *            the model
+     *            the models of the markers
      * @return the {@link EmailNotification} object
      */
-    private EmailNotification buildEmailNotification( TaskNotifyGruConfig config, IProvider provider, Map<String, Object> model )
+    private EmailNotification buildEmailNotification( TaskNotifyGruConfig config, IProvider provider, MarkerModels model )
     {
         EmailNotification userEmailNotification = new EmailNotification( );
 
         userEmailNotification.setSenderName( config.getSenderNameEmail( ) );
         userEmailNotification.setSenderEmail( config.getSenderEmail( ) );
         userEmailNotification.setRecipient( provider.provideCustomerEmail( ) );
-        userEmailNotification.setSubject( replaceMarkersInText( config.getSubjectEmail( ), model ) );
-        userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model ) );
+        userEmailNotification.setSubject( replaceMarkersInText( config.getSubjectEmail( ), model.text( ) ) );
+        userEmailNotification.setMessage( replaceMarkers( config.getMessageEmail( ), model.html( ) ) );
         userEmailNotification.setCc( replaceSemicolons( config.getRecipientsCcEmail( ) ) );
         userEmailNotification.setBcc( replaceSemicolons( config.getRecipientsCciEmail( ) ) );
 
@@ -423,10 +426,10 @@ public class TaskNotifyGru extends SimpleTask
      * @param config
      *            the task configuration
      * @param model
-     *            the model
+     *            the models of the markers
      * @return the {@link BroadcastNotification} object
      */
-    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, Map<String, Object> model )
+    private BroadcastNotification buildBroadcastNotification( TaskNotifyGruConfig config, MarkerModels model )
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
 
@@ -434,7 +437,7 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( StringUtils.isNotEmpty( config.getEmailBroadcast( ) ) )
         {
-            String strRecipientBroadcast = replaceMarkersInText( config.getEmailBroadcast( ), model );
+            String strRecipientBroadcast = replaceMarkersInText( config.getEmailBroadcast( ), model.text( ) );
             listRecipientBroadcast.addAll( extractEmails( strRecipientBroadcast ) );
         }
 
@@ -452,14 +455,14 @@ public class TaskNotifyGru extends SimpleTask
 
         if ( StringUtils.isNotEmpty( config.getRecipientsCcBroadcast( ) ) )
         {
-            strRecipientCcBroadcast = replaceMarkersInText( config.getRecipientsCcBroadcast( ), model );
+            strRecipientCcBroadcast = replaceMarkersInText( config.getRecipientsCcBroadcast( ), model.text( ) );
         }
 
         broadcastNotification.setSenderName( config.getSenderNameBroadcast( ) );
         broadcastNotification.setSenderEmail( config.getSenderEmail( ) );
         broadcastNotification.setRecipient( buildEmailAddresses( listRecipientBroadcast ) );
-        broadcastNotification.setSubject( replaceMarkersInText( config.getSubjectBroadcast( ), model ) );
-        broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
+        broadcastNotification.setSubject( replaceMarkersInText( config.getSubjectBroadcast( ), model.text( ) ) );
+        broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model.html( ) ) );
         broadcastNotification.setCc( buildEmailAddresses( extractEmails( strRecipientCcBroadcast ) ) );
         broadcastNotification.setBcc( buildEmailAddresses( extractEmails( config.getRecipientsCciBroadcast( ) ) ) );
 
@@ -496,22 +499,26 @@ public class TaskNotifyGru extends SimpleTask
     }
 
     /**
-     * Finds the NotifyGru markers
+     * Finds the NotifyGru markers, by provider: the rich markers can be declared for one provider
+     * ({@link NotifyGruMarkers}).
      *
      * @param resourceHistory
      *            the resource history
+     * @param strProviderManagerId
+     *            the id of the provider manager, which identifies the markers of the provider
      * @param provider
      *            the provider
      * @param listMarkerProviderIds
      *            the list of marker provider ids
      * @param request
      *            the request
-     * @return the NotifyGru markers
+     * @return the NotifyGru markers by provider id, the provider first, then the marker providers in their order
      */
-    private Collection<InfoMarker> findMarkers( ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
-            HttpServletRequest request )
+    private Map<String, Collection<InfoMarker>> findMarkers( ResourceHistory resourceHistory, String strProviderManagerId, IProvider provider,
+            List<String> listMarkerProviderIds, HttpServletRequest request )
     {
-        Collection<InfoMarker> collectionMarkers = provider.provideMarkerValues( );
+        Map<String, Collection<InfoMarker>> mapMarkers = new LinkedHashMap<>( );
+        mapMarkers.put( strProviderManagerId, new ArrayList<>( provider.provideMarkerValues( ) ) );
 
         for ( String strMarkerProviderId : listMarkerProviderIds )
         {
@@ -519,11 +526,12 @@ public class TaskNotifyGru extends SimpleTask
 
             if ( markerProvider != null )
             {
-                collectionMarkers.addAll( markerProvider.provideMarkerValues( resourceHistory, this, request ) );
+                mapMarkers.computeIfAbsent( markerProvider.getId( ), k -> new ArrayList<>( ) )
+                        .addAll( markerProvider.provideMarkerValues( resourceHistory, this, request ) );
             }
         }
 
-        return collectionMarkers;
+        return mapMarkers;
     }
 
     /**
@@ -534,7 +542,7 @@ public class TaskNotifyGru extends SimpleTask
      * @param strMessage
      *            the message
      * @param model
-     *            the model
+     *            the model of the HTML messages
      * @return the message with markers replaced
      */
     private String replaceMarkers( String strMessage, Map<String, Object> model )
@@ -550,7 +558,7 @@ public class TaskNotifyGru extends SimpleTask
      * @param strText
      *            the text
      * @param model
-     *            the model
+     *            the model of the text fields
      * @return the text with markers replaced
      */
     private String replaceMarkersInText( String strText, Map<String, Object> model )
@@ -573,22 +581,16 @@ public class TaskNotifyGru extends SimpleTask
     }
 
     /**
-     * Converts the specified collection of NotifyGru markers into a model
+     * The two models of the notification texts: the HTML messages (rich markers as sanitized markup) and the text fields
+     * (rich markers as plain text).
      *
-     * @param collectionNotifyGruMarkers
-     *            the collection to convert
-     * @return the model
+     * @param html
+     *            the model of the HTML messages
+     * @param text
+     *            the model of the text fields
      */
-    private Map<String, Object> markersToModel( Collection<InfoMarker> collectionNotifyGruMarkers )
+    private record MarkerModels( Map<String, Object> html, Map<String, Object> text )
     {
-        Map<String, Object> model = new HashMap<>( );
-
-        for ( InfoMarker notifyGruMarker : collectionNotifyGruMarkers )
-        {
-            model.put( notifyGruMarker.getMarker( ), notifyGruMarker.getValue( ) );
-        }
-
-        return model;
     }
 
     /*
