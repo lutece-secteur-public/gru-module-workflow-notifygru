@@ -145,6 +145,28 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
     }
 
     /**
+     * The former signature, without return URL, still validates: the button of the error message goes back in the history as before
+     */
+    @Test
+    @SuppressWarnings( "deprecation" )
+    public void testValidationWithTheFormerSignatureHasNoReturnUrl( ) throws Exception
+    {
+        initRequest( );
+        fillRequest( );
+        replaceRequestParameter( PARAMETER_SUBJECT, null );
+        initValidator( );
+
+        assertThatValidationFails( _validator.validate( initModel( ) ) );
+        assertThat( AdminMessageService.getMessage( _request ).getBackUrl( ), is( ( String ) null ) );
+
+        initRequest( );
+        fillRequest( );
+        initValidator( );
+
+        assertThatValidationSucceeds( _validator.validate( initModel( ) ) );
+    }
+
+    /**
      * The button of the error message of an unknown marker opens the configuration of the task, even in a new tab
      */
     @Test

@@ -118,6 +118,22 @@ public final class ServiceConfigTaskForm
     }
 
     /**
+     * display the error message. Its button goes back in the history, or opens the admin home when there is no page to go back to
+     *
+     * @param lstErrors
+     *            the list of errors
+     * @param request
+     *            the http request
+     * @return the error message
+     * @deprecated use {@link #displayErrorMessage(List, HttpServletRequest, String)} with the URL of the screen of the configuration
+     */
+    @Deprecated
+    public static String displayErrorMessage( List<String> lstErrors, HttpServletRequest request )
+    {
+        return displayErrorMessage( lstErrors, request, null );
+    }
+
+    /**
      * display the error message.
      *
      * @param lstErrors
