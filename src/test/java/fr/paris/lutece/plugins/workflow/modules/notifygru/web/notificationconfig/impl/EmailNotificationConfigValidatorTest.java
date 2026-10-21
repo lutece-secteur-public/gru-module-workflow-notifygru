@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.business.TaskNotifyGruConfig;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.web.AbstractNotificationConfigValidator;
+import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.test.mocks.MockHttpServletRequest;
 
@@ -49,6 +50,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EmailNotificationConfigValidatorTest extends LuteceTestCase
 {
+    private static final String URL_MODIFY_TASK = "http://localhost/lutece/jsp/admin/plugins/workflow/ModifyTask.jsp?id_task=1";
+
     // PARAMETERS
     private static final String PARAMETER_SUBJECT = "subject_email";
     private static final String PARAMETER_MESSAGE = "message_email";
@@ -72,7 +75,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         fillRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -120,9 +123,41 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SUBJECT, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
+    }
+
+    /**
+     * The button of the error message opens the configuration of the task, even in a new tab
+     */
+    @Test
+    public void testValidationErrorReturnsToTheConfigurationOfTheTask( ) throws Exception
+    {
+        initRequest( );
+        fillRequest( );
+        replaceRequestParameter( PARAMETER_SUBJECT, null );
+        initValidator( );
+
+        _validator.validate( initModel( ), URL_MODIFY_TASK );
+
+        assertThat( AdminMessageService.getMessage( _request ).getBackUrl( ), is( URL_MODIFY_TASK ) );
+    }
+
+    /**
+     * The button of the error message of an unknown marker opens the configuration of the task, even in a new tab
+     */
+    @Test
+    public void testMarkerErrorReturnsToTheConfigurationOfTheTask( ) throws Exception
+    {
+        initRequest( );
+        fillRequest( );
+        replaceRequestParameter( PARAMETER_SUBJECT, FIELD_WITH_UNKNOW_MARK );
+        initValidator( );
+
+        _validator.validate( initModel( ), URL_MODIFY_TASK );
+
+        assertThat( AdminMessageService.getMessage( _request ).getBackUrl( ), is( URL_MODIFY_TASK ) );
     }
 
     private void replaceRequestParameter( String strParameterName, String strParameterValue )
@@ -143,7 +178,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SUBJECT, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -156,7 +191,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -169,7 +204,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -182,7 +217,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SENDER_NAME, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -195,7 +230,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_RECIPIENT_CC, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -208,7 +243,7 @@ public class EmailNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_RECIPIENT_CCI, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }

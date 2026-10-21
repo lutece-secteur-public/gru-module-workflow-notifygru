@@ -124,9 +124,11 @@ public final class ServiceConfigTaskForm
      *            the list of errors
      * @param request
      *            the http request
+     * @param strReturnUrl
+     *            the URL of the screen of the configuration, opened by the button of the error message when there is no page to go back to
      * @return the error message
      */
-    public static String displayErrorMessage( List<String> lstErrors, HttpServletRequest request )
+    public static String displayErrorMessage( List<String> lstErrors, HttpServletRequest request, String strReturnUrl )
     {
         Object [ ] tabRequiredFields = new Object [ lstErrors.size( )];
 
@@ -137,15 +139,17 @@ public final class ServiceConfigTaskForm
 
         if ( tabRequiredFields.length > 2 )
         {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+            return AdminMessageService.getMessageUrlReturningTo( request, Constants.MESSAGE_MANDATORY_THREE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING,
+                    strReturnUrl );
         }
         else
             if ( tabRequiredFields.length == 2 )
             {
-                return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+                return AdminMessageService.getMessageUrlReturningTo( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING,
+                        strReturnUrl );
             }
 
-        return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+        return AdminMessageService.getMessageUrlReturningTo( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING, strReturnUrl );
     }
 
     /**
