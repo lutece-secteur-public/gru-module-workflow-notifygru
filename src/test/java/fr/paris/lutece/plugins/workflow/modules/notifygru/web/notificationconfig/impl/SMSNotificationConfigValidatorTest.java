@@ -49,6 +49,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SMSNotificationConfigValidatorTest extends LuteceTestCase
 {
+    private static final String URL_MODIFY_TASK = "http://localhost/lutece/jsp/admin/plugins/workflow/ModifyTask.jsp?id_task=1";
+
     // PARAMETERS
     private static final String PARAMETER_MESSAGE = "message_sms";
 
@@ -68,7 +70,7 @@ public class SMSNotificationConfigValidatorTest extends LuteceTestCase
         fillRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -110,7 +112,7 @@ public class SMSNotificationConfigValidatorTest extends LuteceTestCase
         initRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -133,7 +135,7 @@ public class SMSNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }

@@ -49,6 +49,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AgentNotificationConfigValidatorTest extends LuteceTestCase
 {
+    private static final String URL_MODIFY_TASK = "http://localhost/lutece/jsp/admin/plugins/workflow/ModifyTask.jsp?id_task=1";
+
     // PARAMETERS
     private static final String PARAMETER_MESSAGE = "message_agent";
     private static final String PARAMETER_STATUS_TEXT = "status_text_agent";
@@ -69,7 +71,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
         fillRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -114,7 +116,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -137,7 +139,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -150,7 +152,7 @@ public class AgentNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_STATUS_TEXT, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }

@@ -50,6 +50,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
 {
+    private static final String URL_MODIFY_TASK = "http://localhost/lutece/jsp/admin/plugins/workflow/ModifyTask.jsp?id_task=1";
+
     // PARAMETERS
     private static final String PARAMETER_MESSAGE = "message_guichet";
     private static final String PARAMETER_STATUS_TEXT = "status_text_guichet";
@@ -77,7 +79,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         fillRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -126,7 +128,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -149,7 +151,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -162,7 +164,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_STATUS_TEXT, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -175,7 +177,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SENDER_NAME, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -188,7 +190,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SUBJECT, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -201,7 +203,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_MAX_STEP, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -214,7 +216,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_MAX_STEP, String.valueOf( DEMAND_MAX_STEP * -1 ) );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -227,7 +229,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_MAX_STEP, FIELD_WITH_CORRECT_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -240,7 +242,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_USER_CURRENT_STEP, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -253,7 +255,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_MAX_STEP, String.valueOf( DEMAND_USER_CURRENT_STEP * -1 ) );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -266,7 +268,7 @@ public class GuichetNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_DEMAND_USER_CURRENT_STEP, FIELD_WITH_CORRECT_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
