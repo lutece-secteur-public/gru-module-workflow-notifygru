@@ -70,6 +70,20 @@ public abstract class AbstractNotificationConfigValidator
     }
 
     /**
+     * Validates the configuration. The button of an error message goes back in the history, or opens the admin home when there is no page to go back to
+     * 
+     * @param model
+     *            the model used to vaidate the configuration
+     * @return the URL of the error page when there is a validation error, an empty String otherwise
+     * @deprecated use {@link #validate(Map, String)} with the URL of the screen of the configuration
+     */
+    @Deprecated
+    public final String validate( Map<String, Object> model )
+    {
+        return validate( model, null );
+    }
+
+    /**
      * Validates the configuration
      * 
      * @param model
