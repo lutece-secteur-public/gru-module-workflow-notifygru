@@ -76,6 +76,7 @@ import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
 import fr.paris.lutece.util.ErrorMessage;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.url.UrlItem;
 
 /**
  * This class represents a controller for the Notify GRU task configuration
@@ -97,6 +98,10 @@ public class NotifyGruTaskConfigController
 
     // Parameters
     private static final String PARAMETER_APPLY = "apply";
+    private static final String PARAMETER_ID_TASK = "id_task";
+
+    // Jsp Definition
+    private static final String JSP_MODIFY_TASK = "jsp/admin/plugins/workflow/ModifyTask.jsp";
 
     // Actions
     private static final String ACTION_FIRST_STEP_SAVE = "saveFirstStep";
@@ -254,6 +259,21 @@ public class NotifyGruTaskConfigController
         }
 
         return strAction;
+    }
+
+    /**
+     * Return the URL of the JSP modify task of the workflow plugin, on the configuration of the task
+     * 
+     * @param request
+     *            the request
+     * @return the URL of the JSP modify task
+     */
+    private String getJspModifyTask( HttpServletRequest request )
+    {
+        UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MODIFY_TASK );
+        url.addParameter( PARAMETER_ID_TASK, _task.getId( ) );
+
+        return url.getUrl( );
     }
 
     /**
@@ -742,7 +762,7 @@ public class NotifyGruTaskConfigController
 
             for ( INotificationConfig notificationConfig : filterActiveNotificationConfigs( ) )
             {
-                strErrorUrl = notificationConfig.getValidator( ).validate( model );
+                strErrorUrl = notificationConfig.getValidator( ).validate( model, getJspModifyTask( _request ) );
 
                 if ( !StringUtils.isEmpty( strErrorUrl ) )
                 {
@@ -780,7 +800,7 @@ public class NotifyGruTaskConfigController
          */
         private String buildUrlForMissingProviderManager( )
         {
-            return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrlReturningTo( _request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP, getJspModifyTask( _request ) );
         }
 
         /**
@@ -790,7 +810,7 @@ public class NotifyGruTaskConfigController
          */
         private String buildUrlForNoNotificationConfig( )
         {
-            return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrlReturningTo( _request, Constants.MESSAGE_MANDATORY_ONGLET, AdminMessage.TYPE_STOP, getJspModifyTask( _request ) );
         }
 
         /**

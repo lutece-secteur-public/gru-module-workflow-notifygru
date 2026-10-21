@@ -74,15 +74,17 @@ public abstract class AbstractNotificationConfigValidator
      * 
      * @param model
      *            the model used to vaidate the configuration
+     * @param strReturnUrl
+     *            the URL of the screen of the configuration, opened by the button of an error message when there is no page to go back to
      * @return the URL of the error page when there is a validation error, an empty String otherwise
      */
-    public final String validate( Map<String, Object> model )
+    public final String validate( Map<String, Object> model, String strReturnUrl )
     {
         List<String> listErrors = validateFieldsWithoutMarker( );
 
         if ( !listErrors.isEmpty( ) )
         {
-            return buildUrlForFieldValidationErrors( listErrors );
+            return buildUrlForFieldValidationErrors( listErrors, strReturnUrl );
         }
 
         List<String> listInvalidEmails = findInvalidEmails( );
@@ -96,7 +98,7 @@ public abstract class AbstractNotificationConfigValidator
 
         if ( !areFieldsWithMarkersValid( model ) )
         {
-            return buildUrlForMarkerValidationError( model );
+            return buildUrlForMarkerValidationError( model, strReturnUrl );
         }
 
         return null;
@@ -107,25 +109,31 @@ public abstract class AbstractNotificationConfigValidator
      * 
      * @param listErrors
      *            the list of field validation errors
+     * @param strReturnUrl
+     *            the URL of the screen of the configuration, opened by the button of the error message when there is no page to go back to
      * @return the URL of the error page
      */
-    private String buildUrlForFieldValidationErrors( List<String> listErrors )
+    private String buildUrlForFieldValidationErrors( List<String> listErrors, String strReturnUrl )
     {
-        return ServiceConfigTaskForm.displayErrorMessage( listErrors, _request );
+        return ServiceConfigTaskForm.displayErrorMessage( listErrors, _request, strReturnUrl );
     }
 
     /**
      * Builds the URL of the error page for marker validation error
      * 
+     * @param model
+     *            the model used to validate the configuration
+     * @param strReturnUrl
+     *            the URL of the screen of the configuration, opened by the button of the error message when there is no page to go back to
      * @return the URL of the error page
      */
-    private String buildUrlForMarkerValidationError( Map<String, Object> model )
+    private String buildUrlForMarkerValidationError( Map<String, Object> model, String strReturnUrl )
     {
         Object [ ] tabRequiredFields = {
                 model.get( Constants.MARK_MESSAGES_ERROR ),
         };
 
-        return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_ERROR_FREEMARKER, tabRequiredFields, AdminMessage.TYPE_STOP );
+        return AdminMessageService.getMessageUrlReturningTo( _request, Constants.MESSAGE_ERROR_FREEMARKER, tabRequiredFields, AdminMessage.TYPE_STOP, strReturnUrl );
     }
 
     /**

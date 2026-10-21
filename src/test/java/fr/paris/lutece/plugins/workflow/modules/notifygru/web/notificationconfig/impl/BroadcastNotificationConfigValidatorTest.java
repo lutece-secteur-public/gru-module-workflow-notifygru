@@ -50,6 +50,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
 {
+    private static final String URL_MODIFY_TASK = "http://localhost/lutece/jsp/admin/plugins/workflow/ModifyTask.jsp?id_task=1";
+
     // PARAMETERS
     private static final String PARAMETER_MAILING_TYPE = "mailing_type";
     private static final String PARAMETER_ID_MAILING_LIST = "id_mailing_list_broadcast";
@@ -80,7 +82,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         fillRequest( );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -132,7 +134,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_ID_MAILING_LIST, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -156,7 +158,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_ID_MAILING_LIST, FIELD_WITH_CORRECT_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -170,7 +172,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_ID_MAILING_LIST, FIELD_WITH_CORRECT_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -184,7 +186,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MAIL_SPECIFIC, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -241,7 +243,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SENDER_NAME, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -254,7 +256,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SUBJECT, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -267,7 +269,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_SUBJECT, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -280,7 +282,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -293,7 +295,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_MESSAGE, FIELD_WITH_UNKNOW_MARK );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationFails( strErrorUrl );
     }
@@ -306,7 +308,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_RECIPIENT_CC, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
@@ -319,7 +321,7 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         replaceRequestParameter( PARAMETER_RECIPIENT_CCI, null );
         initValidator( );
 
-        String strErrorUrl = _validator.validate( initModel( ) );
+        String strErrorUrl = _validator.validate( initModel( ), URL_MODIFY_TASK );
 
         assertThatValidationSucceeds( strErrorUrl );
     }
