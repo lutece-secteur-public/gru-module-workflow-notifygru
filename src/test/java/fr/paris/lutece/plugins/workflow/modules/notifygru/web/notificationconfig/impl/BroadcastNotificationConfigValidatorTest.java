@@ -189,6 +189,50 @@ public class BroadcastNotificationConfigValidatorTest extends LuteceTestCase
         assertThatValidationFails( strErrorUrl );
     }
 
+    /**
+     * A specific e-mail that is not an e-mail address is refused, alone or in a list separated by semicolons
+     *
+     * @throws Exception
+     *             if the validator cannot be built
+     */
+    @Test
+    public void testValidationWhenSpecificEmailIsInvalid( ) throws Exception
+    {
+        for ( String strEmail : new String [ ] {
+                "abc", "valid@example.com;abc"
+        } )
+        {
+            initRequest( );
+            fillRequest( );
+            replaceRequestParameter( PARAMETER_MAIL_SPECIFIC, strEmail );
+            initValidator( );
+
+            assertThatValidationFails( _validator.validate( initModel( ) ) );
+        }
+    }
+
+    /**
+     * Valid specific e-mail addresses are accepted, as well as an address given by a marker, known only when the notification is sent
+     *
+     * @throws Exception
+     *             if the validator cannot be built
+     */
+    @Test
+    public void testValidationWhenSpecificEmailIsValidOrMarker( ) throws Exception
+    {
+        for ( String strEmail : new String [ ] {
+                "valid@example.com", "valid@example.com; other@example.fr", "${mark};valid@example.com"
+        } )
+        {
+            initRequest( );
+            fillRequest( );
+            replaceRequestParameter( PARAMETER_MAIL_SPECIFIC, strEmail );
+            initValidator( );
+
+            assertThatValidationSucceeds( _validator.validate( initModel( ) ) );
+        }
+    }
+
     @Test
     public void testValidationWhenSenderNameIsEmpty( ) throws Exception
     {

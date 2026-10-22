@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.workflow.modules.notifygru.web;
 
 import fr.paris.lutece.plugins.workflow.modules.notifygru.service.ServiceConfigTaskForm;
 import fr.paris.lutece.plugins.workflow.modules.notifygru.utils.constants.Constants;
+import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -43,6 +44,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractNotificationConfigValidator
 {
+    private static final String MARKER_START = "${";
     private final HttpServletRequest _request;
 
     /**
@@ -80,6 +83,15 @@ public abstract class AbstractNotificationConfigValidator
         if ( !listErrors.isEmpty( ) )
         {
             return buildUrlForFieldValidationErrors( listErrors );
+        }
+
+        List<String> listInvalidEmails = findInvalidEmails( );
+
+        if ( !listInvalidEmails.isEmpty( ) )
+        {
+            return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_INVALID_EMAIL, new Object [ ] {
+                    String.join( ", ", listInvalidEmails )
+            }, AdminMessage.TYPE_STOP );
         }
 
         if ( !areFieldsWithMarkersValid( model ) )
@@ -166,6 +178,46 @@ public abstract class AbstractNotificationConfigValidator
         }
 
         return false;
+    }
+
+    /**
+     * Gives the e-mail addresses of the configuration that are not valid. No address is checked by default
+     *
+     * @return the list of the invalid e-mail addresses, empty if every address is valid
+     */
+    protected List<String> findInvalidEmails( )
+    {
+        return new ArrayList<>( );
+    }
+
+    /**
+     * Gives the addresses of a list of e-mail addresses separated by semicolons that are not valid. An address containing a marker is not checked, its value
+     * being known only when the notification is sent
+     *
+     * @param strEmails
+     *            the e-mail addresses separated by semicolons
+     * @return the list of the invalid e-mail addresses
+     */
+    protected static List<String> getInvalidEmails( String strEmails )
+    {
+        List<String> listInvalidEmails = new ArrayList<>( );
+
+        if ( StringUtils.isBlank( strEmails ) )
+        {
+            return listInvalidEmails;
+        }
+
+        for ( String strEmail : strEmails.split( Constants.SEMICOLON ) )
+        {
+            String strTrimmedEmail = strEmail.replaceAll( "[\\r\\n\\t ]", "" );
+
+            if ( !strTrimmedEmail.isEmpty( ) && !strTrimmedEmail.contains( MARKER_START ) && !AdminUserService.checkEmail( strTrimmedEmail ) )
+            {
+                listInvalidEmails.add( strTrimmedEmail );
+            }
+        }
+
+        return listInvalidEmails;
     }
 
     /**

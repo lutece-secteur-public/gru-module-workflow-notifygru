@@ -243,6 +243,20 @@ public class BroadcastNotificationConfig implements INotificationConfig
         }
 
         /**
+         * {@inheritDoc} The specific e-mail addresses are checked when the notification is sent to them
+         */
+        @Override
+        protected List<String> findInvalidEmails( )
+        {
+            if ( TYPE_MAILING_TYPE_SPECIFIC.equals( _strMailingType ) )
+            {
+                return getInvalidEmails( _strSpecificEmail );
+            }
+
+            return new ArrayList<>( );
+        }
+
+        /**
          * {@inheritDoc}
          */
         @Override
