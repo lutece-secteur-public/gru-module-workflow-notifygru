@@ -427,12 +427,13 @@ public class NotifyGruTaskConfigController
             String strProviderId = ProviderManagerUtil.fetchProviderId( strIdSpringProvider );
             IProviderManager providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
-            if ( providerManager != null )
+            if ( providerManager != null && providerManager.getProviderDescription( strProviderId ) != null )
             {
                 _model.put( Constants.MARK_NOTIFYGRU_MARKERS, findMarkers( providerManager, strProviderId, _config.getMarkerProviders( ) ) );
             }
             else
             {
+                // unknown provider manager, or provider removed since (a deleted form for instance)
                 List<ErrorMessage> listErrorMessages = new ArrayList<>( );
                 listErrorMessages.add( new MVCMessage( I18nService.getLocalizedString( Constants.MESSAGE_ERROR_PROVIDER_NOT_FOUND, _request.getLocale( ) ) ) );
                 _model.put( Constants.MARK_MESSAGES_ERROR, listErrorMessages );
@@ -821,8 +822,10 @@ public class NotifyGruTaskConfigController
         private Map<String, Object> buildModelForValidation( )
         {
             String strProviderId = ProviderManagerUtil.fetchProviderId( _config.getIdSpringProvider( ) );
+            ProviderDescription providerDescription = _providerManager.getProviderDescription( strProviderId );
 
-            return markersToModel( _providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( ) );
+            // provider removed since the task was configured (a deleted form for instance): no marker
+            return markersToModel( ( providerDescription != null ) ? providerDescription.getMarkerDescriptions( ) : new ArrayList<>( ) );
         }
 
         /**
