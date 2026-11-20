@@ -71,7 +71,7 @@ public class NotifyGruHistoryDAO implements INotifyGruHistoryDAO
     private static final String SQL_QUERY_SELECT_COUNT_ID_HISTORY_TO_CLEAN="select count(n.id_history) from workflow_task_notify_gru_history as n , "
     		+ "workflow_resource_history as h  WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ?" ;
     private static final String SQL_QUERY_CLEAN_HISTORY_CONTENT_BY_DATE="update workflow_task_notify_gru_history as n ,"
-    		+ "workflow_resource_history as h   set n.content_cleaned=1,n.message_email = null , n.message_guichet = null,n.message_guichet = null,n.message_sms = null, n.message_broadcast = null  "
+    		+ "workflow_resource_history as h   set n.content_cleaned=1,n.message_email = null , n.message_guichet = null, n.message_agent = null, n.message_sms = null, n.message_broadcast = null  "
     		+ "WHERE n.id_history=h.id_history and n.content_cleaned=0 and h.creation_date < ? ";    
     
     
